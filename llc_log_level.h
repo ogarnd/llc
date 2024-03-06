@@ -22,38 +22,26 @@ namespace llc
 	void				_llc_print_system_errors		(const char * prefix, uint32_t prefixLen);
 #endif
 
-#ifdef LLC_WINDOWS
-	tplt<size_t prefixLength, size_t fmtLen, tpnm... TArgs>
-	static	void		_llc_debug_printf				(int severity, const char (&prefix)[prefixLength], const char (&format)[fmtLen], const TArgs... args)			{
-		char					timeString	[64]				= {};
-		size_t					stringLength					= snprintf(timeString, sizeof(timeString) - 2, "%llu|", ::llc::timeCurrentInMs());
-		base_log_write(timeString, (int)stringLength);
-		base_log_write(prefix, prefixLength);
+
+	error_t				debug_print_prefix				(int severity, const char * path, int line, const char * function);
+
+#ifndef LLC_ATMEL
+	tplt<size_t fmtLen, tpnm... TArgs>
+	static	void		_llc_debug_printf				(int severity, const char * path, int line, const char * function, const char (&format)[fmtLen], const TArgs... args)			{
+		debug_print_prefix(severity, path, line, function);
 #else
-#	ifdef LLC_ATMEL
 	tplt<tpnm... TArgs>
 	static	void		_llc_debug_printf				(const char* function, const __FlashStringHelper* format, const TArgs... args)			{
 		base_log_print_F("{");
 		base_log_print(function);
 		base_log_print_F("}:");
-#	else
-	tplt<size_t prefixLength, size_t fmtLen, tpnm... TArgs>
-	static	void		_llc_debug_printf				(int severity, const char (&prefix)[prefixLength], const char * function, const char (&format)[fmtLen], const TArgs... args)			{
-		char					timeString	[64]				= {};
-		size_t					stringLength					= snprintf(timeString, sizeof(timeString) - 2, "%llu|", ::llc::timeCurrentInMs());
-		base_log_write(timeString, (int)stringLength);
-		base_log_write(prefix, strlen(prefix));
-		base_log_write("{", 1);
-		base_log_write(function, strlen(function));
-		base_log_write("}:", 2);
-#	endif
 #endif
 
 #ifdef LLC_ESP32 // Use dynamic string buffer to save flash space.
 		if(format) {
 			const uint32_t bufferSize = uint32_t(strlen(format) + 1024 * 2);
 			if(char * customDynamicString = (char*)malloc(bufferSize)) {
-				stringLength	= snprintf(customDynamicString, bufferSize - 2, format, args...);
+				const	size_t 	stringLength	= snprintf(customDynamicString, bufferSize - 2, format, args...);
 				customDynamicString[::llc::min(stringLength, bufferSize - 2)] = '\n';
 				customDynamicString[::llc::min(stringLength + 1, bufferSize - 1)] = 0;
 				base_log_write(customDynamicString, (int)::llc::min(stringLength + 1, bufferSize - 1));
@@ -63,30 +51,31 @@ namespace llc
 #else
 #	ifdef LLC_ATMEL
 		char					customDynamicString	[128]		= {};
-		size_t 					stringLength					= snprintf_P(customDynamicString, sizeof(customDynamicString) - 1, (const char*)format, args...);
+		const	size_t 			stringLength					= snprintf_P(customDynamicString, sizeof(customDynamicString) - 1, (const char*)format, args...);
 		customDynamicString[min(stringLength, (size_t)sizeof(customDynamicString)-1)] = '\n';
 	#else
 		char					customDynamicString	[fmtLen + 1024 * 32]	= {};
-		stringLength		= ::llc::sprintf_s(customDynamicString, format, args...);
+		const	size_t 			stringLength					= ::llc::sprintf_s(customDynamicString, format, args...);
 		customDynamicString[min(stringLength, sizeof(customDynamicString)-2)] = '\n';
 		if(2 >= severity)
-			::llc::_llc_print_system_errors(prefix, prefixLength);
+			::llc::_llc_print_system_errors("", 0);
 #	endif
 		base_log_write(customDynamicString, (uint32_t)min(sizeof(customDynamicString), stringLength + 1));
 #endif
 	}
 
 	tplt<tpnm... _tArgs>
-	stincxp	void*		nully		(_tArgs&&...)		{ return 0; }
+	stincxp	void*		nully				(_tArgs&&...)		{ return 0; }
+
 }
 
 #ifdef LLC_WINDOWS
-#	define llc_debug_printf(severity, severityStr, format, ...)	::llc::_llc_debug_printf(severity, #severity "|" severityStr "|" __FILE__ "(" LLC_TOSTRING(__LINE__) "){" __FUNCTION__ "}:", format, __VA_ARGS__)
+#	define llc_debug_printf(severity, severityStr, format, ...)	::llc::_llc_debug_printf(severity, __FILE__, __LINE__, __FUNCTION__, format, __VA_ARGS__)
 #else
 #	ifdef LLC_ATMEL
 #		define llc_debug_printf(severity, severityStr, format, ...)	do{ /*base_log_print_F(__FILE__ "(" LLC_TOSTRING(__LINE__) ")");*/ ::llc::_llc_debug_printf(__func__, F(format), ##__VA_ARGS__); } while(0) //::llc::_llc_debug_printf("(" LLC_TOSTRING(__LINE__) ")", "")
 #	else
-#		define llc_debug_printf(severity, severityStr, format, ...)	::llc::_llc_debug_printf(severity, #severity "|" severityStr "|" __FILE__ "(" LLC_TOSTRING(__LINE__) ")", __func__, format, ##__VA_ARGS__)
+#		define llc_debug_printf(severity, severityStr, format, ...)	::llc::_llc_debug_printf(severity, __FILE__, __LINE__, __func__, format, ##__VA_ARGS__)
 #	endif
 #endif
 

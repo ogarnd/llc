@@ -24,6 +24,20 @@
 #	endif
 #endif
 
+#ifdef LLC_ATMEL
+stacxpr		int		LOG_PREFIX_BUFFER_SIZE	= 64;
+#else
+stacxpr		int		LOG_PREFIX_BUFFER_SIZE	= 256;
+#endif
+
+::llc::error_t			llc::debug_print_prefix	(int severity, const char * path, int line, const char * function) {
+	stacxpr cchar_t	STR_DEBUG_PREFIX[]					= "%i|%llu|%s(%i){%s}:";
+	char			formatted[::LOG_PREFIX_BUFFER_SIZE]	= {};
+	snprintf(formatted, llc::size(formatted), STR_DEBUG_PREFIX, severity, ::llc::timeCurrentInMs(), path, line, function);
+	return base_log_print(formatted);
+}
+
+
 #if (defined(LLC_WINDOWS) || defined(LLC_ANDROID))
 static	::llc::error_t	default_base_log_write	(const char * text, uint32_t textLen) {
 #if defined(LLC_WINDOWS)
