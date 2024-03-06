@@ -8,7 +8,16 @@
 #ifndef LLC_DEBUG_H
 #define LLC_DEBUG_H
 
-#if defined(LLC_DEBUG_ENABLED)
+#ifndef LLC_DEBUG_ENABLED
+namespace llc { stacxpr size_t DEBUG_BUILD = 0; } 
+#	define LLC_PLATFORM_CRT_BREAKPOINT()		do {} while(0)
+#	define LLC_PLATFORM_CRT_CHECK_MEMORY()		do {} while(0)
+//#	define LLC_ERROR_PRINTF_ENABLED
+//#	define LLC_WARNING_PRINTF_ENABLED	// Uncomment as needed
+//#	define LLC_INFO_PRINTF_ENABLED		// Uncomment as needed
+//#	define LLC_SUCCESS_PRINTF_ENABLED	// Uncomment as needed
+//#	define LLC_VERBOSE_PRINTF_ENABLED	// Uncomment as needed
+#else
 namespace llc { stacxpr size_t DEBUG_BUILD = (size_t)-1; } 
 #	define LLC_ERROR_PRINTF_ENABLED
 #	define LLC_WARNING_PRINTF_ENABLED
@@ -21,22 +30,7 @@ namespace llc { stacxpr size_t DEBUG_BUILD = (size_t)-1; }
 #	ifndef LLC_KEEP_SYSTEM_ERROR_ON_ERROR_LOG
 #		define LLC_CLEAR_SYSTEM_ERROR_ON_ERROR_LOG
 #	endif
-#	ifndef LLC_WINDOWS
-#       ifndef LLC_ESP32
-#		    define LLC_PLATFORM_CRT_BREAKPOINT()	do {} while(0)
-#		    define LLC_PLATFORM_CRT_CHECK_MEMORY()	do {} while(0)
-#     	else
-#		    define LLC_PLATFORM_CRT_BREAKPOINT()	do {} while(0)
-#       	ifndef LLC_DEBUG_ENABLED
-#		        define LLC_PLATFORM_CRT_CHECK_MEMORY()	do {} while(0)
-#       	else
-#       		include <esp_heap_caps.h>
-#       		include <freertos/FreeRTOS.h>
-#       		include <freertos/task.h>
-#       		define LLC_PLATFORM_CRT_CHECK_MEMORY() do { info_printf("Available RAM - Heap: %u bytes, Stack: %u bytes.", heap_caps_get_free_size(MALLOC_CAP_8BIT), uxTaskGetStackHighWaterMark(NULL)); } while(0)
-#       	endif
-#       endif
-#	else
+#	ifdef LLC_WINDOWS
 #		include <crtdbg.h>
 #		if defined LLC_USE_DEBUG_BREAK_ON_ERROR_LOG
 #			define LLC_PLATFORM_CRT_BREAKPOINT		(void)_CrtDbgBreak
@@ -44,16 +38,17 @@ namespace llc { stacxpr size_t DEBUG_BUILD = (size_t)-1; }
 #			define LLC_PLATFORM_CRT_BREAKPOINT()	do {} while(0)
 #		endif
 #		define LLC_PLATFORM_CRT_CHECK_MEMORY()	do {} while(0) // (void)_CrtCheckMemory
+#	else
+#		define LLC_PLATFORM_CRT_BREAKPOINT()	do {} while(0)
+#		ifndef LLC_ESP32
+#			define LLC_PLATFORM_CRT_CHECK_MEMORY()	do {} while(0)
+#		else
+#			include <esp_heap_caps.h>
+#			include <freertos/FreeRTOS.h>
+#			include <freertos/task.h>
+#			define LLC_PLATFORM_CRT_CHECK_MEMORY() do { info_printf("Available RAM - Heap: %u bytes, Stack: %u bytes.", heap_caps_get_free_size(MALLOC_CAP_8BIT), uxTaskGetStackHighWaterMark(NULL)); } while(0)
+#		endif
 #	endif
-#else
-namespace llc { stacxpr size_t DEBUG_BUILD = 0; } 
-#	define LLC_PLATFORM_CRT_BREAKPOINT()		do {} while(0)
-#	define LLC_PLATFORM_CRT_CHECK_MEMORY()		do {} while(0)
-//#	define LLC_ERROR_PRINTF_ENABLED
-//#	define LLC_WARNING_PRINTF_ENABLED	// Uncomment as needed
-//#	define LLC_INFO_PRINTF_ENABLED		// Uncomment as needed
-//#	define LLC_SUCCESS_PRINTF_ENABLED	// Uncomment as needed
-//#	define LLC_VERBOSE_PRINTF_ENABLED	// Uncomment as needed
 #endif
 
 #endif // LLC_DEBUG_H
