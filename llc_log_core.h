@@ -19,16 +19,16 @@
 
 namespace llc
 {
-	typedef	void	(*log_print_t)		(const char * text);
-	void			_base_log_print		(const char * text);
-	typedef	void	(*log_write_t)		(const char * text, uint32_t textLen);
-	void			_base_log_write		(const char * text, uint32_t textLen);
+	typedef	error_t	(*log_print_t)		(const char * text);
+	error_t			_base_log_print		(const char * text);
+	typedef	error_t	(*log_write_t)		(const char * text, uint32_t textLen);
+	error_t			_base_log_write		(const char * text, uint32_t textLen);
 #define base_log_write(text, textLen)	::llc::_base_log_write(text, textLen)
 #define base_log_print(text)			::llc::_base_log_print(text)
 
 #ifdef LLC_LOG_ARDUINO_FLASHSTRINGHELPER
-	typedef	void	(*log_print_P_t)	(const __FlashStringHelper * text);
-	void			_base_log_print_P	(const __FlashStringHelper * text);
+	typedef	int		(*log_print_P_t)	(const __FlashStringHelper * text);
+	int				_base_log_print_P	(const __FlashStringHelper * text);
 #	define base_log_print_P(text)	::llc::_base_log_print_P(text)
 #	define base_log_print_F(text)	base_log_print_P(F(text))
 #else

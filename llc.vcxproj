@@ -564,6 +564,7 @@
     <None Include="copy_llc_config.bat" />
     <None Include="country_coords.json" />
     <None Include="cpp.hint" />
+    <None Include="library.json" />
     <None Include="llc_cgi_interceptor.json" />
     <None Include="llc_config.json" />
     <None Include="Makefile" />

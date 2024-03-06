@@ -977,5 +977,6 @@
     <None Include="llc_config.json" />
     <None Include="Makefile" />
     <None Include="country_coords.json" />
+    <None Include="library.json" />
   </ItemGroup>
 </Project>

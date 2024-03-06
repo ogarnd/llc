@@ -25,24 +25,26 @@
 #endif
 
 #if (defined(LLC_WINDOWS) || defined(LLC_ANDROID))
-static void default_base_log_write(const char * text, uint32_t textLen) {
+static	::llc::error_t	default_base_log_write	(const char * text, uint32_t textLen) {
 #if defined(LLC_WINDOWS)
 	OutputDebugStringA(text); (void)textLen;
 #elif defined(LLC_ANDROID)
 	LOGI("%s", text); (void)textLen;
 #else
-	printf("%s", text); (void)textLen;
+	return (::llc::error_t)printf("%s", text); (void)textLen;
 #endif
+	return (::llc::error_t)strlen(text);
 }
 
-static void default_base_log_print(const char * text) {
+static ::llc::error_t	default_base_log_print	(const char * text) {
 #if defined(LLC_WINDOWS)
 	OutputDebugStringA(text);
 #elif defined(LLC_ANDROID)
 	LOGI("%s", text);
 #else
-	printf("%s", text);
+	return (::llc::error_t)printf("%s", text);
 #endif
+	return (::llc::error_t)strlen(text);
 }
 ::llc::log_write_t		llc_log_write					= default_base_log_write;
 ::llc::log_print_t		llc_log_print					= default_base_log_print;
@@ -51,11 +53,11 @@ static void default_base_log_print(const char * text) {
 ::llc::log_print_t		llc_log_print					= {};
 #endif
 
-void					llc::_base_log_print			(const char* text)						{ if(llc_log_print && text) ::llc_log_print(text); }
-void					llc::_base_log_write			(const char* text, uint32_t textLen)	{ if(llc_log_write && text && textLen) ::llc_log_write(text, textLen); }
+::llc::error_t			llc::_base_log_print			(const char* text)						{ return (llc_log_print && text) ? ::llc_log_print(text) : 0; }
+::llc::error_t			llc::_base_log_write			(const char* text, uint32_t textLen)	{ return (llc_log_write && text && textLen) ? ::llc_log_write(text, textLen) : 0; }
 #ifdef LLC_LOG_ARDUINO_FLASHSTRINGHELPER
 ::llc::log_print_P_t	llc_log_print_P					= {};
-void					llc::_base_log_print_P			(const __FlashStringHelper* text)		{ if(llc_log_print_P && text) ::llc_log_print_P(text); }
+::llc::error_t			llc::_base_log_print_P			(const __FlashStringHelper* text)		{ return (llc_log_print_P && text) ? ::llc_log_print_P(text) : 0; }
 #endif
 
 #ifndef LLC_ARDUINO
@@ -74,7 +76,7 @@ static	::llc::error_t	getSystemErrorAsString			(const uint64_t lastError, char* 
 #endif
 }
 
-		void					llc::_llc_print_system_errors	(const char* prefix, uint32_t prefixLen)								{
+void					llc::_llc_print_system_errors	(const char* prefix, uint32_t prefixLen)								{
 	char								bufferError[256]				= {};
 #if defined(LLC_WINDOWS)
 	int64_t								lastSystemError					= ::GetLastError() & 0xFFFFFFFFFFFFFFFFLL;
