@@ -70,21 +70,21 @@ namespace llc
 }
 
 #ifdef LLC_WINDOWS
-#	define llc_debug_printf(severity, severityStr, format, ...)	::llc::_llc_debug_printf(severity, __FILE__, __LINE__, __FUNCTION__, format, __VA_ARGS__)
+#	define llc_debug_printf(severity, format, ...)	::llc::_llc_debug_printf(severity, __FILE__, __LINE__, __FUNCTION__, format, __VA_ARGS__)
 #else
 #	ifdef LLC_ATMEL
-#		define llc_debug_printf(severity, severityStr, format, ...)	do{ /*base_log_print_F(__FILE__ "(" LLC_TOSTRING(__LINE__) ")");*/ ::llc::_llc_debug_printf(__func__, F(format), ##__VA_ARGS__); } while(0) //::llc::_llc_debug_printf("(" LLC_TOSTRING(__LINE__) ")", "")
+#		define llc_debug_printf(severity, format, ...)	do{ /*base_log_print_F(__FILE__ "(" LLC_TOSTRING(__LINE__) ")");*/ ::llc::_llc_debug_printf(__func__, F(format), ##__VA_ARGS__); } while(0) //::llc::_llc_debug_printf("(" LLC_TOSTRING(__LINE__) ")", "")
 #	else
-#		define llc_debug_printf(severity, severityStr, format, ...)	::llc::_llc_debug_printf(severity, __FILE__, __LINE__, __func__, format, ##__VA_ARGS__)
+#		define llc_debug_printf(severity, format, ...)	::llc::_llc_debug_printf(severity, __FILE__, __LINE__, __func__, format, ##__VA_ARGS__)
 #	endif
 #endif
 
 #ifndef always_printf
 #ifndef logf_always
 #if !defined(LLC_WINDOWS)
-#	define always_printf(format, ...)					llc_debug_printf(3, "info", format, ##__VA_ARGS__)
+#	define always_printf(format, ...)					llc_debug_printf(3, format, ##__VA_ARGS__)
 #else
-#	define always_printf(format, ...)					llc_debug_printf(3, "info", format, __VA_ARGS__)
+#	define always_printf(format, ...)					llc_debug_printf(3, format, __VA_ARGS__)
 #endif
 #endif
 #endif
@@ -93,9 +93,9 @@ namespace llc
 #ifndef logf_error
 #	if defined (LLC_ERROR_PRINTF_ENABLED)
 #ifndef LLC_WINDOWS
-#		define error_printf(format, ...)					do { llc_debug_printf(1, "error", format, ##__VA_ARGS__); LLC_PLATFORM_CRT_BREAKPOINT(); } while(0)
+#		define error_printf(format, ...)					do { llc_debug_printf(1, format, ##__VA_ARGS__); LLC_PLATFORM_CRT_BREAKPOINT(); } while(0)
 #else
-#		define error_printf(format, ...)					do { llc_debug_printf(1, "error", format, __VA_ARGS__); LLC_PLATFORM_CRT_BREAKPOINT(); } while(0)
+#		define error_printf(format, ...)					do { llc_debug_printf(1, format, __VA_ARGS__); LLC_PLATFORM_CRT_BREAKPOINT(); } while(0)
 #endif
 #	else
 #		define error_printf(format, ...)					do { ::llc::dummy(__VA_ARGS__); LLC_PLATFORM_CRT_BREAKPOINT(); } while(0)
@@ -107,9 +107,9 @@ namespace llc
 #ifndef logf_warning
 #	if defined (LLC_WARNING_PRINTF_ENABLED)
 #ifndef LLC_WINDOWS
-#		define warning_printf(format, ...)					llc_debug_printf(2, "warning"	, format, ##__VA_ARGS__)
+#		define warning_printf(format, ...)					llc_debug_printf(2, format, ##__VA_ARGS__)
 #else
-#		define warning_printf(format, ...)					llc_debug_printf(2, "warning"	, format, __VA_ARGS__)
+#		define warning_printf(format, ...)					llc_debug_printf(2, format, __VA_ARGS__)
 #endif
 #	else
 #		define warning_printf(format, ...)					do { ::llc::dummy(__VA_ARGS__); } while(0)
@@ -121,9 +121,9 @@ namespace llc
 #ifndef logf_info
 #	if defined (LLC_INFO_PRINTF_ENABLED)
 #ifndef LLC_WINDOWS
-#		define info_printf(format, ...)						llc_debug_printf(3, "info"		, format, ##__VA_ARGS__)
+#		define info_printf(format, ...)						llc_debug_printf(3, format, ##__VA_ARGS__)
 #else
-#		define info_printf(format, ...)						llc_debug_printf(3, "info"		, format, __VA_ARGS__)
+#		define info_printf(format, ...)						llc_debug_printf(3, format, __VA_ARGS__)
 #endif
 #	else
 #		define info_printf(format, ...)						do { ::llc::dummy(__VA_ARGS__); } while(0)
@@ -135,9 +135,9 @@ namespace llc
 #ifndef logf_success
 #	if defined (LLC_SUCCESS_PRINTF_ENABLED)
 #ifndef LLC_WINDOWS
-#		define success_printf(format, ...)					llc_debug_printf(4, "info"		, format, ##__VA_ARGS__)
+#		define success_printf(format, ...)					llc_debug_printf(4, format, ##__VA_ARGS__)
 #else
-#		define success_printf(format, ...)					llc_debug_printf(4, "info"		, format, __VA_ARGS__)
+#		define success_printf(format, ...)					llc_debug_printf(4, format, __VA_ARGS__)
 #endif
 #	else
 #		define success_printf(format, ...)					do { ::llc::dummy(__VA_ARGS__); } while(0)
@@ -149,9 +149,9 @@ namespace llc
 #ifndef logf_verbose
 #	if defined (LLC_VERBOSE_PRINTF_ENABLED)
 #ifndef LLC_WINDOWS
-#		define verbose_printf(format, ...)					llc_debug_printf(4, "info"		, format, ##__VA_ARGS__)
+#		define verbose_printf(format, ...)					llc_debug_printf(4, format, ##__VA_ARGS__)
 #else
-#		define verbose_printf(format, ...)					llc_debug_printf(4, "info"		, format, __VA_ARGS__)
+#		define verbose_printf(format, ...)					llc_debug_printf(4, format, __VA_ARGS__)
 #endif
 #	else
 #		define verbose_printf(format, ...)					do { ::llc::dummy(__VA_ARGS__); } while(0)
@@ -160,8 +160,8 @@ namespace llc
 #endif
 
 //
-#define llc_rv_hrcall(retVal, hr_call)					do { ::HRESULT errCall_ = (hr_call); if FAILED(errCall_) { llc_debug_printf(0, "error", "%s -> %i (0x%X): '%s'.", #hr_call, errCall_, ::llc::getWindowsErrorAsString(errCall_).begin()); return retVal; } } while(0)
-#define llc_rve_hrcall(retVal, hr_call, format, ...)	do { ::HRESULT errCall_ = (hr_call); if FAILED(errCall_) { llc_debug_printf(0, "error", "%s -> %i (0x%X): '%s' " format, #hr_call, errCall_, ::llc::getWindowsErrorAsString(errCall_).begin(), __VA_ARGS__); return retVal; } } while(0)
+#define llc_rv_hrcall(retVal, hr_call)					do { ::HRESULT errCall_ = (hr_call); if FAILED(errCall_) { llc_debug_printf(0, "%s -> %i (0x%X): '%s'.", #hr_call, errCall_, ::llc::getWindowsErrorAsString(errCall_).begin()); return retVal; } } while(0)
+#define llc_rve_hrcall(retVal, hr_call, format, ...)	do { ::HRESULT errCall_ = (hr_call); if FAILED(errCall_) { llc_debug_printf(0, "%s -> %i (0x%X): '%s' " format, #hr_call, errCall_, ::llc::getWindowsErrorAsString(errCall_).begin(), __VA_ARGS__); return retVal; } } while(0)
 
 #define llc_hrcall(hr_call)				do { llc_rv_hrcall (-1, hr_call)				; } while(0)		// HRESULT call.
 #define llc_hrecall(hr_call, ...)		do { llc_rve_hrcall(-1, hr_call, __VA_ARGS__)	; } while(0)		// HRESULT call.
