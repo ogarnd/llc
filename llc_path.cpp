@@ -5,11 +5,11 @@
 #		define WIN32_LEAN_AND_MEAN
 #	endif
 #	include <Windows.h>
-//#elif defined(LLC_ANDROID) || defined(LLC_LINUX)
-//#	include <dirent.h>
-//#	include <sys/stat.h>
-////#	include <sys/types.h>
-////#	include <unistd.h>
+#elif defined(LLC_ANDROID) || defined(LLC_LINUX)
+#	include <dirent.h>
+#	include <sys/stat.h>
+#	include <sys/types.h>
+#	include <unistd.h>
 #elif !defined(LLC_ATMEL)
 //#	include <dirent.h>
 #	include <sys/stat.h>

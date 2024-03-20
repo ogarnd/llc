@@ -1,5 +1,5 @@
-IncDir			:= ../../zlib 
-Platform		:= Linux.x64
+IncDir			:= ../zlib 
+Platform		:= Linux.ARM
 ProjectName		:= llc
 Configuration	:= Release
 
@@ -12,13 +12,13 @@ ifeq ($(DEBUG), 1)
 	C_DEFS			+= -DDEBUG
 endif
 
-OutDir	= ../../$(Platform).$(Configuration)
-IntDir	= ../../obj/$(Platform).$(Configuration)/$(ProjectName)
+OutDir	= ../$(Platform).$(Configuration)
+IntDir	= ../obj/$(Platform).$(Configuration)/$(ProjectName)
 
 OBJDIRS	:= $(patsubst %, $(IntDir), $(ProjectName))
 INCDIR	:= $(patsubst %,-I%,$(IncDir))
 
-CFLAGS	:= -std=c++17 -Wall -Werror -O$(OPT) $(INCDIR) 
+CFLAGS	:= -std=c++17 -Wall -O$(OPT) $(INCDIR) 
 CC		:= g++
 
 _OBJ	:= $(patsubst %.cpp,%.o,$(wildcard *.cpp)) 
