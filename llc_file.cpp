@@ -13,7 +13,7 @@
 #elif defined(LLC_ANDROID) || defined(LLC_LINUX)
 #	include <dirent.h>
 #	include <unistd.h>
-#	include <fcntl.h>           /* Definition of AT_* constants */
+#	include <fcntl.h> // Definition of AT_* constants
 #elif defined(LLC_ESP32)
 #	include <SPIFFS.h>
 #endif

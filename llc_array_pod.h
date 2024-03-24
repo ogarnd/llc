@@ -159,7 +159,7 @@
 			}
 			// returns the new size of the list or -1 on failure.
 			::llc::error_t			insert				(uint32_t index, const T & newValue)	noexcept	{
-				ree_if(index > Count, "%u > %u", index, Count);
+				ree_if(index > Count, LLC_FMT_U32_GT_U32, index, Count);
 				const uint32_t				newCount			= Count + 1;
 				if(Size < newCount) {
 					T							* newData			= 0;
@@ -184,8 +184,8 @@
 				return Count = newCount;
 			}
 			// returns the new size of the list or -1 on failure.
-			::llc::error_t			insert				(uint32_t index, const T* chainToInsert, uint32_t chainLength)	noexcept	{
-				ree_if(index > Count, "%u > %u", index, Count);
+			::llc::error_t			insert				(uint32_t index, const T * chainToInsert, uint32_t chainLength)	noexcept	{
+				ree_if(index > Count, LLC_FMT_U32_GT_U32, index, Count);
 
 				const uint32_t				newCount			= Count + chainLength;
 				if(Size < newCount) {
@@ -215,21 +215,21 @@
 			inline	::llc::error_t	insert				(uint32_t index, ::llc::view<const T> chainToInsert)			noexcept	{ return insert(index, chainToInsert.begin(), chainToInsert.size()); }
 			// Returns the new size of the list or -1 if the array pointer is not initialized.
 			::llc::error_t			remove_unordered	(uint32_t index)												noexcept	{
-				ree_if(index >= Count, "%u >= %u.", index, Count);
+				ree_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
 				Data[index]				= Data[--Count];
 				*(u16*)&Data[Count]		= 0;
 				return Count;
 			}
 			// returns the new array size or -1 if failed.
-			::llc::error_t			erase				(const T* address)												noexcept	{
+			::llc::error_t			erase				(const T * address)												noexcept	{
 				const ptrdiff_t				ptrDiff				= ptrdiff_t(address) - (ptrdiff_t)Data;
 				const uint32_t				index				= (uint32_t)(ptrDiff / (ptrdiff_t)sizeof(T));
-				ree_if(index >= Count, "%u >= %u. p: 0x%p", index, Count, address);
+				ree_if(index >= Count, LLC_FMT_U32_GE_U32 ", p: 0x%p", index, Count, address);
 				return remove(index);
 			}
 			// returns the new array size or -1 if failed.
 			::llc::error_t			remove				(uint32_t index)													noexcept	{
-				ree_if(index >= Count, "%u >= %u.", index, Count);
+				ree_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
 				--Count;
 				while(index < Count) {
 					Data[index]				= Data[index + 1];
