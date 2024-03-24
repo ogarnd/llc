@@ -1,7 +1,13 @@
 #include "llc_append_json.h"
 
-llc::err_t	llc::appendOpenKey		(::llc::achar & output, ::llc::vcs key)							{ return ::llc::append_strings(output, '"', key, "\":"); }
-llc::err_t	llc::appendKeyValue		(::llc::achar & output, ::llc::vcs key, ::llc::vcs value)		{ return ::llc::append_strings(output, '"', key, "\":", value); }
-llc::err_t	llc::appendKeyString	(::llc::achar & output, ::llc::vcs key, ::llc::vcs value)		{ return ::llc::append_strings(output, '"', key, "\":", '{',  value, '}'); }
-llc::err_t	llc::appendKeyList		(::llc::achar & output, ::llc::vcs key, ::llc::vcs listItems)	{ return ::llc::append_strings(output, '"', key, "\":", '[',  listItems, ']'); }
-llc::err_t	llc::appendKeyObject	(::llc::achar & output, ::llc::vcs key, ::llc::vcs listItems)	{ return ::llc::append_strings(output, '"', key, "\":", '{',  listItems, '}'); }
+namespace llc
+{
+    stacxpr vcs PREPENDED_QUOT = LLC_CXS(",\"");
+    stacxpr vcs NOPREPDED_QUOT = LLC_CXS("\"");
+
+    err_t   appendOpenKey   (achar & output, vcs k       , bool prepSep)  { return append_strings(output, prepSep ? PREPENDED_QUOT : NOPREPDED_QUOT, k, "\":")              ; }
+    err_t   appendKeyValue  (achar & output, vcs k, vcs v, bool prepSep)  { return append_strings(output, prepSep ? PREPENDED_QUOT : NOPREPDED_QUOT, k, "\":", v)           ; }
+    err_t   appendKeyString (achar & output, vcs k, vcs v, bool prepSep)  { return append_strings(output, prepSep ? PREPENDED_QUOT : NOPREPDED_QUOT, k, "\":", '"',  v, '"'); }
+    err_t   appendKeyList   (achar & output, vcs k, vcs v, bool prepSep)  { return append_strings(output, prepSep ? PREPENDED_QUOT : NOPREPDED_QUOT, k, "\":", '[',  v, ']'); }
+    err_t   appendKeyObject (achar & output, vcs k, vcs v, bool prepSep)  { return append_strings(output, prepSep ? PREPENDED_QUOT : NOPREPDED_QUOT, k, "\":", '{',  v, '}'); }
+}
