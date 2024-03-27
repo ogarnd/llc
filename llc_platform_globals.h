@@ -2,20 +2,21 @@
 #ifndef LLC_PLATFORM_GLOBALS_H_23627
 #define LLC_PLATFORM_GLOBALS_H_23627
 
-#if (!defined(LLC_ANDROID)) && (defined(ANDROID) || defined(__ANDROID__))
+#if (!defined(LLC_ATMEL)) && defined(__ATMEGA__)
+#	define LLC_ATMEL
+#elif (!defined(LLC_ESP32)) && (defined(ESP32) || defined(ARDUINO_ARCH_ESP32))
+#	define LLC_ESP32
+#elif (!defined(LLC_ANDROID)) && (defined(ANDROID) || defined(__ANDROID__))
 #	define LLC_ANDROID
 #elif (!defined(LLC_LINUX)) && defined(__linux__)
 #	define LLC_LINUX
-#elif (!defined(LLC_ARDUINO)) && (defined(__ARDUINO__) || defined(ARDUINO_ARCH_ESP32))
-#	define LLC_ARDUINO
 #elif (!defined(LLC_WINDOWS)) && (defined(WIN32) || defined(_WIN32) || defined(WIN64) || defined(_WIN64))
 #	define LLC_WINDOWS
 #endif
 
-#if (!defined(LLC_ESP32)) && (defined(ESP32) || defined(ARDUINO_ARCH_ESP32))
-#	define LLC_ESP32
+#if (!defined(LLC_ARDUINO)) && (defined(__ARDUINO__) || defined(ARDUINO_ARCH_ESP32))
+#	define LLC_ARDUINO
 #endif
-
 #if (!defined(LLC_ST)) && !defined(LLC_CMSIS) && !defined(LLC_ESP32) && !defined(LLC_ATMEL) && !defined(LLC_ARDUINO) && !defined(LLC_WINDOWS) && !defined(LLC_LINUX) && !defined(LLC_ANDROID)
 #	error "Unsupported platform."
 #	define LLC_UNKNOWN
