@@ -4,7 +4,7 @@
 
 #if (!defined(LLC_ATMEL)) && defined(__ATMEGA__)
 #	define LLC_ATMEL
-#elif (!defined(LLC_ESP32)) && (defined(ESP32) || defined(ARDUINO_ARCH_ESP32))
+#elif (!defined(LLC_ESP32)) && (defined(ESP32) || defined(ESP_PLATFORM) || defined(ARDUINO_ARCH_ESP32))
 #	define LLC_ESP32
 #elif (!defined(LLC_ANDROID)) && (defined(ANDROID) || defined(__ANDROID__))
 #	define LLC_ANDROID
