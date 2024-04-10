@@ -29,12 +29,12 @@
 
 namespace llc
 {
-	stacxpr	const uintptr_t				calc_align_address			(uintptr_t alignment, uintptr_t address)	noexcept	{ return (alignment - ((alignment - 1) & address)) & (alignment - 1); }
-	stincxp	const uintptr_t				calc_align_address_4		(uintptr_t address)							noexcept	{ return calc_align_address( 4, address); }
-	stincxp	const uintptr_t				calc_align_address_8		(uintptr_t address)							noexcept	{ return calc_align_address( 8, address); }
-	stincxp	const uintptr_t				calc_align_address_16		(uintptr_t address)							noexcept	{ return calc_align_address(16, address); }
-	stincxp	const uintptr_t				calc_align_address_32		(uintptr_t address)							noexcept	{ return calc_align_address(32, address); }
-	stincxp	const uintptr_t				calc_align_address_64		(uintptr_t address)							noexcept	{ return calc_align_address(64, address); }
+	stacxpr	uintptr_t					calc_align_address			(uintptr_t alignment, uintptr_t address)	noexcept	{ return (alignment - ((alignment - 1) & address)) & (alignment - 1); }
+	stincxp	uintptr_t					calc_align_address_4		(uintptr_t address)							noexcept	{ return calc_align_address( 4, address); }
+	stincxp	uintptr_t					calc_align_address_8		(uintptr_t address)							noexcept	{ return calc_align_address( 8, address); }
+	stincxp	uintptr_t					calc_align_address_16		(uintptr_t address)							noexcept	{ return calc_align_address(16, address); }
+	stincxp	uintptr_t					calc_align_address_32		(uintptr_t address)							noexcept	{ return calc_align_address(32, address); }
+	stincxp	uintptr_t					calc_align_address_64		(uintptr_t address)							noexcept	{ return calc_align_address(64, address); }
 
 #if defined(LLC_WINDOWS)
 	stainli	void						llc_free					(void* ptr)									noexcept	{ _aligned_free(ptr);									}

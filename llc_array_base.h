@@ -74,7 +74,7 @@ namespace llc
 		TArray&					operator =				(const TArray && other)					= delete;
 		// This helper method is used to prevent redundancies. It returns a safe integer of the same or a higher value than the one passed as argument.
 		static	::llc::error_t	alloc_with_reserve		(const uint32_t newCount, T* & reserved)	noexcept	{ 
-			uint32_t					newSize;
+			uint32_t					newSize					= 0;
 			llc_necall(calc_reserve_count(newCount, newSize), "Too large. newCount: %" LLC_FMT_I32 ".", newCount);
 			const uint32_t				bytesToAllocate			= ::llc::size<T>(newSize) + 2;
 			if(bool(reserved = (T*)::llc::llc_malloc(bytesToAllocate)))

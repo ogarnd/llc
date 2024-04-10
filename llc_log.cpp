@@ -85,7 +85,7 @@ static	::llc::error_t	getSystemErrorAsString			(const uint64_t lastError, char* 
 		;
 #else
 	(void) bufferSize;
-	sprintf(buffer, "%u.", (uint32_t)lastError);
+	sprintf(buffer, "%" LLC_FMT_U32 ".", (uint32_t)lastError);
 	return 0;
 #endif
 }

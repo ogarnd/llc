@@ -156,9 +156,9 @@ namespace llc
 	}
 	stacxpr	llc::astchar<5 >	str			(int8_t		arg) { 
 		return	(arg >=    0) ?	str(uint8_t(arg))
-			:	(arg <= -100) ?	llc::astchar<5>{'-', digit<2>(-arg), digit<1>(-arg), digit<0>(-arg)}
-			:	(arg <=  -10) ?	llc::astchar<5>{'-', digit<1>(-arg), digit<0>(-arg)}
-			:					llc::astchar<5>{'-', digit<0>(-arg)}
+			:	(arg <= -100) ?	llc::astchar<5>{'-', digit<2>((int16_t)-arg), digit<1>((int16_t)-arg), digit<0>((int16_t)-arg)}
+			:	(arg <=  -10) ?	llc::astchar<5>{'-', digit<1>((int16_t)-arg), digit<0>((int16_t)-arg)}
+			:					llc::astchar<5>{'-', digit<0>((int16_t)-arg)}
 			;
 	}
 } // namespace

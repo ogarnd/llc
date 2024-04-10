@@ -51,9 +51,16 @@ namespace llc
 	stainli	::llc::error_t	sleep	(uint32_t milliseconds)		noexcept	{ Sleep(milliseconds); return 0; }
 	stainli ::llc::error_t	sleepUs	(uint64_t microseconds)		noexcept	{ std::this_thread::sleep_for (std::chrono::microseconds(microseconds)); return 0; }
 #else
-#	define llc__sync_increment(nCount)			(++(nCount))
-#	define llc__sync_decrement(nCount)			(--(nCount))
-#	define llc__sync_exchange(Target, Value)	((Target) = (Value))
+#	ifdef LLC_ESP32
+#		include <esp_system.h>
+#		define llc__sync_increment(nCount)			atomic_fetch_add(&nCount, 1)
+#		define llc__sync_decrement(nCount)			atomic_fetch_sub(&nCount, 1)
+#		define llc__sync_exchange(Target, Value)	((Target) = (Value))
+#	else
+#		define llc__sync_increment(nCount)			(++(nCount))
+#		define llc__sync_decrement(nCount)			(--(nCount))
+#		define llc__sync_exchange(Target, Value)	((Target) = (Value))
+#	endif
 #	define DECLARE_SHARED_SECTION(Name)			::std::mutex Name //(true)
 #	define INIT_SHARED_SECTION(Name)			(1)
 #	define ENTER_SHARED_SECTION(Name)			(Name).lock()

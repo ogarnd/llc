@@ -42,9 +42,9 @@ namespace llc
 			const uint32_t bufferSize = uint32_t(strlen(format) + 1024 * 2);
 			if(char * customDynamicString = (char*)malloc(bufferSize)) {
 				const	size_t 	stringLength	= snprintf(customDynamicString, bufferSize - 2, format, args...);
-				customDynamicString[::llc::min(stringLength, bufferSize - 2)] = '\n';
-				customDynamicString[::llc::min(stringLength + 1, bufferSize - 1)] = 0;
-				base_log_write(customDynamicString, (int)::llc::min(stringLength + 1, bufferSize - 1));
+				customDynamicString[::llc::min(stringLength, size_t(bufferSize - 2))] = '\n';
+				customDynamicString[::llc::min(stringLength + 1, size_t(bufferSize - 1))] = 0;
+				base_log_write(customDynamicString, (int)::llc::min(stringLength + 1, size_t(bufferSize - 1)));
 				free(customDynamicString);
 			}
 		}
