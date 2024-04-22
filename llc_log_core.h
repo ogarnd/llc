@@ -1,4 +1,5 @@
 #include "llc_error.h"
+#include "llc_sync.h"
 
 #ifdef LLC_ATMEL
 #	define LLC_LOG_ARDUINO_FLASHSTRINGHELPER
@@ -43,9 +44,9 @@ namespace llc
 #ifdef LLC_WINDOWS
 #	define llc_throw(...)								throw(__VA_ARGS__)
 #elif defined(LLC_ARDUINO) && defined(LLC_ESP32)
-#	define llc_throw(...)								do { delay(500); throw(__VA_ARGS__); } while(0)
+#	define llc_throw(...)								do { ::llc::sleep(500); throw(__VA_ARGS__); } while(0)
 #else
-#	define llc_throw(...)								do { char * nulp = 0; unsigned int i = 0; while(++i) nulp[i] = (char)i; ::llc::dummy(__VA_ARGS__); } while(0)
+#	define llc_throw(...)								do { ::llc::sleep(500); char * nulp = 0; unsigned int i = 0; while(++i) nulp[i] = (char)i; ::llc::dummy(__VA_ARGS__); } while(0)
 #endif
 
 #ifndef block_log
@@ -66,19 +67,18 @@ namespace llc
 // - Conditional log formatted.
 #ifndef if_true_logf
 #	ifdef LLC_WINDOWS					
-#		define if_true_logf(llc_logFunction, condition, format, ...)						if(condition) { llc_logFunction(#condition "-> " format, __VA_ARGS__); }					// - Log condition and custom formatted string args if (condition) == true.
-#		define if_true_block_logf(llc_logFunction, condition, statement, format, ...)		if(condition) block_logf(llc_logFunction, statement, #condition "-> " format, __VA_ARGS__)	// - Conditional block with custom statement preceded by a log call with custom formatted string args.
+#		define if_true_logf(llc_logFunction, condition, format, ...)						if(condition) { llc_logFunction(#condition "->" format, __VA_ARGS__); }					// - Log condition and custom formatted string args if (condition) == true.
+#		define if_true_block_logf(llc_logFunction, condition, statement, format, ...)		if(condition) block_logf(llc_logFunction, statement, #condition "->" format, __VA_ARGS__)	// - Conditional block with custom statement preceded by a log call with custom formatted string args.
 #	else
 #		ifdef LLC_ATMEL																																																											
 #			define if_true_logf(llc_logFunction, condition, format, ...)					if_true_log			(llc_logFunction, condition)				// - Log condition and custom formatted string args if (condition) == true.
 #			define if_true_block_logf(llc_logFunction, condition, statement, format, ...)	if_true_block_log	(llc_logFunction, condition, statement) 	// - Conditional block with custom statement preceded by a log call with custom formatted string args.
 #		else
-#			define if_true_logf(llc_logFunction, condition, format, ...)					if(condition) { llc_logFunction(#condition "-> " format, ##__VA_ARGS__); }						// - Log condition and custom formatted string args if (condition) == true.
-#			define if_true_block_logf(llc_logFunction, condition, statement, format, ...)	if(condition) block_logf(llc_logFunction, statement, #condition "-> " format, ##__VA_ARGS__)		// - Conditional block with custom statement preceded by a log call with custom formatted string args.
+#			define if_true_logf(llc_logFunction, condition, format, ...)					if(condition) { llc_logFunction(#condition "->" format, ##__VA_ARGS__); }						// - Log condition and custom formatted string args if (condition) == true.
+#			define if_true_block_logf(llc_logFunction, condition, statement, format, ...)	if(condition) block_logf(llc_logFunction, statement, #condition "->" format, ##__VA_ARGS__)		// - Conditional block with custom statement preceded by a log call with custom formatted string args.
 #		endif
 #	endif
 #endif // if_true_logf
-
 
 #ifdef if_true_log
 #	define if_true_log_and_break(llc_logFunction, condition)						if_true_block_log(llc_logFunction, condition, break)						// - Log condition and break if (condition) == true.

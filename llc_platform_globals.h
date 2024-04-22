@@ -181,4 +181,13 @@ namespace llc
 #endif
 }
 
+#define LLCREP0(param) (param)
+#define LLCREP1(param) LLCREP0(param), (param)
+#define LLCREP2(param) LLCREP1(param), (param)
+#define LLCREP3(param) LLCREP2(param), (param)
+#define LLCREP4(param) LLCREP3(param), (param)
+#define LLCREP5(param) LLCREP4(param), (param)
+#define LLCREP6(param) LLCREP5(param), (param)
+#define LLCREP7(param) LLCREP6(param), (param)
+
 #endif // LLC_PLATFORM_GLOBALS_H_23627
