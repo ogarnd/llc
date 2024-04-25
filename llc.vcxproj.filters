@@ -750,6 +750,9 @@
     <ClInclude Include="llc_append_xml.h">
       <Filter>string</Filter>
     </ClInclude>
+    <ClInclude Include="llc_cloud_register.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="llc_adam7.cpp">
