@@ -36,7 +36,11 @@ namespace llc
 #	define base_log_print_P(text)	base_log_print(text)
 #	define base_log_print_F(text)	base_log_print(text)
 #endif
-
+	error_t			setupDefaultLogCallbacks();
+	error_t			setupLogCallbacks
+		( log_print_t	funcLogPrint
+		, log_write_t	funcLogWrite
+		);
 	tplt<tpnm... _tArgs>
 	stincxp	void	dummy				(_tArgs&&...)		{}
 } // namespace

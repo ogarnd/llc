@@ -335,9 +335,9 @@ namespace llc
 #	pragma warning(disable : 4063)	// On Windows, using enum types like we do cause the compiler to throw a warning when the warning level is set to 4
 #endif
 
-#define llc_warning_unhandled_value(valueUnhandled)		warning_printf("Unhandled %s value: (0x%X)(%i)(%c) %s", ::llc::get_enum_namep(valueUnhandled), valueUnhandled, valueUnhandled, (char)valueUnhandled, ::llc::get_value_namep(valueUnhandled))
-#define llc_enum_value_info(_enumValue)					info_printf("'%s': (0x%X)(%i)(%c) '%s'", ::llc::get_enum_namep(_enumValue), _enumValue, _enumValue, (char)_enumValue, ::llc::get_value_namep(_enumValue))
-#define llc_enum_valued_info(_enumValue)				info_printf("'%s': (0x%X)(%i)(%c) '%s'-'%s'", ::llc::get_enum_namep(_enumValue), _enumValue, _enumValue, (char)_enumValue, ::llc::get_value_namep(_enumValue), ::llc::get_value_descp(_enumValue))
+#define llc_warning_unhandled_value(_enumValue)		warning_printf("Unhandled'%s' value:(0x%X)(%i)(%c) %s"	, ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue))
+#define llc_enum_value_info(_enumValue)				info_printf("'%s':(0x%X)(%i)(%c)'%s'"					, ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue))
+#define llc_enum_valued_info(_enumValue)			info_printf("'%s':(0x%X)(%i)(%c)'%s'-'%s'"				, ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue), ::llc::get_value_descp(_enumValue))
 
 
 namespace llc
