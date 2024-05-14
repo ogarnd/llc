@@ -10,6 +10,8 @@
 
 #ifdef LLC_WINDOWS
 #	include <Windows.h>
+#elif defined(LLC_ARDUINO)
+#	include <Arduino.h>
 #else
 #	include <errno.h>
 #	ifdef LLC_ANDROID
@@ -41,6 +43,8 @@ stacxpr		int		LOG_PREFIX_BUFFER_SIZE	= 256;
 static	::llc::error_t	default_base_log_write	(const char * text, uint32_t textLen) {	OutputDebugStringA(text); return textLen; }
 #elif defined(LLC_ANDROID)
 static	::llc::error_t	default_base_log_write	(const char * text, uint32_t textLen) {	LOGI("%s", text); return textLen; }
+#elif defined(LLC_ARDUINO)
+static	::llc::error_t	default_base_log_write	(const char * text, uint32_t textLen) {	return Serial ? Serial.write(text, textLen) : textLen; }
 #else
 static	::llc::error_t	default_base_log_write	(const char * text, uint32_t textLen) {	(void)textLen; return (::llc::error_t)printf("%s", text); }
 #endif
@@ -49,6 +53,8 @@ static	::llc::error_t	default_base_log_write	(const char * text, uint32_t textLe
 static	::llc::error_t	default_base_log_print	(const char * text) {	OutputDebugStringA(text); return strlen(text); }
 #elif defined(LLC_ANDROID)
 static	::llc::error_t	default_base_log_print	(const char * text) {	LOGI("%s", text); return strlen(text); }
+#elif defined(LLC_ARDUINO)
+static	::llc::error_t	default_base_log_print	(const char * text) {	return Serial ? Serial.printf("%s", text) : strlen(text); }
 #else
 static	::llc::error_t	default_base_log_print	(const char * text) {	return (::llc::error_t)printf("%s", text); }
 #endif
