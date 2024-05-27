@@ -1,6 +1,5 @@
 	#include "llc_array_base.h"
 
-
 	#include "llc_keyval.h"
 
 	#include "llc_view_serialize.h"
@@ -97,7 +96,7 @@
 				}
 				return appended;
 			}
-			tplt<size_t 					_len>
+			tplt<size_t _len>
 			inline	::llc::error_t	append				(const T (&newChain)[_len])									noexcept	{ return append(newChain, (uint32_t)_len); }
 			inline	::llc::error_t	append				(const ::llc::view<const T> & newChain)						noexcept	{ return append(newChain.begin(), newChain.size());	}
 			inline	::llc::error_t	append				(const ::llc::view<const ::llc::view<const T>> & newChains)	noexcept	{ 
@@ -133,12 +132,10 @@
 				}
 				return Size;
 			}
-
 			inline	::llc::error_t	resize_bits			(uint32_t newBitCount)						noexcept	{
 				stacxpr	uint32_t			elementBits			= (uint32_t)sizeof(T) * 8U;
 				return resize(newBitCount / elementBits + one_if(newBitCount % elementBits));
 			}
-
 			// Returns the new size of the array.
 			::llc::error_t			resize				(uint32_t newCount)						noexcept	{
 				llc_necs(reserve(newCount));
