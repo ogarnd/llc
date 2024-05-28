@@ -251,7 +251,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	}
 	char						temp		[32]				= {};
 	for(uint32_t i = 0; i < ::llc::min(filtered.size(), (uint32_t)8U); ++i) {
-		snprintf(temp, ::llc::size(temp) - 2, "%i", filtered[i]);
+		snprintf(temp, ::llc::size(temp) - 2, "%" LLC_FMT_I32, filtered[i]);
 		llc_necs(digest.append_string(temp));
 	}
 	return 0;

@@ -202,7 +202,7 @@
 	uint32_t					iAddress										= 0;
 	bool						addressFound									= false;
 	for(const addrinfo* ptr = createdAddrInfo; ptr != NULL; ptr = ptr->ai_next)  {	// Retrieve each address and print out the hex bytes
-		verbose_printf("getaddrinfo response at index %u.", iAddress);
+		verbose_printf("getaddrinfo response at index %" LLC_FMT_U32 ".", iAddress);
 		verbose_printf("Flags: 0x%x.", ptr->ai_flags);
 		verbose_printf("%s", "Family: ");
 		char						ipstringbuffer	[46]							= {};
@@ -280,7 +280,7 @@
 		//	break;
 		//}
 		//++iAddress;
-		verbose_printf("Length of this sockaddr: %u", (uint32_t)ptr->ai_addrlen);
+		verbose_printf("Length of this sockaddr: %" LLC_FMT_U32 "", (uint32_t)ptr->ai_addrlen);
 		verbose_printf("Canonical name: %s", ptr->ai_canonname);
 		if(addressFound)
 			break;

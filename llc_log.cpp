@@ -32,8 +32,8 @@ stacxpr		int		LOG_PREFIX_BUFFER_SIZE	= 64;
 stacxpr		int		LOG_PREFIX_BUFFER_SIZE	= 256;
 #endif
 
-::llc::error_t			llc::debug_print_prefix	(int severity, const char * path, int line, const char * function) {
-	stacxpr cchar_t	STR_DEBUG_PREFIX[]					= "%i|%llu|%s(%i){%s}:";
+::llc::error_t			llc::debug_print_prefix	(int severity, const char * path, uint32_t line, const char * function) {
+	stacxpr cchar_t	STR_DEBUG_PREFIX[]					= "%i|%llu|%s(%" LLC_FMT_U32 "){%s}:";
 	char			formatted[::LOG_PREFIX_BUFFER_SIZE]	= {};
 	snprintf(formatted, llc::size(formatted), STR_DEBUG_PREFIX, severity, ::llc::timeCurrentInMs(), path, line, function);
 	return base_log_print(formatted);
@@ -54,7 +54,7 @@ static	::llc::error_t	default_base_log_print	(const char * text) {	OutputDebugSt
 #elif defined(LLC_ANDROID)
 static	::llc::error_t	default_base_log_print	(const char * text) {	LOGI("%s", text); return strlen(text); }
 #elif defined(LLC_ARDUINO)
-static	::llc::error_t	default_base_log_print	(const char * text) {	return Serial ? Serial.printf("%s", text) : strlen(text); }
+static	::llc::error_t	default_base_log_print	(const char * text) {	return Serial ? Serial.print(text) : strlen(text); }
 #else
 static	::llc::error_t	default_base_log_print	(const char * text) {	return (::llc::error_t)printf("%s", text); }
 #endif
@@ -123,10 +123,10 @@ void					llc::_llc_print_system_errors	(const char* prefix, uint32_t prefixLen)	
 	if(lastSystemError) {
 		base_log_write("\n", 1);
 #ifdef LLC_WINDOWS
-		::strerror_s(bufferError, (int)lastSystemError);
+		::strerror_s(bufferError, (int32_t)lastSystemError);
 		{
 #else
-		const char * serr = ::strerror((int)lastSystemError);
+		const char * serr = ::strerror((int32_t)lastSystemError);
 		if(serr) {
 			strcpy_s(bufferError, serr);
 #endif

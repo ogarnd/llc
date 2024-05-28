@@ -30,11 +30,11 @@ namespace llc
 	tplt<tpnm T, tpnm TByte>
 	::llc::error_t				viewReadLegacy		(::llc::view<T> & headerToRead, ::llc::view<TByte> input)	{
 		const uint32_t					counterWidth		= sizeof(uint32_t);
-		ree_if(input.size() < counterWidth, "Invalid input size: %u", input.size());
+		ree_if(input.size() < counterWidth, "Invalid input size: %" LLC_FMT_U32 "", input.size());
 
 		const uint32_t					elementCount		= *(const uint32_t*)input.begin();
 		const uint32_t					dataSize			= elementCount * sizeof(T);
-		ree_if(dataSize > (input.size() - counterWidth), "Invalid input size: %u. Expected: %u", input.size(), dataSize);
+		ree_if(dataSize > (input.size() - counterWidth), "Invalid input size: %" LLC_FMT_U32 ". Expected: %" LLC_FMT_U32 "", input.size(), dataSize);
 
 		headerToRead				= {(input.size() > counterWidth) ? (T*)&input[counterWidth] : 0, elementCount};
 		return counterWidth + dataSize;

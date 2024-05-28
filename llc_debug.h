@@ -46,7 +46,7 @@ namespace llc { stacxpr size_t DEBUG_BUILD = (size_t)-1; }
 #			include <esp_heap_caps.h>
 #			include <freertos/FreeRTOS.h>
 #			include <freertos/task.h>
-#			define LLC_PLATFORM_CRT_CHECK_MEMORY() do { info_printf("Available RAM - Heap: %u bytes, Stack: %u bytes.", heap_caps_get_free_size(MALLOC_CAP_8BIT), uxTaskGetStackHighWaterMark(NULL)); } while(0)
+#			define LLC_PLATFORM_CRT_CHECK_MEMORY() do { info_printf("Available RAM - Heap: %" LLC_FMT_U32 " bytes, Stack: %" LLC_FMT_U32 " bytes.", heap_caps_get_free_size(MALLOC_CAP_8BIT), uxTaskGetStackHighWaterMark(NULL)); } while(0)
 #		endif
 #	endif
 #endif

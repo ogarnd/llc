@@ -41,12 +41,12 @@ namespace llc
 		tplt<size_t Len>
 		inlcxpr					view			(uint32_t elementCount, T (&elements)[Len])		: Data(elements), Count(::llc::min((uint32_t)Len, elementCount))	{}
 		inline					view			(T * elements, uint32_t elementCount)			: Data(elements), Count(elementCount)								{
-			gthrow_if(0 == elements && 0 != elementCount, "%u -> 0.", elementCount);	// Crash if we received invalid parameters in order to prevent further malfunctioning.
+			gthrow_if(0 == elements && 0 != elementCount, "%" LLC_FMT_U32 " -> 0.", elementCount);	// Crash if we received invalid parameters in order to prevent further malfunctioning.
 		}
 
 		tplt <size_t Len>
 		inline					view			(T (&elements)[Len], uint32_t elementCount)		: Data(elements), Count(::llc::min((uint32_t)Len, elementCount))	{
-			gthrow_if(elementCount > Len, "%u > %u", elementCount, (uint32_t)Len);
+			gthrow_if(elementCount > Len, LLC_FMT_U32_GT_U32, elementCount, (uint32_t)Len);
 		}
 
 		// Operators
@@ -55,12 +55,12 @@ namespace llc
 		T&						operator[]		(uint32_t index)								{
 			static T dymmy = {}; 
 			rves_if(dymmy, 0 == Data);
-			gthrow_if(index >= Count, "%i >= %i.", index, Count);
+			gthrow_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
 			return Data[index];
 		}
 		const T&				operator[]		(uint32_t index)			const				{
 			gsthrow_if(0 == Data);
-			gthrow_if(index >= Count, "%i >= %i.", index, Count);
+			gthrow_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
 			return Data[index];
 		}
 		bool					operator!=		(const TConstView & other)	const				{ return  !operator==(other); } // I had to add this for the android build not supporting C++20.
@@ -90,18 +90,18 @@ namespace llc
 		inline	T*				end				()									noexcept	{ return Data + Count;	}
 
 		::llc::error_t			slice			(TView & out, uint32_t offset, uint32_t count = (uint32_t)-1)				{
-			reterr_gerror_if(offset > Count, "%u > %u", offset, (uint32_t)Count);
+			reterr_gerror_if(offset > Count, LLC_FMT_U32_GT_U32, offset, (uint32_t)Count);
 			const uint32_t				newSize			= Count - offset;
 			if(count != (uint32_t)-1)
-				ree_if(count > newSize, "%u > %u", count, (uint32_t)newSize);
+				ree_if(count > newSize, LLC_FMT_U32_GT_U32, count, (uint32_t)newSize);
 			out						= {&Data[offset], ::llc::min(newSize, count)};
 			return out.size();
 		}
 		::llc::error_t			slice			(TConstView & out, uint32_t offset, uint32_t count = (uint32_t)-1)	const	{
-			ree_if(offset > Count, "%u > %u", offset, (uint32_t)Count);
+			ree_if(offset > Count, LLC_FMT_U32_GT_U32, offset, (uint32_t)Count);
 			const uint32_t				newSize			= Count - offset;
 			if(count != (uint32_t)-1)
-				ree_if(count > newSize, "%u > %u", count, (uint32_t)newSize);
+				ree_if(count > newSize, LLC_FMT_U32_GT_U32, count, (uint32_t)newSize);
 			out						= {&Data[offset], ::llc::min(newSize, count)};
 			return out.size();
 		}

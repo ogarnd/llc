@@ -31,22 +31,22 @@ namespace llc
 		uint8_t					Stop	: 4;
 
 		bit_proxy<T>			operator*		()				{
-			gthrow_if(Element == &End, "Invalid index: %u.", uint32_t(&Element - &Begin) + Offset);
+			gthrow_if(Element == &End, "Invalid index: %" LLC_FMT_U32 ".", uint32_t(&Element - &Begin) + Offset);
 			return {Element, (uint8_t)Offset};
 		}
 		
 		bool					operator*		()		const	{
-			gthrow_if(Element == &End, "Invalid index: %u.", uint32_t(&Element - &Begin) + Offset);
+			gthrow_if(Element == &End, "Invalid index: %" LLC_FMT_U32 ".", uint32_t(&Element - &Begin) + Offset);
 			return (*Element) & (1ULL << Offset);
 		}
 
-		inline	operator		bool			()									const				{ gthrow_if(Element == &End, "Invalid index: %u.", uint32_t(&Element - &Begin) + Offset); return (*Element) & (1ULL << Offset); }
+		inline	operator		bool			()									const				{ gthrow_if(Element == &End, "Invalid index: %" LLC_FMT_U32 ".", uint32_t(&Element - &Begin) + Offset); return (*Element) & (1ULL << Offset); }
 		inlcxpr	bool			operator==		(const bit_iterator & other)		const	noexcept	{ return (((1ULL << Offset)) & *Element) == (((1ULL << other.Offset)) & *other.Element); }
 		inlcxpr	bool			operator!=		(const bit_iterator & other)		const	noexcept	{ return (((1ULL << Offset)) & *Element) != (((1ULL << other.Offset)) & *other.Element); }
 
 		inline	bit_iterator&	operator=		(bool value)	{ value ? *Element |= (1ULL << Offset)	: *Element &= ~(1ULL << Offset); return *this; }
-		bit_iterator&			operator++		()				{ ++Offset; if(Offset >= ELEMENT_BITS)	{ ++Element; Offset = 0;				gthrow_if(Element >= (End   + 1), "Out of range: %u. End: %u.", Element, End  ); } return *this; }
-		bit_iterator&			operator--		()				{ --Offset; if(Offset < 0)				{ --Element; Offset = ELEMENT_BITS - 1; gthrow_if(Element <  (Begin - 1), "Out of range: %u. End: %u.", Element, Begin); } return *this; }
+		bit_iterator&			operator++		()				{ ++Offset; if(Offset >= ELEMENT_BITS)	{ ++Element; Offset = 0;				gthrow_if(Element >= (End   + 1), "Out of range: %" LLC_FMT_U32 ". End: %" LLC_FMT_U32 ".", Element, End  ); } return *this; }
+		bit_iterator&			operator--		()				{ --Offset; if(Offset < 0)				{ --Element; Offset = ELEMENT_BITS - 1; gthrow_if(Element <  (Begin - 1), "Out of range: %" LLC_FMT_U32 ". End: %" LLC_FMT_U32 ".", Element, Begin); } return *this; }
 		bit_iterator			operator++		(int)			{
 			bit_iterator				result			(*this);	// Make a copy.
 			++(*this);					// Use the prefix version to do the work.
@@ -77,7 +77,7 @@ namespace llc
 		// Constructors
 		inlcxpr					view_bit		()							noexcept	= default;
 		inline					view_bit		(T * data, uint32_t bitCount)			: Data(data), Count(bitCount) {
-			gthrow_if(bitCount && 0 == data, "Invalid parameters. Element count: %u.", bitCount);	// Crash if we received invalid parameters in order to prevent further malfunctioning.
+			gthrow_if(bitCount && 0 == data, "Invalid parameters. Element count: %" LLC_FMT_U32 ".", bitCount);	// Crash if we received invalid parameters in order to prevent further malfunctioning.
 		}
 
 		tplt <size_t _length>
@@ -85,19 +85,19 @@ namespace llc
 
 		tplt <size_t _length>
 		inline					view_bit		(T (&data)[_length], uint32_t bitCount)	: Data(data), Count(::llc::min(uint32_t(_length * ELEMENT_BITS), bitCount))	{
-			gthrow_if(bitCount > (_length * ELEMENT_BITS), "Out of range count. Max count: %u. Requested: %u.", _length * ELEMENT_BITS, bitCount);
+			gthrow_if(bitCount > (_length * ELEMENT_BITS), "Out of range count. Max count: %" LLC_FMT_U32 ". Requested: %" LLC_FMT_U32 ".", _length * ELEMENT_BITS, bitCount);
 		}
 
 		// Operators
 		bit_proxy<T>			operator[]		(uint32_t index)			{
-			gthrow_if(index >= Count, "Invalid index: %u.", index);
+			gthrow_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
 			const uint32_t				offsetRow		= index / ELEMENT_BITS;
 			const uint32_t				offsetBit		= index % ELEMENT_BITS;
 			return {Data[offsetRow], (uint8_t)offsetBit};
 		}
 
 		bool					operator[]		(uint32_t index)	const	{
-			gthrow_if(index >= Count, "Invalid index: %u.", index);
+			gthrow_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
 			const uint32_t				offsetRow		= index / ELEMENT_BITS;
 			const uint32_t				offsetBit		= index % ELEMENT_BITS;
 			return Data[offsetRow] & (1ULL << offsetBit);

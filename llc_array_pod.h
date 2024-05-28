@@ -24,7 +24,7 @@
 
 			inlcxpr					array_pod			()										noexcept	= default;
 									array_pod			(::std::initializer_list<T> init)				{
-				gthrow_if(errored(resize((uint32_t)init.size())), "init.size() -> %u.", (uint32_t)init.size());
+				gthrow_if(errored(resize((uint32_t)init.size())), "init.size() -> %" LLC_FMT_U32 ".", (uint32_t)init.size());
 				memcpy(Data, init.begin(), Count * sizeof(T));
 			}
 									array_pod			(array_pod<T> && other)					noexcept	{

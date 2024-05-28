@@ -77,12 +77,12 @@ namespace llc
 				value						= Values[index];
 				return 0;
 			}
-			enum_printf("Enumeration index out of range! Index: 0x%u.", index);
+			enum_printf("Enumeration index out of range! Index: 0x%" LLC_FMT_U32 ".", index);
 			value						= INVALID_VALUE;
 			return -1;
 		}
 		T							get_value_by_index		(uint32_t index)							const			{
-			retval_gwarn_if(INVALID_VALUE, index >= Values.size(), "Enumeration index out of range! Index: 0x%u.", index);
+			retval_gwarn_if(INVALID_VALUE, index >= Values.size(), "Enumeration index out of range! Index: 0x%" LLC_FMT_U32 ".", index);
 			return Values[index];
 		}
 		::llc::error_t				get_label_by_index		(uint32_t index, ::llc::vcc & value)		const			{
@@ -91,14 +91,14 @@ namespace llc
 				return 0;
 			}
 			value						= ::llc::UNDEFINED_ENUM_VALUE_STR;
-			enum_printf("Enumeration index out of range! Index: 0x%u.", index);
+			enum_printf("Enumeration index out of range! Index: 0x%" LLC_FMT_U32 ".", index);
 			return -1;
 		}
 		::llc::vcc					get_label_by_index		(uint32_t index)							const			{
 			if(index < Names.size())
 				return Names[index];
 			else {
-				enum_printf("Enumeration index out of range! Index: 0x%u.", index);
+				enum_printf("Enumeration index out of range! Index: 0x%" LLC_FMT_U32 ".", index);
 				return ::llc::UNDEFINED_ENUM_VALUE_STR;
 			}
 		}
@@ -335,9 +335,9 @@ namespace llc
 #	pragma warning(disable : 4063)	// On Windows, using enum types like we do cause the compiler to throw a warning when the warning level is set to 4
 #endif
 
-#define llc_warning_unhandled_value(_enumValue)		warning_printf("Unhandled'%s' value:(0x%X)(%i)(%c) %s"	, ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue))
-#define llc_enum_value_info(_enumValue)				info_printf("'%s':(0x%X)(%i)(%c)'%s'"					, ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue))
-#define llc_enum_valued_info(_enumValue)			info_printf("'%s':(0x%X)(%i)(%c)'%s'-'%s'"				, ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue), ::llc::get_value_descp(_enumValue))
+#define llc_warning_unhandled_value(_enumValue)		warning_printf("Unhandled'%s' value:(0x%X)(%" LLC_FMT_I32 ")(%c) %s"	, ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue))
+#define llc_enum_value_info(_enumValue)				info_printf("'%s':(0x%X)(%" LLC_FMT_I32 ")(%c)'%s'"					, ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue))
+#define llc_enum_valued_info(_enumValue)			info_printf("'%s':(0x%X)(%" LLC_FMT_I32 ")(%c)'%s'-'%s'"				, ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue), ::llc::get_value_descp(_enumValue))
 
 
 namespace llc

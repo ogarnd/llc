@@ -33,7 +33,7 @@ namespace llc
 								array_obj			(const view<const T> & other)										{
 			uint32_t					newCount			= other.size();
 			if(newCount) {
-				gthrow_if(errored(reserve(newCount)), "Requested size: %u. ", (uint32_t)newCount);
+				gthrow_if(errored(reserve(newCount)), "Requested size: %" LLC_FMT_U32 ". ", (uint32_t)newCount);
 				for(; Count < newCount; ++Count)
 					new (&Data[Count]) T(other.begin()[Count]);
 			}
@@ -41,17 +41,17 @@ namespace llc
 								array_obj			(const view<T> & other)												{
 			uint32_t					newCount			= other.size();
 			if(newCount) {
-				gthrow_if(errored(reserve(newCount)), "Requested size: %u. ", (uint32_t)newCount);
+				gthrow_if(errored(reserve(newCount)), "Requested size: %" LLC_FMT_U32 ". ", (uint32_t)newCount);
 				for(; Count < newCount; ++Count)
 					new (&Data[Count]) T(other.begin()[Count]);
 			}
 		}
 								array_obj			(::std::initializer_list<T> init)				{
-			gthrow_if(errored(append(init.begin(), (uint32_t)init.size())), "Failed to resize array! Why? Initializer list size: %u.", (uint32_t)init.size());
+			gthrow_if(errored(append(init.begin(), (uint32_t)init.size())), "Failed to resize array! Why? Initializer list size: %" LLC_FMT_U32 ".", (uint32_t)init.size());
 		}
 		tplt<size_t _count>
 								array_obj			(const T (&other)[_count])							{
-			gthrow_if(errored(append(other, (uint32_t)_count)), "Failed to resize array! Why? Initializer list size: %u.", (uint32_t)_count);
+			gthrow_if(errored(append(other, (uint32_t)_count)), "Failed to resize array! Why? Initializer list size: %" LLC_FMT_U32 ".", (uint32_t)_count);
 		}
 		inlcxpr	operator		view<const T>		()									const	noexcept	{ return {Data, Count}; }
 		inline	TArray&			operator=			(const TArray & other)									{
@@ -67,7 +67,7 @@ namespace llc
 			if(newCount > Size) {
 				T							* newData			= 0;
 				const uint32_t				newSize				= alloc_with_reserve(newCount, newData);
-				ree_if(0 == newData, "newCount: %i, newSize: %i", newCount, newSize);
+				ree_if(0 == newData, "newCount: %" LLC_FMT_I32 ", newSize: %" LLC_FMT_I32 "", newCount, newSize);
 				for(uint32_t iElement = 0; iElement < Count; ++iElement) {
 					new (&newData[iElement]) T(Data[iElement]);
 					Data[iElement].~T();
@@ -138,13 +138,13 @@ namespace llc
 			ree_if(0 == Data, "Uninitialized array pointer! Invalid address to erase: %p.", address);
 			const ptrdiff_t				ptrDiff				= ptrdiff_t(address) - (ptrdiff_t)Data;
 			const uint32_t				index				= (uint32_t)(ptrDiff / (ptrdiff_t)sizeof(T));
-			ree_if(index >= Count, "Invalid index: %u.", index);
+			ree_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
 			return remove(index);
 		}
 
 		::llc::error_t			remove				(uint32_t index)																		{
-			ree_if(0 == Data, "Uninitialized array pointer! Invalid index to erase: %u.", index);
-			ree_if(index >= Count, "Invalid index: %u.", index);
+			ree_if(0 == Data, "Uninitialized array pointer! Invalid index to erase: %" LLC_FMT_U32 ".", index);
+			ree_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
 			--Count;
 			while(index < Count) {
 				Data[index].~T();							// Destroy old
@@ -157,8 +157,8 @@ namespace llc
 
 		// Returns the new size of the list or -1 if the array pointer is not initialized.
 		::llc::error_t			remove_unordered	(uint32_t index)																		{
-			ree_if(0 == Data, "Uninitialized array pointer! Invalid index to erase: %u.", index);
-			ree_if(index >= Count, "Invalid index: %u.", index);
+			ree_if(0 == Data, "Uninitialized array pointer! Invalid index to erase: %" LLC_FMT_U32 ".", index);
+			ree_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
 			Data[index].~T();							// Destroy old
 			if(1 == Count || index == (Count - 1))
 				--Count;
@@ -185,7 +185,7 @@ namespace llc
 
 		// returns the new size of the list or -1 on failure.
 		::llc::error_t			insert				(uint32_t index, const T & newValue)										noexcept	{
-			ree_if(index > Count, "Invalid index: %u.", index);
+			ree_if(index > Count, "Invalid index: %" LLC_FMT_U32 ".", index);
 			const uint32_t				newCount			= Count + 1;
 			if(Size < newCount) {
 				T							* newData			= 0;
@@ -217,7 +217,7 @@ namespace llc
 
 		// returns the new size of the list or -1 on failure.
 		::llc::error_t			insert				(uint32_t index, const T * chainToInsert, uint32_t chainLength)			noexcept	{
-			ree_if(index > Count, "Invalid index: %u.", index);
+			ree_if(index > Count, "Invalid index: %" LLC_FMT_U32 ".", index);
 
 			const uint32_t				newCount			= Count + chainLength;
 			if(Size < newCount) {

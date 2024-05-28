@@ -57,7 +57,7 @@ namespace llc
 		inline	::llc::error_t				View		(const char* elements, uint16_t count)	{ ::llc::vcc out_view; return View(elements, count, out_view); }
 
 		::llc::error_t						Index		(const ::llc::vcc & elements) {
-			ree_if(elements.size() >= CLabelManager::BLOCK_SIZE, "Data too large: %u.", elements.size());
+			ree_if(elements.size() >= CLabelManager::BLOCK_SIZE, "Data too large: %" LLC_FMT_U32 ".", elements.size());
 
 			for(uint32_t iView = 0, countLabels = Texts.size(); iView < countLabels; ++iView) {
 				if(elements.size() != Counts[iView])

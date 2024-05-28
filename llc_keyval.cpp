@@ -5,9 +5,9 @@
 
 ::llc::error_t			llc::join				(::llc::achar & output, char separator, ::llc::vcvcc fields)	{
 	for(uint32_t iField = 0; iField < fields.size();) {
-		llc_necall(output.append(fields[iField]), "%i", iField);
+		llc_necall(output.append(fields[iField]), "%" LLC_FMT_U32 "", iField);
 		if(++iField < fields.size())
-			llc_necall(output.push_back(separator), "%i", iField);
+			llc_necall(output.push_back(separator), "%" LLC_FMT_U32 "", iField);
 	}
 	return 0;
 }

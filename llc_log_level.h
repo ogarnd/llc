@@ -23,11 +23,11 @@ namespace llc
 #endif
 
 
-	error_t				debug_print_prefix				(int severity, const char * path, int line, const char * function);
+	error_t				debug_print_prefix				(int severity, const char * path, uint32_t line, const char * function);
 
 #ifndef LLC_ATMEL
 	tplt<size_t fmtLen, tpnm... TArgs>
-	static	void		_llc_debug_printf				(int severity, const char * path, int line, const char * function, const char (&format)[fmtLen], const TArgs... args)			{
+	static	void		_llc_debug_printf				(int severity, const char * path, uint32_t line, const char * function, const char (&format)[fmtLen], const TArgs... args)			{
 		debug_print_prefix(severity, path, line, function);
 #else
 	tplt<tpnm... TArgs>
@@ -44,7 +44,7 @@ namespace llc
 				const	size_t 	stringLength	= snprintf(customDynamicString, bufferSize - 2, format, args...);
 				customDynamicString[::llc::min(stringLength, size_t(bufferSize - 2))] = '\n';
 				customDynamicString[::llc::min(stringLength + 1, size_t(bufferSize - 1))] = 0;
-				base_log_write(customDynamicString, (int)::llc::min(stringLength + 1, size_t(bufferSize - 1)));
+				base_log_write(customDynamicString, (int)::llc::min(stringLength + 1U, size_t(bufferSize - 1)));
 				free(customDynamicString);
 			}
 		}
@@ -160,17 +160,17 @@ namespace llc
 #endif
 
 //
-#define llc_rv_hrcall(retVal, hr_call)					do { ::HRESULT errCall_ = (hr_call); if FAILED(errCall_) { llc_debug_printf(0, "%s -> %i (0x%X): '%s'.", #hr_call, errCall_, ::llc::getWindowsErrorAsString(errCall_).begin()); return retVal; } } while(0)
-#define llc_rve_hrcall(retVal, hr_call, format, ...)	do { ::HRESULT errCall_ = (hr_call); if FAILED(errCall_) { llc_debug_printf(0, "%s -> %i (0x%X): '%s' " format, #hr_call, errCall_, ::llc::getWindowsErrorAsString(errCall_).begin(), __VA_ARGS__); return retVal; } } while(0)
+#define llc_rv_hrcall(retVal, hr_call)					do { ::HRESULT errCall_ = (hr_call); if FAILED(errCall_) { llc_debug_printf(0, "%s -> %" LLC_FMT_I32 " (0x%X): '%s'.", #hr_call, errCall_, ::llc::getWindowsErrorAsString(errCall_).begin()); return retVal; } } while(0)
+#define llc_rve_hrcall(retVal, hr_call, format, ...)	do { ::HRESULT errCall_ = (hr_call); if FAILED(errCall_) { llc_debug_printf(0, "%s -> %" LLC_FMT_I32 " (0x%X): '%s' " format, #hr_call, errCall_, ::llc::getWindowsErrorAsString(errCall_).begin(), __VA_ARGS__); return retVal; } } while(0)
 
 #define llc_hrcall(hr_call)				do { llc_rv_hrcall (-1, hr_call)				; } while(0)		// HRESULT call.
 #define llc_hrecall(hr_call, ...)		do { llc_rve_hrcall(-1, hr_call, __VA_ARGS__)	; } while(0)		// HRESULT call.
 
-#define llc_necs(llcl_call)					do { const auto _grr_rslt_val = llcl_call; if(0 > ::llc::error_t(_grr_rslt_val)) { error_printf("%s -> %i", #llcl_call, _grr_rslt_val); return -1; } } while(0) // Non-		propagable error call string.
+#define llc_necs(llcl_call)					do { const auto _grr_rslt_val = llcl_call; if(0 > ::llc::error_t(_grr_rslt_val)) { error_printf("%s -> %" LLC_FMT_I32 "", #llcl_call, _grr_rslt_val); return -1; } } while(0) // Non-		propagable error call string.
 #ifdef LLC_WINDOWS
-#	define llc_necall(llcl_call, format, ...)	do { const auto _grr_rslt_val = llcl_call; if(0 > ::llc::error_t(_grr_rslt_val)) { error_printf("%s -> %i: " format, #llcl_call, _grr_rslt_val, __VA_ARGS__); return -1; } } while(0)		// Non-propagable error call.
+#	define llc_necall(llcl_call, format, ...)	do { const auto _grr_rslt_val = llcl_call; if(0 > ::llc::error_t(_grr_rslt_val)) { error_printf("%s -> %" LLC_FMT_I32 ": " format, #llcl_call, _grr_rslt_val, __VA_ARGS__); return -1; } } while(0)		// Non-propagable error call.
 #else
-#	define llc_necall(llcl_call, format, ...)	do { const auto _grr_rslt_val = llcl_call; if(0 > ::llc::error_t(_grr_rslt_val)) { error_printf("%s -> %i: " format, #llcl_call, _grr_rslt_val, ##__VA_ARGS__); return -1; } } while(0)		// Non-propagable error call.
+#	define llc_necall(llcl_call, format, ...)	do { const auto _grr_rslt_val = llcl_call; if(0 > ::llc::error_t(_grr_rslt_val)) { error_printf("%s -> %" LLC_FMT_I32 ": " format, #llcl_call, _grr_rslt_val, ##__VA_ARGS__); return -1; } } while(0)		// Non-propagable error call.
 #endif
 
 #ifndef gthrow_if

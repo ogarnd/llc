@@ -214,8 +214,8 @@ namespace llc
 
 #define N3_F32 "{%f, %f, %f}"
 #define N3_F64 "{%g, %g, %g}"
-#define N3_I32 "{%i, %i, %i}"
-#define N3_U32 "{%u, %u, %u}"
+#define N3_I32 "{%" LLC_FMT_I32 ", %" LLC_FMT_I32 ", %" LLC_FMT_I32 "}"
+#define N3_U32 "{%" LLC_FMT_U32 ", %" LLC_FMT_U32 ", %" LLC_FMT_U32 "}"
 #define N3_I64 "{%lli, %lli, %lli}"
 #define N3_U64 "{%llu, %llu, %llu}"
 
