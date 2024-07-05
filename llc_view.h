@@ -269,6 +269,13 @@ namespace llc
 	stainli	::llc::error_t	rtrim				(::llc::vcc & trimmed) 	{ return rtrim(trimmed, trimmed); }
 	stainli	::llc::error_t	ltrim				(::llc::vcc & trimmed) 	{ return ltrim(trimmed, trimmed); }
 	stainli	::llc::error_t	trim				(::llc::vcc & trimmed) 	{ return trim(trimmed, trimmed); }
+	
+	stainli	::llc::error_t	rtrim				(::llc::vc & trimmed, const ::llc::vc & original, const ::llc::vcc & characters = ::llc::TRIM_CHARACTERS)	{ return rtrim	(*(::llc::vcc*)&trimmed, *(const ::llc::vcc*)&original, characters); }
+	stainli	::llc::error_t	ltrim				(::llc::vc & trimmed, const ::llc::vc & original, const ::llc::vcc & characters = ::llc::TRIM_CHARACTERS)	{ return ltrim	(*(::llc::vcc*)&trimmed, *(const ::llc::vcc*)&original, characters); }
+	stainli	::llc::error_t	trim				(::llc::vc & trimmed, const ::llc::vc & original, const ::llc::vcc & characters = ::llc::TRIM_CHARACTERS)	{ return trim	(*(::llc::vcc*)&trimmed, *(const ::llc::vcc*)&original, characters); }
+	stainli	::llc::error_t	rtrim				(::llc::vc & trimmed) 	{ return rtrim(trimmed, trimmed); }
+	stainli	::llc::error_t	ltrim				(::llc::vc & trimmed) 	{ return ltrim(trimmed, trimmed); }
+	stainli	::llc::error_t	trim				(::llc::vc & trimmed) 	{ return trim(trimmed, trimmed); }
 
 	tplt <tpnm T>
 	::llc::error_t			reverse				(::llc::view<T> elements)													{
