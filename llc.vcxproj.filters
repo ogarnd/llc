@@ -486,7 +486,7 @@
     <ClInclude Include="llc_stdstring.h">
       <Filter>view</Filter>
     </ClInclude>
-    <ClInclude Include="llc_string.h">
+    <ClInclude Include="llc_cstring.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="llc_sync.h">

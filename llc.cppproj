@@ -270,7 +270,7 @@
     <Compile Include="llc_input.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="llc_io.h">
+    <Compile Include="llc_cstdio.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="llc_json.cpp">
@@ -426,7 +426,7 @@
     <Compile Include="llc_storage.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="llc_string.h">
+    <Compile Include="llc_cstring.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="llc_string_helper.cpp">

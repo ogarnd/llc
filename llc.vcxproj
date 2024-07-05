@@ -206,7 +206,7 @@
     <ClInclude Include="llc_stdstring.h" />
     <ClInclude Include="llc_stl.h" />
     <ClInclude Include="llc_file.h" />
-    <ClInclude Include="llc_string.h" />
+    <ClInclude Include="llc_cstring.h" />
     <ClInclude Include="llc_string_helper.h" />
     <ClInclude Include="llc_sync.h" />
     <ClInclude Include="llc_tcpip.h" />
