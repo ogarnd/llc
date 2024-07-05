@@ -1,6 +1,6 @@
 #include "llc_file.h"
-#include "llc_io.h"
-#include "llc_string.h"
+#include "llc_cstdio.h"
+#include "llc_cstring.h"
 #include "llc_path.h"
 
 #include <new>

@@ -1,5 +1,5 @@
 #include "llc_log.h"
-#include "llc_string.h"
+#include "llc_cstring.h"
 #include "llc_size.h"
 
 #ifdef LLC_ATMEL
@@ -50,11 +50,11 @@ static	::llc::error_t	default_base_log_write	(const char * text, uint32_t textLe
 #endif
 
 #if defined(LLC_WINDOWS)
-static	::llc::error_t	default_base_log_print	(const char * text) {	OutputDebugStringA(text); return strlen(text); }
+static	::llc::error_t	default_base_log_print	(const char * text) {	OutputDebugStringA(text); return (::llc::error_t)strlen(text); }
 #elif defined(LLC_ANDROID)
-static	::llc::error_t	default_base_log_print	(const char * text) {	LOGI("%s", text); return strlen(text); }
+static	::llc::error_t	default_base_log_print	(const char * text) {	LOGI("%s", text); return (::llc::error_t)strlen(text); }
 #elif defined(LLC_ARDUINO)
-static	::llc::error_t	default_base_log_print	(const char * text) {	return Serial ? Serial.print(text) : strlen(text); }
+static	::llc::error_t	default_base_log_print	(const char * text) {	return Serial ? Serial.print(text) : (::llc::error_t)strlen(text); }
 #else
 static	::llc::error_t	default_base_log_print	(const char * text) {	return (::llc::error_t)printf("%s", text); }
 #endif

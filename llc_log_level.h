@@ -3,7 +3,7 @@
 #include "llc_chrono.h" 
 #include "llc_size.h"
 
-#include "llc_string.h"
+#include "llc_cstring.h"
 
 #ifdef LLC_ATMEL
 #	include <stdio.h>
