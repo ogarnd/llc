@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="llc_micro.h" />
+    <ClInclude Include="llc_bus.h" />
     <ClInclude Include="llc_adam7.h" />
     <ClInclude Include="llc_aes.h" />
     <ClInclude Include="llc_align.h" />
@@ -176,7 +178,7 @@
     <ClInclude Include="llc_http_client.h" />
     <ClInclude Include="llc_image.h" />
     <ClInclude Include="llc_input.h" />
-    <ClInclude Include="llc_io.h" />
+    <ClInclude Include="llc_cstdio.h" />
     <ClInclude Include="llc_json.h" />
     <ClInclude Include="llc_json_expression.h" />
     <ClInclude Include="llc_keyval.h" />

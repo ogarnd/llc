@@ -25,10 +25,34 @@ namespace llc
 	stacxpr	::llc::error_t OS_WAKE_UP           = ::llc::OS_RESTART           - 1;
 	stacxpr	::llc::error_t OS_SLEEP             = ::llc::OS_WAKE_UP           - 1;
 	stacxpr	::llc::error_t OS_OFFLINE           = ::llc::OS_SLEEP             - 1;
-	stacxpr	::llc::error_t OS_CONNECTING        = ::llc::OS_OFFLINE           - 1;
+	stacxpr	::llc::error_t OS_DISCONNECTED      = ::llc::OS_OFFLINE           - 1;
+	stacxpr	::llc::error_t OS_CONNECTING        = ::llc::OS_DISCONNECTED      - 1;
 	stacxpr	::llc::error_t OS_CONNECTED         = ::llc::OS_CONNECTING        - 1;
 	stacxpr	::llc::error_t OS_MISSING_DATA      = ::llc::OS_CONNECTED         - 1;
 	stacxpr	::llc::error_t OS_NO_MEMORY         = ::llc::OS_MISSING_DATA      - 1;
+	stacxpr	::llc::error_t OS_READ              = ::llc::OS_NO_MEMORY         - 1;
+	stacxpr	::llc::error_t OS_WRITE             = ::llc::OS_READ              - 1;
+
+	stacxpr	::llc::error_t ESP_NO_MEM              = -0x101 ;
+	stacxpr	::llc::error_t ESP_INVALID_ARG         = -0x102 ;
+	stacxpr	::llc::error_t ESP_INVALID_STATE       = -0x103 ;
+	stacxpr	::llc::error_t ESP_INVALID_SIZE        = -0x104 ;
+	stacxpr	::llc::error_t ESP_NOT_FOUND           = -0x105 ;
+	stacxpr	::llc::error_t ESP_NOT_SUPPORTED       = -0x106 ;
+	stacxpr	::llc::error_t ESP_TIMEOUT             = -0x107 ;
+	stacxpr	::llc::error_t ESP_INVALID_RESPONSE    = -0x108 ;
+	stacxpr	::llc::error_t ESP_INVALID_CRC         = -0x109 ;
+	stacxpr	::llc::error_t ESP_INVALID_VERSION     = -0x10A ;
+	stacxpr	::llc::error_t ESP_INVALID_MAC         = -0x10B ;
+	stacxpr	::llc::error_t ESP_NOT_FINISHED        = -0x10C ;
+	stacxpr	::llc::error_t ESP_WIFI_BASE           = -0x3000;
+	stacxpr	::llc::error_t ESP_MESH_BASE           = -0x4000;
+	stacxpr	::llc::error_t ESP_FLASH_BASE          = -0x6000;
+	stacxpr	::llc::error_t ESP_HW_CRYPTO_BASE      = -0xc000;
+	stacxpr	::llc::error_t ESP_MEMPROT_BASE        = -0xd000;
+	stacxpr	::llc::error_t ESP_FLASH_OP_FAIL		= ESP_FLASH_BASE - 1;
+	stacxpr	::llc::error_t ESP_FLASH_OP_TIMEOUT		= ESP_FLASH_BASE - 2;
+
 } // namespace
 
 #if !defined(errored)

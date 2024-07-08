@@ -358,31 +358,37 @@ namespace llc
 	GDEFINE_ENUM_VALUE(RESULT, Wake_up           , int8_t(::llc::OS_WAKE_UP           ));
 	GDEFINE_ENUM_VALUE(RESULT, Sleep             , int8_t(::llc::OS_SLEEP             ));
 	GDEFINE_ENUM_VALUE(RESULT, Offline           , int8_t(::llc::OS_OFFLINE           ));
+	GDEFINE_ENUM_VALUE(RESULT, Disconnected      , int8_t(::llc::OS_DISCONNECTED      ));
 	GDEFINE_ENUM_VALUE(RESULT, Connecting        , int8_t(::llc::OS_CONNECTING        ));
 	GDEFINE_ENUM_VALUE(RESULT, Connected         , int8_t(::llc::OS_CONNECTED         ));
 	GDEFINE_ENUM_VALUE(RESULT, Missing_data      , int8_t(::llc::OS_MISSING_DATA      ));
 	GDEFINE_ENUM_VALUE(RESULT, No_Memory         , int8_t(::llc::OS_NO_MEMORY         ));
+	GDEFINE_ENUM_VALUE(RESULT, Read              , int8_t(::llc::OS_READ              ));
+	GDEFINE_ENUM_VALUE(RESULT, Write             , int8_t(::llc::OS_WRITE             ));
 
 	GDEFINE_ENUM_TYPE (COMMAND, int8_t);
-	GDEFINE_ENUM_VALUE(COMMAND, Ok                , int8_t(RESULT_No_Memory * -1));
-	GDEFINE_ENUM_VALUE(COMMAND, Error             , int8_t(COMMAND_Ok +  1));
-	GDEFINE_ENUM_VALUE(COMMAND, Busy              , int8_t(COMMAND_Ok +  2));
-	GDEFINE_ENUM_VALUE(COMMAND, Timeout           , int8_t(COMMAND_Ok +  3));
-	GDEFINE_ENUM_VALUE(COMMAND, Full              , int8_t(COMMAND_Ok +  4));
-	GDEFINE_ENUM_VALUE(COMMAND, Empty             , int8_t(COMMAND_Ok +  5));
-	GDEFINE_ENUM_VALUE(COMMAND, Overrun           , int8_t(COMMAND_Ok +  6));
-	GDEFINE_ENUM_VALUE(COMMAND, Not_available     , int8_t(COMMAND_Ok +  7));
-	GDEFINE_ENUM_VALUE(COMMAND, Not_found         , int8_t(COMMAND_Ok +  8));
-	GDEFINE_ENUM_VALUE(COMMAND, Invalid_parameter , int8_t(COMMAND_Ok +  9));
-	GDEFINE_ENUM_VALUE(COMMAND, Forbidden         , int8_t(COMMAND_Ok + 10));
-	GDEFINE_ENUM_VALUE(COMMAND, Restart           , int8_t(COMMAND_Ok + 11));
-	GDEFINE_ENUM_VALUE(COMMAND, Wake_up           , int8_t(COMMAND_Ok + 12));
-	GDEFINE_ENUM_VALUE(COMMAND, Sleep             , int8_t(COMMAND_Ok + 13));
-	GDEFINE_ENUM_VALUE(COMMAND, Offline           , int8_t(COMMAND_Ok + 14));
-	GDEFINE_ENUM_VALUE(COMMAND, Connecting        , int8_t(COMMAND_Ok + 15));
-	GDEFINE_ENUM_VALUE(COMMAND, Connected         , int8_t(COMMAND_Ok + 16));
-	GDEFINE_ENUM_VALUE(COMMAND, Missing_data      , int8_t(COMMAND_Ok + 17));
-	GDEFINE_ENUM_VALUE(COMMAND, No_Memory         , int8_t(COMMAND_Ok + 18));
+	GDEFINE_ENUM_VALUE(COMMAND, Ok                , RESULT_Ok                * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Error             , RESULT_Error             * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Busy              , RESULT_Busy              * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Timeout           , RESULT_Timeout           * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Full              , RESULT_Full              * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Empty             , RESULT_Empty             * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Overrun           , RESULT_Overrun           * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Not_available     , RESULT_Not_available     * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Not_found         , RESULT_Not_found         * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Invalid_parameter , RESULT_Invalid_parameter * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Forbidden         , RESULT_Forbidden         * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Restart           , RESULT_Restart           * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Wake_up           , RESULT_Wake_up           * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Sleep             , RESULT_Sleep             * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Offline           , RESULT_Offline           * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Disconnected      , RESULT_Disconnected      * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Connecting        , RESULT_Connecting        * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Connected         , RESULT_Connected         * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Missing_data      , RESULT_Missing_data      * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, No_Memory         , RESULT_No_Memory         * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Read              , RESULT_Read              * -1);
+	GDEFINE_ENUM_VALUE(COMMAND, Write             , RESULT_Write             * -1);
 }
 
 #endif // LLC_ENUM_H_23627

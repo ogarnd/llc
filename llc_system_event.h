@@ -18,6 +18,8 @@ namespace llc
 	GDEFINE_ENUM_VALUE(SYSTEM_EVENT, Camera		, 9);
 	GDEFINE_ENUM_VALUE(SYSTEM_EVENT, Raster		,10);
 	GDEFINE_ENUM_VALUE(SYSTEM_EVENT, Device		,11);
+	GDEFINE_ENUM_VALUE(SYSTEM_EVENT, Wire		,12);
+	GDEFINE_ENUM_VALUE(SYSTEM_EVENT, Bus		,13);
 
 	typedef ::llc::SEvent            <::llc::SYSTEM_EVENT>	SEventSystem;
 	typedef ::llc::SEView            <::llc::SYSTEM_EVENT>	SEViewSystem;

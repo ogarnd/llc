@@ -15,20 +15,17 @@
 #ifndef LLC_LOG_LEVEL_H
 #define LLC_LOG_LEVEL_H
 
-
 namespace llc
 {
 #ifndef LLC_ARDUINO
 	void				_llc_print_system_errors		(const char * prefix, uint32_t prefixLen);
 #endif
-
-
-	error_t				debug_print_prefix				(int severity, const char * path, uint32_t line, const char * function);
+	::llc::error_t		debug_print_prefix				(int8_t severity, const char * path, uint32_t line, const char * function);
 
 #ifndef LLC_ATMEL
 	tplt<size_t fmtLen, tpnm... TArgs>
 	static	void		_llc_debug_printf				(int severity, const char * path, uint32_t line, const char * function, const char (&format)[fmtLen], const TArgs... args)			{
-		debug_print_prefix(severity, path, line, function);
+		debug_print_prefix((int8_t)severity, path, line, function);
 #else
 	tplt<tpnm... TArgs>
 	static	void		_llc_debug_printf				(const char* function, const __FlashStringHelper* format, const TArgs... args)			{

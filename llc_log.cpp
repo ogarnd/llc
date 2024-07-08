@@ -32,7 +32,7 @@ stacxpr		int		LOG_PREFIX_BUFFER_SIZE	= 64;
 stacxpr		int		LOG_PREFIX_BUFFER_SIZE	= 256;
 #endif
 
-::llc::error_t			llc::debug_print_prefix	(int severity, const char * path, uint32_t line, const char * function) {
+::llc::error_t			llc::debug_print_prefix				(int8_t severity, const char * path, uint32_t line, const char * function) {
 	stacxpr cchar_t	STR_DEBUG_PREFIX[]					= "%i|%llu|%s(%" LLC_FMT_U32 "){%s}:";
 	char			formatted[::LOG_PREFIX_BUFFER_SIZE]	= {};
 	snprintf(formatted, llc::size(formatted), STR_DEBUG_PREFIX, severity, ::llc::timeCurrentInMs(), path, line, function);
