@@ -47,11 +47,11 @@ namespace llc
 		int8_t* p = (int8_t*)::memalign(LLC_MALLOC_ALIGN, size + 1);
 		return p;
 	}
-#elif defined(LLC_ATMEL)
+#elif defined(LLC_ATMEL) || defined(ESP8266)
 	stainli	void						llc_free					(void* ptr)									noexcept	{ ::free(ptr);											}
 	stainli	void*						llc_malloc					(size_t size)								noexcept	{ int8_t* p = (int8_t*)::malloc(size + 1); return p; }
 #else
-	stainli	void						llc_free					(void* ptr)									noexcept	{ ::free(ptr);											}
+	stainli	void						llc_free					(void* ptr)									noexcept	{ ::free(ptr);		        									}
 	stainli	void*						llc_malloc					(size_t size)								noexcept	{ int8_t* p = (int8_t*)::memalign(LLC_MALLOC_ALIGN, size + 1); return p; }
 #endif
 

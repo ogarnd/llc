@@ -46,7 +46,7 @@ namespace llc
 			}
 		}
 #else
-#	ifdef LLC_ATMEL
+#	if defined(LLC_ATMEL) || defined(ESP8266)
 		char					customDynamicString	[128]		= {};
 		const	size_t 			stringLength					= snprintf_P(customDynamicString, sizeof(customDynamicString) - 1, (const char*)format, args...);
 		customDynamicString[min(stringLength, (size_t)sizeof(customDynamicString)-1)] = '\n';

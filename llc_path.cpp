@@ -98,7 +98,6 @@ stacxpr	uint32_t LLC_MAX_PATH = 256;
 		if(0 == extension.size() || (extension.size() < fileName.size() && 0 == strncmp(fileName.end() - extension.size(), extension.begin(), ::llc::min(extension.size(), fileName.size()))))
 			llc_necs(output.push_back(fileName));
 	}
-
 	for(uint32_t iFolder = 0; iFolder < input.Folders.size(); ++iFolder)
 		llc_necall(llc::pathList(input.Folders[iFolder], output, extension), "%s", "Unknown error!");
 	return 0;
@@ -115,15 +114,15 @@ stacxpr	uint32_t LLC_MAX_PATH = 256;
 	return 0;
 }
 
+#if !defined(LLC_ESP8266) // && !defined(LLC_ESP32) && !defined(LLC_ARDUINO) 
+stacxpr	const char		curDir	[]					= ".";
+stacxpr	const char		parDir	[]					= "..";
+#endif
+
 ::llc::error_t			llc::pathList				(const ::llc::vcc & pathToList, ::llc::aachar & output, bool listFolders, const ::llc::vcc extension)	{
-	stacxpr	char				curDir	[]					= ".";
-	stacxpr	char				parDir	[]					= "..";
-
 	::llc::achar				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcc{pathToList.begin(), pathToList.size() - 1};
-
 	char						bufferFormat[16]			=  {};
 	snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U32 "s/*.*", withoutTrailingSlash.size());
-
 	char						sPath	[LLC_MAX_PATH]		= {};
 	llc_necall(snprintf(sPath, ::llc::size(sPath) - 2, bufferFormat, withoutTrailingSlash.begin()), "bufferFormat: '%s'. withoutTrailingSlash: '%s'", bufferFormat, withoutTrailingSlash.begin());
 
@@ -169,15 +168,11 @@ stacxpr	uint32_t LLC_MAX_PATH = 256;
 
 
 ::llc::error_t			llc::pathList				(const ::llc::vcc & pathToList, ::llc::SPathContents & pathContents, const llc::vcc extension)						{
-	char						sPath[LLC_MAX_PATH]			= {};
-	char						bufferFormat[36]			= {};
-
 	::llc::achar				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcc{pathToList.begin(), pathToList.size() - 1};
-
+	char						bufferFormat[36]			= {};
 	snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U32 "s/*.*", withoutTrailingSlash.size());
+	char						sPath[LLC_MAX_PATH]			= {};
 	llc_necall(snprintf(sPath, ::llc::size(sPath) - 2, bufferFormat, withoutTrailingSlash.begin()), "%s", "Path too long?");
-	stacxpr	const char			curDir []					= ".";
-	stacxpr	const char			parDir []					= "..";
 #if defined(LLC_WINDOWS)
 	WIN32_FIND_DATAA			fdFile						= {};
 	HANDLE						hFind						= NULL;

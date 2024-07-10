@@ -1,8 +1,8 @@
 #include "llc_tcpip.h"
-#include "llc_windows.h"
 #include "llc_stdsocket.h"
 #include "llc_parse.h"
 #include "llc_json.h"
+#include "llc_windows.h"
 
 ::llc::error_t			llc::tcpipAddress		(::llc::vcs strIP, uint32_t & address, uint16_t & port) {
 	uint32_t					iOffset					= ::llc::tcpipAddress(strIP, address);
@@ -69,6 +69,9 @@
 
 #if defined(LLC_WINDOWS)
 #	include <WS2tcpip.h>
+#elif defined(ESP8266)
+#	include <lwip/sockets.h>
+#	include <lwip/netdb.h>
 #else
 #	include <netdb.h>
 #	include <arpa/inet.h>
@@ -160,13 +163,21 @@
 
 ::llc::error_t			llc::tcpipAddress	(uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint8_t* a1, uint8_t* a2, uint8_t* a3, uint8_t* a4)										{
 	char						host_name[257]								= {};
+#if defined(ESP8266)
+	sprintf(host_name, "%s", wifi_station_get_hostname());
+#else	
 	gethostname(host_name, 256);
+#endif
 	return ::llc::tcpipAddress(host_name, portRequested, adapterIndex, mode, a1, a2, a3, a4);
 }
 
 ::llc::error_t			llc::tcpipAddress	(uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint32_t & address)										{
 	char						host_name[257]								= {};
+#if defined(ESP8266)
+	sprintf(host_name, "%s", wifi_station_get_hostname());
+#else	
 	gethostname(host_name, 256);
+#endif
 	return ::llc::tcpipAddress(host_name, portRequested, adapterIndex, mode, address);
 }
 
@@ -211,10 +222,12 @@
 #endif
 		::sockaddr					* sockaddr_ip									=  0;
 		::sockaddr_in				* sockaddr_ipv4									=  0;
+#ifndef ESP8266
 		::sockaddr_in6				* sockaddr_ipv6									=  0;
+		(void)sockaddr_ipv6	;
+#endif
 		(void)sockaddr_ip	;
 		(void)sockaddr_ipv4	;
-		(void)sockaddr_ipv6	;
 		//DWORD dwRetval;
 #if defined(LLC_WINDOWS)
 		int32_t						iRetval;
@@ -239,13 +252,14 @@
 				addressFound								= true;
 			}
 			break;
+#ifndef ESP8266
 		case AF_INET6	:
 			verbose_printf("%s", "AF_INET6 (IPv6)");
 			// the InetNtop function is available on Windows Vista and later
 			sockaddr_ipv6								= (struct ::sockaddr_in6 *) ptr->ai_addr;
 			//info_printf("IPv6 address %s", InetNtop(AF_INET6, &sockaddr_ipv6->sin6_addr, ipwstringbuffer, 46) );
 
-#if defined(LLC_WINDOWS)
+#	if defined(LLC_WINDOWS)
 			sockaddr_ip									= (LPSOCKADDR)ptr->ai_addr;
 			ipbufferlength								= 46;	// The buffer length is changed by each call to WSAAddresstoString, so we need to set it for each iteration through the loop for safety
 			iRetval										= WSAAddressToStringW(sockaddr_ip, (DWORD) ptr->ai_addrlen, NULL, ipwstringbuffer, &ipbufferlength );	// We use WSAAddressToString since it is supported on Windows XP and later
@@ -254,8 +268,9 @@
 			}
 			else
 				::wprintf(L"IPv6 address '%s'.\n", ipwstringbuffer);
-#endif
+#	endif
 			break;
+#endif
 		}
 
 		//verbose_printf("%s", "Socket type: ");

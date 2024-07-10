@@ -39,7 +39,7 @@
 , "CF": {"latitude": 6.611111	, "longitude": 20.939444	, "name": "Central African Republic"}
 , "CG": {"latitude": -0.228021	, "longitude": 15.827659	, "name": "Congo [Republic]"}
 , "CH": {"latitude": 46.818188	, "longitude": 8.227512		, "name": "Switzerland"}
-, "CI": {"latitude": 7.539989	, "longitude": -5.54708		, "name": "Côte d'Ivoire"}
+, "CI": {"latitude": 7.539989	, "longitude": -5.54708		, "name": "CÃ´te d'Ivoire"}
 , "CK": {"latitude": -21.236736	, "longitude": -159.777671	, "name": "Cook Islands"}
 , "CL": {"latitude": -35.675147	, "longitude": -71.542969	, "name": "Chile"}
 , "CM": {"latitude": 7.369722	, "longitude": 12.354722	, "name": "Cameroon"}
@@ -182,7 +182,7 @@
 , "PW": {"latitude": 7.51498	, "longitude": 134.58252	, "name": "Palau"}
 , "PY": {"latitude": -23.442503	, "longitude": -58.443832	, "name": "Paraguay"}
 , "QA": {"latitude": 25.354826	, "longitude": 51.183884	, "name": "Qatar"}
-, "RE": {"latitude": -21.115141	, "longitude": 55.536384	, "name": "Réunion"}
+, "RE": {"latitude": -21.115141	, "longitude": 55.536384	, "name": "RÃ©union"}
 , "RO": {"latitude": 45.943161	, "longitude": 24.96676		, "name": "Romania"}
 , "RS": {"latitude": 44.016521	, "longitude": 21.005859	, "name": "Serbia"}
 , "RU": {"latitude": 61.52401	, "longitude": 105.318756	, "name": "Russia"}
@@ -202,7 +202,7 @@
 , "SN": {"latitude": 14.497401	, "longitude": -14.452362	, "name": "Senegal"}
 , "SO": {"latitude": 5.152149	, "longitude": 46.199616	, "name": "Somalia"}
 , "SR": {"latitude": 3.919305	, "longitude": -56.027783	, "name": "Suriname"}
-, "ST": {"latitude": 0.18636	, "longitude": 6.613081		, "name": "São Tomé and Príncipe"}
+, "ST": {"latitude": 0.18636	, "longitude": 6.613081		, "name": "SÃ£o TomÃ© and PrÃ­ncipe"}
 , "SV": {"latitude": 13.794185	, "longitude": -88.89653	, "name": "El Salvador"}
 , "SY": {"latitude": 34.802075	, "longitude": 38.996815	, "name": "Syria"}
 , "SZ": {"latitude": -26.522503	, "longitude": 31.465866	, "name": "Swaziland"}

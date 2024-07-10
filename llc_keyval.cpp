@@ -27,11 +27,11 @@
 }
 
 ::llc::error_t			llc::token_split		(char token, const ::llc::vcs & input_string, TKeyValConstChar & output_views)	{
-	uint32_t					indexToken;
+	int32_t						indexToken;
 	llc_necall(indexToken = ::llc::find(token, input_string), "'%c' not found.", token);
 	output_views.Key		= {input_string.begin(), (uint32_t)indexToken};
-	output_views.Val		= (indexToken + 1 < (int32_t)input_string.size())
-		? ::llc::vcs{&input_string[indexToken + 1], input_string.size() - (indexToken + 1)}
+	output_views.Val		= (uint32_t(indexToken + 1) < input_string.size())
+		? ::llc::vcs{&input_string[indexToken + 1U], input_string.size() - (indexToken + 1U)}
 		: ::llc::vcs{}	// empty view if there's no data after the separator.
 		;
 	::llc::trim(output_views.Key, output_views.Key);
