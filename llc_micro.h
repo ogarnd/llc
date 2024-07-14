@@ -30,8 +30,8 @@ namespace llc
 
     GDEFINE_ENUM_TYPE (ESP_TCP, int32_t);
     GDEFINE_ENUM_VALUE(ESP_TCP, OK                    ,  0);
-    GDEFINE_ENUM_VALUE(ESP_TCP, MEM                   , -1);
-    GDEFINE_ENUM_VALUE(ESP_TCP, BUF                   , -2);
+    GDEFINE_ENUM_VALUE(ESP_TCP, NO_MEMORY             , -1);
+    GDEFINE_ENUM_VALUE(ESP_TCP, BUFFER                , -2);
     GDEFINE_ENUM_VALUE(ESP_TCP, TIMEOUT               , -3);
     GDEFINE_ENUM_VALUE(ESP_TCP, ROUTING               , -4);
     GDEFINE_ENUM_VALUE(ESP_TCP, IN_PROGRESS           , -5);
@@ -46,6 +46,34 @@ namespace llc
     GDEFINE_ENUM_VALUE(ESP_TCP, CONNECTION_RESET      , -14);
     GDEFINE_ENUM_VALUE(ESP_TCP, CLOSED                , -15);
     GDEFINE_ENUM_VALUE(ESP_TCP, ILLEGAL_ARGUMENT      , -16);
+
+	GDEFINE_ENUM_TYPE  (ESP_RESET, int32_t); 
+	GDEFINE_ENUM_VALUED(ESP_RESET, UNKNOWN   ,  0, "Reset reason can not be determined"                     );
+	GDEFINE_ENUM_VALUED(ESP_RESET, POWERON   ,  1, "Reset due to power-on event"                            );
+	GDEFINE_ENUM_VALUED(ESP_RESET, EXT       ,  2, "Reset by external pin (not applicable for ESP32)"       );
+	GDEFINE_ENUM_VALUED(ESP_RESET, SW        ,  3, "Software reset via esp_restart"                         );
+	GDEFINE_ENUM_VALUED(ESP_RESET, PANIC     ,  4, "Software reset due to exception/panic"                  );
+	GDEFINE_ENUM_VALUED(ESP_RESET, INT_WDT   ,  5, "Reset (software or hardware) due to interrupt watchdog" );
+	GDEFINE_ENUM_VALUED(ESP_RESET, TASK_WDT  ,  6, "Reset due to task watchdog"                             );
+	GDEFINE_ENUM_VALUED(ESP_RESET, WDT       ,  7, "Reset due to other watchdogs"                           );
+	GDEFINE_ENUM_VALUED(ESP_RESET, DEEPSLEEP ,  8, "Reset after exiting deep sleep mode"                    );
+	GDEFINE_ENUM_VALUED(ESP_RESET, BROWNOUT  ,  9, "Brownout reset (software or hardware)"                  );
+	GDEFINE_ENUM_VALUED(ESP_RESET, SDIO      , 10, "Reset over SDIO"                                        );
+
+	GDEFINE_ENUM_TYPE  (ESP_AWAKE, int32_t);
+    GDEFINE_ENUM_VALUE (ESP_AWAKE, UNDEFINED         ,   0); 
+    GDEFINE_ENUM_VALUE (ESP_AWAKE, ALL               ,   1); 
+    GDEFINE_ENUM_VALUED(ESP_AWAKE, EXT0              ,   2, "Wakeup by external signal using RTC_IO"  ); 
+    GDEFINE_ENUM_VALUED(ESP_AWAKE, EXT1              ,   3, "Wakeup by external signal using RTC_CNTL"); 
+    GDEFINE_ENUM_VALUED(ESP_AWAKE, TIMER             ,   4, "Wakeup by timer"                         ); 
+    GDEFINE_ENUM_VALUED(ESP_AWAKE, TOUCHPAD          ,   5, "Wakeup by touchpad"                      ); 
+    GDEFINE_ENUM_VALUED(ESP_AWAKE, ULP               ,   6, "Wakeup by ULP program"                   ); 
+    GDEFINE_ENUM_VALUE (ESP_AWAKE, GPIO              ,   7); 
+    GDEFINE_ENUM_VALUE (ESP_AWAKE, UART              ,   8); 
+    GDEFINE_ENUM_VALUE (ESP_AWAKE, WIFI              ,   9); 
+    GDEFINE_ENUM_VALUE (ESP_AWAKE, COCPU             ,  10); 
+    GDEFINE_ENUM_VALUE (ESP_AWAKE, COCPU_TRAP_TRIG   ,  11); 
+    GDEFINE_ENUM_VALUE (ESP_AWAKE, BT                ,  12); 
 } // namespace
 
 #endif // LLC_MICRO_H
