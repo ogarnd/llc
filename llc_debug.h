@@ -1,6 +1,12 @@
 /// Copyright 2010-2022 - ogarnd
 #include "llc_platform_globals.h"
 
+#ifdef LLC_ATMEL
+#   include <stddef.h>
+#else
+#   include <cstddef>
+#endif
+
 // Uncomment these to toggle behavior
 //#define LLC_DISABLE_DEBUG_BREAK_ON_ERROR_LOG
 //#define LLC_KEEP_SYSTEM_ERROR_ON_ERROR_LOG

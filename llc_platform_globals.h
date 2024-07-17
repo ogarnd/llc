@@ -75,23 +75,7 @@
 #	define LLC_DISABLE_CPP_EXCEPTIONS
 #endif
 
-#ifdef LLC_WINDOWS
-#	include <cstdint>
-#else
-#	if defined(LLC_ATMEL)
-#		include <stddef.h>
-#		include <stdint.h>
-#	else
-#		include <cstddef>
-#		include <cstdint>
-#	endif
-#endif
 
-#if defined(LLC_ATMEL)
-//#	include "initializer_list.h"
-#else
-#	include <initializer_list>
-#endif
 
 // These aliases make keyword width to be consistent and makes the code less verbose.
 #define vltl	volatile
@@ -172,20 +156,6 @@
 #define LLC_FMT_I64_LE_I64 "%" LLC_FMT_I64 " <= %" LLC_FMT_I64
 #define LLC_FMT_U64_LE_U64 "%" LLC_FMT_U64 " <= %" LLC_FMT_U64
 
-namespace llc
-{
-#if defined(LLC_ANDROID) || defined(LLC_CLANG)
-#	pragma clang diagnostic push
-#	pragma clang diagnostic ignored "-Wtautological-constant-out-of-range-compare"
-#endif
-	// -- Returns 0 on little-endian machines
-
-	ndstain int		test_endianness		()	noexcept	{ stacxpr uint16_t test = 0xFF00U; return (((const  char*)&test)[0] == 0xFFU) ? 1 : 0; }
-
-#if defined(LLC_ANDROID) || defined(LLC_CLANG)
-#	pragma clang diagnostic pop
-#endif
-}
 
 #define LLCREP0(param) (param)
 #define LLCREP1(param) LLCREP0(param), (param)

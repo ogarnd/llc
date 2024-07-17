@@ -1,9 +1,21 @@
 #include "llc_debug.h"
 
-#if defined(LLC_ATMEL)
-#	include <stdint.h>
-#else
+#ifdef LLC_WINDOWS
 #	include <cstdint>
+#else
+#	if defined(LLC_ATMEL)
+#		include <stddef.h>
+#		include <stdint.h>
+#	else
+#		include <cstddef>
+#		include <cstdint>
+#	endif
+#endif
+
+#ifdef LLC_ATMEL
+//#	include "initializer_list.h"
+#else
+#	include <initializer_list>
 #endif
 
 #ifndef LLC_TYPEINT_H_23627
@@ -11,6 +23,15 @@
 
 namespace llc
 {
+#if defined(LLC_ANDROID) || defined(LLC_CLANG)
+#	pragma clang diagnostic push
+#	pragma clang diagnostic ignored "-Wtautological-constant-out-of-range-compare"
+#endif
+	// -- Returns 0 on little-endian machines
+	ndstain int		test_endianness		()	noexcept	{ stacxpr uint16_t test = 0xFF00U; return (((const  char*)&test)[0] == 0xFFU) ? 1 : 0; }
+#if defined(LLC_ANDROID) || defined(LLC_CLANG)
+#	pragma clang diagnostic pop
+#endif
 	typedef	float			float32_t	;
 	typedef	double			float64_t	;
 	typedef	char			char_t  ;
@@ -116,6 +137,8 @@ namespace llc
 
 	tplt<tpnm _tInstance>	
 	nodscrd	_tInstance&	global	()								noexcept	{ static _tInstance instance = {}; return instance; }
+
+
 }
 
 #if !defined(LLC_ANDROID) && !defined(LLC_ESP32) && !defined(LLC_ARDUINO)

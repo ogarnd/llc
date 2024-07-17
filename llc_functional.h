@@ -1,4 +1,4 @@
-#include "llc_typeint.h"
+#include "llc_error.h"
 
 #ifdef LLC_ATMEL
 #	include <ustd_functional.h>
@@ -28,6 +28,8 @@ namespace llc
 	tplt<tpnm T, tpnm tCount = uint32_t>	using	TFuncEnumerate		= FVoid<tCount&, T&>;
 	tplt<tpnm T, tpnm tCount = uint32_t>	using	TFuncEnumerateConst	= FVoid<tCount&, const T&>;
 
+	tplt<tpnm TSource, tpnm TTarget>		using	TFuncAppend 		= function<::llc::error_t(TTarget 	& output, const TSource & origin)>;
+	tplt<tpnm TIO>							using	TFuncSize			= function<::llc::error_t(const TIO & origin)>;
 } // namespace
 
 #endif // LLC_FUNCTIONAL_H_23627
