@@ -2,6 +2,13 @@
 #include "llc_append_xml.h"
 
 #ifndef LLC_ATMEL
+llc::err_t	llc::appendHtmlPage	(::llc::achar & output, const ::llc::FAppend & funcAppendHead, const ::llc::FAppend & funcAppendBody) {
+	return ::llc::appendXmlTag(output, "html", vcs{}, [&output, funcAppendHead, funcAppendBody]() {
+		return ::llc::appendXmlTag(output, "head", vcs{}, [&output, funcAppendHead]() { return funcAppendHead(output); })
+			+  ::llc::appendXmlTag(output, "body", vcs{}, [&output, funcAppendBody]() { return funcAppendBody(output); })
+			;
+	});
+}
 llc::err_t	llc::appendHtmlPage	(::llc::achar & output, const ::llc::FAppend & funcAppendCSS, const ::llc::FAppend & funcAppendJS, const ::llc::FAppend & funcAppendBody) {
 	return ::llc::appendXmlTag(output, "html", vcs{}, [&output, funcAppendBody, funcAppendCSS, funcAppendJS]() {
 		return ::llc::appendXmlTag(output, "head", vcs{}, [&output, funcAppendCSS, funcAppendJS]() {
@@ -11,7 +18,6 @@ llc::err_t	llc::appendHtmlPage	(::llc::achar & output, const ::llc::FAppend & fu
 		}) + ::llc::appendXmlTag(output, "body", vcs{}, [&output, funcAppendBody]() { return funcAppendBody(output); });
 	});
 }
-
 llc::err_t	llc::appendHtmlPage	(::llc::achar & output, const ::llc::FAppend & funcAppendBody) {
 	return ::llc::appendXmlTag(output, "html", vcs{}, [&output, funcAppendBody]() {
 		return ::llc::appendXmlTag(output, "head", vcs{}, [&output]() {
@@ -21,7 +27,6 @@ llc::err_t	llc::appendHtmlPage	(::llc::achar & output, const ::llc::FAppend & fu
 		}) + ::llc::appendXmlTag(output, "body", vcs{}, [&output, funcAppendBody]() { return funcAppendBody(output); });
 	});
 }
-
 llc::err_t	llc::appendHtmlHead		(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "head", tagAttributes, innerHtml); }
 llc::err_t	llc::appendHtmlBody		(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "body", tagAttributes, innerHtml); }
 llc::err_t	llc::appendHtmlScript	(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "script", tagAttributes, innerHtml); }
