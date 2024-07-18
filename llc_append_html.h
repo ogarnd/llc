@@ -12,7 +12,7 @@ namespace llc
 	llc::err_t	appendHtmlTableRow	(::llc::achar & output, ::llc::vcs tagAttributes = {}, ::llc::vcs innerHtml = {});
 	llc::err_t	appendHtmlTableCol	(::llc::achar & output, ::llc::vcs tagAttributes = {}, ::llc::vcs innerHtml = {});
 	llc::err_t	appendHtmlPage		(::llc::achar & output, const ::llc::FAppend & funcAppendCSS, const ::llc::FAppend & funcAppendJS, const ::llc::FAppend & funcAppendBody);
-	llc::err_t	appendHtmlPage		(::llc::achar & output, const ::llc::FAppend & funcAppendHead, const ::llc::FAppend & funcAppendBody)	
+	llc::err_t	appendHtmlPage		(::llc::achar & output, const ::llc::FAppend & funcAppendHead, const ::llc::FAppend & funcAppendBody);
 	llc::err_t	appendHtmlPage		(::llc::achar & output, const ::llc::FAppend & funcAppendBody);
 } // namespace 
 
