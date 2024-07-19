@@ -1,11 +1,46 @@
 #include "llc_append_html.h"
-#include "llc_append_xml.h"
 
 #ifndef LLC_ATMEL
+llc::err_t	llc::appendHtmlScripts	(::llc::achar & output, llc::vcvcs filenames) { 
+	::llc::err_t 		result 				= 0;
+	stacxpr	const char	FMT_ATTR_SRC_JS	[]	= "type=\"text/javascript\" src=\"/%s.js\"";
+	for(uint32_t iFile = 0; iFile < filenames.size(); ++iFile) {
+		char 				cooked	[128] 		= {};
+		if_fail_e(::llc::sprintf_s(cooked, FMT_ATTR_SRC_JS, filenames[iFile].begin()));
+		result 		+= ::llc::appendXmlTag(output, "script", cooked);
+	}
+	return result;
+}
+llc::err_t	llc::appendHtmlStyles	(::llc::achar & output, llc::vcvcs filenames) { 
+	::llc::err_t 		result 				= 0;
+	stacxpr	const char	FMT_ATTR_HREF_CSS	[]	= "rel=\"stylesheet\" href=\"/%s.css\"";
+	for(uint32_t iFile = 0; iFile < filenames.size(); ++iFile) {
+		char 				cooked	[128] 		= {};
+		if_fail_e(::llc::sprintf_s(cooked, FMT_ATTR_HREF_CSS, filenames[iFile].begin()));
+		result 		+= ::llc::appendXmlTag(output, "link", cooked);
+	}
+	return result;
+}
+llc::err_t	llc::appendHtmlHead	(::llc::achar & output, ::llc::vcs title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS) {
+	return ::llc::appendXmlTag(output, "head", vcs{}, [&output, title, filesCSS, filesJS]() { 
+		return ::llc::appendXmlTag		(output, "title", vcs{}, title)
+			+  ::llc::appendHtmlStyles	(output, filesCSS)
+			+  ::llc::appendHtmlScripts	(output, filesJS)
+			; 
+	});
+}
 llc::err_t	llc::appendHtmlPage	(::llc::achar & output, const ::llc::FAppend & funcAppendHead, const ::llc::FAppend & funcAppendBody) {
 	return ::llc::appendXmlTag(output, "html", vcs{}, [&output, funcAppendHead, funcAppendBody]() {
 		return ::llc::appendXmlTag(output, "head", vcs{}, [&output, funcAppendHead]() { return funcAppendHead(output); })
 			+  ::llc::appendXmlTag(output, "body", vcs{}, [&output, funcAppendBody]() { return funcAppendBody(output); })
+			;
+	});
+}
+llc::err_t	llc::appendHtmlPage	(::llc::achar & output, ::llc::vcs title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS, const ::llc::FAppend & funcAppendBody, ::llc::vcs postScript) {
+	return ::llc::appendXmlTag(output, "html", vcs{}, [&output, &title, &filesCSS, &filesJS, &funcAppendBody, &postScript]() {
+		return ::llc::appendHtmlHead(output, title, filesCSS, filesJS)
+			+  ::llc::appendXmlTag(output, "body", vcs{}, [&output, funcAppendBody]() { return funcAppendBody(output); })
+			+  ((0 == postScript.size()) ? 0 : ::llc::appendXmlTag(output, "script", vcs{}, postScript))
 			;
 	});
 }
@@ -18,19 +53,4 @@ llc::err_t	llc::appendHtmlPage	(::llc::achar & output, const ::llc::FAppend & fu
 		}) + ::llc::appendXmlTag(output, "body", vcs{}, [&output, funcAppendBody]() { return funcAppendBody(output); });
 	});
 }
-llc::err_t	llc::appendHtmlPage	(::llc::achar & output, const ::llc::FAppend & funcAppendBody) {
-	return ::llc::appendXmlTag(output, "html", vcs{}, [&output, funcAppendBody]() {
-		return ::llc::appendXmlTag(output, "head", vcs{}, [&output]() {
-			return ::llc::appendXmlTag(output, "link" , "rel=\"stylesheet\" href=\"/style/main.css\"")
-				+  ::llc::appendXmlTag(output, "script", "src=\"/script/main.js\"")
-				;
-		}) + ::llc::appendXmlTag(output, "body", vcs{}, [&output, funcAppendBody]() { return funcAppendBody(output); });
-	});
-}
-llc::err_t	llc::appendHtmlHead		(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "head", tagAttributes, innerHtml); }
-llc::err_t	llc::appendHtmlBody		(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "body", tagAttributes, innerHtml); }
-llc::err_t	llc::appendHtmlScript	(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "script", tagAttributes, innerHtml); }
-llc::err_t	llc::appendHtmlTable	(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "table", tagAttributes, innerHtml); }
-llc::err_t	llc::appendHtmlTableRow	(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "tr", tagAttributes, innerHtml); }
-llc::err_t	llc::appendHtmlTableCol	(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "td", tagAttributes, innerHtml); }
 #endif
