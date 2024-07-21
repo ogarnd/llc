@@ -75,19 +75,28 @@
 #	define LLC_DISABLE_CPP_EXCEPTIONS
 #endif
 
-
-
 // These aliases make keyword width to be consistent and makes the code less verbose.
-#define vltl	volatile
-#define tpnm	typename
-#define tplt	template
+#define vltl	        volatile
+#define tpnm	        typename
+#define tplt	        template
+#define tplt_T	        tplt<tpnm T>
+#define tplt_TInTOut    tplt<tpnm TIn, tpnm TOut>
+#define tplt_T_Nu32     tplt<tpnm T, uint32_t N>
 
-#define operatr	operator
-#define cnstxpr	constexpr
+#define operatr	        operator
+#define cnstxpr	        constexpr
+#define noexcpt	        noexcept
+#define prtctd          protected
+#define privte          private
 
-#define inlcxpr	inline cnstxpr
-#define stacxpr	static cnstxpr
-#define stainli	static inline
+#define opr             operatr
+#define cxp             cnstxpr
+#define nxp             noexcpt
+#define inl             inline
+
+#define inlcxpr	inline  cnstxpr
+#define stacxpr	static  cnstxpr
+#define stainli	static  inline
 #define stincxp	stainli	cnstxpr
 
 #define nodscrd [[nodiscard]]
@@ -156,14 +165,79 @@
 #define LLC_FMT_I64_LE_I64 "%" LLC_FMT_I64 " <= %" LLC_FMT_I64
 #define LLC_FMT_U64_LE_U64 "%" LLC_FMT_U64 " <= %" LLC_FMT_U64
 
+#define LLCREP0(param)              (param)
+#define LLCREP1(param)              LLCREP0(param), (param)
+#define LLCREP2(param)              LLCREP1(param), (param)
+#define LLCREP3(param)              LLCREP2(param), (param)
+#define LLCREP4(param)              LLCREP3(param), (param)
+#define LLCREP5(param)              LLCREP4(param), (param)
+#define LLCREP6(param)              LLCREP5(param), (param)
+#define LLCREP7(param)              LLCREP6(param), (param)
 
-#define LLCREP0(param) (param)
-#define LLCREP1(param) LLCREP0(param), (param)
-#define LLCREP2(param) LLCREP1(param), (param)
-#define LLCREP3(param) LLCREP2(param), (param)
-#define LLCREP4(param) LLCREP3(param), (param)
-#define LLCREP5(param) LLCREP4(param), (param)
-#define LLCREP6(param) LLCREP5(param), (param)
-#define LLCREP7(param) LLCREP6(param), (param)
+namespace llc
+{
+    enum OPCODE_SET : unsigned char
+        { OPCODE_SET_UNKNOWN
+        , OPCODE_SET_ARM32
+        , OPCODE_SET_ARM64
+        , OPCODE_SET_AVR
+        , OPCODE_SET_PIC16F
+        , OPCODE_SET_PIC18F
+        , OPCODE_SET_STM32
+        , OPCODE_SET_X86
+        , OPCODE_SET_X86_64
+        , OPCODE_SET_XTENSA_LX6_SINGLE
+        , OPCODE_SET_XTENSA_LX6_DUAL
+        , OPCODE_SET_XTENSA_LX7
+        , OPCODE_SET_CUSTOM         = 0x80U
+        };
+    enum OPCODE_EXT : unsigned char
+        { OPCODE_EXT_NONE
+        , OPCODE_EXT_AVX
+        , OPCODE_EXT_MMX
+        , OPCODE_EXT_SSE
+        , OPCODE_EXT_SSE2
+        , OPCODE_EXT_SSE3
+        , OPCODE_EXT_SSE4
+        , OPCODE_EXT_CUSTOM         = 0x80U
+        };
+    enum DEVICE_TYPE : unsigned char
+        { DEVICE_TYPE_UNKNOWN
+        , DEVICE_TYPE_ANDROID
+        , DEVICE_TYPE_IPHONE
+        , DEVICE_TYPE_PC
+        , DEVICE_TYPE_RASPBERRY_PI_3
+        , DEVICE_TYPE_RASPBERRY_PI_4
+        , DEVICE_TYPE_MAC
+        , DEVICE_TYPE_CUSTOM        = 0x80U
+        };
+    enum OS_FAMILY : unsigned char
+        { OS_FAMILY_UNKNOWN
+        , OS_FAMILY_ANDROID
+        , OS_FAMILY_ARDUINO
+        , OS_FAMILY_FREERTOS
+        , OS_FAMILY_IOS
+        , OS_FAMILY_LINUX
+        , OS_FAMILY_MACOS
+        , OS_FAMILY_NO_OS
+        , OS_FAMILY_PI
+        , OS_FAMILY_RTOS
+        , OS_FAMILY_WINDOWS
+        , OS_FAMILY_CUSTOM          = 0x80
+        };
+
+#define GDEFINE_ENUM_NAMEP(TEnum)                       tplt<TEnum> ndstinx const char* get_enum_namep  (const TEnum&)  noexcpt { return #TEnum; }
+    GDEFINE_ENUM_NAMEP(DEVICE_TYPE  );
+    GDEFINE_ENUM_NAMEP(OPCODE_SET   );
+    GDEFINE_ENUM_NAMEP(OPCODE_EXT   );
+    GDEFINE_ENUM_NAMEP(OS_FAMILY    );
+
+#define llc_enum_value_level(_funcPrintf, _enumValue)	_funcPrintf("'%s':(0x%X)(%" LLC_FMT_I32 ")(%c)'%s'", ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue))
+
+    nodscrd const char* get_value_namep (DEVICE_TYPE    value)  noexcpt;
+    nodscrd const char* get_value_namep (OPCODE_SET     value)  noexcpt;
+    nodscrd const char* get_value_namep (OPCODE_EXT     value)  noexcpt;
+    nodscrd const char* get_value_namep (OS_FAMILY      value)  noexcpt;
+} // namespace
 
 #endif // LLC_PLATFORM_GLOBALS_H_23627

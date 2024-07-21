@@ -759,6 +759,9 @@
     <ClInclude Include="llc_micro.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="llc_pack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="llc_adam7.cpp">
@@ -976,6 +979,9 @@
     </ClCompile>
     <ClCompile Include="llc_apod_tcpip.cpp">
       <Filter>aliases</Filter>
+    </ClCompile>
+    <ClCompile Include="llc_pack.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
