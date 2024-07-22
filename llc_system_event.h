@@ -50,8 +50,8 @@ namespace llc
 
 		cnstxpr						SDeviceResult	(::llc::RESULT deviceEvent = ::llc::RESULT_Error)
 			: SystemEvent {::llc::SYSTEM_EVENT_Device}
-			, TailWidth   {::llc::tail_width<uint32_t>((uint32_t)sizeof(::llc::RESULT))}
-			, Multiplier  {::llc::tail_multiplier<uint32_t>((uint32_t)sizeof(::llc::RESULT))}
+			, TailWidth   {::llc::uint_tail_width<uint32_t>((uint32_t)sizeof(::llc::RESULT))}
+			, Multiplier  {::llc::uint_tail_multiplier<uint32_t>((uint32_t)sizeof(::llc::RESULT))}
 			, DeviceEvent {deviceEvent}
 			{}
 	};
@@ -63,8 +63,8 @@ namespace llc
 
 		cnstxpr						SDeviceCommand	(::llc::COMMAND deviceEvent = ::llc::COMMAND_Ok)
 			: SystemEvent {::llc::SYSTEM_EVENT_Device}
-			, TailWidth   {::llc::tail_width<uint32_t>((uint32_t)sizeof(::llc::COMMAND))}
-			, Multiplier  {::llc::tail_multiplier<uint32_t>((uint32_t)sizeof(::llc::COMMAND))}
+			, TailWidth   {::llc::uint_tail_width<uint32_t>((uint32_t)sizeof(::llc::COMMAND))}
+			, Multiplier  {::llc::uint_tail_multiplier<uint32_t>((uint32_t)sizeof(::llc::COMMAND))}
 			, DeviceEvent {deviceEvent}
 			{}
 	};
