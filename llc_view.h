@@ -255,7 +255,25 @@ namespace llc
 
 	stainli llc::vcs		str					(const llc::vcs & arg)	{ return arg; } 
 	stainli llc::vcs		str					(const llc::vs & arg)	{ return arg.cc(); } 
-
+	// 
+	tplt_T	ndstinx	::llc::vcs	get_type_namev					()							noexcept	{ return LLC_CXS("unknown"); }
+	tplt_T	ndstinx	const char*	get_type_namep					()							noexcept	{ return get_type_namev<T>().begin(); }
+#define GDEFINE_TYPE_NAME_STR(typeIdentifier)																													\
+			ndstinx	::llc::vcs	get_type_namev					(const typeIdentifier &)	noexcept	{ return LLC_CXS(#typeIdentifier); }					\
+	tplt<>	ndincxp	::llc::vcs	get_type_namev<typeIdentifier>	()							noexcept	{ return LLC_CXS(#typeIdentifier); }					\
+			ndstinx	const char*	get_type_namep					(const typeIdentifier &)	noexcept	{ return get_type_namev<typeIdentifier>().begin(); }	\
+	tplt<>	ndincxp	const char*	get_type_namep<typeIdentifier>	()							noexcept	{ return get_type_namev<typeIdentifier>().begin(); }	
+	GDEFINE_TYPE_NAME_STR(uint8_t	);
+	GDEFINE_TYPE_NAME_STR(uint16_t	);
+	GDEFINE_TYPE_NAME_STR(uint32_t	);
+	GDEFINE_TYPE_NAME_STR(uint64_t	);
+	GDEFINE_TYPE_NAME_STR(int8_t	);
+	GDEFINE_TYPE_NAME_STR(int16_t	);
+	GDEFINE_TYPE_NAME_STR(int32_t	);
+	GDEFINE_TYPE_NAME_STR(int64_t	);
+	GDEFINE_TYPE_NAME_STR(float		);
+	GDEFINE_TYPE_NAME_STR(double	);
+	// 
 	typedef	::llc::view<::llc::vs			>	vvs;
 	typedef	::llc::view<::llc::vcs			>	vvcs;
 	typedef	::llc::view<const ::llc::vs		>	vcvs;
@@ -463,8 +481,8 @@ namespace llc
 	}
 
 	tplt<tpnm TNumber>	
-	TNumber					sum						(::llc::view<const TNumber> input)			{
-		TNumber 				result 					= 0;
+	TNumber						sum						(::llc::view<const TNumber> input)			{
+		TNumber 						result 					= 0;
 		input.for_each([&result](TNumber number) { result += number; });
 		return result;
 	}
