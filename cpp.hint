@@ -1,11 +1,6 @@
 // Hint files help the Visual Studio IDE interpret Visual C++ identifiers
 // such as names of functions and macros.
 // For more information see https://go.microsoft.com/fwlink/?linkid=865984
-#define inlcxpr
-#define stacxpr
-#define stainli
-#define stincxp
-#define cnstxpr	
 
 #define llc_debug_printf
 #define always_printf
@@ -92,11 +87,41 @@
 #define rww_if
 #define rwi_if
 
+#define GDEFINE_TYPE_NAME_STR
 #define GDEFINE_ENUM_TYPE
 #define GDEFINE_ENUM_VALUE
 #define GDEFINE_ENUM_VALUED
 #define GDEFINE_ENUM_VALTD
 #define GDEFINE_FLAG_TYPE
 #define GDEFINE_FLAG_VALUE
-#define llc_warning_unhandled_value
 #define CONTROL_STATE_SET_FUNCTION
+#define llc_warning_unhandled_value
+
+#define vltl	            
+#define tpnm	            
+#define tplt	            
+#define tplt_T	            
+#define tplt_TInTOut        
+#define tplt_T_Nu32         
+
+#define prtctd              
+#define privte              
+#define noexcpt	            
+
+#define operatr	            
+#define cnstxpr	            
+#define inlcxpr	            
+#define stacxpr	            
+#define stainli	            
+#define stincxp	            
+
+#define nodscrd             
+#define ndsttic             
+#define ndinlne             
+#define ndcnxpr             
+#define ndstain             
+#define ndstcxp             
+#define ndincxp             
+#define ndstinx             
+
+#define cxp_if

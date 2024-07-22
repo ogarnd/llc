@@ -48,7 +48,7 @@ namespace llc
 	tplt<tpnm T>
 	class array_base : public view<T> {
 		static	uint32_t		calc_reserve_count		(const uint32_t newCountRequested, uint32_t & outCount)	noexcept	{ 
-			stacxpr	uint32_t			MAX_COUNT				= 0x7FFFFFFFU;
+			stacxpr	uint32_t			MAX_COUNT				= 0x3FFFFFFFU;
 			if(MAX_COUNT < newCountRequested)
 				return (uint32_t)-1;
 
@@ -60,8 +60,8 @@ namespace llc
 		using					view<T>::Data;
 
 		typedef					array_base<T>			TArray;
-		uint32_t				Size					: 31;
-		uint32_t				NoAlloc					: 1;
+		uint32_t				Size					: 30;
+		uint32_t				NoAlloc					: 2;
 //		uint32_t				Offset					= 0;
 
 		inline					~array_base				()							noexcept	{ if(0 == NoAlloc) ::llc::safe_llc_free(Data); }

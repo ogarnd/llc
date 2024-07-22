@@ -18,8 +18,8 @@ namespace llc
 	tplt_T stainli		err_t	saveView			(ai8 & output, const view<T> & headerToWrite) { return saveView(*(au8*)&output, headerToWrite); }
 	tplt_T				err_t	savePOD				(au8 & output, const T & input)	{ llc_necs(output.append((const uint8_t*)&input, sizeof(T))); return sizeof(T); }
 	tplt_T stainli		err_t	savePOD				(ai8 & output, const T & input)	{ return savePOD(*(au8*)&output, input); }
-	tplt_T				err_t	saveInt				(au8 & output, const T & input)	{ 
-		const packed_int<T>			packedInput			= input; 
+	tplt_T				err_t	saveUInt			(au8 & output, const T & input)	{ 
+		const packed_uint<T>			packedInput			= input; 
 		llc_necs(output.append(packedInput.cu8())); 
 		return packedInput.ValueWidth(); 
 	}

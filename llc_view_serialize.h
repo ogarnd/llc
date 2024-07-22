@@ -15,17 +15,17 @@ namespace llc
 	}
 	tplt_T	stainli	err_t	loadPOD			(vci8 & input, T & output)	{ return loadPOD (*(vcu8*)& input, output); }
 	tplt_T	stainli	err_t	loadPOD			(vcc  & input, T & output)	{ return loadPOD (*(vcu8*)& input, output); }
-
-	tplt_T			err_t	loadInt			(vcu8 & input, T & output)	{
-		const packed_int<T>			& packedInput	= *(const packed_int<T>*)input.begin(); 
+	//
+	tplt_T			err_t	loadUInt		(vcu8 & input, T & output)	{
+		const packed_uint<T>		& packedInput	= *(const packed_uint<T>*)input.begin(); 
 		if_true_ve(-1, packedInput.ValueWidth() > input.size()); 
 		output					= packedInput.Value(); 
 		llc_necs(input.slice(input, packedInput.ValueWidth())); 
 		return packedInput.ValueWidth();
 	}
-	tplt_T	stainli	err_t	loadInt			(vci8 & input, T & output)			{ return loadInt (*(vcu8*)& input, output); }
-	tplt_T	stainli	err_t	loadInt			(vcc  & input, T & output)			{ return loadInt (*(vcu8*)& input, output); }
-	
+	tplt_T	stainli	err_t	loadUInt		(vci8 & input, T & output)	{ return loadUInt (*(vcu8*)& input, output); }
+	tplt_T	stainli	err_t	loadUInt		(vcc  & input, T & output)	{ return loadUInt (*(vcu8*)& input, output); }
+	//
 	tplt<tpnm T, tpnm TByte>
 	err_t					viewRead		(view<T> & headerToRead, view<TByte> input)	{
 		const packedu32				& header		= *(const packedu32*)input.begin();
@@ -43,7 +43,16 @@ namespace llc
 	tplt_T	stainli	err_t	viewRead		(view<T> & headerToRead, vu8 input)					{ return viewRead<T, uint8_t>(headerToRead, input); }
 	tplt_T	stainli	err_t	viewRead		(view<T> & headerToRead, vi8 input)					{ return viewRead<T, int8_t >(headerToRead, input); }
 	tplt_T	stainli	err_t	viewRead		(view<T> & headerToRead, vc  input)					{ return viewRead<T, char   >(headerToRead, input); }
-
+	//
+	tplt_T			err_t	loadView		(vcu8 & input, view<const T> & output) { 
+		uint32_t					bytesRead		= 0;
+		llc_necs(bytesRead = viewRead(output, input)); 
+		llc_necs(input.slice(input, bytesRead));
+		return 0;
+	}
+	tplt_T	stainli	err_t	loadView	(vci8 & input, view<T> & output) { return loadView(*(vcu8*)& input, output); }
+	tplt_T	stainli	err_t	loadView	(vcc  & input, view<T> & output) { return loadView(*(vcu8*)& input, output); }
+	//
 	tplt<tpnm T, tpnm TByte>
 	err_t					viewReadLegacy	(view<T> & headerToRead, view<TByte> input)	{
 		const uint32_t				counterWidth	= sizeof(uint32_t);
@@ -60,16 +69,6 @@ namespace llc
 	tplt_T	stainli	err_t	viewReadLegacy	(view<T> & headerToRead, vu8 input)					{ return viewReadLegacy<T, uint8_t>(headerToRead, input); }
 	tplt_T	stainli	err_t	viewReadLegacy	(view<T> & headerToRead, vi8 input)					{ return viewReadLegacy<T, int8_t >(headerToRead, input); }
 	tplt_T	stainli	err_t	viewReadLegacy	(view<T> & headerToRead, vc  input)					{ return viewReadLegacy<T, char   >(headerToRead, input); }
-
-
-	tplt_T			err_t	loadView		(vcu8 & input, view<const T> & output) { 
-		uint32_t					bytesRead		= 0;
-		llc_necs(bytesRead = viewRead(output, input)); 
-		llc_necs(input.slice(input, bytesRead));
-		return 0;
-	}
-	tplt_T	stainli	err_t	loadView	(vci8 & input, view<T> & output) { return loadView(*(vcu8*)& input, output); }
-	tplt_T	stainli	err_t	loadView	(vcc  & input, view<T> & output) { return loadView(*(vcu8*)& input, output); }
 } // namespace
 
 #endif // LLC_VIEW_SERIALIZE_H_23627

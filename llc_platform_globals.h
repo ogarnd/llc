@@ -76,40 +76,46 @@
 #endif
 
 // These aliases make keyword width to be consistent and makes the code less verbose.
-#define vltl	        volatile
-#define tpnm	        typename
-#define tplt	        template
-#define tplt_T	        tplt<tpnm T>
-#define tplt_TInTOut    tplt<tpnm TIn, tpnm TOut>
-#define tplt_T_Nu32     tplt<tpnm T, uint32_t N>
+#define vltl	            volatile
+#define tpnm	            typename
+#define tplt	            template
+#define tplt_T	            tplt<tpnm T>
+#define tplt_TInTOut        tplt<tpnm TIn, tpnm TOut>
+#define tplt_T_Nu32         tplt<tpnm T, uint32_t N>
 
-#define operatr	        operator
-#define cnstxpr	        constexpr
-#define noexcpt	        noexcept
-#define prtctd          protected
-#define privte          private
+#define prtctd              protected
+#define privte              private
+#define noexcpt	            noexcept
 
-#define opr             operatr
-#define cxp             cnstxpr
-#define nxp             noexcpt
-#define inl             inline
+//#define nxcp              noexcpt
+//#define inln              inline
+//#define sttc              static
+//#define oprt              operatr
+//#define cxpr              cnstxpr
 
-#define inlcxpr	inline  cnstxpr
-#define stacxpr	static  cnstxpr
-#define stainli	static  inline
-#define stincxp	stainli	cnstxpr
 
-#define nodscrd [[nodiscard]]
-#define ndsttic nodscrd static
-#define ndinlne nodscrd inline
-#define ndcnxpr nodscrd cnstxpr
-#define ndstain ndsttic inline
-#define ndstcxp ndsttic cnstxpr
-#define ndincxp ndinlne cnstxpr
-#define ndstinx ndstain cnstxpr
+#define operatr	            operator
+#define cnstxpr	            constexpr
+#define inlcxpr	            inline  cnstxpr
+#define stacxpr	            static  cnstxpr
+#define stainli	            static  inline
+#define stincxp	            stainli cnstxpr
+
+#define nodscrd             [[nodiscard]]
+#define ndsttic             nodscrd static
+#define ndinlne             nodscrd inline
+#define ndcnxpr             nodscrd cnstxpr
+#define ndstain             ndsttic inline
+#define ndstcxp             ndsttic cnstxpr
+#define ndincxp             ndinlne cnstxpr
+#define ndstinx             ndstain cnstxpr
+
+#define cxp_if(condition)   if cnstxpr(condition)
+#define if_not(condition)   if not(condition)
 
 #define	LLC_STRINGIFY(x) #x
 #define	LLC_TOSTRING(x)  LLC_STRINGIFY(x)
+
 
 #ifndef LLC_ATMEL
 #	define LLC_FMT_F32 "f"
@@ -164,6 +170,13 @@
 #define LLC_FMT_U32_LE_U32 "%" LLC_FMT_U32 " <= %" LLC_FMT_U32
 #define LLC_FMT_I64_LE_I64 "%" LLC_FMT_I64 " <= %" LLC_FMT_I64
 #define LLC_FMT_U64_LE_U64 "%" LLC_FMT_U64 " <= %" LLC_FMT_U64
+
+#define LLC_FMT_F32_NE_F32 "%" LLC_FMT_F32 " != %" LLC_FMT_F32
+#define LLC_FMT_F64_NE_F64 "%" LLC_FMT_F64 " != %" LLC_FMT_F64
+#define LLC_FMT_I32_NE_I32 "%" LLC_FMT_I32 " != %" LLC_FMT_I32
+#define LLC_FMT_U32_NE_U32 "%" LLC_FMT_U32 " != %" LLC_FMT_U32
+#define LLC_FMT_I64_NE_I64 "%" LLC_FMT_I64 " != %" LLC_FMT_I64
+#define LLC_FMT_U64_NE_U64 "%" LLC_FMT_U64 " != %" LLC_FMT_U64
 
 #define LLCREP0(param)              (param)
 #define LLCREP1(param)              LLCREP0(param), (param)
