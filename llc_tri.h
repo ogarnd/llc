@@ -17,7 +17,7 @@ namespace llc
 		LLC_DEFAULT_OPERATOR(tri<_tVertex>, A == other.A && B == other.B && C == other.C);
 	};
 	typedef	tri<char>		trichar;
-	typedef	tri<uchar_t>	triuchar;
+	typedef	tri<uc_t>	triuchar;
 	typedef	tri<float>		trif32;
 	typedef	tri<double>		trif64;
 	typedef	tri<uint8_t>	triu8;

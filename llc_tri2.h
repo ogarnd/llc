@@ -48,7 +48,7 @@ namespace llc
 		}
 	};
 	typedef	tri2<char>		tri2char;
-	typedef	tri2<uchar_t>	tri2uchar;
+	typedef	tri2<uc_t>	tri2uchar;
 	typedef	tri2<float>		tri2f32;
 	typedef	tri2<double>	tri2f64;
 	typedef	tri2<uint8_t>	tri2u8;

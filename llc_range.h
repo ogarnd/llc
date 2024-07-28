@@ -6,7 +6,7 @@
 namespace llc
 {
 #pragma pack(push, 1)
-	tplt_T
+	tpltT
 	struct range {	
 		T							Offset, Count;	
 		LLC_DEFAULT_OPERATOR(range <T>, Offset == other.Offset && Count == other.Count); 
@@ -27,7 +27,7 @@ namespace llc
 #pragma pack(pop)
 
 	typedef	range<char		>	rangechar;
-	typedef	range<uchar_t	>	rangeuchar;
+	typedef	range<uc_t	>	rangeuchar;
 	typedef range<float		>	rangef32;
 	typedef range<double	>	rangef64;
 	typedef range<uint8_t	>	rangeu8;

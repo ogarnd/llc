@@ -27,7 +27,7 @@ namespace llc
 		inlcxpr	minmax<_tOther>	Cast		()				const	noexcept	{ return{(_tOther)Min, (_tOther)Max}; }
 
 		inlcxpr	minmax<char		>	c		()				const	noexcept	{ return Cast<char		>(); }
-		inlcxpr	minmax<uchar_t	>	uc		()				const	noexcept	{ return Cast<uchar_t	>(); }
+		inlcxpr	minmax<uc_t	>	uc		()				const	noexcept	{ return Cast<uc_t	>(); }
 		inlcxpr	minmax<uint8_t	>	u8		()				const	noexcept	{ return Cast<uint8_t	>(); }
 		inlcxpr	minmax<uint16_t	>	u16		()				const	noexcept	{ return Cast<uint16_t	>(); }
 		inlcxpr	minmax<uint32_t	>	u32		()				const	noexcept	{ return Cast<uint32_t	>(); }
@@ -44,7 +44,7 @@ namespace llc
 	};
 #pragma pack(pop)
 	typedef	minmax<char		>	minmaxchar, minmaxc;
-	typedef	minmax<uchar_t	>	minmaxuchar, minmaxuc;
+	typedef	minmax<uc_t	>	minmaxuchar, minmaxuc;
 	typedef minmax<float	>	minmaxf32;
 	typedef minmax<double	>	minmaxf64;
 	typedef minmax<uint8_t	>	minmaxu8;

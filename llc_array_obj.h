@@ -265,7 +265,7 @@ namespace llc
 	tplt <tpnm T>	using aview		= ::llc::aobj	<::llc::view<T>>; 
 	tplt <tpnm T>	using av		= ::llc::aview	<T>; 
 
-	typedef	::llc::aview<uchar_t	>	avuc;
+	typedef	::llc::aview<uc_t	>	avuc;
 	typedef	::llc::aview<char		>	avc;
 	typedef	::llc::aview<float		>	avf32, avf;
 	typedef	::llc::aview<double		>	avf64, avd;
@@ -279,7 +279,7 @@ namespace llc
 	typedef	::llc::aview<int64_t	>	avi64;
 
 	// view<const> common typedefs
-	typedef	::llc::aview<const uchar_t	>	avcuc;
+	typedef	::llc::aview<const uc_t	>	avcuc;
 	typedef	::llc::aview<const char		>	avcc;
 	typedef	::llc::aview<const float	>	avcf32, avcf;
 	typedef	::llc::aview<const double	>	avcf64, avcd;

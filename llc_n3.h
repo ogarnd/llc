@@ -183,31 +183,31 @@ namespace llc
 			return *this;
 		}
 	};	// struct n3
-	typedef	n3<char>		n3char;
-	typedef	n3<uchar_t>		n3uchar;
-	typedef	n3<float>		n3f32;
-	typedef	n3<double>		n3f64;
-	typedef	n3<uint8_t>		n3u8;
-	typedef	n3<uint16_t>	n3u16;
-	typedef	n3<uint32_t>	n3u32;
-	typedef	n3<uint64_t>	n3u64;
-	typedef	n3<int8_t>		n3i8;
-	typedef	n3<int16_t>		n3i16;
-	typedef	n3<int32_t>		n3i32;
-	typedef	n3<int64_t>		n3i64;
+	typedef	n3<uc_t>		n3uc_t, n3uchar;
+	typedef	n3<sc_t>		n3sc_t, n3char;
+	typedef	n3<u0_t>		n3u0_t, n3u8;
+	typedef	n3<u1_t>		n3u1_t, n3u16;
+	typedef	n3<u2_t>		n3u2_t, n3u32;
+	typedef	n3<u3_t>		n3u3_t, n3u64;
+	typedef	n3<s0_t>		n3s0_t, n3i8;
+	typedef	n3<s1_t>		n3s1_t, n3i16;
+	typedef	n3<s2_t>		n3s2_t, n3i32;
+	typedef	n3<s3_t>		n3s3_t, n3i64;
+	typedef	n3<f2_t>		n3f2_t, n3f32;
+	typedef	n3<f3_t>		n3f3_t, n3f64;
 
-	typedef	const n3char	cn3char		;
-	typedef	const n3uchar	cn3uchar	;
-	typedef	const n3f32		cn3f32		;
-	typedef	const n3f64		cn3f64		;
-	typedef	const n3u8		cn3u8		;
-	typedef	const n3u16		cn3u16		;
-	typedef	const n3u32		cn3u32		;
-	typedef	const n3u64		cn3u64		;
-	typedef	const n3i8		cn3i8		;
-	typedef	const n3i16		cn3i16		;
-	typedef	const n3i32		cn3i32		;
-	typedef	const n3i64		cn3i64		;
+	typedef	const n3uc_t	n3uc_c;
+	typedef	const n3sc_t	n3sc_c;
+	typedef	const n3u0_t	n3u0_c;
+	typedef	const n3u1_t	n3u1_c;
+	typedef	const n3u2_t	n3u2_c;
+	typedef	const n3u3_t	n3u3_c;
+	typedef	const n3s0_t	n3s0_c;
+	typedef	const n3s1_t	n3s1_c;
+	typedef	const n3s2_t	n3s2_c;
+	typedef	const n3s3_t	n3s3_c;
+	typedef	const n3f2_t	n3f2_c;
+	typedef	const n3f3_t	n3f3_c;
 
 #pragma pack(pop)	// You can read about pragma pack() here: https://www.google.com/search?q=pragma+pack
 } // namespace

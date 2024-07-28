@@ -801,4 +801,52 @@ namespace llc
 #define ci_ecallf if_fail_cif
 #define cv_ecallf if_fail_cvf
 
+#define llc_fail_if_eq(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left == (n2u_right), str_format, n2u_left, n2u_right)
+#define llc_fail_if_ne(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left != (n2u_right), str_format, n2u_left, n2u_right)
+#define llc_fail_if_lt(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left  < (n2u_right), str_format, n2u_left, n2u_right)
+#define llc_fail_if_le(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left <= (n2u_right), str_format, n2u_left, n2u_right)
+#define llc_fail_if_ge(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left >= (n2u_right), str_format, n2u_left, n2u_right)
+#define llc_fail_if_gt(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left  > (n2u_right), str_format, n2u_left, n2u_right)
+
+#define fail_if_eq2u(n2u_left, n2u_right) llc_fail_if_eq(LLC_FMT_EQ_U32, uint32_t(n2u_left), uint32_t(n2u_right))
+#define fail_if_ne2u(n2u_left, n2u_right) llc_fail_if_ne(LLC_FMT_NE_U32, uint32_t(n2u_left), uint32_t(n2u_right))
+#define fail_if_lt2u(n2u_left, n2u_right) llc_fail_if_lt(LLC_FMT_LT_U32, uint32_t(n2u_left), uint32_t(n2u_right))
+#define fail_if_le2u(n2u_left, n2u_right) llc_fail_if_le(LLC_FMT_LE_U32, uint32_t(n2u_left), uint32_t(n2u_right))
+#define fail_if_ge2u(n2u_left, n2u_right) llc_fail_if_ge(LLC_FMT_GE_U32, uint32_t(n2u_left), uint32_t(n2u_right))
+#define fail_if_gt2u(n2u_left, n2u_right) llc_fail_if_gt(LLC_FMT_GT_U32, uint32_t(n2u_left), uint32_t(n2u_right))
+
+#define fail_if_eq2s(n2s_left, n2s_right) llc_fail_if_eq(LLC_FMT_EQ_I32, int32_t(n2s_left), int32_t(n2s_right))
+#define fail_if_ne2s(n2s_left, n2s_right) llc_fail_if_ne(LLC_FMT_NE_I32, int32_t(n2s_left), int32_t(n2s_right))
+#define fail_if_lt2s(n2s_left, n2s_right) llc_fail_if_lt(LLC_FMT_LT_I32, int32_t(n2s_left), int32_t(n2s_right))
+#define fail_if_le2s(n2s_left, n2s_right) llc_fail_if_le(LLC_FMT_LE_I32, int32_t(n2s_left), int32_t(n2s_right))
+#define fail_if_ge2s(n2s_left, n2s_right) llc_fail_if_ge(LLC_FMT_GE_I32, int32_t(n2s_left), int32_t(n2s_right))
+#define fail_if_gt2s(n2s_left, n2s_right) llc_fail_if_gt(LLC_FMT_GT_I32, int32_t(n2s_left), int32_t(n2s_right))
+
+#define fail_if_eq3u(n3u_left, n3u_right) llc_fail_if_eq(LLC_FMT_EQ_U64, uint64_t(n3u_left), uint64_t(n3u_right))
+#define fail_if_ne3u(n3u_left, n3u_right) llc_fail_if_ne(LLC_FMT_NE_U64, uint64_t(n3u_left), uint64_t(n3u_right))
+#define fail_if_lt3u(n3u_left, n3u_right) llc_fail_if_lt(LLC_FMT_LT_U64, uint64_t(n3u_left), uint64_t(n3u_right))
+#define fail_if_le3u(n3u_left, n3u_right) llc_fail_if_le(LLC_FMT_LE_U64, uint64_t(n3u_left), uint64_t(n3u_right))
+#define fail_if_ge3u(n3u_left, n3u_right) llc_fail_if_ge(LLC_FMT_GE_U64, uint64_t(n3u_left), uint64_t(n3u_right))
+#define fail_if_gt3u(n3u_left, n3u_right) llc_fail_if_gt(LLC_FMT_GT_U64, uint64_t(n3u_left), uint64_t(n3u_right))
+
+#define fail_if_eq3s(n3s_left, n3s_right) llc_fail_if_eq(LLC_FMT_EQ_I64, int64_t(n3s_left), int64_t(n3s_right))
+#define fail_if_ne3s(n3s_left, n3s_right) llc_fail_if_ne(LLC_FMT_NE_I64, int64_t(n3s_left), int64_t(n3s_right))
+#define fail_if_lt3s(n3s_left, n3s_right) llc_fail_if_lt(LLC_FMT_LT_I64, int64_t(n3s_left), int64_t(n3s_right))
+#define fail_if_le3s(n3s_left, n3s_right) llc_fail_if_le(LLC_FMT_LE_I64, int64_t(n3s_left), int64_t(n3s_right))
+#define fail_if_ge3s(n3s_left, n3s_right) llc_fail_if_ge(LLC_FMT_GE_I64, int64_t(n3s_left), int64_t(n3s_right))
+#define fail_if_gt3s(n3s_left, n3s_right) llc_fail_if_gt(LLC_FMT_GT_I64, int64_t(n3s_left), int64_t(n3s_right))
+
+#define fail_if_equ fail_if_eq2u
+#define fail_if_neu fail_if_ne2u
+#define fail_if_ltu fail_if_lt2u
+#define fail_if_leu fail_if_le2u
+#define fail_if_geu fail_if_ge2u
+#define fail_if_gtu fail_if_gt2u
+#define fail_if_eqs fail_if_eq2s
+#define fail_if_nes fail_if_ne2s
+#define fail_if_lts fail_if_lt2s
+#define fail_if_les fail_if_le2s
+#define fail_if_ges fail_if_ge2s
+#define fail_if_gts fail_if_gt2s
+
 #endif // LLC_LOG_LEVEL_H

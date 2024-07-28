@@ -103,56 +103,56 @@ namespace llc
 
 	::llc::error_t	jsonObjectGetString (const ::llc::SJSONReader & reader, uint32_t iNode, vcc		& value);
 	::llc::error_t	jsonObjectGetBoolean(const ::llc::SJSONReader & reader, uint32_t iNode, bool	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i64_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i32_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i16_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i8_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, u64_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, u32_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, u16_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, u8_t	& value);
-	::llc::error_t	jsonObjectGetDecimal(const ::llc::SJSONReader & reader, uint32_t iNode, double	& value);
-	::llc::error_t	jsonObjectGetDecimal(const ::llc::SJSONReader & reader, uint32_t iNode, float	& value);
+	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i0u_t	& value);
+	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i1u_t	& value);
+	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i2u_t	& value);
+	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i3u_t	& value);
+	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i0s_t	& value);
+	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i1s_t	& value);
+	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i2s_t	& value);
+	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i3s_t	& value);
+	::llc::error_t	jsonObjectGetDecimal(const ::llc::SJSONReader & reader, uint32_t iNode, f2s_t	& value);
+	::llc::error_t	jsonObjectGetDecimal(const ::llc::SJSONReader & reader, uint32_t iNode, f3s_t	& value);
 
 	// TODO: Finish
 	//::llc::error_t	jsonObjectGetIntegerAsString (const ::llc::SJSONReader & reader, uint32_t iNode, vcc	& value);
 	::llc::error_t	jsonObjectGetIntegerAsBoolean(const ::llc::SJSONReader & reader, uint32_t iNode, bool	& value);
 	::llc::error_t	jsonObjectGetIntegerAsDecimal(const ::llc::SJSONReader & reader, uint32_t iNode, double	& value);
-	::llc::error_t	jsonObjectGetDecimalAsInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i64_t	& value);
+	::llc::error_t	jsonObjectGetDecimalAsInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i3s_t	& value);
 	//::llc::error_t	jsonObjectGetDecimalAsString (const ::llc::SJSONReader & reader, uint32_t iNode, vcc	& value);
 	::llc::error_t	jsonObjectGetDecimalAsBoolean(const ::llc::SJSONReader & reader, uint32_t iNode, bool	& value);
 	//::llc::error_t	jsonObjectGetStringAsInteger (const ::llc::SJSONReader & reader, uint32_t iNode, i64_t	& value);
 	//::llc::error_t	jsonObjectGetStringAsBoolean (const ::llc::SJSONReader & reader, uint32_t iNode, bool	& value);
 	//::llc::error_t	jsonObjectGetStringAsDecimal (const ::llc::SJSONReader & reader, uint32_t iNode, double	& value);
-	::llc::error_t	jsonObjectGetBooleanAsInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i64_t	& value);
+	::llc::error_t	jsonObjectGetBooleanAsInteger(const ::llc::SJSONReader & reader, uint32_t iNode, i3s_t	& value);
 	//::llc::error_t	jsonObjectGetBooleanAsString (const ::llc::SJSONReader & reader, uint32_t iNode, vcc	& value);
 	::llc::error_t	jsonObjectGetBooleanAsDecimal(const ::llc::SJSONReader & reader, uint32_t iNode, double	& value);
 	// 
 	//::llc::error_t	jsonObjectGetAsString	(const ::llc::SJSONReader & reader, uint32_t iNode, vcc		& value);
 	//::llc::error_t	jsonObjectGetAsBoolean	(const ::llc::SJSONReader & reader, uint32_t iNode, bool	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i64_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i32_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i16_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i8_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, u64_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, u32_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, u16_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, u8_t	& value);
-	//::llc::error_t	jsonObjectGetAsDecimal	(const ::llc::SJSONReader & reader, uint32_t iNode, double	& value);
-	//::llc::error_t	jsonObjectGetAsDecimal	(const ::llc::SJSONReader & reader, uint32_t iNode, float	& value);
+	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i0u_t	& value);
+	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i1u_t	& value);
+	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i2u_t	& value);
+	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i3u_t	& value);
+	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i0s_t	& value);
+	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i1s_t	& value);
+	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i2s_t	& value);
+	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i3s_t	& value);
+	//::llc::error_t	jsonObjectGetAsDecimal	(const ::llc::SJSONReader & reader, uint32_t iNode, f2s_t	& value);
+	//::llc::error_t	jsonObjectGetAsDecimal	(const ::llc::SJSONReader & reader, uint32_t iNode, f3s_t	& value);
 
 	::llc::error_t	jsonObjectGetAsString	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, vcc		& value);
 	::llc::error_t	jsonObjectGetAsBoolean	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, bool	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, i64_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, i32_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, i16_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, i8_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, u64_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, u32_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, u16_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, u8_t	& value);
-	::llc::error_t	jsonObjectGetAsDecimal	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, double	& value);
-	::llc::error_t	jsonObjectGetAsDecimal	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, float	& value);
+	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, i0u_t	& value);
+	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, i1u_t	& value);
+	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, i2u_t	& value);
+	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, i3u_t	& value);
+	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, i0s_t	& value);
+	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, i1s_t	& value);
+	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, i2s_t	& value);
+	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, i3s_t	& value);
+	::llc::error_t	jsonObjectGetAsDecimal	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, f2s_t	& value);
+	::llc::error_t	jsonObjectGetAsDecimal	(const ::llc::SJSONReader & reader, uint32_t iNode, const ::llc::vcs & key, f3s_t	& value);
 
 	struct SJSONFile {
 		::llc::achar			Bytes					= {};

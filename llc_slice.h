@@ -29,7 +29,7 @@ namespace llc
 #pragma pack(pop)
 
 	typedef	slice<char		>	slicechar;
-	typedef	slice<uchar_t	>	sliceuchar;
+	typedef	slice<uc_t	>	sliceuchar;
 	typedef slice<float		>	slicef32;
 	typedef slice<double	>	slicef64;
 	typedef slice<uint8_t	>	sliceu8;

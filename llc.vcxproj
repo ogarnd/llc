@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="llc_cerrno.h" />
     <ClInclude Include="llc_micro.h" />
     <ClInclude Include="llc_bus.h" />
     <ClInclude Include="llc_adam7.h" />

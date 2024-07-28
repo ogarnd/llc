@@ -20,12 +20,12 @@ namespace llc
     GDEFINE_ENUM_VALUE(PACK_FILTER, 3, 3);
     GDEFINE_ENUM_VALUE(PACK_FILTER, 4, 4);
 
-    tplt_TInTOut    err_t   packFilter0 (apod<TOut> & filtered, view<const TIn> unfiltered)                         { return unfiltered.for_each([&filtered](const TIn & element) { return filtered.push_back(element); } ); }
-    tplt_TInTOut    err_t   packFilter1 (apod<TOut> & filtered, view<const TIn> unfiltered)                         { return unfiltered.for_each([&filtered](const TIn & element) { return filtered.push_back(element); } ); }
-    tplt_TInTOut    err_t   packFilter2 (apod<TOut> & filtered, view<const TIn> unfiltered)                         { return unfiltered.for_each([&filtered](const TIn & element) { return filtered.push_back(element); } ); }
-    tplt_TInTOut    err_t   packFilter3 (apod<TOut> & filtered, view<const TIn> unfiltered)                         { return unfiltered.for_each([&filtered](const TIn & element) { return filtered.push_back(element); } ); }
-    tplt_TInTOut    err_t   packFilter4 (apod<TOut> & filtered, view<const TIn> unfiltered)                         { return unfiltered.for_each([&filtered](const TIn & element) { return filtered.push_back(element); } ); }
-    tplt_TInTOut    err_t   packFilter  (apod<TOut> & filtered, view<const TIn> unfiltered, PACK_FILTER filterType) {
+    tpltTInTOut    err_t   packFilter0 (apod<TOut> & filtered, view<const TIn> unfiltered)                         { return unfiltered.for_each([&filtered](const TIn & element) { return filtered.push_back(element); } ); }
+    tpltTInTOut    err_t   packFilter1 (apod<TOut> & filtered, view<const TIn> unfiltered)                         { return unfiltered.for_each([&filtered](const TIn & element) { return filtered.push_back(element); } ); }
+    tpltTInTOut    err_t   packFilter2 (apod<TOut> & filtered, view<const TIn> unfiltered)                         { return unfiltered.for_each([&filtered](const TIn & element) { return filtered.push_back(element); } ); }
+    tpltTInTOut    err_t   packFilter3 (apod<TOut> & filtered, view<const TIn> unfiltered)                         { return unfiltered.for_each([&filtered](const TIn & element) { return filtered.push_back(element); } ); }
+    tpltTInTOut    err_t   packFilter4 (apod<TOut> & filtered, view<const TIn> unfiltered)                         { return unfiltered.for_each([&filtered](const TIn & element) { return filtered.push_back(element); } ); }
+    tpltTInTOut    err_t   packFilter  (apod<TOut> & filtered, view<const TIn> unfiltered, PACK_FILTER filterType) {
         switch(filterType) {
         default: llc_enum_value_error(filterType); return -1;
         case PACK_FILTER_0: return filter0(filtered, unfiltered);
@@ -36,10 +36,10 @@ namespace llc
         }
     }
 
-    tplt_TInTOut    err_t   viewPack    (apod<TOut> & /*packed*/, view<const TIn> /*unpacked*/, PACK_TYPE /*packType*/) { return -1; }
-    tplt_TInTOut    err_t   viewPack    (apod<TOut> & /*packed*/, view<const TIn> /*unpacked*/)                         { return -1; }
-    tplt_TInTOut    err_t   viewUnpack  (apod<TOut> & /*packed*/, view<const TIn> /*unpacked*/, PACK_TYPE /*packType*/) { return -1; }
-    tplt_TInTOut    err_t   viewUnpack  (apod<TOut> & /*packed*/, view<const TIn> /*unpacked*/)                         { return -1; }
+    tpltTInTOut    err_t   viewPack    (apod<TOut> & /*packed*/, view<const TIn> /*unpacked*/, PACK_TYPE /*packType*/) { return -1; }
+    tpltTInTOut    err_t   viewPack    (apod<TOut> & /*packed*/, view<const TIn> /*unpacked*/)                         { return -1; }
+    tpltTInTOut    err_t   viewUnpack  (apod<TOut> & /*packed*/, view<const TIn> /*unpacked*/, PACK_TYPE /*packType*/) { return -1; }
+    tpltTInTOut    err_t   viewUnpack  (apod<TOut> & /*packed*/, view<const TIn> /*unpacked*/)                         { return -1; }
 } // namespace
 
 #endif // LLC_PACK_H

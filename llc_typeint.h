@@ -23,123 +23,83 @@
 
 namespace llc
 {
+	typedef	unsigned char	uc_t, c0u_t;
+	typedef	char			sc_t, c0s_t, char_t;
+	typedef uint8_t			u0_t, i0u_t;
+	typedef uint16_t		u1_t, i1u_t;
+	typedef uint32_t		u2_t, i2u_t;
+	typedef uint64_t		u3_t, i3u_t;
+	typedef int8_t			s0_t, i0s_t;
+	typedef int16_t			s1_t, i1s_t;
+	typedef int32_t			s2_t, i2s_t;
+	typedef int64_t			s3_t, i3s_t;
+	typedef float			f2_t, f2s_t;
+	typedef double			f3_t, f3s_t;
+
+	typedef	const uc_t		uc_c, c0u_c;
+	typedef	const sc_t		sc_c, c0s_c, sc_c;
+	typedef	const u0_t		u0_c, i0u_c;
+	typedef	const u1_t		u1_c, i1u_c;
+	typedef	const u2_t		u2_c, i2u_c;
+	typedef	const u3_t		u3_c, i3u_c;
+	typedef	const s0_t		s0_c, i0s_c;
+	typedef	const s1_t		s1_c, i1s_c;
+	typedef	const s2_t		s2_c, i2s_c;
+	typedef	const s3_t		s3_c, i3s_c;
+	typedef	const f2_t		f2_c, f2s_c;
+	typedef	const f3_t		f3_c, f3s_c;
+
 #if defined(LLC_ANDROID) || defined(LLC_CLANG)
 #	pragma clang diagnostic push
 #	pragma clang diagnostic ignored "-Wtautological-constant-out-of-range-compare"
 #endif
 	// -- Returns 0 on little-endian machines
-	ndstain int		test_endianness		()	noexcept	{ stacxpr uint16_t test = 0xFF00U; return (((const  char*)&test)[0] == 0xFFU) ? 1 : 0; }
+	ndstain int		test_endianness		()	noexcept	{ stacxpr u1_c test = 0xFF00U; return (0xFFU == ((const  char*)&test)[0]) ? 1 : 0; }
 #if defined(LLC_ANDROID) || defined(LLC_CLANG)
 #	pragma clang diagnostic pop
 #endif
-	typedef	float			float32_t	;
-	typedef	double			float64_t	;
-	typedef	char			char_t  ;
-	typedef	unsigned char	uchar_t , uchar;
 
-	typedef	unsigned int	uint_t, uint;
-	typedef	unsigned short	ushort_t , ushort;
+#define tpltN0u     tplt<u0_t N>
+#define tpltN1u     tplt<u1_t N>
+#define tpltN2u     tplt<u2_t N>
+#define tpltN3u     tplt<u3_t N>
+#define	tpltTIn     tplt<tpnm TIn>
+#define	tpltTOut    tplt<tpnm TOut>
+#define	tpltTN2     tplt<tpnm T     , u2_t N>
+#define	tpltTOutN2  tplt<tpnm TOut  , u2_t N>
+#define	tpltTInN2   tplt<tpnm TIn   , u2_t N>
 
-	typedef	const int8_t	cint8_t 	;
-	typedef	const int16_t	cint16_t	;
-	typedef	const int32_t	cint32_t	;
-	typedef	const int64_t	cint64_t	;
-	typedef	const uint8_t	cuint8_t	;
-	typedef	const uint16_t	cuint16_t	;
-	typedef	const uint32_t	cuint32_t	;
-	typedef	const uint64_t	cuint64_t	;
-	typedef	const float32_t	cfloat32_t	;
-	typedef	const float64_t	cfloat64_t	;
-	typedef	const char_t	cchar_t , cchar;
-	typedef	const uchar_t	cuchar_t, cuchar;
-
-	typedef int8_t		i8_t ;
-	typedef int16_t		i16_t;
-	typedef int32_t		i32_t;
-	typedef int64_t		i64_t;
-	typedef uint8_t		u8_t ;
-	typedef uint16_t	u16_t;
-	typedef uint32_t	u32_t;
-	typedef uint64_t	u64_t;
-	typedef float		f32_t;
-	typedef double		f64_t;
-
-	typedef	const int8_t	ci8_t ;
-	typedef	const int16_t	ci16_t;
-	typedef	const int32_t	ci32_t;
-	typedef	const int64_t	ci64_t;
-	typedef	const uint8_t	cu8_t ;
-	typedef	const uint16_t	cu16_t;
-	typedef	const uint32_t	cu32_t;
-	typedef	const uint64_t	cu64_t;
-	typedef	const float32_t	cf32_t;
-	typedef	const float64_t	cf64_t;
-
-	typedef int8_t		i8 ;
-	typedef int16_t		i16;
-	typedef int32_t		i32;
-	typedef int64_t		i64;
-	typedef uint8_t		u8 ;
-	typedef uint16_t	u16;
-	typedef uint32_t	u32;
-	typedef uint64_t	u64;
-	typedef float		f32;
-	typedef double		f64;
-
-	typedef const int8_t	ci8 ;
-	typedef const int16_t	ci16;
-	typedef const int32_t	ci32;
-	typedef const int64_t	ci64;
-	typedef const uint8_t	cu8 ;
-	typedef const uint16_t	cu16;
-	typedef const uint32_t	cu32;
-	typedef const uint64_t	cu64;
-	typedef const float		cf32;
-	typedef const double	cf64;
-
-	stacxpr	const uint8_t	PLATFORM_BYTE_BIT_COUNT								= 8;
+	stacxpr	u0_c	PLATFORM_BYTE_BIT_COUNT					= 8;
 #if defined LLC_WINDOWS
 #	if defined(_WIN64) || defined(WIN64)
 #		define	LLC_REFCOUNT_T		long long
-		typedef vltl	LLC_REFCOUNT_T	refcount_t			;
+		typedef vltl	LLC_REFCOUNT_T	refcount_t;
 #	else
 #		define	LLC_REFCOUNT_T		long
-		typedef vltl	LLC_REFCOUNT_T	refcount_t			;
+		typedef vltl	LLC_REFCOUNT_T	refcount_t;
 #	endif
 #else
 #	define	LLC_REFCOUNT_T	intptr_t
-	typedef vltl	LLC_REFCOUNT_T	refcount_t			;
+	typedef vltl	LLC_REFCOUNT_T	refcount_t;
 #endif
+	tplt<class _tBase>	struct remove_cv							{ using type = _tBase; };
+	tplt<class _tBase>	struct remove_cv<const		_tBase>			{ using type = _tBase; };
+	tplt<class _tBase>	struct remove_cv<vltl		_tBase>			{ using type = _tBase; };
+	tplt<class _tBase>	struct remove_cv<const vltl	_tBase>			{ using type = _tBase; };
+	tplt<class _tBase>	using	remove_cv_t			= tpnm remove_cv<_tBase>::type;
 
-	tplt<class _tBase>	struct remove_cv																			{ using type = _tBase; };
-	tplt<class _tBase>	struct remove_cv<const					_tBase>												{ using type = _tBase; };
-	tplt<class _tBase>	struct remove_cv<volatile				_tBase>												{ using type = _tBase; };
-	tplt<class _tBase>	struct remove_cv<const volatile			_tBase>												{ using type = _tBase; };
-	tplt<class _tBase>	using									remove_cv_t											= tpnm remove_cv<_tBase>::type;
+	tplt<class _tBase>	struct remove_volatile						{ using type = _tBase; };
+	tplt<class _tBase>	struct remove_volatile<const		_tBase>	{ using type = _tBase; };
+	tplt<class _tBase>	struct remove_volatile<vltl			_tBase>	{ using type = _tBase; };
+	tplt<class _tBase>	struct remove_volatile<const vltl	_tBase>	{ using type = _tBase; };
+	tplt<class _tBase>	using	remove_volatile_t	= tpnm remove_volatile<_tBase>::type;
 
-	tplt<class _tBase>	struct remove_volatile																		{ using type = _tBase; };
-	tplt<class _tBase>	struct remove_volatile<const			_tBase>												{ using type = _tBase; };
-	tplt<class _tBase>	struct remove_volatile<volatile			_tBase>												{ using type = _tBase; };
-	tplt<class _tBase>	struct remove_volatile<const volatile	_tBase>												{ using type = _tBase; };
-	tplt<class _tBase>	using									remove_volatile_t									= tpnm remove_volatile<_tBase>::type;
-
-	tplt<tpnm TPair, tpnm TValue>	
-	stincxp	TPair		dim2	(TValue value)					noexcept	{ return {value, value}; }
-
-	tplt<tpnm TTriplet, tpnm TValue>		
-	stincxp	TTriplet	dim3	(TValue value)					noexcept	{ return {value, value, value}; }
-
-	tplt<tpnm _tInt>	
-	ndstinx	uint8_t		byte_at	(_tInt value, uint8_t index)	noexcept	{ return uint8_t((value & (_tInt(0xFFU) << (8 * index))) >> (8 * index)); }
-
-	tplt<tpnm _tInt>	
-	ndstinx	_tInt		byte_to	(uint8_t byte, uint8_t index)	noexcept	{ return _tInt(byte) << (8 * index); }
-
-	tplt<tpnm _tInstance>	
-	nodscrd	_tInstance&	global	()								noexcept	{ static _tInstance instance = {}; return instance; }
-
-
-}
+	tpltTInTOut	stincxp	TOut	dim2		(TIn value)				noexcept	{ return {value, value}; }
+	tpltTInTOut	stincxp	TOut	dim3		(TIn value)				noexcept	{ return {value, value, value}; }
+	tpltT		ndstinx	u0_t	byte_at		(T value, u0_t index)	noexcept	{ return u0_t((value & (T(0xFFU) << (8 * index))) >> (8 * index)); }
+	tpltT		ndstinx	T		byte_to		(u0_t byte, u0_t index)	noexcept	{ return T(byte) << (u2_t(8U) * index); }
+	tpltT		nodscrd	T&		global		()						noexcept	{ static T instance = {}; return instance; }
+} // namespace
 
 #if !defined(LLC_ANDROID) && !defined(LLC_ESP32) && !defined(LLC_ARDUINO)
 #	define LLC_DEFAULT_OPERATOR_I(_otherType, statement)	inline	bool	operator==(const _otherType & other) const noexcept { return statement; }

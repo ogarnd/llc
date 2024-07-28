@@ -23,36 +23,38 @@
 #	define 	LLC_SOC_FILESYSTEM_INSTANCE SPIFFS
 #endif
 
+::llc::error_t		llc::with			(vcs filepath, vcs mode, const function<::llc::err_t(FILE*&)> & funcFile)	{ 
+	FILE					* fp				= {};
+	llc_necs(::llc::fopen_s(&fp, filepath, mode)); if_null_ve(-1, fp);
+	::llc::error_t			result;
+	if_fail_ef(result = funcFile(fp), "filepath:'%s'.", filepath.begin());
+	if(fp)
+		fclose(fp);
+	return result;
+}
+
+stacxpr ::llc::vcs	LLC_OPEN_MODE_READ		= LLC_CXS("rb");
+stacxpr ::llc::vcs	LLC_OPEN_MODE_WRITE		= LLC_CXS("wb");
+stacxpr ::llc::vcs	LLC_OPEN_MODE_APPEND	= LLC_CXS("ab+");
 
 #if defined(LLC_ESP32) || defined(ESP8266)
-stacxpr const char	LLC_OPEN_MODE_APPEND	[]	= "ab";
-stacxpr const char	LLC_OPEN_MODE_WRITE		[]	= "wb";
 stainli	fs::FS&		getSoCFileSystem		()	{ return LLC_SOC_FILESYSTEM_INSTANCE; }
 #endif
 
 #define llc_file_info_printf info_printf
 
-int64_t								llc::fileSize				(::llc::vcs fileName)								{
-	FILE									* fp						= 0;
-	ree_if(0 != ::llc::fopen_s(&fp, fileName.begin(), "rb"), "Failed to open file: %s.", fileName.begin());
-	ree_if(0 == fp, "Failed to open file: %s.", fileName.begin());
-#if defined(LLC_WINDOWS)
-	if(0 != _fseeki64(fp, 0, SEEK_END)) {
-		error_printf("%s", "Unknown error reading file: '%s'.", fileName.begin());
+int64_t								llc::fileSize				(vcs fileName)								{
+	::FILE									* fp						= 0;
+	llc_necall(::llc::fopen_s(&fp, fileName, ::LLC_OPEN_MODE_READ), "Failed to open '%s'.", fileName.begin());
+	ree_if(0 == fp, "Failed to open '%s'.", fileName.begin());
+	if(0 != ::llc::fseek(fp, 0, FSEEK_END)) {
+		error_printf("%s", "Unknown error reading '%s'.", fileName.begin());
 		fclose(fp);
 		return -1;
 	}
-	const int64_t							fileSize					= _ftelli64(fp);
-#else
-	if(0 != fseek(fp, 0, SEEK_END)) {
-		error_printf("%s", "Unknown error reading file: '%s'.", fileName.begin());
-		fclose(fp);
-		return -1;
-	}
-	const int64_t							fileSize					= ftell(fp);
-#endif
+	const int64_t							fileSize					= ::llc::ftell(fp);
 	if(0 > fileSize)
-		error_printf("%s", "Unknown error reading file: '%s'.", fileName.begin());
+		error_printf("%s", "Unknown error reading '%s'.", fileName.begin());
 	fclose(fp);
 	return fileSize;
 }
@@ -61,7 +63,7 @@ int64_t								llc::fileSize				(::llc::vcs fileName)								{
 static	::llc::error_t	fileSplitSmall				(::llc::vcs fileNameSrc, const uint32_t sizePartMax) {
 	ree_if(0 == sizePartMax, "Invalid part size: %" LLC_FMT_U32 ".", fileNameSrc.begin(), sizePartMax);
 	::llc::apod<int8_t>						fileInMemory;
-	llc_necall(llc::fileToMemory(fileNameSrc, fileInMemory), "Failed to load file: \"%s\".", fileNameSrc);
+	llc_necall(llc::fileToMemory(fileNameSrc, fileInMemory), "Failed to load '%s'.", fileNameSrc);
 
 	// -- Write parts to disk.
 	uint32_t								countParts					= fileInMemory.size() / sizePartMax + one_if(fileInMemory.size() % sizePartMax);
@@ -72,7 +74,7 @@ static	::llc::error_t	fileSplitSmall				(::llc::vcs fileNameSrc, const uint32_t 
 		llc_necall(snprintf(fileNameDst, ::llc::size(fileNameDst) - 2, "%s.%.2" LLC_FMT_U32, fileNameSrc.begin(), iPart), "File name too large: %s.", fileNameSrc.begin());
 		info_printf("Creating part %" LLC_FMT_U32 ": '%s'.", iPart, fileNameDst);
 		FILE									* fpDest					= 0;
-		ree_if(0 != ::llc::fopen_s(&fpDest, fileNameDst, "wb"), "Failed to open file: %s.", fileNameDst);
+		ree_if(0 != ::llc::fopen_s(&fpDest, fileNameDst, LLC_OPEN_MODE_WRITE), "Failed to open file: %s.", fileNameDst);
 		ree_if(0 == fpDest, "Failed to create file: %s.", fileNameDst);
 		uint32_t								countBytes					= (iPart == countParts - 1) ? fileInMemory.size() - offsetPart : sizePartMax;
 		ree_if(countBytes != fwrite(&fileInMemory[offsetPart], 1, countBytes, fpDest), "Failed to write part %" LLC_FMT_U32 " of %" LLC_FMT_U32 " bytes to disk. Disk full?", iPart, countBytes);
@@ -88,8 +90,8 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 	ree_if(errored(sizeFile), "Failed to open file %s.", fileNameSrc.begin());
 	FILE						* fp						= 0;
 	ree_if(0 == fp, "%s", "Files larger than 3gb still not supported.");
-	ree_if(0 != ::llc::fopen_s(&fp, fileNameSrc.begin(), "rb"), "Failed to open file: %s.", fileNameSrc.begin());
-	ree_if(0 == fp, "Failed to open file: %s.", fileNameSrc.begin());
+	ree_if(0 != ::llc::fopen_s(&fp, {fileNameSrc}, LLC_OPEN_MODE_READ), "Failed to open '%s'.", fileNameSrc.begin());
+	ree_if(0 == fp, "Failed to open '%s'.", fileNameSrc.begin());
 
 	::llc::ai8					partInMemory;
 	llc_necall(partInMemory.resize(sizePartMax), "Failed to allocate buffer for file part. Out of memory? File part size: %" LLC_FMT_U32 ".", sizePartMax);
@@ -103,7 +105,7 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 		llc_necall(snprintf(fileNameDst, ::llc::size(fileNameDst) - 2, "%s.%.2" LLC_FMT_U32, fileNameSrc.begin(), iPart), "File name too large: %s.", fileNameSrc.begin());
 		info_printf("Creating part %" LLC_FMT_U32 ": '%s'.", iPart, fileNameDst);
 		FILE									* fpDest					= 0;
-		ree_if(0 != ::llc::fopen_s(&fpDest, fileNameDst, "wb"), "Failed to open file: %s.", fileNameDst);
+		ree_if(0 != ::llc::fopen_s(&fpDest, fileNameDst, LLC_OPEN_MODE_WRITE), "Failed to open file: %s.", fileNameDst);
 		ree_if(0 == fpDest, "Failed to create file: %s.", fileNameDst);
 		int64_t									countBytes					= (iPart == countParts - 1) ? sizeFile - offsetPart : sizePartMax;
 		ree_if(countBytes != (int64_t)fwrite(partInMemory.begin(), 1, (uint32_t)countBytes, fpDest), "Failed to write part %" LLC_FMT_U32 " of %" LLC_FMT_U32 " bytes to disk. Disk full?", iPart, countBytes);
@@ -113,7 +115,7 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 }
 
 // Splits a file into file.## parts.
-::llc::error_t			llc::fileSplit				(::llc::vcs fileNameSrc, const uint32_t sizePartMax) {
+::llc::error_t			llc::fileSplit				(vcs fileNameSrc, const uint32_t sizePartMax) {
 	// -- Get file size to determine which algorithm to use.
 	// -- For files smaller than 3gb, we use a fast algorithm that loads the entire file in memory.
 	// -- For files of, or larger than, 3gb, we use a fast algorithm that loads chunks of 1gb in memory for writing the parts.
@@ -125,13 +127,13 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 }
 
 // Joins a file split into file.## parts.
-::llc::error_t			llc::fileJoin				(::llc::vcs fileNameDst)	{
+::llc::error_t			llc::fileJoin				(vcs fileNameDst)	{
 	char						fileNameSrc	[1024]			= {};
 	uint32_t					iFile						= 0;
-	llc_necall(snprintf(fileNameSrc, ::llc::size(fileNameSrc) - 2, "%s.%.2" LLC_FMT_U32, fileNameDst.begin(), iFile++), "File name too large: %s.", fileNameDst.begin());
-	FILE						* fpDest					= 0;
+	llc_necall(snprintf(fileNameSrc, ::llc::size(fileNameSrc) - 2, "%s.%.2" LLC_FMT_U32, str(fileNameDst).begin(), iFile++), "File name too large: %s.", fileNameDst.begin());
+	::FILE						* fpDest					= 0;
 	::llc::apod<char>			finalPathName				= ::llc::toString(fileNameDst);
-	::llc::fopen_s(&fpDest, finalPathName.begin(), "wb");
+	llc_necall(::llc::fopen_s(&fpDest, finalPathName, LLC_OPEN_MODE_WRITE), "%s", finalPathName.begin());
 	ree_if(0 == fpDest, "Failed to create file: %s.", finalPathName.begin());
 	::llc::apod<int8_t>			fileInMemory				= {};
 	// Load each .split part and write it to the destionation file.
@@ -147,13 +149,12 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 
 #define LLC_DEBUG_FILE_CONTENTS
 
-::llc::error_t			llc::fileToMemory			(::llc::vcs usfileName, ::llc::au8 & fileInMemory)		{
+::llc::error_t			llc::fileToMemory			(vcs usfileName, ::llc::au8 & fileInMemory, uint32_t maxSize, uint64_t offset)		{
 	const ::llc::achar			fileName					= ::llc::toString(usfileName);
 	llc_file_info_printf("Loading '%s'.", fileName.begin());
 
-	::llc::error_t				result						= 0;
 #if defined(LLC_ESP32) || defined(ESP8266)
-	File						fp							= getSoCFileSystem().open(fileName.begin(), "rb");
+	File						fp							= getSoCFileSystem().open(fileName.begin(), LLC_OPEN_MODE_READ);
 	ree_if(!fp, "Cannot open file: %s.", fileName.begin());
 	const uint32_t				fileSize					= (uint32_t)fp.size();
 	fileInMemory.clear();
@@ -164,14 +165,19 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 #endif
 	rees_if(fileSize != (uint32_t)fp.readBytes((char*)fileInMemory.begin(), fileSize));
 	fp.close();
+	::llc::error_t				result						= 0;
 #else
-	FILE						* fp						= 0;
-	const int32_t				fileErr						= ::llc::fopen_s(&fp, fileName.begin(), "rb");
+	::FILE						* fp						= 0;
+	const int32_t				fileErr						= ::llc::fopen_s(&fp, fileName, ::LLC_OPEN_MODE_READ);
 	rvw_if((fileErr > 0) ? -fileErr : fileErr, 0 != fileErr || 0 == fp, "Cannot open file: %s.", fileName.begin());
 	fseek(fp, 0, SEEK_END);
-	const int32_t				fileSize					= (int32_t)ftell(fp);
-	fseek(fp, 0, SEEK_SET);
-	if (errored(fileInMemory.resize(fileSize))) {
+	const int64_t				fileSize					= ::llc::ftell(fp);
+	fail_if_lt3s(fileSize, 0);
+	fail_if_ge3u(offset, fileSize);
+	const uint32_t				maxRead						= (uint32_t)min((int64_t)maxSize, fileSize - (int64_t)offset);
+	fail_if_ne3u(0, ::llc::fseek(fp, offset, FSEEK_SET));
+	::llc::error_t				result						= 0;
+	if (errored(fileInMemory.resize(maxRead))) {
 		error_printf("File too large? : %llu.", (uint64_t)fileSize);
 		result					= -1;
 	}
@@ -192,7 +198,7 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 	return result;
 }
 
-::llc::error_t			llc::fileFromMemory			(::llc::vcs usfileName, const ::llc::vcu8 & fileInMemory, bool append)	{
+::llc::error_t			llc::fileFromMemory			(vcs usfileName, const ::llc::vcu8 & fileInMemory, bool append)	{
 	const ::llc::achar			fileName					= ::llc::toString(usfileName);
 #ifdef LLC_DEBUG_FILE_CONTENTS
 	llc_file_info_printf("%s '%s':\n%s\n", append ? "Appending to" : "Writing", fileName.begin(), fileInMemory.size() ? fileInMemory.begin() : (const uint8_t*)"");
@@ -206,8 +212,8 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 	ree_if(!fp, "Failed to open '%s'.", fileName.begin());
 	ree_if(!fp.write(fileInMemory.begin(), fileInMemory.size()), "Failed to write to '%s'.", fileName.begin());
 #else
-	FILE						* fp						= 0;
-	const int32_t				fileErr						= ::llc::fopen_s(&fp, fileName.begin(), append ? "ab" : "wb");
+	::FILE						* fp						= 0;
+	const int32_t				fileErr						= ::llc::fopen_s(&fp, fileName, append ? LLC_OPEN_MODE_APPEND : LLC_OPEN_MODE_WRITE);
 	rvw_if((fileErr > 0) ? -fileErr : fileErr, 0 != fileErr || 0 == fp, "Failed to create '%s' for %s.", fileName.begin(), append ? "appending" : "writing");
 	if(fileInMemory.size() != fwrite(fileInMemory.begin(), 1, fileInMemory.size(), fp)) {
 		error_printf("Failed to write '%s'. Disk full? File size: %" LLC_FMT_U32 ".", fileName.begin(), fileInMemory.size());
@@ -215,15 +221,13 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 	}
 	fclose(fp);
 #endif
-
 	llc_file_info_printf("'%s' written successfully.", fileName.begin());
 	return result;
 }
 
-::llc::error_t			llc::fileDelete				(::llc::vcs usfileName)	{
+::llc::error_t			llc::fileDelete				(vcs usfileName)	{
 	const ::llc::achar			fileName					= ::llc::toString(usfileName);
 	llc_file_info_printf("Deleting '%s'.", fileName.begin());
-
 #if defined(LLC_ESP32) || defined(ESP8266)
 	ree_if(0 == ::getSoCFileSystem().remove(fileName.begin()), "Failed to delete '%s'.", fileName.begin());
 #elif defined(LLC_WINDOWS)
@@ -233,23 +237,20 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 #else
 	llc_necall(unlink(fileName.begin()), "Failed to delete '%s'.", fileName.begin());
 #endif
-
 	llc_file_info_printf("'%s' deleted successfully.", fileName.begin());
 	return 0;
 }
 
-::llc::error_t			llc::fileToMemory	(::llc::vcs folderPath, ::llc::vcs fileName, ::llc::au8 & fileBytes) {
+::llc::error_t			llc::fileToMemory	(vcs folderPath, vcs fileName, ::llc::au8 & fileBytes, uint32_t maxSize, uint64_t offset) {
 	::llc::achar			filePath			= {};
 	llc_necall(llc::pathNameCompose(folderPath, fileName, filePath), "folderPath: '%s', fileName: '%s'.", folderPath.begin(), fileName.begin());
-	llc_necall(llc::fileToMemory({filePath}, fileBytes), "folderPath: '%s', fileName: '%s'.", folderPath.begin(), fileName.begin());
+	llc_necall(llc::fileToMemory({filePath}, fileBytes, maxSize, offset), "folderPath: '%s', fileName: '%s'.", folderPath.begin(), fileName.begin());
 	return 0;
 }
 
-
-::llc::error_t			llc::fileFromMemory	(::llc::vcs folderPath, ::llc::vcs fileName, const ::llc::vcu8 & fileInMemory, bool append) {
+::llc::error_t			llc::fileFromMemory	(vcs folderPath, vcs fileName, const ::llc::vcu8 & fileInMemory, bool append) {
 	::llc::achar			filePath			= {}; 
 	llc_necall(llc::pathNameCompose(folderPath, fileName, filePath), "folderPath: '%s', fileName: '%s'.", folderPath.begin(), fileName.begin());
 	llc_necall(llc::fileFromMemory({filePath}, fileInMemory, append), "folderPath: '%s', fileName: '%s', append: %s.", folderPath.begin(), fileName.begin(), ::llc::bool2char(append));
 	return 0;
 }
-

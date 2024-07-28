@@ -10,7 +10,7 @@ namespace llc
 	tplt<tpnm T> using papod	= ::llc::pobj<::llc::apod<T>>;
 	tplt<tpnm T> using apapod	= ::llc::aobj<::llc::papod<T>>;
 
-	typedef	::llc::papod<uchar_t	>	pauchar;
+	typedef	::llc::papod<uc_t	>	pauchar;
 	typedef	::llc::papod<char		>	pachar;
 	typedef	::llc::papod<float		>	paf32;
 	typedef	::llc::papod<double		>	paf64;

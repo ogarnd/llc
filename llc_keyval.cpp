@@ -3,7 +3,7 @@
 #include "llc_parse.h"
 #include "llc_apod_serialize.h"
 
-::llc::error_t			llc::join				(::llc::achar & output, char separator, ::llc::vcvcc fields)	{
+::llc::error_t			llc::join				(::llc::achar & output, char separator, ::llc::vcvsc_t fields)	{
 	for(uint32_t iField = 0; iField < fields.size();) {
 		llc_necall(output.append(fields[iField]), "%" LLC_FMT_U32 "", iField);
 		if(++iField < fields.size())
@@ -62,7 +62,7 @@
 	return -1;
 }
 
-::llc::error_t			llc::keyValConstStringSerialize		(const ::llc::view<const ::llc::TKeyValConstString> & keyVals, const ::llc::vcvcc & keysToSave, ::llc::au8 & output)	{
+::llc::error_t			llc::keyValConstStringSerialize		(const ::llc::view<const ::llc::TKeyValConstString> & keyVals, ::llc::vcvsc_c & keysToSave, ::llc::au8 & output)	{
 	::llc::apod<::llc::TKeyValConstString>	keyValsToSave					= {};
 	for(uint32_t iKey = 0; iKey < keyVals.size(); ++iKey) {
 		for(uint32_t iRef = 0; iRef < keysToSave.size(); ++iRef) {

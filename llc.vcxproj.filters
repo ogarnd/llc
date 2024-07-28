@@ -762,6 +762,9 @@
     <ClInclude Include="llc_packed_int.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="llc_cerrno.h">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="llc_adam7.cpp">

@@ -58,16 +58,16 @@ namespace llc
 		tplt<tpnm _t>
 		inlcxpr	n2<_t>		Cast				()									const	noexcept	{ return {(_t)x, (_t)y}; }
 
-		inlcxpr	n2<uint8_t>	u8					()									const	noexcept	{ return Cast<uint8_t	>(); }
-		inlcxpr	n2<uint16_t>u16					()									const	noexcept	{ return Cast<uint16_t	>(); }
-		inlcxpr	n2<uint32_t>u32					()									const	noexcept	{ return Cast<uint32_t	>(); }
-		inlcxpr	n2<uint64_t>u64					()									const	noexcept	{ return Cast<uint64_t	>(); }
-		inlcxpr	n2<int8_t>	i8					()									const	noexcept	{ return Cast<int8_t	>(); }
-		inlcxpr	n2<int16_t>	i16					()									const	noexcept	{ return Cast<int16_t	>(); }
-		inlcxpr	n2<int32_t>	i32					()									const	noexcept	{ return Cast<int32_t	>(); }
-		inlcxpr	n2<int64_t>	i64					()									const	noexcept	{ return Cast<int64_t	>(); }
-		inlcxpr	n2<float>	f32					()									const	noexcept	{ return Cast<float		>(); }
-		inlcxpr	n2<double>	f64					()									const	noexcept	{ return Cast<double	>(); }
+		inlcxpr	n2<u0_t>	u8					()									const	noexcept	{ return Cast<uint8_t	>(); }
+		inlcxpr	n2<u1_t>	u16					()									const	noexcept	{ return Cast<uint16_t	>(); }
+		inlcxpr	n2<u2_t>	u32					()									const	noexcept	{ return Cast<uint32_t	>(); }
+		inlcxpr	n2<u3_t>	u64					()									const	noexcept	{ return Cast<uint64_t	>(); }
+		inlcxpr	n2<s0_t>	i8					()									const	noexcept	{ return Cast<int8_t	>(); }
+		inlcxpr	n2<s1_t>	i16					()									const	noexcept	{ return Cast<int16_t	>(); }
+		inlcxpr	n2<s2_t>	i32					()									const	noexcept	{ return Cast<int32_t	>(); }
+		inlcxpr	n2<s3_t>	i64					()									const	noexcept	{ return Cast<int64_t	>(); }
+		inlcxpr	n2<f2_t>	f32					()									const	noexcept	{ return Cast<float		>(); }
+		inlcxpr	n2<f3_t>	f64					()									const	noexcept	{ return Cast<double	>(); }
 
 		inline	Tn2&		Set					(T value)							noexcept	{ x = y = value; return *this; }
 		inline	Tn2&		From				(T value)							noexcept	{ x = y = value; return *this; }
@@ -154,34 +154,33 @@ namespace llc
 		}
 
 	};	// struct n2
-	typedef	n2<char>		n2char;
-	typedef	n2<uchar_t>		n2uchar;
-	typedef	n2<float>		n2f32;
-	typedef	n2<double>		n2f64;
-	typedef	n2<uint8_t>		n2u8;
-	typedef	n2<uint16_t>	n2u16;
-	typedef	n2<uint32_t>	n2u32;
-	typedef	n2<uint64_t>	n2u64;
-	typedef	n2<int8_t>		n2i8;
-	typedef	n2<int16_t>		n2i16;
-	typedef	n2<int32_t>		n2i32;
-	typedef	n2<int64_t>		n2i64;
+	typedef	n2<uc_t>		n2uc_t, n2uchar;
+	typedef	n2<sc_t>		n2sc_t, n2char;
+	typedef	n2<u0_t>		n2u0_t, n2u8;
+	typedef	n2<u1_t>		n2u1_t, n2u16;
+	typedef	n2<u2_t>		n2u2_t, n2u32;
+	typedef	n2<u3_t>		n2u3_t, n2u64;
+	typedef	n2<s0_t>		n2s0_t, n2i8;
+	typedef	n2<s1_t>		n2s1_t, n2i16;
+	typedef	n2<s2_t>		n2s2_t, n2i32;
+	typedef	n2<s3_t>		n2s3_t, n2i64;
+	typedef	n2<f2_t>		n2f2_t, n2f32;
+	typedef	n2<f3_t>		n2f3_t, n2f64;
 
-	typedef	const n2char	cn2char		;
-	typedef	const n2uchar	cn2uchar	;
-	typedef	const n2f32		cn2f32		;
-	typedef	const n2f64		cn2f64		;
-	typedef	const n2u8		cn2u8		;
-	typedef	const n2u16		cn2u16		;
-	typedef	const n2u32		cn2u32		;
-	typedef	const n2u64		cn2u64		;
-	typedef	const n2i8		cn2i8		;
-	typedef	const n2i16		cn2i16		;
-	typedef	const n2i32		cn2i32		;
-	typedef	const n2i64		cn2i64		;
-
-	tplt<tpnm _tValue>
-	stacxpr	bool	in_range	(const ::llc::n2<_tValue>& valueToTest, const ::llc::n2<_tValue>& rangeStart, const ::llc::n2<_tValue>& rangeStop)	noexcept	{
+	typedef	const n2uc_t	n2uc_c;
+	typedef	const n2sc_t	n2sc_c;
+	typedef	const n2u0_t	n2u0_c;
+	typedef	const n2u1_t	n2u1_c;
+	typedef	const n2u2_t	n2u2_c;
+	typedef	const n2u3_t	n2u3_c;
+	typedef	const n2s0_t	n2s0_c;
+	typedef	const n2s1_t	n2s1_c;
+	typedef	const n2s2_t	n2s2_c;
+	typedef	const n2s3_t	n2s3_c;
+	typedef	const n2f2_t	n2f2_c;
+	typedef	const n2f3_t	n2f3_c;
+	
+	tpltT	stacxpr	bool	in_range	(const ::llc::n2<T> & valueToTest, const ::llc::n2<T> & rangeStart, const ::llc::n2<T> & rangeStop)	noexcept	{
 		return	::llc::in_range(valueToTest.x, rangeStart.x, rangeStop.x)
 			&&	::llc::in_range(valueToTest.y, rangeStart.y, rangeStop.y)
 			;

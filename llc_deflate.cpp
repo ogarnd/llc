@@ -140,7 +140,7 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 	const ::llc::au8			& compressedContentsPacked	= folderPackage.CompressedContentsPacked	;
 	{
 		FILE						* fp						= 0;
-		::llc::fopen_s(&fp, ::llc::toString(nameFileDst).begin(), "wb");
+		llc_necall(::llc::fopen_s(&fp, nameFileDst, "wb"), "'%s'", nameFileDst.begin());
 		ree_if(0 == fp, "Failed to create file: %s.", ::llc::toString(nameFileDst).begin());
 		fwrite(&fileHeader							, 1, sizeof(::llc::SPackHeader)			, fp);
 		fwrite(compressedTableFiles		.begin	()	, 1, compressedTableFiles		.size()	, fp);
@@ -238,19 +238,18 @@ stacxpr	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 
 // Write folder to disk.
 ::llc::error_t			llc::folderToDisk			(const ::llc::SFolderInMemory & virtualFolder, ::llc::vcs destinationPath)				{
-	::llc::ac					bufferFormat				= {};
+	char						bufferFormat	[32]		= {};
 	::llc::ac					finalPathName				= {};
-	finalPathName.resize(1024*8);
-	bufferFormat.resize(64);
-	memset(finalPathName.begin(), 0, finalPathName.size());
+	finalPathName.resize(8 * 1024);
+	finalPathName.fill(0);
 	FILE						* fp						= 0;
 	for(uint32_t iFile = 0, countFiles = virtualFolder.Names.size(); iFile < countFiles; ++iFile) {
 		llc_safe_fclose(fp);
 		const ::llc::vcs			& fileName					= virtualFolder.Names		[iFile];
 		const ::llc::vcu8			& fileContent				= virtualFolder.Contents	[iFile];
-		snprintf(bufferFormat.begin(), bufferFormat.size(), "%%.%us%%.%us", (unsigned int)destinationPath.size(), (unsigned int)fileName.size());
-		snprintf(finalPathName.begin(), finalPathName.size(), bufferFormat.begin(), destinationPath.begin(), fileName.begin());
-		info_printf("File found (%u): %s. Size: %u.", iFile, finalPathName.begin(), fileContent.size());
+		sprintf_s(bufferFormat, "%%.%us%%.%us", destinationPath.size(), fileName.size());
+		snprintf(finalPathName.begin(), finalPathName.size(), bufferFormat, destinationPath.begin(), fileName.begin());
+		info_printf("File found (%u):'%s'. Size: %u.", iFile, finalPathName.begin(), fileContent.size());
 		uint32_t					lenPath						= (uint32_t)strlen(finalPathName.begin());
 		::llc::error_t				indexSlash					= ::llc::findLastSlash(::llc::vcs{finalPathName.begin(), uint32_t(-1)});
 		if(-1 != indexSlash) { // Create path if any specified.
@@ -259,7 +258,7 @@ stacxpr	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
  			cef_if(errored(::llc::pathCreate({finalPathName.begin(), lenPath})), "Failed to create foder: %s.", finalPathName.begin());
 			finalPathName[indexSlash]	= '/';
 		}
-		::llc::fopen_s(&fp, finalPathName.begin(), "wb");
+		llc_necall(::llc::fopen_s(&fp, finalPathName, "wb"), "%s", finalPathName.begin());
 		cef_if(0 == fp, "Failed to create file: %s.", finalPathName.begin());
 		cef_if(fileContent.size() != fwrite(fileContent.begin(), 1, fileContent.size(), fp), "Failed to write file: %s. Disk full?", finalPathName.begin());
 	}

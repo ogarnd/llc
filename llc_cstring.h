@@ -11,9 +11,8 @@
 #	include <cstdio>
 #endif
 
-#ifndef LLC_STRING_H_23627
-#define LLC_STRING_H_23627
-
+#ifndef LLC_CSTRING_H_23627
+#define LLC_CSTRING_H_23627
 
 namespace llc
 {
@@ -127,4 +126,4 @@ namespace llc
 #endif
 } // namespace
 
-#endif // LLC_STRING_H_23627
+#endif // LLC_CSTRING_H_23627

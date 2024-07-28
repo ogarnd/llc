@@ -18,6 +18,8 @@
 #ifndef LLC_STDSOCKET_H_23627
 #define LLC_STDSOCKET_H_23627
 
+namespace llc
+{
 #ifndef LLC_WINDOWS
 typedef int SOCKET;
 #	ifndef INVALID_SOCKET
@@ -25,12 +27,10 @@ typedef int SOCKET;
 #	endif
 #endif
 
-namespace llc
-{
 	struct auto_socket_close : public ::llc::auto_handler<SOCKET, INVALID_SOCKET>					{
 		using			TWrapper						::auto_handler;
 		inline											~auto_socket_close					()	noexcept	{ close(); }
-		inline			void							close								()	noexcept	{ llc_safe_closesocket(Handle); }
+		inline			void							close								()	noexcept	{ if(INVALID_SOCKET != Handle) { closesocket(Handle); Handle = INVALID_SOCKET; } }
 	};
 
 	::llc::error_t			tcpipAddressToSockaddr		(uint8_t a1, uint8_t a2, uint8_t a3, uint8_t a4, uint16_t port, sockaddr_in & sockaddr);

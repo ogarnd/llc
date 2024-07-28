@@ -109,21 +109,21 @@
 	return 0;
 }
 
-::llc::error_t			llc::tcpipAddressFromSockaddr	(const sockaddr_in & sockaddr_ipv4, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4, uint16_t * port)	{
-#if defined(LLC_WINDOWS)
-	llc_safe_assign(a1, (uint8_t)sockaddr_ipv4.sin_addr.S_un.S_un_b.s_b1);
-	llc_safe_assign(a2, (uint8_t)sockaddr_ipv4.sin_addr.S_un.S_un_b.s_b2);
-	llc_safe_assign(a3, (uint8_t)sockaddr_ipv4.sin_addr.S_un.S_un_b.s_b3);
-	llc_safe_assign(a4, (uint8_t)sockaddr_ipv4.sin_addr.S_un.S_un_b.s_b4);
-#else
-	llc_safe_assign(a1, ::llc::byte_at(sockaddr_ipv4.sin_addr.s_addr, 0));
-	llc_safe_assign(a2, ::llc::byte_at(sockaddr_ipv4.sin_addr.s_addr, 1));
-	llc_safe_assign(a3, ::llc::byte_at(sockaddr_ipv4.sin_addr.s_addr, 2));
-	llc_safe_assign(a4, ::llc::byte_at(sockaddr_ipv4.sin_addr.s_addr, 3));
-#endif
-	llc_safe_assign(port, (uint16_t)ntohs(sockaddr_ipv4.sin_port));
-	return 0;
-}
+//::llc::error_t			llc::tcpipAddressFromSockaddr	(const sockaddr_in & sockaddr_ipv4, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4, uint16_t * port)	{
+//#if defined(LLC_WINDOWS)
+//	llc_safe_assign(a1, (uint8_t)sockaddr_ipv4.sin_addr.S_un.S_un_b.s_b1);
+//	llc_safe_assign(a2, (uint8_t)sockaddr_ipv4.sin_addr.S_un.S_un_b.s_b2);
+//	llc_safe_assign(a3, (uint8_t)sockaddr_ipv4.sin_addr.S_un.S_un_b.s_b3);
+//	llc_safe_assign(a4, (uint8_t)sockaddr_ipv4.sin_addr.S_un.S_un_b.s_b4);
+//#else
+//	llc_safe_assign(a1, ::llc::byte_at(sockaddr_ipv4.sin_addr.s_addr, 0));
+//	llc_safe_assign(a2, ::llc::byte_at(sockaddr_ipv4.sin_addr.s_addr, 1));
+//	llc_safe_assign(a3, ::llc::byte_at(sockaddr_ipv4.sin_addr.s_addr, 2));
+//	llc_safe_assign(a4, ::llc::byte_at(sockaddr_ipv4.sin_addr.s_addr, 3));
+//#endif
+//	llc_safe_assign(port, (uint16_t)ntohs(sockaddr_ipv4.sin_port));
+//	return 0;
+//}
 ::llc::error_t			llc::tcpipAddressToSockaddr		(uint32_t address, uint16_t port, sockaddr_in & sockaddr_ipv4) {
 	sockaddr_ipv4				= {};
 	sockaddr_ipv4.sin_family	= AF_INET;

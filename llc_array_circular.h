@@ -93,7 +93,7 @@ namespace llc
 	tplt<tpnm T, uint32_t _maxCount> using acircular	= ::llc::acir<T, _maxCount>;
 	
 	tplt<uint32_t _maxCount>	using acirc		= ::llc::acir<char     , _maxCount>; tplt<uint32_t _maxCount>	using acirchar	= ::llc::acir<char    , _maxCount>;
-	tplt<uint32_t _maxCount>	using aciruc 	= ::llc::acir<uchar_t  , _maxCount>; tplt<uint32_t _maxCount>	using aciruchar	= ::llc::acir<uchar_t , _maxCount>;
+	tplt<uint32_t _maxCount>	using aciruc 	= ::llc::acir<uc_t  , _maxCount>; tplt<uint32_t _maxCount>	using aciruchar	= ::llc::acir<uc_t , _maxCount>;
 	tplt<uint32_t _maxCount>	using aciru8 	= ::llc::acir<uint8_t  , _maxCount>; 
 	tplt<uint32_t _maxCount>	using aciru16	= ::llc::acir<uint16_t , _maxCount>; 
 	tplt<uint32_t _maxCount>	using aciru32	= ::llc::acir<uint32_t , _maxCount>; 
@@ -102,8 +102,8 @@ namespace llc
 	tplt<uint32_t _maxCount>	using aciri16	= ::llc::acir<int16_t  , _maxCount>; 
 	tplt<uint32_t _maxCount>	using aciri32	= ::llc::acir<int32_t  , _maxCount>; 
 	tplt<uint32_t _maxCount>	using aciri64	= ::llc::acir<int64_t  , _maxCount>; 
-	tplt<uint32_t _maxCount>	using acirf32	= ::llc::acir<float32_t, _maxCount>; 
-	tplt<uint32_t _maxCount>	using acirf64	= ::llc::acir<float64_t, _maxCount>; 
+	tplt<uint32_t _maxCount>	using acirf32	= ::llc::acir<f2s_t, _maxCount>; 
+	tplt<uint32_t _maxCount>	using acirf64	= ::llc::acir<f3s_t, _maxCount>; 
 } // namespace 
 
 #endif // LLC_ARRAY_CIRCULAR_H

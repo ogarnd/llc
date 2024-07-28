@@ -5,7 +5,15 @@
 
 namespace llc 
 {
-	tplt<tpnm _tInt>	ndstinx	uint64_t	uint_tail_mask	()	{
+	tplt<tpnm _tInt>	ndstcxp	uint8_t		uint_width_field_size	()		{ 
+		return 
+			( (sizeof(_tInt) > 4) ? 3
+			: (sizeof(_tInt) > 2) ? 2
+			: (sizeof(_tInt) > 1) ? 1 
+			: 1
+			);
+	}
+	tplt<tpnm _tInt>	ndstcxp	uint64_t	uint_tail_mask	()	{
 		return
 			( (1 == sizeof(_tInt)) ? 0x7FU
 			: (2 == sizeof(_tInt)) ? 0x7FU
@@ -62,7 +70,6 @@ namespace llc
 			: count
 			);
 	}
-
 	tplt<tpnm _tInt>	ndstcxp	_tInt		uint_tail_base			(_tInt count)	{
 		return _tInt
 			( (1 == sizeof(_tInt)) ? ((uint8_t (count) > uint_tail_mask<_tInt>()) ? count & 0xFFU : count)
@@ -86,15 +93,7 @@ namespace llc
 			: count
 			);
 	}
-	tplt<tpnm _tInt>
-	ndstcxp	uint8_t			uint_width_field_size	()		{ 
-		return 
-			( (sizeof(_tInt) > 4) ? 3
-			: (sizeof(_tInt) > 2) ? 2
-			: (sizeof(_tInt) > 1) ? 1 
-			: 1
-			);
-	};
+
 #pragma pack(push, 1)
 	tplt<tpnm _tInt = uint32_t, uint8_t widthField = uint_width_field_size<_tInt>()>
 	struct packed_uint { 

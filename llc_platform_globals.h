@@ -79,9 +79,8 @@
 #define vltl	            volatile
 #define tpnm	            typename
 #define tplt	            template
-#define tplt_T	            tplt<tpnm T>
-#define tplt_TInTOut        tplt<tpnm TIn, tpnm TOut>
-#define tplt_T_Nu32         tplt<tpnm T, uint32_t N>
+#define tpltT	            tplt<tpnm T>
+#define tpltTInTOut	        tplt<tpnm TIn, tpnm TOut>
 
 #define prtctd              protected
 #define privte              private
@@ -178,6 +177,49 @@
 #define LLC_FMT_I64_NE_I64 "%" LLC_FMT_I64 " != %" LLC_FMT_I64
 #define LLC_FMT_U64_NE_U64 "%" LLC_FMT_U64 " != %" LLC_FMT_U64
 
+#define LLC_FMT_EQ_F32  LLC_FMT_F32_EQ_F32
+#define LLC_FMT_EQ_F64  LLC_FMT_F64_EQ_F64
+#define LLC_FMT_EQ_I32  LLC_FMT_I32_EQ_I32
+#define LLC_FMT_EQ_U32  LLC_FMT_U32_EQ_U32
+#define LLC_FMT_EQ_I64  LLC_FMT_I64_EQ_I64
+#define LLC_FMT_EQ_U64  LLC_FMT_U64_EQ_U64
+
+#define LLC_FMT_NE_F32  LLC_FMT_F32_NE_F32
+#define LLC_FMT_NE_F64  LLC_FMT_F64_NE_F64
+#define LLC_FMT_NE_I32  LLC_FMT_I32_NE_I32
+#define LLC_FMT_NE_U32  LLC_FMT_U32_NE_U32
+#define LLC_FMT_NE_I64  LLC_FMT_I64_NE_I64
+#define LLC_FMT_NE_U64  LLC_FMT_U64_NE_U64
+
+#define LLC_FMT_GT_F32  LLC_FMT_F32_GT_F32
+#define LLC_FMT_GT_F64  LLC_FMT_F64_GT_F64
+#define LLC_FMT_GT_I32  LLC_FMT_I32_GT_I32
+#define LLC_FMT_GT_U32  LLC_FMT_U32_GT_U32
+#define LLC_FMT_GT_I64  LLC_FMT_I64_GT_I64
+#define LLC_FMT_GT_U64  LLC_FMT_U64_GT_U64
+
+#define LLC_FMT_GE_F32  LLC_FMT_F32_GE_F32
+#define LLC_FMT_GE_F64  LLC_FMT_F64_GE_F64
+#define LLC_FMT_GE_I32  LLC_FMT_I32_GE_I32
+#define LLC_FMT_GE_U32  LLC_FMT_U32_GE_U32
+#define LLC_FMT_GE_I64  LLC_FMT_I64_GE_I64
+#define LLC_FMT_GE_U64  LLC_FMT_U64_GE_U64
+
+#define LLC_FMT_LE_F32  LLC_FMT_F32_LE_F32
+#define LLC_FMT_LE_F64  LLC_FMT_F64_LE_F64
+#define LLC_FMT_LE_I32  LLC_FMT_I32_LE_I32
+#define LLC_FMT_LE_U32  LLC_FMT_U32_LE_U32
+#define LLC_FMT_LE_I64  LLC_FMT_I64_LE_I64
+#define LLC_FMT_LE_U64  LLC_FMT_U64_LE_U64
+
+#define LLC_FMT_LT_F32  LLC_FMT_F32_LT_F32
+#define LLC_FMT_LT_F64  LLC_FMT_F64_LT_F64
+#define LLC_FMT_LT_I32  LLC_FMT_I32_LT_I32
+#define LLC_FMT_LT_U32  LLC_FMT_U32_LT_U32
+#define LLC_FMT_LT_I64  LLC_FMT_I64_LT_I64
+#define LLC_FMT_LT_U64  LLC_FMT_U64_LT_U64
+
+
 #define LLCREP0(param)              (param)
 #define LLCREP1(param)              LLCREP0(param), (param)
 #define LLCREP2(param)              LLCREP1(param), (param)
@@ -202,7 +244,7 @@ namespace llc
         , OPCODE_SET_XTENSA_LX6_SINGLE
         , OPCODE_SET_XTENSA_LX6_DUAL
         , OPCODE_SET_XTENSA_LX7
-        , OPCODE_SET_CUSTOM         = 0x80U
+        , OPCODE_SET_CUSTOM         = 0x40U
         };
     enum OPCODE_EXT : unsigned char
         { OPCODE_EXT_NONE
@@ -212,7 +254,7 @@ namespace llc
         , OPCODE_EXT_SSE2
         , OPCODE_EXT_SSE3
         , OPCODE_EXT_SSE4
-        , OPCODE_EXT_CUSTOM         = 0x80U
+        , OPCODE_EXT_CUSTOM         = 0x40U
         };
     enum DEVICE_TYPE : unsigned char
         { DEVICE_TYPE_UNKNOWN
@@ -222,7 +264,7 @@ namespace llc
         , DEVICE_TYPE_RASPBERRY_PI_3
         , DEVICE_TYPE_RASPBERRY_PI_4
         , DEVICE_TYPE_MAC
-        , DEVICE_TYPE_CUSTOM        = 0x80U
+        , DEVICE_TYPE_CUSTOM        = 0x40U
         };
     enum OS_FAMILY : unsigned char
         { OS_FAMILY_UNKNOWN
@@ -236,7 +278,7 @@ namespace llc
         , OS_FAMILY_PI
         , OS_FAMILY_RTOS
         , OS_FAMILY_WINDOWS
-        , OS_FAMILY_CUSTOM          = 0x80
+        , OS_FAMILY_CUSTOM          = 0x40U
         };
 
 #define GDEFINE_ENUM_NAMEP(TEnum)                       tplt<TEnum> ndstinx const char* get_enum_namep  (const TEnum&)  noexcpt { return #TEnum; }
