@@ -291,7 +291,7 @@ namespace llc
     GDEFINE_ENUM_NAMEP(OPCODE_EXT   );
     GDEFINE_ENUM_NAMEP(OS_FAMILY    );
 
-#define llc_enum_value_log(printf_fn, enumVal)  printf_fn("'%s':(0x%X)(%" LLC_FMT_I32 ")(%c)'%s'", ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue))
+#define llc_enum_value_log(printf_fn, enumVal)  printf_fn("'%s':(0x%X)(%" LLC_FMT_I32 ")(%c)'%s'", ::llc::get_enum_namep LLCREP3(enumVal) ? char(enumVal) : '?', ::llc::get_value_namep(enumVal))
     nodscrd cnst char*  get_value_namep (DEVICE_TYPE value) nxpt;
     nodscrd cnst char*  get_value_namep (OPCODE_SET  value) nxpt;
     nodscrd cnst char*  get_value_namep (OPCODE_EXT  value) nxpt;
