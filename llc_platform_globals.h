@@ -76,33 +76,26 @@
 #endif
 
 // These aliases make keyword width to be consistent and makes the code less verbose.
-#define cnst                const
-#define nxpt                noexcept
-#define cnstnxpt            cnst nxpt
-#define cxpr                constexpr
-#define vltl                volatile
-#define tplt                template
-#define tpnm                typename
-#define tplT                tplt<tpnm T>
-#define tplTInTOut          tplt<tpnm TIn, tpnm TOut>
-#define tplTstruct          tplT struct
-
-#define prtctd              protected
-#define privte              private
-
-//#define nxcp              nxpt
 //#define inln              inline
 //#define sttc              static
 //#define oprt              operatr
-//#define cxpr              cnstxpr
-
-
+#define cnst                const
+#define nxpt                noexcept
+#define cnstnxpt            cnst nxpt
+#define vltl                volatile
+#define cnstvltl            cnst vltl
+#define cxpr                constexpr
+#define tplt                template
+#define tpnm                typename
+#define unsgnd              unsigned
 #define operatr	            operator
 #define cnstxpr	            constexpr
 #define inlcxpr	            inline  cnstxpr
 #define stacxpr	            static  cnstxpr
 #define stainli	            static  inline
 #define stincxp	            stainli cnstxpr
+#define prtctd              protected
+#define privte              private
 
 #define nodscrd             [[nodiscard]]
 #define ndsttic             nodscrd static
@@ -113,13 +106,21 @@
 #define ndincxp             ndinlne cnstxpr
 #define ndstinx             ndstain cnstxpr
 
+#define tplT                tplt<tpnm T>
+#define tpl_t               tplt<tpnm _t>
+#define tplTInTOut          tplt<tpnm TIn, tpnm TOut>
+#define tplTstruct          tplT struct
+#define tplTndstcxp	        tplT ndstcxp
+#define tplTstincxp	        tplT stincxp
+#define tplTstacxpr	        tplT stacxpr
+#define tplTndstinx	        tplT ndstinx
+
 #define cxp_if(condition)       if cnstxpr(condition)
 #define cxp_if_not(condition)   if cnstxpr(not(condition))
 #define if_not(condition)       if(not(condition))
 
 #define	LLC_STRINGIFY(x) #x
 #define	LLC_TOSTRING(x)  LLC_STRINGIFY(x)
-
 
 #ifndef LLC_ATMEL
 #	define LLC_FMT_F32 "f"

@@ -23,8 +23,9 @@
 
 namespace llc
 {
+
 	typedef bool			b8_t, b8u_t;
-	typedef	unsigned char	uc_t, c0u_t;
+	typedef	unsgnd char		uc_t, c0u_t;
 	typedef	char			sc_t, c0s_t;
 	typedef uint8_t			u0_t, i0u_t;
 	typedef uint16_t		u1_t, i1u_t;
@@ -37,19 +38,19 @@ namespace llc
 	typedef float			f2_t, f2s_t;
 	typedef double			f3_t, f3s_t;
 
-	typedef	const b8_t		b8_c, b8u_c;
-	typedef	const uc_t		uc_c, c0u_c;
-	typedef	const sc_t		sc_c, c0s_c;
-	typedef	const u0_t		u0_c, i0u_c;
-	typedef	const u1_t		u1_c, i1u_c;
-	typedef	const u2_t		u2_c, i2u_c;
-	typedef	const u3_t		u3_c, i3u_c;
-	typedef	const s0_t		s0_c, i0s_c;
-	typedef	const s1_t		s1_c, i1s_c;
-	typedef	const s2_t		s2_c, i2s_c;
-	typedef	const s3_t		s3_c, i3s_c;
-	typedef	const f2_t		f2_c, f2s_c;
-	typedef	const f3_t		f3_c, f3s_c;
+	typedef	cnst b8_t		b8_c, b8u_c;
+	typedef	cnst uc_t		uc_c, c0u_c;
+	typedef	cnst sc_t		sc_c, c0s_c;
+	typedef	cnst u0_t		u0_c, i0u_c;
+	typedef	cnst u1_t		u1_c, i1u_c;
+	typedef	cnst u2_t		u2_c, i2u_c;
+	typedef	cnst u3_t		u3_c, i3u_c;
+	typedef	cnst s0_t		s0_c, i0s_c;
+	typedef	cnst s1_t		s1_c, i1s_c;
+	typedef	cnst s2_t		s2_c, i2s_c;
+	typedef	cnst s3_t		s3_c, i3s_c;
+	typedef	cnst f2_t		f2_c, f2s_c;
+	typedef	cnst f3_t		f3_c, f3s_c;
 
 #if defined(LLC_ANDROID) || defined(LLC_CLANG)
 #	pragma clang diagnostic push
@@ -84,17 +85,29 @@ namespace llc
 #	define	LLC_REFCOUNT_T	intptr_t
 	typedef vltl	LLC_REFCOUNT_T	refcount_t;
 #endif
-	tplT	struct remove_cv						{ using type = T; };
-	tplT	struct remove_cv<const		T>			{ using type = T; };
-	tplT	struct remove_cv<vltl		T>			{ using type = T; };
-	tplT	struct remove_cv<const vltl	T>			{ using type = T; };
+	tplTstruct remove_cv						{ using type = T; };
+	tplTstruct remove_cv<cnst		T>			{ using type = T; };
+	tplTstruct remove_cv<vltl		T>			{ using type = T; };
+	tplTstruct remove_cv<cnstvltl	T>			{ using type = T; };
 	tplT	using	remove_cv_t			= tpnm remove_cv<T>::type;
 
-	tplT	struct remove_volatile					{ using type = T; };
-	tplT	struct remove_volatile<const		T>	{ using type = T; };
-	tplT	struct remove_volatile<vltl			T>	{ using type = T; };
-	tplT	struct remove_volatile<const vltl	T>	{ using type = T; };
+	tplTstruct remove_volatile					{ using type = T; };
+	tplTstruct remove_volatile<cnst		T>		{ using type = T; };
+	tplTstruct remove_volatile<vltl		T>		{ using type = T; };
+	tplTstruct remove_volatile<cnstvltl	T>		{ using type = T; };
 	tplT	using	remove_volatile_t	= tpnm remove_volatile<T>::type;
+
+	tpl_t	struct rm_cnst							{ using T = _t; };
+	tpl_t	struct rm_cnst<cnst _t>					{ using T = _t; };
+	tpl_t	struct rm_vltl							{ using T = _t; };
+	tpl_t	struct rm_vltl<vltl _t>					{ using T = _t; };
+	tpl_t	struct rm_csvl							{ using T = _t; };
+	tpl_t	struct rm_csvl<vltl		_t>				{ using T = _t; };
+	tpl_t	struct rm_csvl<cnst		_t>				{ using T = _t; };
+	tpl_t	struct rm_csvl<cnstvltl	_t>				{ using T = _t; };
+	tpl_t	using	rm_cnst_t			= tpnm rm_cnst<_t>::T;
+	tpl_t	using	rm_vltl_t			= tpnm rm_vltl<_t>::T;
+	tpl_t	using	rm_csvl_t			= tpnm rm_csvl<_t>::T;
 
 	tplTInTOut	stincxp	TOut	dim2		(TIn value)				nxpt	{ return {value, value}; }
 	tplTInTOut	stincxp	TOut	dim3		(TIn value)				nxpt	{ return {value, value, value}; }
