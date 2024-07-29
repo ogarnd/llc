@@ -95,41 +95,36 @@ namespace llc
 	}
 
 #pragma pack(push, 1)
-	tplt<tpnm _tInt = uint32_t, uint8_t widthField = uint_width_field_size<_tInt>()>
+	tplt<tpnm _tInt = u2_t, uint8_t widthField = uint_width_field_size<_tInt>()>
 	struct packed_uint { 
 		typedef _tInt	T;
+		typedef cnst T	TConst;
 
-		const	T		TailWidth		: widthField;
-		const	T		Multiplier		: 8 - widthField;
-		const	T		Tail			: max((uint8_t)1U, uint8_t((sizeof(T) - 1) * 8));
+		TConst		TailWidth		: widthField;
+		TConst		Multiplier		: 8 - widthField;
+		TConst		Tail			: max((uint8_t)1U, uint8_t((sizeof(T) - 1) * 8));
 
 		inlcxpr			packed_uint		()												: TailWidth{}, Multiplier{}, Tail{} {}
-		inlcxpr			packed_uint		(const T & value)								: TailWidth{(T)uint_tail_width(value)}, Multiplier{(T)uint_tail_multiplier(value)}, Tail{(T)uint_tail_base(value)} {}
+		inlcxpr			packed_uint		(TConst & value)								: TailWidth{(T)uint_tail_width(value)}, Multiplier{(T)uint_tail_multiplier(value)}, Tail{(T)uint_tail_base(value)} {}
 		inlcxpr			packed_uint		(uint8_t tailWidth, uint8_t multiplier, T tail)	: TailWidth(tailWidth), Multiplier(multiplier), Tail(tail) {}
 
 		tplt<tpnm TView>
-		TView			cu8				()	const 				{ return {(const uint8_t*)(void*)this, ValueWidth()}; }
+		TView			cu8				()	const 				{ return {(u0_c*)(void*)this, ValueWidth()}; }
 
-		ndincxp	uint8_t	ValueWidth		()	const	noexcept	{ return uint8_t(1 + TailWidth); }
+		ndincxp	u0_t	ValueWidth		()	const	noexcept	{ return u0_t(1 + TailWidth); }
 		nodscrd	T		Value			()	const	noexcept	{
 			if(0 == TailWidth)
 				return Multiplier;
 
-			uint64_t tail = 0; 
-			memcpy(&tail, ((const char*)this) + 1, TailWidth); 
+			uint64_t			tail			= 0; 
+			memcpy(&tail, ((u0_c*)this) + 1, TailWidth); 
 			return T((uint64_t(Multiplier) << (TailWidth * 8)) + tail); 
 		}
 	};
 #pragma pack(pop)
-	typedef packed_uint<uint16_t>	packedu16;
-	typedef packed_uint<uint32_t>	packedu32;
-	typedef packed_uint<uint64_t>	packedu64;
-	//ndstain uint16_t			int_unpack	(const ::llc::packedu16 value) { return value.Value(); } 
-	//ndstain uint32_t			int_unpack	(const ::llc::packedu32 value) { return value.Value(); } 
-	//ndstain uint64_t			int_unpack	(const ::llc::packedu64 value) { return value.Value(); } 
-	//ndstain int16_t				int_unpack	(const ::llc::packedi16 value) { return value.Value(); } 
-	//ndstain int32_t				int_unpack	(const ::llc::packedi32 value) { return value.Value(); } 
-	//ndstain int64_t				int_unpack	(const ::llc::packedi64 value) { return value.Value(); } 
+	typedef packed_uint<u1_t>	pku1_t, packedu16;
+	typedef packed_uint<u2_t>	pku2_t, packedu32;
+	typedef packed_uint<u3_t>	pku3_t, packedu64;
 
 	//ndstinx ::llc::packedu16	int_pack	(const uint16_t value) { return {uint_tail_width(value), uint_tail_multiplier(value), uint_tail_base(value)}; } 
 	//ndstinx ::llc::packedu32	int_pack	(const uint32_t value) { return {uint_tail_width(value), uint_tail_multiplier(value), uint_tail_base(value)}; } 

@@ -30,7 +30,7 @@ namespace llc
 	err_t					viewRead		(view<T> & headerToRead, view<TByte> input)	{
 		const packedu32				& header		= *(const packedu32*)input.begin();
 		const uint32_t				counterWidth	= header.ValueWidth();
-		ree_if(input.size() < counterWidth, LLC_FMT_U32_LT_U32, input.size(), counterWidth);
+		ree_if(input.size() < counterWidth, LLC_FMT_LT_U32, input.size(), counterWidth);
 		const uint32_t				elementCount	= header.Value();
 		const uint32_t				dataSize		= sizeof(T) * elementCount;
 		ree_if(dataSize > (input.size() - counterWidth), "%" LLC_FMT_U32 " > (%" LLC_FMT_U32 "-%" LLC_FMT_U32 ").", dataSize, input.size(), counterWidth);
