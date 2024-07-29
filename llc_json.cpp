@@ -680,7 +680,7 @@ static	::llc::error_t	decodeUnicodeEscapeSequence	(::llc::vcc input, uint32_t& r
 }
 
 
-tpltT	stainli	llc::err_t	jsonObjectGetInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, T		& value)	{ value = (T)reader.Token[iNode].Value; return iNode; }
+tplT	stainli	llc::err_t	jsonObjectGetInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, T		& value)	{ value = (T)reader.Token[iNode].Value; return iNode; }
 ::llc::error_t	llc::		jsonObjectGetInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i0u_t	& value)	{ return ::jsonObjectGetInteger(reader, iNode, value); }
 ::llc::error_t	llc::		jsonObjectGetInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i1u_t	& value)	{ return ::jsonObjectGetInteger(reader, iNode, value); }
 ::llc::error_t	llc::		jsonObjectGetInteger	(const ::llc::SJSONReader & reader, uint32_t iNode, i2u_t	& value)	{ return ::jsonObjectGetInteger(reader, iNode, value); }

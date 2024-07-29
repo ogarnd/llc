@@ -6,7 +6,7 @@
 namespace llc
 {
 #pragma pack(push, 1)
-	tpltT
+	tplT
 	struct range {	
 		T							Offset, Count;	
 		LLC_DEFAULT_OPERATOR(range <T>, Offset == other.Offset && Count == other.Count); 

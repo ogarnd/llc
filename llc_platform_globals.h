@@ -77,17 +77,19 @@
 
 // These aliases make keyword width to be consistent and makes the code less verbose.
 #define cnst                const
+#define cxpr                constexpr
 #define vltl                volatile
-#define tpnm                typename
+#define nxpt                noexcept
 #define tplt                template
-#define tpltT               tplt<tpnm T>
-#define tpltTInTOut	        tplt<tpnm TIn, tpnm TOut>
+#define tpnm                typename
+#define tplT                tplt<tpnm T>
+#define tplTInTOut          tplt<tpnm TIn, tpnm TOut>
+#define tplTstruct          tplt<tpnm T> struct
 
 #define prtctd              protected
 #define privte              private
-#define noxcpt	            noexcept
 
-//#define nxcp              noxcpt
+//#define nxcp              nxpt
 //#define inln              inline
 //#define sttc              static
 //#define oprt              operatr
@@ -283,18 +285,17 @@ namespace llc
         , OS_FAMILY_CUSTOM          = 0x40U
         };
 
-#define GDEFINE_ENUM_NAMEP(TEnum)                       tplt<TEnum> ndstinx const char* get_enum_namep  (const TEnum&)  noxcpt { return #TEnum; }
+#define GDEFINE_ENUM_NAMEP(TEnum)               ndstinx const char* get_enum_namep  (const TEnum&)  nxpt { return #TEnum; }
     GDEFINE_ENUM_NAMEP(DEVICE_TYPE  );
     GDEFINE_ENUM_NAMEP(OPCODE_SET   );
     GDEFINE_ENUM_NAMEP(OPCODE_EXT   );
     GDEFINE_ENUM_NAMEP(OS_FAMILY    );
 
-#define llc_enum_value_level(_funcPrintf, _enumValue)	_funcPrintf("'%s':(0x%X)(%" LLC_FMT_I32 ")(%c)'%s'", ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue))
-
-    nodscrd const char* get_value_namep (DEVICE_TYPE    value)  noxcpt;
-    nodscrd const char* get_value_namep (OPCODE_SET     value)  noxcpt;
-    nodscrd const char* get_value_namep (OPCODE_EXT     value)  noxcpt;
-    nodscrd const char* get_value_namep (OS_FAMILY      value)  noxcpt;
+#define llc_enum_value_log(printf_fn, enumVal)  printf_fn("'%s':(0x%X)(%" LLC_FMT_I32 ")(%c)'%s'", ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue))
+    nodscrd cnst char*  get_value_namep (DEVICE_TYPE value) nxpt;
+    nodscrd cnst char*  get_value_namep (OPCODE_SET  value) nxpt;
+    nodscrd cnst char*  get_value_namep (OPCODE_EXT  value) nxpt;
+    nodscrd cnst char*  get_value_namep (OS_FAMILY   value) nxpt;
 } // namespace
 
 #endif // LLC_PLATFORM_GLOBALS_H_23627

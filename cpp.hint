@@ -106,7 +106,8 @@
 
 #define prtctd              
 #define privte              
-#define noxcpt	            
+#define nxpt	            
+#define cnst
 
 #define operatr	            
 #define cnstxpr	            

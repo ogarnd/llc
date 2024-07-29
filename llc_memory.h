@@ -55,8 +55,8 @@ namespace llc
 	stainli	void*						llc_malloc					(size_t size)								noexcept	{ int8_t* p = (int8_t*)::memalign(LLC_MALLOC_ALIGN, size + 1); return p; }
 #endif
 
-	tpltT stainli	T*&					malloc						(T*& newRef)								noexcept	{ return newRef = (T*)llc_malloc(sizeof(T)); }
-	tpltT stainli	T*&					malloc						(T*& newRef, u2_t count)					noexcept	{ return newRef = (T*)llc_malloc(sizeof(T) * count); }
+	tplT stainli	T*&					malloc						(T*& newRef)								noexcept	{ return newRef = (T*)llc_malloc(sizeof(T)); }
+	tplT stainli	T*&					malloc						(T*& newRef, u2_t count)					noexcept	{ return newRef = (T*)llc_malloc(sizeof(T) * count); }
 
 	tplt<tpnm _typePtr>
 	stainli	void						safe_llc_free				(_typePtr &p)								noexcept	{

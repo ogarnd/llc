@@ -7,7 +7,7 @@
 
 namespace llc
 {
-	tpltT struct gref {
+	tplT struct gref {
 		T					* Instance;
 		refcount_t			References;
 	};

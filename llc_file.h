@@ -28,7 +28,7 @@ namespace llc
 	GDEFINE_ENUM_VALUE(OPEN_MODE, WRITE		, 'w' + (i1u_t('b') << 8));							//  2
 	GDEFINE_ENUM_VALUE(OPEN_MODE, APPEND	, 'a' + (i2u_t('b') << 8) + (i2u_t('+') << 16));	//  3
 	// FILE wrapper
-	tpltT	struct SFile {	
+	tplT	struct SFile {	
 		T							File			{};
 		uint64_t					Offset			= {};
 		vcs							Name			= {};

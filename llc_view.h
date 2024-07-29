@@ -290,8 +290,8 @@ namespace llc
 	stainli llc::vcs		str					(const llc::vcs & arg)	{ return arg; } 
 	stainli llc::vcs		str					(const llc::vs & arg)	{ return arg.cc(); } 
 	// 
-	tpltT	ndstinx	::llc::vcs	get_type_namev					()							noexcept	{ return LLC_CXS("unknown"); }
-	tpltT	ndstinx	const sc_t*	get_type_namep					()							noexcept	{ return get_type_namev<T>().begin(); }
+	tplT	ndstinx	::llc::vcs	get_type_namev					()							noexcept	{ return LLC_CXS("unknown"); }
+	tplT	ndstinx	const sc_t*	get_type_namep					()							noexcept	{ return get_type_namev<T>().begin(); }
 #define GDEFINE_TYPE_NAME_STR(typeIdentifier)																													\
 			ndstinx	::llc::vcs	get_type_namev					(typeIdentifier &)	noexcept	{ return LLC_CXS(#typeIdentifier); }					\
 	tplt<>	ndincxp	::llc::vcs	get_type_namev<typeIdentifier>	()					noexcept	{ return LLC_CXS(#typeIdentifier); }					\
@@ -484,7 +484,7 @@ namespace llc
 		return iValue;
 	}
 
-	tpltT	err_t		max						(::llc::view<T> input, T ** result) {
+	tplT	err_t		max						(::llc::view<T> input, T ** result) {
 		ree_if(0 == input.size(), "%s", "Cannot get reference to max element of an empty array.");
 		*result				= &input[0];
 		s2_t					iMax					= 0;
@@ -498,7 +498,7 @@ namespace llc
 		return iMax;
 	}
 
-	tpltT	err_t		min						(::llc::view<T> input, T ** result) {
+	tplT	err_t		min						(::llc::view<T> input, T ** result) {
 		ree_if(0 == input.size(), "%s", "Cannot get reference to min element of an empty array.");
 		*result				= &input[0];
 		s2_t					iMin					= 0;
@@ -512,10 +512,10 @@ namespace llc
 		return iMin;
 	}
 
-	tpltT	T&			max		(::llc::view<T> elements)		{ T * rmax	{}; if_fail_e(::llc::max(elements, &rmax));	return *rmax; }
-	tpltT	T&			min		(::llc::view<T> elements)		{ T * rmin	{}; if_fail_e(::llc::min(elements, &rmin));	return *rmin; }
-	tpltT	T			sum		(::llc::view<const T> elements)	{ T result	{}; for(T element : elements) result += element; return result; }
-	tpltT	stainli	T&	be2le	(T & number)					{ ::llc::reverse<i0u_t>({(i0u_t*)&number, sizeof(T)}); return number; }
+	tplT	T&			max		(::llc::view<T> elements)		{ T * rmax	{}; if_fail_e(::llc::max(elements, &rmax));	return *rmax; }
+	tplT	T&			min		(::llc::view<T> elements)		{ T * rmin	{}; if_fail_e(::llc::min(elements, &rmin));	return *rmin; }
+	tplT	T			sum		(::llc::view<const T> elements)	{ T result	{}; for(T element : elements) result += element; return result; }
+	tplT	stainli	T&	be2le	(T & number)					{ ::llc::reverse<i0u_t>({(i0u_t*)&number, sizeof(T)}); return number; }
 } // namespace
 
 #endif // LLC_ARRAY_VIEW_H_23627

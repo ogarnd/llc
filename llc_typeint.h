@@ -84,23 +84,26 @@ namespace llc
 #	define	LLC_REFCOUNT_T	intptr_t
 	typedef vltl	LLC_REFCOUNT_T	refcount_t;
 #endif
-	tpltT	struct remove_cv						{ using type = T; };
-	tpltT	struct remove_cv<const		T>			{ using type = T; };
-	tpltT	struct remove_cv<vltl		T>			{ using type = T; };
-	tpltT	struct remove_cv<const vltl	T>			{ using type = T; };
-	tpltT	using	remove_cv_t			= tpnm remove_cv<T>::type;
+	tplT	struct remove_cv						{ using type = T; };
+	tplT	struct remove_cv<const		T>			{ using type = T; };
+	tplT	struct remove_cv<vltl		T>			{ using type = T; };
+	tplT	struct remove_cv<const vltl	T>			{ using type = T; };
+	tplT	using	remove_cv_t			= tpnm remove_cv<T>::type;
 
-	tpltT	struct remove_volatile					{ using type = T; };
-	tpltT	struct remove_volatile<const		T>	{ using type = T; };
-	tpltT	struct remove_volatile<vltl			T>	{ using type = T; };
-	tpltT	struct remove_volatile<const vltl	T>	{ using type = T; };
-	tpltT	using	remove_volatile_t	= tpnm remove_volatile<T>::type;
+	tplT	struct remove_volatile					{ using type = T; };
+	tplT	struct remove_volatile<const		T>	{ using type = T; };
+	tplT	struct remove_volatile<vltl			T>	{ using type = T; };
+	tplT	struct remove_volatile<const vltl	T>	{ using type = T; };
+	tplT	using	remove_volatile_t	= tpnm remove_volatile<T>::type;
 
-	tpltTInTOut	stincxp	TOut	dim2		(TIn value)				noexcept	{ return {value, value}; }
-	tpltTInTOut	stincxp	TOut	dim3		(TIn value)				noexcept	{ return {value, value, value}; }
-	tpltT		ndstinx	u0_t	byte_at		(T value, u0_t index)	noexcept	{ return u0_t((value & (T(0xFFU) << (8 * index))) >> (8 * index)); }
-	tpltT		ndstinx	T		byte_to		(u0_t byte, u0_t index)	noexcept	{ return T(byte) << (u2_t(8U) * index); }
-	tpltT		nodscrd	T&		global		()						noexcept	{ static T instance = {}; return instance; }
+	tplTInTOut	stincxp	TOut	dim2		(TIn value)				nxpt	{ return {value, value}; }
+	tplTInTOut	stincxp	TOut	dim3		(TIn value)				nxpt	{ return {value, value, value}; }
+	tplT		ndstinx	u0_t	byte_at		(T value, u0_t index)	nxpt	{ return u0_t((value & (T(0xFFU) << (8 * index))) >> (8 * index)); }
+	tplT		ndstinx	T		byte_to		(u0_t byte, u0_t index)	nxpt	{ return T(byte) << (u2_t(8U) * index); }
+	tplT		nodscrd	T&		global		()						nxpt	{ static T instance = {}; return instance; }
+
+	tplT	struct srcdst { T src, dst; }; 
+	tplT	struct dstsrc { T dst, src; }; 
 } // namespace
 
 #if !defined(LLC_ANDROID) && !defined(LLC_ESP32) && !defined(LLC_ARDUINO)

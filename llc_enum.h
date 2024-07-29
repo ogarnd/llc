@@ -246,20 +246,20 @@ namespace llc
 		::llc::camelCase(uncased, camelCased);
 		return ::llc::get_enum<TEnum>().get_value(camelCased);
 	}
-	tplt<tpnm TEnum>	ndstain	uint32_t			get_value_count		()							noxcpt	{ return ::llc::get_enum<TEnum>().Values.size(); }
+	tplt<tpnm TEnum>	ndstain	uint32_t			get_value_count		()							nxpt	{ return ::llc::get_enum<TEnum>().Values.size(); }
 	tplt<tpnm TEnum>	ndstain	const ::llc::vcc&	get_value_label		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_label(statusBit); }
 	tplt<tpnm TEnum>	ndstain	const ::llc::vcc&	get_value_namev		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_label(statusBit); }
 	tplt<tpnm TEnum>	ndstain	const char*			get_value_namep		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_label(statusBit).begin(); }
 	tplt<tpnm TEnum>	ndstain	const ::llc::vcc&	get_value_descv		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_desc (statusBit); }
 	tplt<tpnm TEnum>	ndstain	const char*			get_value_descp		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_desc (statusBit).begin(); }
-	tplt<tpnm TEnum>	ndstain	::llc::vcvsc_c&		get_value_labels	()							noxcpt	{ return ::llc::get_enum<TEnum>().Names; }
-	tplt<tpnm TEnum>	ndstain	::llc::vcvsc_c&		get_value_names		()							noxcpt	{ return ::llc::get_enum<TEnum>().Names; }
-	tplt<tpnm TEnum>	ndstain	::llc::vcvsc_c&		get_value_descs		()							noxcpt	{ return ::llc::get_enum<TEnum>().Names; }
+	tplt<tpnm TEnum>	ndstain	::llc::vcvsc_c&		get_value_labels	()							nxpt	{ return ::llc::get_enum<TEnum>().Names; }
+	tplt<tpnm TEnum>	ndstain	::llc::vcvsc_c&		get_value_names		()							nxpt	{ return ::llc::get_enum<TEnum>().Names; }
+	tplt<tpnm TEnum>	ndstain	::llc::vcvsc_c&		get_value_descs		()							nxpt	{ return ::llc::get_enum<TEnum>().Names; }
 	tplt<tpnm TEnum>	ndstain	int32_t				get_value_index		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_index(statusBit); }
-	tplt<tpnm TEnum>	ndstain	::llc::vcsc_c&		get_enum_namev		()							noxcpt	{ return ::llc::get_enum<TEnum>().Name;			}
-	tplt<tpnm TEnum>	ndstain	::llc::vcsc_c&		get_enum_namev		(const TEnum & )			noxcpt	{ return ::llc::get_enum<TEnum>().Name;			}
-	tplt<tpnm TEnum>	ndstain	const char*			get_enum_namep		()							noxcpt	{ return ::llc::get_enum<TEnum>().Name.begin();	}
-	tplt<tpnm TEnum>	ndstain	const char*			get_enum_namep		(const TEnum & )			noxcpt	{ return ::llc::get_enum<TEnum>().Name.begin();	}
+	tplt<tpnm TEnum>	ndstain	::llc::vcsc_c&		get_enum_namev		()							nxpt	{ return ::llc::get_enum<TEnum>().Name;			}
+	tplt<tpnm TEnum>	ndstain	::llc::vcsc_c&		get_enum_namev		(const TEnum & )			nxpt	{ return ::llc::get_enum<TEnum>().Name;			}
+	tplt<tpnm TEnum>	ndstain	const char*			get_enum_namep		()							nxpt	{ return ::llc::get_enum<TEnum>().Name.begin();	}
+	tplt<tpnm TEnum>	ndstain	const char*			get_enum_namep		(const TEnum & )			nxpt	{ return ::llc::get_enum<TEnum>().Name.begin();	}
 
 	tplt <tpnm T>
 	struct genum_value_auto {
@@ -294,8 +294,8 @@ namespace llc
 #define GDEFINE_ENUM_STRUCT(EnumName, IntType)																								\
 	struct EnumName {																														\
 		IntType				Value			;																								\
-		inline	operatr		IntType&		()			noxcpt	{ return Value; }															\
-		inlcxpr	operatr		const IntType&	()	const	noxcpt	{ return Value; }															\
+		inline	operatr		IntType&		()			nxpt	{ return Value; }															\
+		inlcxpr	operatr		const IntType&	()	const	nxpt	{ return Value; }															\
 	};																																		\
 	static	const uint32_t	__sei_##EnumName##enumInit	= ::llc::enum_definition<EnumName>::init(#EnumName);								\
 	stincxp	EnumName		operator &	(EnumName  a, EnumName b)	noexcept	{ return {a & (IntType)b};				}	\
@@ -343,13 +343,13 @@ namespace llc
 #endif
 
 #define llc_warning_unhandled_value(_enumValue)			warning_printf("Unhandled'%s' value:(0x%X)(%" LLC_FMT_I32 ")(%c) %s"	, ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue))
-#define llc_enum_valued_level(_funcPrintf, _enumValue)	_funcPrintf("'%s':(0x%X)(%" LLC_FMT_I32 ")(%c)'%s'-'%s'"				, ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue), ::llc::get_value_descp(_enumValue))
-#define llc_enum_value_info(_enumValue)					llc_enum_value_level (info_printf		, _enumValue)
-#define llc_enum_value_warning(_enumValue)				llc_enum_value_level (warning_printf	, _enumValue)
-#define llc_enum_value_error(_enumValue)				llc_enum_value_level (error_printf		, _enumValue)
-#define llc_enum_valued_info(_enumValue)				llc_enum_valued_level(info_printf		, _enumValue)
-#define llc_enum_valued_warning(_enumValue)				llc_enum_valued_level(warning_printf	, _enumValue)
-#define llc_enum_valued_error(_enumValue)				llc_enum_valued_level(error_printf		, _enumValue)
+#define llc_enum_valued_log(_funcPrintf, _enumValue)	_funcPrintf("'%s':(0x%X)(%" LLC_FMT_I32 ")(%c)'%s'-'%s'"				, ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue), ::llc::get_value_descp(_enumValue))
+#define llc_enum_value_info(_enumValue)					llc_enum_value_log	(info_printf	, _enumValue)
+#define llc_enum_value_warning(_enumValue)				llc_enum_value_log	(warning_printf	, _enumValue)
+#define llc_enum_value_error(_enumValue)				llc_enum_value_log	(error_printf	, _enumValue)
+#define llc_enum_valued_info(_enumValue)				llc_enum_valued_log	(info_printf	, _enumValue)
+#define llc_enum_valued_warning(_enumValue)				llc_enum_valued_log	(warning_printf	, _enumValue)
+#define llc_enum_valued_error(_enumValue)				llc_enum_valued_log	(error_printf	, _enumValue)
 
 
 namespace llc

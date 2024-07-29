@@ -6,8 +6,8 @@
 
 namespace llc
 {
-	tpltT	using	aaobj		= ::llc::aobj<::llc::aobj<T>>; 
-	tpltT	using	aapod		= ::llc::aobj<::llc::apod<T>>; 
+	tplT	using	aaobj		= ::llc::aobj<::llc::aobj<T>>; 
+	tplT	using	aapod		= ::llc::aobj<::llc::apod<T>>; 
 
 	typedef	::llc::aapod<uc_t>	aauc_t, aauchar		;
 	typedef	::llc::aapod<sc_t>	aasc_t, aachar		;

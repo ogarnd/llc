@@ -180,7 +180,7 @@ namespace llc
 	typedef	const n2f2_t	n2f2_c;
 	typedef	const n2f3_t	n2f3_c;
 	
-	tpltT	stacxpr	bool	in_range	(const ::llc::n2<T> & valueToTest, const ::llc::n2<T> & rangeStart, const ::llc::n2<T> & rangeStop)	noexcept	{
+	tplT	stacxpr	bool	in_range	(const ::llc::n2<T> & valueToTest, const ::llc::n2<T> & rangeStart, const ::llc::n2<T> & rangeStop)	noexcept	{
 		return	::llc::in_range(valueToTest.x, rangeStart.x, rangeStop.x)
 			&&	::llc::in_range(valueToTest.y, rangeStart.y, rangeStop.y)
 			;

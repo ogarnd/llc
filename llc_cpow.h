@@ -30,10 +30,10 @@ namespace llc
 	stacxpr	uint8_t		ASCII_LETTER_COUNT		= ASCII_ALPHABET_LENGTH * 2;
 	stacxpr	uint8_t		ASCII_DIGIT_COUNT		= ASCII_LETTER_COUNT + 10;
 
-	ndstinx char		digit_ascii				(char remainder)								noxcpt	{ return remainder + ((remainder < 10) ? '0' : '7'); }
-	ndstinx char		digit_ascii				(uint64_t value, uint8_t base)					noxcpt	{ return digit_ascii(char(value % base)); }
+	ndstinx char		digit_ascii				(char remainder)								nxpt	{ return remainder + ((remainder < 10) ? '0' : '7'); }
+	ndstinx char		digit_ascii				(uint64_t value, uint8_t base)					nxpt	{ return digit_ascii(char(value % base)); }
 	tplt<uint8_t exp, tpnm TValue>
-	ndstinx	char		digit					(const TValue value, const TValue base = 10)	noxcpt	{ return ::llc::digit_ascii(value / ::llc::cpow<exp>(base), (uint8_t)base); }
+	ndstinx	char		digit					(const TValue value, const TValue base = 10)	nxpt	{ return ::llc::digit_ascii(value / ::llc::cpow<exp>(base), (uint8_t)base); }
 } // namespace
 
 #endif // LLC_CPOW_H
