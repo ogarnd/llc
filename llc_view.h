@@ -139,8 +139,8 @@ namespace llc
 	tplT			using	view1d		= ::llc::view<T>;
 	tplT			using	v1			= ::llc::view<T>;
 
-	tplt<tpnm T>	ndstinx	u2_t	size		(cnst ::llc::view<T> & viewToTest)	nxpt	{ return viewToTest.size();			}
-	tplt<tpnm T>	ndstinx	u2_t	byte_count	(cnst ::llc::view<T> & viewToTest)	nxpt	{ return viewToTest.byte_count();	}
+	tplT			ndstinx	u2_t	size		(cnst ::llc::view<T> & viewToTest)	nxpt	{ return viewToTest.size();			}
+	tplT			ndstinx	u2_t	byte_count	(cnst ::llc::view<T> & viewToTest)	nxpt	{ return viewToTest.byte_count();	}
 
 #pragma pack(pop)
 
