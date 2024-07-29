@@ -3,7 +3,7 @@
 #define GDEFINE_ENUM_CASE_DEFAULT(TEnum, TValue)    default                 : return #TValue
 #define GDEFINE_ENUM_CASE(TEnum, TValue)            case TEnum##_##TValue   : return #TValue
 
-const char* llc::get_value_namep     (DEVICE_TYPE    value)  noexcpt {
+const char* llc::get_value_namep     (DEVICE_TYPE    value)  noxcpt {
     switch(value) {
     GDEFINE_ENUM_CASE_DEFAULT(DEVICE_TYPE, UNKNOWN);
     GDEFINE_ENUM_CASE(DEVICE_TYPE, UNKNOWN          );
@@ -16,7 +16,7 @@ const char* llc::get_value_namep     (DEVICE_TYPE    value)  noexcpt {
     GDEFINE_ENUM_CASE(DEVICE_TYPE, CUSTOM           );
     }
 }
-const char* llc::get_value_namep     (OPCODE_SET     value)  noexcpt {
+const char* llc::get_value_namep     (OPCODE_SET     value)  noxcpt {
     switch(value) {
     GDEFINE_ENUM_CASE_DEFAULT(OPCODE_SET, UNKNOWN);
     GDEFINE_ENUM_CASE(OPCODE_SET, UNKNOWN);
@@ -34,7 +34,7 @@ const char* llc::get_value_namep     (OPCODE_SET     value)  noexcpt {
     GDEFINE_ENUM_CASE(OPCODE_SET, CUSTOM);
     }
 }
-const char* llc::get_value_namep     (OPCODE_EXT     value)  noexcpt {
+const char* llc::get_value_namep     (OPCODE_EXT     value)  noxcpt {
     switch(value) {
     GDEFINE_ENUM_CASE_DEFAULT(OPCODE_EXT, NONE);
     GDEFINE_ENUM_CASE(OPCODE_EXT, NONE);
@@ -47,7 +47,7 @@ const char* llc::get_value_namep     (OPCODE_EXT     value)  noexcpt {
     GDEFINE_ENUM_CASE(OPCODE_EXT, CUSTOM);
     }
 }
-const char* llc::get_value_namep     (OS_FAMILY      value)  noexcpt {
+const char* llc::get_value_namep     (OS_FAMILY      value)  noxcpt {
     switch(value) {
     GDEFINE_ENUM_CASE_DEFAULT(OS_FAMILY, UNKNOWN);
     GDEFINE_ENUM_CASE(OS_FAMILY, UNKNOWN    );

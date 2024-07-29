@@ -197,7 +197,7 @@ namespace llc
 	typedef	const vcf3_t 		vcf3_c;
 
 // Use this to initialize a constexpr vcs from a string literal
-#define LLC_CXS(constexpr_string_literal) ::llc::vcc{uint32_t(sizeof(constexpr_string_literal) - 1), constexpr_string_literal}
+#define LLC_CXS(constexpr_string_literal) ::llc::vcsc_t{::llc::s2_t(sizeof(constexpr_string_literal) - 1), constexpr_string_literal}
 
 	typedef	::llc::view<vuc_t>	vvuc_t;
 	typedef	::llc::view<vsc_t>	vvsc_t;
@@ -297,10 +297,8 @@ namespace llc
 	tplt<>	ndincxp	::llc::vcs	get_type_namev<typeIdentifier>	()					noexcept	{ return LLC_CXS(#typeIdentifier); }					\
 			ndstinx	const sc_t*	get_type_namep					(typeIdentifier &)	noexcept	{ return get_type_namev<typeIdentifier>().begin(); }	\
 	tplt<>	ndincxp	const sc_t*	get_type_namep<typeIdentifier>	()					noexcept	{ return get_type_namev<typeIdentifier>().begin(); }	
-#ifdef LLC_WINDOWS
-	GDEFINE_TYPE_NAME_STR(uc_t);
+	//GDEFINE_TYPE_NAME_STR(uc_t);
 	GDEFINE_TYPE_NAME_STR(sc_t);
-#endif
 	GDEFINE_TYPE_NAME_STR(u0_t);
 	GDEFINE_TYPE_NAME_STR(u1_t);
 	GDEFINE_TYPE_NAME_STR(u2_t);
@@ -311,10 +309,8 @@ namespace llc
 	GDEFINE_TYPE_NAME_STR(s3_t);
 	GDEFINE_TYPE_NAME_STR(f2_t);
 	GDEFINE_TYPE_NAME_STR(f3_t);
-#ifdef LLC_WINDOWS
-	GDEFINE_TYPE_NAME_STR(uc_c);
+	//GDEFINE_TYPE_NAME_STR(uc_c);
 	GDEFINE_TYPE_NAME_STR(sc_c);
-#endif
 	GDEFINE_TYPE_NAME_STR(u0_c);
 	GDEFINE_TYPE_NAME_STR(u1_c);
 	GDEFINE_TYPE_NAME_STR(u2_c);

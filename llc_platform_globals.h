@@ -76,17 +76,18 @@
 #endif
 
 // These aliases make keyword width to be consistent and makes the code less verbose.
-#define vltl	            volatile
-#define tpnm	            typename
-#define tplt	            template
-#define tpltT	            tplt<tpnm T>
+#define cnst                const
+#define vltl                volatile
+#define tpnm                typename
+#define tplt                template
+#define tpltT               tplt<tpnm T>
 #define tpltTInTOut	        tplt<tpnm TIn, tpnm TOut>
 
 #define prtctd              protected
 #define privte              private
-#define noexcpt	            noexcept
+#define noxcpt	            noexcept
 
-//#define nxcp              noexcpt
+//#define nxcp              noxcpt
 //#define inln              inline
 //#define sttc              static
 //#define oprt              operatr
@@ -109,8 +110,9 @@
 #define ndincxp             ndinlne cnstxpr
 #define ndstinx             ndstain cnstxpr
 
-#define cxp_if(condition)   if cnstxpr(condition)
-#define if_not(condition)   if not(condition)
+#define cxp_if(condition)       if cnstxpr(condition)
+#define cxp_if_not(condition)   if cnstxpr(not(condition))
+#define if_not(condition)       if(not(condition))
 
 #define	LLC_STRINGIFY(x) #x
 #define	LLC_TOSTRING(x)  LLC_STRINGIFY(x)
@@ -281,7 +283,7 @@ namespace llc
         , OS_FAMILY_CUSTOM          = 0x40U
         };
 
-#define GDEFINE_ENUM_NAMEP(TEnum)                       tplt<TEnum> ndstinx const char* get_enum_namep  (const TEnum&)  noexcpt { return #TEnum; }
+#define GDEFINE_ENUM_NAMEP(TEnum)                       tplt<TEnum> ndstinx const char* get_enum_namep  (const TEnum&)  noxcpt { return #TEnum; }
     GDEFINE_ENUM_NAMEP(DEVICE_TYPE  );
     GDEFINE_ENUM_NAMEP(OPCODE_SET   );
     GDEFINE_ENUM_NAMEP(OPCODE_EXT   );
@@ -289,10 +291,10 @@ namespace llc
 
 #define llc_enum_value_level(_funcPrintf, _enumValue)	_funcPrintf("'%s':(0x%X)(%" LLC_FMT_I32 ")(%c)'%s'", ::llc::get_enum_namep LLCREP3(_enumValue) ? char(_enumValue) : '?', ::llc::get_value_namep(_enumValue))
 
-    nodscrd const char* get_value_namep (DEVICE_TYPE    value)  noexcpt;
-    nodscrd const char* get_value_namep (OPCODE_SET     value)  noexcpt;
-    nodscrd const char* get_value_namep (OPCODE_EXT     value)  noexcpt;
-    nodscrd const char* get_value_namep (OS_FAMILY      value)  noexcpt;
+    nodscrd const char* get_value_namep (DEVICE_TYPE    value)  noxcpt;
+    nodscrd const char* get_value_namep (OPCODE_SET     value)  noxcpt;
+    nodscrd const char* get_value_namep (OPCODE_EXT     value)  noxcpt;
+    nodscrd const char* get_value_namep (OS_FAMILY      value)  noxcpt;
 } // namespace
 
 #endif // LLC_PLATFORM_GLOBALS_H_23627

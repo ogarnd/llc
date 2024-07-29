@@ -29,12 +29,12 @@
 
 namespace llc
 {
-	stacxpr	uintptr_t					calc_align_address			(uintptr_t alignment, uintptr_t address)	noexcept	{ return (alignment - ((alignment - 1) & address)) & (alignment - 1); }
-	stincxp	uintptr_t					calc_align_address_4		(uintptr_t address)							noexcept	{ return calc_align_address( 4, address); }
-	stincxp	uintptr_t					calc_align_address_8		(uintptr_t address)							noexcept	{ return calc_align_address( 8, address); }
-	stincxp	uintptr_t					calc_align_address_16		(uintptr_t address)							noexcept	{ return calc_align_address(16, address); }
-	stincxp	uintptr_t					calc_align_address_32		(uintptr_t address)							noexcept	{ return calc_align_address(32, address); }
-	stincxp	uintptr_t					calc_align_address_64		(uintptr_t address)							noexcept	{ return calc_align_address(64, address); }
+	ndstcxp	uintptr_t					calc_align_address			(uintptr_t alignment, uintptr_t address)	noexcept	{ const uintptr_t amask = alignment - 1; return (alignment - (amask & address)) & amask; }
+	ndstinx	uintptr_t					calc_align_address_4		(uintptr_t address)							noexcept	{ return calc_align_address( 4, address); }
+	ndstinx	uintptr_t					calc_align_address_8		(uintptr_t address)							noexcept	{ return calc_align_address( 8, address); }
+	ndstinx	uintptr_t					calc_align_address_16		(uintptr_t address)							noexcept	{ return calc_align_address(16, address); }
+	ndstinx	uintptr_t					calc_align_address_32		(uintptr_t address)							noexcept	{ return calc_align_address(32, address); }
+	ndstinx	uintptr_t					calc_align_address_64		(uintptr_t address)							noexcept	{ return calc_align_address(64, address); }
 
 #if defined(LLC_WINDOWS)
 	stainli	void						llc_free					(void* ptr)									noexcept	{ _aligned_free(ptr);									}
@@ -54,6 +54,9 @@ namespace llc
 	stainli	void						llc_free					(void* ptr)									noexcept	{ ::free(ptr);		        									}
 	stainli	void*						llc_malloc					(size_t size)								noexcept	{ int8_t* p = (int8_t*)::memalign(LLC_MALLOC_ALIGN, size + 1); return p; }
 #endif
+
+	tpltT stainli	T*&					malloc						(T*& newRef)								noexcept	{ return newRef = (T*)llc_malloc(sizeof(T)); }
+	tpltT stainli	T*&					malloc						(T*& newRef, u2_t count)					noexcept	{ return newRef = (T*)llc_malloc(sizeof(T) * count); }
 
 	tplt<tpnm _typePtr>
 	stainli	void						safe_llc_free				(_typePtr &p)								noexcept	{

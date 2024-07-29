@@ -23,8 +23,9 @@
 
 namespace llc
 {
+	typedef bool			b8_t, b8u_t;
 	typedef	unsigned char	uc_t, c0u_t;
-	typedef	char			sc_t, c0s_t, char_t;
+	typedef	char			sc_t, c0s_t;
 	typedef uint8_t			u0_t, i0u_t;
 	typedef uint16_t		u1_t, i1u_t;
 	typedef uint32_t		u2_t, i2u_t;
@@ -36,8 +37,9 @@ namespace llc
 	typedef float			f2_t, f2s_t;
 	typedef double			f3_t, f3s_t;
 
+	typedef	const b8_t		b8_c, b8u_c;
 	typedef	const uc_t		uc_c, c0u_c;
-	typedef	const sc_t		sc_c, c0s_c, sc_c;
+	typedef	const sc_t		sc_c, c0s_c;
 	typedef	const u0_t		u0_c, i0u_c;
 	typedef	const u1_t		u1_c, i1u_c;
 	typedef	const u2_t		u2_c, i2u_c;
@@ -82,17 +84,17 @@ namespace llc
 #	define	LLC_REFCOUNT_T	intptr_t
 	typedef vltl	LLC_REFCOUNT_T	refcount_t;
 #endif
-	tplt<class _tBase>	struct remove_cv							{ using type = _tBase; };
-	tplt<class _tBase>	struct remove_cv<const		_tBase>			{ using type = _tBase; };
-	tplt<class _tBase>	struct remove_cv<vltl		_tBase>			{ using type = _tBase; };
-	tplt<class _tBase>	struct remove_cv<const vltl	_tBase>			{ using type = _tBase; };
-	tplt<class _tBase>	using	remove_cv_t			= tpnm remove_cv<_tBase>::type;
+	tpltT	struct remove_cv						{ using type = T; };
+	tpltT	struct remove_cv<const		T>			{ using type = T; };
+	tpltT	struct remove_cv<vltl		T>			{ using type = T; };
+	tpltT	struct remove_cv<const vltl	T>			{ using type = T; };
+	tpltT	using	remove_cv_t			= tpnm remove_cv<T>::type;
 
-	tplt<class _tBase>	struct remove_volatile						{ using type = _tBase; };
-	tplt<class _tBase>	struct remove_volatile<const		_tBase>	{ using type = _tBase; };
-	tplt<class _tBase>	struct remove_volatile<vltl			_tBase>	{ using type = _tBase; };
-	tplt<class _tBase>	struct remove_volatile<const vltl	_tBase>	{ using type = _tBase; };
-	tplt<class _tBase>	using	remove_volatile_t	= tpnm remove_volatile<_tBase>::type;
+	tpltT	struct remove_volatile					{ using type = T; };
+	tpltT	struct remove_volatile<const		T>	{ using type = T; };
+	tpltT	struct remove_volatile<vltl			T>	{ using type = T; };
+	tpltT	struct remove_volatile<const vltl	T>	{ using type = T; };
+	tpltT	using	remove_volatile_t	= tpnm remove_volatile<T>::type;
 
 	tpltTInTOut	stincxp	TOut	dim2		(TIn value)				noexcept	{ return {value, value}; }
 	tpltTInTOut	stincxp	TOut	dim3		(TIn value)				noexcept	{ return {value, value, value}; }

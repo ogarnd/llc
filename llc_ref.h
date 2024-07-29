@@ -7,10 +7,7 @@
 
 namespace llc
 {
-	tplt<tpnm _tInstance>
-	struct gref {
-		typedef	_tInstance	T;
-
+	tpltT struct gref {
 		T					* Instance;
 		refcount_t			References;
 	};
@@ -45,9 +42,9 @@ namespace llc
 	tplt<tpnm T>
 	T*						ref_allocate			(::llc::gref<T>* * llc_reference)	noexcept	{
 		typedef	::llc::gref<T>	TRef;
-		TRef						* newRef				= (TRef*)::llc::llc_malloc(sizeof(TRef));
-		retnul_gserror_if(0 == newRef);
-		if(0 == (newRef->Instance = (T*)::llc::llc_malloc(sizeof(T)))) {
+		TRef						* newRef				;
+		if_null_ve(0, newRef = ::llc::malloc(newRef));
+		if(0 == ::llc::malloc(newRef->Instance)) {
 			::llc::llc_free(newRef);
 			error_printf("%s", "Out of memory?");
 			return 0;
