@@ -10,12 +10,12 @@ namespace llc
 		::llc::aobj<::llc::SPathContents>	Folders					= {};
 	};
 
-	::llc::error_t						pathCreate				(const ::llc::vcc & folderName, const char separator = '/');	// Recursive
-	::llc::error_t						pathList				(const ::llc::vcc & pathToList, ::llc::aachar & output, bool listFolders, const ::llc::vcc extension = {});		// Not recursive
-	::llc::error_t						pathList				(const ::llc::SPathContents & input, ::llc::aachar & output, const ::llc::vcc extension = {});	// recursively walk over a pathcontents hierarchy and store all the file names into "output"
-	::llc::error_t						pathList				(const ::llc::SPathContents & input, ::llc::avcc & output, const ::llc::vcc extension = {});	// recursively walk over a pathcontents hierarchy and store all the file names into "output"
-	::llc::error_t						pathList				(const ::llc::vcc & pathToList, SPathContents & out_Contents, const ::llc::vcc extension = {});		// Recursive
-	stainli	::llc::error_t				pathList				(const ::llc::vcc & pathToList, ::llc::aachar & output, const ::llc::vcc extension = {}) {
+	::llc::error_t						pathCreate				(const ::llc::vcs & folderName, sc_c separator = '/');	// Recursive
+	::llc::error_t						pathList				(const ::llc::vcs & pathToList, ::llc::aachar & output, bool listFolders, ::llc::vcs extension = {});		// Not recursive
+	::llc::error_t						pathList				(const ::llc::SPathContents & input, ::llc::aasc_t & output	, ::llc::vcs extension = {});	// recursively walk over a pathcontents hierarchy and store all the file names into "output"
+	::llc::error_t						pathList				(const ::llc::SPathContents & input, ::llc::avcc & output	, ::llc::vcs extension = {});	// recursively walk over a pathcontents hierarchy and store all the file names into "output"
+	::llc::error_t						pathList				(const ::llc::vcs & pathToList, SPathContents & out_Contents, ::llc::vcs extension = {});		// Recursive
+	stainli	::llc::error_t				pathList				(const ::llc::vcs & pathToList, ::llc::aachar & output		, ::llc::vcs extension = {}) {
 		::llc::SPathContents					tree					= {};
 		int32_t									error					= ::llc::pathList(pathToList, tree, extension);
 		llc_necs(error |= ::llc::pathList(tree, output, extension));

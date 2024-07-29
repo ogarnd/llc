@@ -77,14 +77,15 @@
 
 // These aliases make keyword width to be consistent and makes the code less verbose.
 #define cnst                const
+#define nxpt                noexcept
+#define cnstnxpt            cnst nxpt
 #define cxpr                constexpr
 #define vltl                volatile
-#define nxpt                noexcept
 #define tplt                template
 #define tpnm                typename
 #define tplT                tplt<tpnm T>
 #define tplTInTOut          tplt<tpnm TIn, tpnm TOut>
-#define tplTstruct          tplt<tpnm T> struct
+#define tplTstruct          tplT struct
 
 #define prtctd              protected
 #define privte              private

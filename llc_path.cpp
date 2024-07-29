@@ -19,11 +19,11 @@
 
 stacxpr	uint32_t LLC_MAX_PATH = 256;
 //
-::llc::error_t			llc::pathCreate				(const ::llc::vcc & pathName, const char separator) {
+::llc::error_t			llc::pathCreate				(const ::llc::vcs & pathName, sc_c separator) {
 	rww_if(0 == pathName.begin(), "%s.", "pathName is null.");
 #ifndef LLC_ATMEL
 	char						folder[LLC_MAX_PATH]		= {};
-	int32_t						offsetBar					= -1;
+	s2_t						offsetBar					= -1;
 	do {
 		++offsetBar;
 		offsetBar				= ::llc::find(separator, pathName, offsetBar);
@@ -46,7 +46,7 @@ stacxpr	uint32_t LLC_MAX_PATH = 256;
 			mkdir(folder, 0700);
 		}
 #endif
-		if(offsetBar < 0 || offsetBar == (int32_t)pathName.size() - 1)
+		if(offsetBar < 0 || offsetBar == (s2_t)pathName.size() - 1)
 			break;
 	} while(true);
 #endif
@@ -77,7 +77,6 @@ stacxpr	uint32_t LLC_MAX_PATH = 256;
 		if('\\' != path[path.size() - 1] && '/' != path[path.size() - 1])
 			out_composed.push_back('/');
 	}
-
 	if(fileName.size()) {
 		for(uint32_t iChar = ('\\' == fileName[0]) ? 1 : 0; iChar < fileName.size(); ++iChar) {
 			const char					curChar						= fileName[iChar];
@@ -92,7 +91,7 @@ stacxpr	uint32_t LLC_MAX_PATH = 256;
 	return out_composed.size();
 }
 
-::llc::error_t			llc::pathList				(const ::llc::SPathContents & input, ::llc::avcc & output, const ::llc::vcc extension)					{
+::llc::error_t			llc::pathList				(const ::llc::SPathContents & input, ::llc::avcc & output, const ::llc::vcs extension)					{
 	for(uint32_t iFile = 0; iFile < input.Files.size(); ++iFile) {
 		const ::llc::vcc			& fileName					= input.Files[iFile];
 		if(0 == extension.size() || (extension.size() < fileName.size() && 0 == strncmp(fileName.end() - extension.size(), extension.begin(), ::llc::min(extension.size(), fileName.size()))))
@@ -103,7 +102,7 @@ stacxpr	uint32_t LLC_MAX_PATH = 256;
 	return 0;
 }
 
-::llc::error_t			llc::pathList				(const ::llc::SPathContents & input, ::llc::aachar & output, const ::llc::vcc extension)					{
+::llc::error_t			llc::pathList				(const ::llc::SPathContents & input, ::llc::aasc_t & output, const ::llc::vcs extension)					{
 	for(uint32_t iFile = 0; iFile < input.Files.size(); ++iFile) {
 		const ::llc::vcc			& fileName					= input.Files[iFile];
 		if(0 == extension.size() || (extension.size() < fileName.size() && 0 == strncmp(fileName.end() - extension.size(), extension.begin(), ::llc::min(extension.size(), fileName.size()))))
@@ -119,8 +118,8 @@ stacxpr	const char		curDir	[]					= ".";
 stacxpr	const char		parDir	[]					= "..";
 #endif
 
-::llc::error_t			llc::pathList				(const ::llc::vcc & pathToList, ::llc::aachar & output, bool listFolders, const ::llc::vcc extension)	{
-	::llc::achar				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcc{pathToList.begin(), pathToList.size() - 1};
+::llc::error_t			llc::pathList				(const ::llc::vcs & pathToList, ::llc::aachar & output, bool listFolders, const ::llc::vcs extension)	{
+	::llc::achar				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcs{pathToList.begin(), pathToList.size() - 1};
 	char						bufferFormat[16]			=  {};
 	snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U32 "s/*.*", withoutTrailingSlash.size());
 	char						sPath	[LLC_MAX_PATH]		= {};
@@ -167,8 +166,8 @@ stacxpr	const char		parDir	[]					= "..";
 }
 
 
-::llc::error_t			llc::pathList				(const ::llc::vcc & pathToList, ::llc::SPathContents & pathContents, const llc::vcc extension)						{
-	::llc::achar				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcc{pathToList.begin(), pathToList.size() - 1};
+::llc::error_t			llc::pathList				(const ::llc::vcs & pathToList, ::llc::SPathContents & pathContents, const llc::vcs extension)						{
+	::llc::achar				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcs{pathToList.begin(), pathToList.size() - 1};
 	char						bufferFormat[36]			= {};
 	snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U32 "s/*.*", withoutTrailingSlash.size());
 	char						sPath[LLC_MAX_PATH]			= {};

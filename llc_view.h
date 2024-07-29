@@ -20,51 +20,50 @@
 namespace llc
 {
 #pragma pack(push, 1)
-	tplt <tpnm _tVal>
-	class view {
+	tplt<tpnm _tVal> class view {
 	protected:
 		// Properties / Member Variables
 		_tVal					* Data			= 0;
-		uint32_t				Count			= 0;
+		u2_t				Count			= 0;
 	public:
 		typedef	_tVal			T;
-		typedef	view<const T>	TConstView;
+		typedef	view<cnst T>	TConstView;
 		typedef	view<T>			TView;
 
 		// Constructors
-		inlcxpr					view			()									noexcept	= default;
-		inlcxpr					view			(const view<T> & other)				noexcept	= default;
+		inlcxpr					view			()									nxpt	= default;
+		inlcxpr					view			(cnst view<T> & other)				nxpt	= default;
 
 		tplt<size_t Len>
-		inlcxpr					view			(T (&elements)[Len])				noexcept	: Data(elements), Count(Len)										{}
+		inlcxpr					view			(T (&elements)[Len])				nxpt	: Data(elements), Count(Len)										{}
 
 		tplt<size_t Len>
-		inlcxpr					view			(uint32_t elementCount, T (&elements)[Len])		: Data(elements), Count(::llc::min((u2_t)Len, elementCount))	{}
-		inline					view			(T * elements, uint32_t elementCount)			: Data(elements), Count(elementCount)								{
+		inlcxpr					view			(u2_t elementCount, T (&elements)[Len])		: Data(elements), Count(::llc::min((u2_t)Len, elementCount))	{}
+		inline					view			(T * elements, u2_t elementCount)			: Data(elements), Count(elementCount)								{
 			gthrow_if(0 == elements && 0 != elementCount, "%" LLC_FMT_U32 " -> 0.", elementCount);	// Crash if we received invalid parameters in order to prevent further malfunctioning.
 		}
 
 		tplt <size_t Len>
-		inline					view			(T (&elements)[Len], uint32_t elementCount)		: Data(elements), Count(::llc::min((u2_t)Len, elementCount))	{
+		inline					view			(T (&elements)[Len], u2_t elementCount)		: Data(elements), Count(::llc::min((u2_t)Len, elementCount))	{
 			gthrow_if(elementCount > Len, LLC_FMT_U32_GT_U32, elementCount, (u2_t)Len);
 		}
 
 		// Operators
-		inlcxpr	operator		view<const T>	()							const	noexcept	{ return {Data, Count}; }
+		inlcxpr	operator		view<cnst T>	()							cnstnxpt	{ return {Data, Count}; }
 
-		T&						operator[]		(uint32_t index)								{
+		T&						operator[]		(u2_t index)								{
 			static T dymmy = {}; 
 			rves_if(dymmy, 0 == Data);
 			gthrow_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
 			return Data[index];
 		}
-		const T&				operator[]		(uint32_t index)			const				{
+		cnst T&					operator[]		(u2_t index)			cnst				{
 			gsthrow_if(0 == Data);
 			gthrow_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
 			return Data[index];
 		}
-		bool					operator!=		(const TConstView & other)	const				{ return  !operator==(other); } // I had to add this for the android build not supporting C++20.
-		bool					operator==		(const TConstView & other)	const				{
+		bool					operator!=		(cnst TConstView & other)	cnst				{ return  !operator==(other); } // I had to add this for the android build not supporting C++20.
+		bool					operator==		(cnst TConstView & other)	cnst				{
 			if(this->size() != other.size())
 				return false;
 			if(this->begin() == other.begin())
@@ -73,39 +72,39 @@ namespace llc
 		}
 
 		// Methods
-		inlcxpr	uint32_t		byte_count		()							const	noexcept	{ return uint32_t(Count * sizeof(T));	}
-		inlcxpr	uint64_t		bit_count		()							const	noexcept	{ return byte_count() * 8ULL;			}
+		inlcxpr	u2_t			byte_count		()							cnstnxpt	{ return u2_t(Count * sizeof(T));	}
+		inlcxpr	uint64_t		bit_count		()							cnstnxpt	{ return byte_count() * 8ULL;			}
 
-		inline	view<sc_t>		c				()									noexcept	{ return {(sc_t			*)Data, byte_count()}; }
-		inline	view<i0u_t>		u8				()									noexcept	{ return {(i0u_t		*)Data, byte_count()}; }
-		inlcxpr	view<sc_c>		cc				()							const	noexcept	{ return {(const sc_t	*)Data, byte_count()}; }
-		inlcxpr	view<i0u_c>		u8				()							const	noexcept	{ return {(i0u_c		*)Data, byte_count()}; }
-		inlcxpr	view<i0u_c>		cu8				()							const	noexcept	{ return {(i0u_c		*)Data, byte_count()}; }
+		inline	view<sc_t>		c				()								nxpt	{ return {(sc_t			*)Data, byte_count()}; }
+		inline	view<i0u_t>		u8				()								nxpt	{ return {(i0u_t		*)Data, byte_count()}; }
+		inlcxpr	view<sc_c>		cc				()							cnstnxpt	{ return {(cnst sc_t	*)Data, byte_count()}; }
+		inlcxpr	view<i0u_c>		u8				()							cnstnxpt	{ return {(i0u_c		*)Data, byte_count()}; }
+		inlcxpr	view<i0u_c>		cu8				()							cnstnxpt	{ return {(i0u_c		*)Data, byte_count()}; }
 
-		inlcxpr	const uint32_t&	size			()							const	noexcept	{ return Count;				}
-		inlcxpr	const T*		begin			()							const	noexcept	{ return Data;				}
-		inlcxpr	const T*		end				()							const	noexcept	{ return begin() + Count;	}
-		inline	T*				begin			()									noexcept	{ return Data;				}
-		inline	T*				end				()									noexcept	{ return begin() + Count;	}
-		::llc::error_t			slice			(TView & out, uint32_t offset, uint32_t count = (u2_t)-1)				{
+		inlcxpr	u2_c&			size			()							cnstnxpt	{ return Count;				}
+		inlcxpr	cnst T*			begin			()							cnstnxpt	{ return Data;				}
+		inlcxpr	cnst T*			end				()							cnstnxpt	{ return begin() + Count;	}
+		inline	T*				begin			()								nxpt	{ return Data;				}
+		inline	T*				end				()								nxpt	{ return begin() + Count;	}
+		::llc::error_t			slice			(TView & out, u2_t offset, u2_t count = (u2_t)-1)				{
 			reterr_gerror_if(offset > Count, LLC_FMT_U32_GT_U32, offset, (u2_t)Count);
-			const uint32_t				newSize			= Count - offset;
+			cnst u2_t					newSize			= Count - offset;
 			if(count != (u2_t)-1)
 				ree_if(count > newSize, LLC_FMT_U32_GT_U32, count, (u2_t)newSize);
 			out						= {&Data[offset], ::llc::min(newSize, count)};
 			return out.size();
 		}
-		::llc::error_t			slice			(TConstView & out, uint32_t offset, uint32_t count = (u2_t)-1)	const	{
+		::llc::error_t			slice			(TConstView & out, u2_t offset, u2_t count = (u2_t)-1)	cnst	{
 			ree_if(offset > Count, LLC_FMT_U32_GT_U32, offset, (u2_t)Count);
-			const uint32_t				newSize			= Count - offset;
+			cnst u2_t					newSize			= Count - offset;
 			if(count != (u2_t)-1)
 				ree_if(count > newSize, LLC_FMT_U32_GT_U32, count, (u2_t)newSize);
 			out						= {&Data[offset], ::llc::min(newSize, count)};
 			return out.size();
 		}
 		::llc::error_t			revert			()																			{
-			const uint32_t				lastElement		= Count - 1;
-			for(uint32_t i = 0, swapCount = Count / 2; i < swapCount; ++i) {
+			cnst u2_t					lastElement		= Count - 1;
+			for(u2_t i = 0, swapCount = Count / 2; i < swapCount; ++i) {
 				T							old				= Data[i];
 				Data[i]					= Data[lastElement - i];
 				Data[lastElement - i]	= old;
@@ -113,35 +112,35 @@ namespace llc
 			return 0;
 		}
 
-		inline	::llc::error_t	fill			(const T & value, uint32_t offset = 0, uint32_t stop = 0xFFFFFFFFU)		{ for(; offset < ::llc::min(Count, stop); ++offset) Data[offset] = value; return Count; }
+		inline	::llc::error_t	fill			(cnst T & value, u2_t offset = 0, u2_t stop = 0xFFFFFFFFU)		{ for(; offset < ::llc::min(Count, stop); ++offset) Data[offset] = value; return Count; }
 
 
-		::llc::error_t			for_each		(const ::llc::TFuncForEach       <T> & funcForEach, uint32_t offset = 0)			{ for(; offset < Count; ++offset) funcForEach(Data[offset]); return offset; }
-		::llc::error_t			for_each		(const ::llc::TFuncForEachConst  <T> & funcForEach, uint32_t offset = 0)	const	{ for(; offset < Count; ++offset) funcForEach(Data[offset]); return offset; }
-		::llc::error_t			enumerate		(const ::llc::TFuncEnumerate     <T> & funcForEach, uint32_t offset = 0)			{ for(; offset < Count; ++offset) funcForEach(offset, Data[offset]); return offset; }
-		::llc::error_t			enumerate		(const ::llc::TFuncEnumerateConst<T> & funcForEach, uint32_t offset = 0)	const	{ for(; offset < Count; ++offset) funcForEach(offset, Data[offset]); return offset; }
+		::llc::error_t			for_each		(cnst ::llc::TFuncForEach       <T> & funcForEach, u2_t offset = 0)			{ for(; offset < Count; ++offset) funcForEach(Data[offset]); return offset; }
+		::llc::error_t			for_each		(cnst ::llc::TFuncForEachConst  <T> & funcForEach, u2_t offset = 0)	cnst	{ for(; offset < Count; ++offset) funcForEach(Data[offset]); return offset; }
+		::llc::error_t			enumerate		(cnst ::llc::TFuncEnumerate     <T> & funcForEach, u2_t offset = 0)			{ for(; offset < Count; ++offset) funcForEach(offset, Data[offset]); return offset; }
+		::llc::error_t			enumerate		(cnst ::llc::TFuncEnumerateConst<T> & funcForEach, u2_t offset = 0)	cnst	{ for(; offset < Count; ++offset) funcForEach(offset, Data[offset]); return offset; }
 		//
-		::llc::error_t			for_each		(const ::llc::TFuncForEach       <T> & funcForEach, uint32_t offset, uint32_t stop)			{ for(stop = ::llc::min(stop, Count); offset < stop; ++offset) funcForEach(Data[offset]); return offset; }
-		::llc::error_t			for_each		(const ::llc::TFuncForEachConst  <T> & funcForEach, uint32_t offset, uint32_t stop)	const	{ for(stop = ::llc::min(stop, Count); offset < stop; ++offset) funcForEach(Data[offset]); return offset; }
-		::llc::error_t			enumerate		(const ::llc::TFuncEnumerate     <T> & funcForEach, uint32_t offset, uint32_t stop)			{ for(stop = ::llc::min(stop, Count); offset < stop; ++offset) funcForEach(offset, Data[offset]); return offset; }
-		::llc::error_t			enumerate		(const ::llc::TFuncEnumerateConst<T> & funcForEach, uint32_t offset, uint32_t stop)	const	{ for(stop = ::llc::min(stop, Count); offset < stop; ++offset) funcForEach(offset, Data[offset]); return offset; }
+		::llc::error_t			for_each		(cnst ::llc::TFuncForEach       <T> & funcForEach, u2_t offset, u2_t stop)			{ for(stop = ::llc::min(stop, Count); offset < stop; ++offset) funcForEach(Data[offset]); return offset; }
+		::llc::error_t			for_each		(cnst ::llc::TFuncForEachConst  <T> & funcForEach, u2_t offset, u2_t stop)	cnst	{ for(stop = ::llc::min(stop, Count); offset < stop; ++offset) funcForEach(Data[offset]); return offset; }
+		::llc::error_t			enumerate		(cnst ::llc::TFuncEnumerate     <T> & funcForEach, u2_t offset, u2_t stop)			{ for(stop = ::llc::min(stop, Count); offset < stop; ++offset) funcForEach(offset, Data[offset]); return offset; }
+		::llc::error_t			enumerate		(cnst ::llc::TFuncEnumerateConst<T> & funcForEach, u2_t offset, u2_t stop)	cnst	{ for(stop = ::llc::min(stop, Count); offset < stop; ++offset) funcForEach(offset, Data[offset]); return offset; }
 
-		::llc::error_t			find			(const FBool<T&>		& funcForEach, uint32_t offset = 0)			{ for(; offset < Count; ++offset) if(funcForEach(Data[offset])) return (::llc::error_t)offset; return -1; }
-		::llc::error_t			find			(const FBool<const T&>	& funcForEach, uint32_t offset = 0)	const	{ for(; offset < Count; ++offset) if(funcForEach(Data[offset])) return (::llc::error_t)offset; return -1; }
-		::llc::error_t			find			(const T & value, uint32_t offset = 0)						const	{ for(; offset < Count; ++offset) if(Data[offset] == value) return (::llc::error_t)offset; return -1; }
+		::llc::error_t			find			(cnst FBool<T&>		& funcForEach, u2_t offset = 0)			{ for(; offset < Count; ++offset) if(funcForEach(Data[offset])) return (::llc::error_t)offset; return -1; }
+		::llc::error_t			find			(cnst FBool<cnst T&>	& funcForEach, u2_t offset = 0)	cnst	{ for(; offset < Count; ++offset) if(funcForEach(Data[offset])) return (::llc::error_t)offset; return -1; }
+		::llc::error_t			find			(cnst T & value, u2_t offset = 0)						cnst	{ for(; offset < Count; ++offset) if(Data[offset] == value) return (::llc::error_t)offset; return -1; }
 
-		tplt<tpnm _tMax> ::llc::error_t	max	(_tMax & maxFound, const FTransform<_tMax, const T &> & funcComparand, uint32_t offset = 0)	const	{ s2_t iMax = 0; for(; offset < Count; ++offset) { _tMax value = funcComparand(Data[offset]); if(value > maxFound) { iMax = offset; maxFound = value; } } return iMax; }
-		tplt<tpnm _tMax> ::llc::error_t	min	(_tMax & minFound, const FTransform<_tMax, const T &> & funcComparand, uint32_t offset = 0)	const	{ s2_t iMin = 0; for(; offset < Count; ++offset) { _tMax value = funcComparand(Data[offset]); if(value < minFound) { iMin = offset; minFound = value; } } return iMin; }
-		tplt<tpnm _tMax> ::llc::error_t	max	(const FTransform<_tMax, const T &> & funcComparand, uint32_t offset = 0)					const	{ _tMax maxFound; return max(maxFound, funcComparand, offset); }
-		tplt<tpnm _tMax> ::llc::error_t	min	(const FTransform<_tMax, const T &> & funcComparand, uint32_t offset = 0)					const	{ _tMax minFound; return min(minFound, funcComparand, offset); }
+		tplt<tpnm _tMax> ::llc::error_t	max	(_tMax & maxFound, cnst FTransform<_tMax, cnst T &> & funcComparand, u2_t offset = 0)	cnst	{ s2_t iMax = 0; for(; offset < Count; ++offset) { _tMax value = funcComparand(Data[offset]); if(value > maxFound) { iMax = offset; maxFound = value; } } return iMax; }
+		tplt<tpnm _tMax> ::llc::error_t	min	(_tMax & minFound, cnst FTransform<_tMax, cnst T &> & funcComparand, u2_t offset = 0)	cnst	{ s2_t iMin = 0; for(; offset < Count; ++offset) { _tMax value = funcComparand(Data[offset]); if(value < minFound) { iMin = offset; minFound = value; } } return iMin; }
+		tplt<tpnm _tMax> ::llc::error_t	max	(cnst FTransform<_tMax, cnst T &> & funcComparand, u2_t offset = 0)					cnst	{ _tMax maxFound; return max(maxFound, funcComparand, offset); }
+		tplt<tpnm _tMax> ::llc::error_t	min	(cnst FTransform<_tMax, cnst T &> & funcComparand, u2_t offset = 0)					cnst	{ _tMax minFound; return min(minFound, funcComparand, offset); }
 	}; // view<>
 
-	tplt<tpnm T>	using	view_array	= ::llc::view<T>;
-	tplt<tpnm T>	using	view1d		= ::llc::view<T>;
-	tplt<tpnm T>	using	v1			= ::llc::view<T>;
+	tplT			using	view_array	= ::llc::view<T>;
+	tplT			using	view1d		= ::llc::view<T>;
+	tplT			using	v1			= ::llc::view<T>;
 
-	tplt<tpnm T>	ndstinx	uint32_t	size		(const ::llc::view<T> & viewToTest)	noexcept	{ return viewToTest.size();			}
-	tplt<tpnm T>	ndstinx	uint32_t	byte_count	(const ::llc::view<T> & viewToTest)	noexcept	{ return viewToTest.byte_count();	}
+	tplt<tpnm T>	ndstinx	u2_t	size		(cnst ::llc::view<T> & viewToTest)	nxpt	{ return viewToTest.size();			}
+	tplt<tpnm T>	ndstinx	u2_t	byte_count	(cnst ::llc::view<T> & viewToTest)	nxpt	{ return viewToTest.byte_count();	}
 
 #pragma pack(pop)
 
@@ -171,33 +170,33 @@ namespace llc
 	typedef	::llc::view<f2_c>	vcf2_t, vcf32;
 	typedef	::llc::view<f3_c>	vcf3_t, vcf64;
 
-	typedef	const vuc_t 		vuc_c;
-	typedef	const vsc_t 		vsc_c;
-	typedef	const vu0_t 		vu0_c;
-	typedef	const vu1_t 		vu1_c;
-	typedef	const vu2_t 		vu2_c;
-	typedef	const vu3_t 		vu3_c;
-	typedef	const vs0_t 		vs0_c;
-	typedef	const vs1_t 		vs1_c;
-	typedef	const vs2_t 		vs2_c;
-	typedef	const vs3_t 		vs3_c;
-	typedef	const vf2_t 		vf2_c;
-	typedef	const vf3_t 		vf3_c;
-	typedef	const vcuc_t 		vcuc_c;
-	typedef	const vcsc_t 		vcsc_c;
-	typedef	const vcu0_t 		vcu0_c;
-	typedef	const vcu1_t 		vcu1_c;
-	typedef	const vcu2_t 		vcu2_c;
-	typedef	const vcu3_t 		vcu3_c;
-	typedef	const vcs0_t 		vcs0_c;
-	typedef	const vcs1_t 		vcs1_c;
-	typedef	const vcs2_t 		vcs2_c;
-	typedef	const vcs3_t 		vcs3_c;
-	typedef	const vcf2_t 		vcf2_c;
-	typedef	const vcf3_t 		vcf3_c;
+	typedef	cnst vuc_t 		vuc_c;
+	typedef	cnst vsc_t 		vsc_c;
+	typedef	cnst vu0_t 		vu0_c;
+	typedef	cnst vu1_t 		vu1_c;
+	typedef	cnst vu2_t 		vu2_c;
+	typedef	cnst vu3_t 		vu3_c;
+	typedef	cnst vs0_t 		vs0_c;
+	typedef	cnst vs1_t 		vs1_c;
+	typedef	cnst vs2_t 		vs2_c;
+	typedef	cnst vs3_t 		vs3_c;
+	typedef	cnst vf2_t 		vf2_c;
+	typedef	cnst vf3_t 		vf3_c;
+	typedef	cnst vcuc_t 		vcuc_c;
+	typedef	cnst vcsc_t 		vcsc_c;
+	typedef	cnst vcu0_t 		vcu0_c;
+	typedef	cnst vcu1_t 		vcu1_c;
+	typedef	cnst vcu2_t 		vcu2_c;
+	typedef	cnst vcu3_t 		vcu3_c;
+	typedef	cnst vcs0_t 		vcs0_c;
+	typedef	cnst vcs1_t 		vcs1_c;
+	typedef	cnst vcs2_t 		vcs2_c;
+	typedef	cnst vcs3_t 		vcs3_c;
+	typedef	cnst vcf2_t 		vcf2_c;
+	typedef	cnst vcf3_t 		vcf3_c;
 
 // Use this to initialize a constexpr vcs from a string literal
-#define LLC_CXS(constexpr_string_literal) ::llc::vcsc_t{::llc::s2_t(sizeof(constexpr_string_literal) - 1), constexpr_string_literal}
+#define LLC_CXS(constexpr_string_literal) ::llc::vcsc_t{::llc::u2_t(sizeof(constexpr_string_literal) - 1), constexpr_string_literal}
 
 	typedef	::llc::view<vuc_t>	vvuc_t;
 	typedef	::llc::view<vsc_t>	vvsc_t;
@@ -225,78 +224,81 @@ namespace llc
 	typedef	::llc::view<vf2_c>	vcvf2_t;
 	typedef	::llc::view<vf3_c>	vcvf3_t;
 
-	typedef	const vvuc_t	vvuc_c;
-	typedef	const vvsc_t	vvsc_c;
-	typedef	const vvu0_t	vvu0_c;
-	typedef	const vvu1_t	vvu1_c;
-	typedef	const vvu2_t	vvu2_c;
-	typedef	const vvu3_t	vvu3_c;
-	typedef	const vvs0_t	vvs0_c;
-	typedef	const vvs1_t	vvs1_c;
-	typedef	const vvs2_t	vvs2_c;
-	typedef	const vvs3_t	vvs3_c;
-	typedef	const vvf2_t	vvf2_c;
-	typedef	const vvf3_t	vvf3_c;
-	typedef	const vcvuc_t	vcvuc_c;
-	typedef	const vcvsc_t	vcvsc_c;
-	typedef	const vcvu0_t	vcvu0_c;
-	typedef	const vcvu1_t	vcvu1_c;
-	typedef	const vcvu2_t	vcvu2_c;
-	typedef	const vcvu3_t	vcvu3_c;
-	typedef	const vcvs0_t	vcvs0_c;
-	typedef	const vcvs1_t	vcvs1_c;
-	typedef	const vcvs2_t	vcvs2_c;
-	typedef	const vcvs3_t	vcvs3_c;
-	typedef	const vcvf2_t	vcvf2_c;
-	typedef	const vcvf3_t	vcvf3_c;
+	typedef	cnst vvuc_t	vvuc_c;
+	typedef	cnst vvsc_t	vvsc_c;
+	typedef	cnst vvu0_t	vvu0_c;
+	typedef	cnst vvu1_t	vvu1_c;
+	typedef	cnst vvu2_t	vvu2_c;
+	typedef	cnst vvu3_t	vvu3_c;
+	typedef	cnst vvs0_t	vvs0_c;
+	typedef	cnst vvs1_t	vvs1_c;
+	typedef	cnst vvs2_t	vvs2_c;
+	typedef	cnst vvs3_t	vvs3_c;
+	typedef	cnst vvf2_t	vvf2_c;
+	typedef	cnst vvf3_t	vvf3_c;
+	typedef	cnst vcvuc_t	vcvuc_c;
+	typedef	cnst vcvsc_t	vcvsc_c;
+	typedef	cnst vcvu0_t	vcvu0_c;
+	typedef	cnst vcvu1_t	vcvu1_c;
+	typedef	cnst vcvu2_t	vcvu2_c;
+	typedef	cnst vcvu3_t	vcvu3_c;
+	typedef	cnst vcvs0_t	vcvs0_c;
+	typedef	cnst vcvs1_t	vcvs1_c;
+	typedef	cnst vcvs2_t	vcvs2_c;
+	typedef	cnst vcvs3_t	vcvs3_c;
+	typedef	cnst vcvf2_t	vcvf2_c;
+	typedef	cnst vcvf3_t	vcvf3_c;
 
 	stacxpr	::llc::vcc	VCC_NULL		= {4, "null"};
 	stacxpr	::llc::vcc	VCC_TRUE		= {4, "true"};
 	stacxpr	::llc::vcc	VCC_FALSE		= {5, "false"};
 
 	ndstinx	::llc::vcc	bool2vcc		(bool b)		{ return b ? ::llc::VCC_TRUE : ::llc::VCC_FALSE; }
-	ndstinx	const sc_t*	bool2char		(bool b)		{ return b ? ::llc::VCC_TRUE.begin() : ::llc::VCC_FALSE.begin(); }
+	ndstinx	cnst sc_t*	bool2char		(bool b)		{ return b ? ::llc::VCC_TRUE.begin() : ::llc::VCC_FALSE.begin(); }
 	ndstinx	uint8_t		bool2u8			(bool b)		{ return b ? 1 : 0; }
 	ndstinx	uint8_t		bool2i8			(bool b)		{ return b ? 1 : 0; }
-	stainli	const sc_t*	bool2char		(bool b, ::llc::vcc & output)	{ return (output = b ? ::llc::VCC_TRUE : ::llc::VCC_FALSE).begin(); }
+	stainli	cnst sc_t*	bool2char		(bool b, ::llc::vcc & output)	{ return (output = b ? ::llc::VCC_TRUE : ::llc::VCC_FALSE).begin(); }
 	stainli	bool		vcc2bool		(::llc::vcc b)	{ return b.size() && b != VCC_FALSE; }
 
 	struct view_string : view<sc_t> {
-		inlcxpr				view_string				()												= default;
-		inlcxpr				view_string				(const view<sc_t> & other)			noexcept	: view(other)				{}
-		tplt<u2_t Len>		view_string				(sc_t (&storage)[Len])				noexcept	: view(storage)			{ Count = (u2_t)strnlen(storage, (u2_t)Len);							}
-		tplt<u2_t Len>		view_string				(sc_t (&storage)[Len], u2_t length)				: view(storage, length)	{ if(length == (u2_t)-1) Count = (u2_t)strnlen(storage, (u2_t)Len);	}
-							view_string				(sc_t * storage, u2_t length)					: view(storage, length)	{ Count = (length == (u2_t)-1) ? (u2_t)strlen(storage) : length;		}
+		inlcxpr			view_string				()											= default;
+		inlcxpr			view_string				(vsc_c & other)						nxpt	: view(other)				{}
+		tplt<u2_t Len>	view_string				(sc_t (&storage)[Len])				nxpt	: view(storage)			{ Count = (u2_t)strnlen(storage, (u2_t)Len);							}
+		tplt<u2_t Len>	view_string				(sc_t (&storage)[Len], u2_t length)			: view(storage, length)	{ if(length == (u2_t)-1) Count = (u2_t)strnlen(storage, (u2_t)Len);	}
+						view_string				(sc_t * storage, u2_t length)				: view(storage, length)	{ Count = (length == (u2_t)-1) ? (u2_t)strlen(storage) : length;		}
 
-		inlcxpr	sc_c*	begin					()	const	noexcept	{ return (Data && Count) ? Data : ""; }
-		inlcxpr	sc_c*	end						()	const	noexcept	{ return (Data && Count) ? Data + Count : begin(); }
-		ndinlne operator	const sc_t* 			()  const  	noexcept	{ return begin(); }
+		inlcxpr	sc_c*	begin					()	cnstnxpt	{ return (Data && Count) ? Data : ""; }
+		inlcxpr	sc_c*	end						()	cnstnxpt	{ return (Data && Count) ? Data + Count : begin(); }
+		ndinlne operatr	cnst sc_t* 				()  cnstnxpt	{ return begin(); }
 	};
-	struct view_const_string : view<const sc_t> {
-		inlcxpr				view_const_string		()												: view(0, "") 							{}
-		inlcxpr				view_const_string		(const view<const sc_t> & other)	noexcept	: view(other)							{}
-		tplt<u2_t Len>		view_const_string		(const sc_t (&storage)[Len])		noexcept	: view(storage)							{ Count = (u2_t)strnlen(storage, (u2_t)Len);							}
-		tplt<u2_t Len>		view_const_string		(const sc_t (&storage)[Len], u2_t length)		: view(storage, length)					{ if(length == (u2_t)-1) Count = (u2_t)strnlen(storage, (u2_t)Len);	}
-							view_const_string		(const sc_t * storage, u2_t length)				: view(storage ? storage : "", length)	{ if(length == (u2_t)-1) Count = (u2_t)strlen(begin());					}
+	struct view_const_string : view<sc_c> {
+		inlcxpr			view_const_string		()											: view(0, "") 							{}
+		inlcxpr			view_const_string		(vcsc_c & other)					nxpt	: view(other)							{}
+		tplt<u2_t Len>	view_const_string		(sc_c (&storage)[Len])				nxpt	: view(storage)							{ Count = (u2_t)strnlen(storage, (u2_t)Len);							}
+		tplt<u2_t Len>	view_const_string		(sc_c (&storage)[Len], u2_t length)			: view(storage, length)					{ if(length == (u2_t)-1) Count = (u2_t)strnlen(storage, (u2_t)Len);	}
+						view_const_string		(sc_c * storage, u2_t length)				: view(storage ? storage : "", length)	{ if(length == (u2_t)-1) Count = (u2_t)strlen(begin());					}
 
-		inlcxpr	sc_c*	begin					()	const	noexcept	{ return (Data && Count) ? Data : ""; }
-		inlcxpr	sc_c*	end						()	const	noexcept	{ return (Data && Count) ? Data + Count : begin(); }
-		ndinlne operator	const sc_t* 			()  const  	noexcept	{ return begin(); }
+		inlcxpr	sc_c*	begin					()	cnstnxpt	{ return (Data && Count) ? Data : ""; }
+		inlcxpr	sc_c*	end						()	cnstnxpt	{ return (Data && Count) ? Data + Count : begin(); }
+		ndinlne operatr	cnst sc_t* 				()  cnstnxpt	{ return begin(); }
 	};
 
-	typedef	::llc::view_string					vs;
-	typedef	::llc::view_const_string			vcs;
+	typedef	::llc::view_string			vstr_t, vs;
+	typedef	::llc::view_const_string	vcst_t, vcs;
+	typedef	cnst vstr_t					vstr_c;
+	typedef	cnst vcst_t					vcst_c;
 
-	stainli llc::vcs		str					(const llc::vcs & arg)	{ return arg; } 
-	stainli llc::vcs		str					(const llc::vs & arg)	{ return arg.cc(); } 
+	stainli			llc::vcs	str				(cnst llc::vcs & arg)	{ return arg; } 
+	stainli			llc::vcs	str				(cnst llc::vs & arg)	{ return arg.cc(); } 
 	// 
-	tplT	ndstinx	::llc::vcs	get_type_namev					()							noexcept	{ return LLC_CXS("unknown"); }
-	tplT	ndstinx	const sc_t*	get_type_namep					()							noexcept	{ return get_type_namev<T>().begin(); }
+	tplT	ndstinx	::llc::vcs	get_type_namev	()							nxpt	{ return LLC_CXS("unknown"); }
+	tplT	ndstinx	cnst sc_t*	get_type_namep	()							nxpt	{ return get_type_namev<T>().begin(); }
+
 #define GDEFINE_TYPE_NAME_STR(typeIdentifier)																													\
-			ndstinx	::llc::vcs	get_type_namev					(typeIdentifier &)	noexcept	{ return LLC_CXS(#typeIdentifier); }					\
-	tplt<>	ndincxp	::llc::vcs	get_type_namev<typeIdentifier>	()					noexcept	{ return LLC_CXS(#typeIdentifier); }					\
-			ndstinx	const sc_t*	get_type_namep					(typeIdentifier &)	noexcept	{ return get_type_namev<typeIdentifier>().begin(); }	\
-	tplt<>	ndincxp	const sc_t*	get_type_namep<typeIdentifier>	()					noexcept	{ return get_type_namev<typeIdentifier>().begin(); }	
+			ndstinx	::llc::vcs	get_type_namev					(typeIdentifier &)	nxpt	{ return LLC_CXS(#typeIdentifier); }					\
+	tplt<>	ndincxp	::llc::vcs	get_type_namev<typeIdentifier>	()					nxpt	{ return LLC_CXS(#typeIdentifier); }					\
+			ndstinx	cnst sc_t*	get_type_namep					(typeIdentifier &)	nxpt	{ return get_type_namev<typeIdentifier>().begin(); }	\
+	tplt<>	ndincxp	cnst sc_t*	get_type_namep<typeIdentifier>	()					nxpt	{ return get_type_namev<typeIdentifier>().begin(); }	
 	//GDEFINE_TYPE_NAME_STR(uc_t);
 	GDEFINE_TYPE_NAME_STR(sc_t);
 	GDEFINE_TYPE_NAME_STR(u0_t);
@@ -324,29 +326,29 @@ namespace llc
 	// 
 	typedef	::llc::view<::llc::vs			>	vvs;
 	typedef	::llc::view<::llc::vcs			>	vvcs;
-	typedef	::llc::view<const ::llc::vs		>	vcvs;
-	typedef	::llc::view<const ::llc::vcs	>	vcvcs;
+	typedef	::llc::view<cnst ::llc::vs		>	vcvs;
+	typedef	::llc::view<cnst ::llc::vcs	>	vcvcs;
 
 	stacxpr	::llc::vcc		TRIM_CHARACTERS		= " \t\b\n\r";
 
-	::llc::error_t			rtrim				(::llc::vcc & trimmed, const ::llc::vcc & original, const ::llc::vcc & characters = ::llc::TRIM_CHARACTERS);
-	::llc::error_t			ltrim				(::llc::vcc & trimmed, const ::llc::vcc & original, const ::llc::vcc & characters = ::llc::TRIM_CHARACTERS);
-	::llc::error_t			trim				(::llc::vcc & trimmed, const ::llc::vcc & original, const ::llc::vcc & characters = ::llc::TRIM_CHARACTERS);
+	::llc::error_t			rtrim				(::llc::vcc & trimmed, cnst ::llc::vcc & original, cnst ::llc::vcc & characters = ::llc::TRIM_CHARACTERS);
+	::llc::error_t			ltrim				(::llc::vcc & trimmed, cnst ::llc::vcc & original, cnst ::llc::vcc & characters = ::llc::TRIM_CHARACTERS);
+	::llc::error_t			trim				(::llc::vcc & trimmed, cnst ::llc::vcc & original, cnst ::llc::vcc & characters = ::llc::TRIM_CHARACTERS);
 	stainli	::llc::error_t	rtrim				(::llc::vcc & trimmed) 	{ return rtrim(trimmed, trimmed); }
 	stainli	::llc::error_t	ltrim				(::llc::vcc & trimmed) 	{ return ltrim(trimmed, trimmed); }
 	stainli	::llc::error_t	trim				(::llc::vcc & trimmed) 	{ return trim(trimmed, trimmed); }
 	
-	stainli	::llc::error_t	rtrim				(::llc::vc & trimmed, const ::llc::vc & original, const ::llc::vcc & characters = ::llc::TRIM_CHARACTERS)	{ return rtrim	(*(::llc::vcc*)&trimmed, *(const ::llc::vcc*)&original, characters); }
-	stainli	::llc::error_t	ltrim				(::llc::vc & trimmed, const ::llc::vc & original, const ::llc::vcc & characters = ::llc::TRIM_CHARACTERS)	{ return ltrim	(*(::llc::vcc*)&trimmed, *(const ::llc::vcc*)&original, characters); }
-	stainli	::llc::error_t	trim				(::llc::vc & trimmed, const ::llc::vc & original, const ::llc::vcc & characters = ::llc::TRIM_CHARACTERS)	{ return trim	(*(::llc::vcc*)&trimmed, *(const ::llc::vcc*)&original, characters); }
+	stainli	::llc::error_t	rtrim				(::llc::vc & trimmed, cnst ::llc::vc & original, cnst ::llc::vcc & characters = ::llc::TRIM_CHARACTERS)	{ return rtrim	(*(::llc::vcc*)&trimmed, *(cnst ::llc::vcc*)&original, characters); }
+	stainli	::llc::error_t	ltrim				(::llc::vc & trimmed, cnst ::llc::vc & original, cnst ::llc::vcc & characters = ::llc::TRIM_CHARACTERS)	{ return ltrim	(*(::llc::vcc*)&trimmed, *(cnst ::llc::vcc*)&original, characters); }
+	stainli	::llc::error_t	trim				(::llc::vc & trimmed, cnst ::llc::vc & original, cnst ::llc::vcc & characters = ::llc::TRIM_CHARACTERS)	{ return trim	(*(::llc::vcc*)&trimmed, *(cnst ::llc::vcc*)&original, characters); }
 	stainli	::llc::error_t	rtrim				(::llc::vc & trimmed) 	{ return rtrim(trimmed, trimmed); }
 	stainli	::llc::error_t	ltrim				(::llc::vc & trimmed) 	{ return ltrim(trimmed, trimmed); }
 	stainli	::llc::error_t	trim				(::llc::vc & trimmed) 	{ return trim(trimmed, trimmed); }
 
 	tplt <tpnm T>
 	::llc::error_t			reverse				(::llc::view<T> elements)													{
-		const uint32_t				lastElement			= elements.size() - 1;
-		for(uint32_t i = 0, swapCount = elements.size() / 2; i < swapCount; ++i) {
+		cnst u2_t				lastElement			= elements.size() - 1;
+		for(u2_t i = 0, swapCount = elements.size() / 2; i < swapCount; ++i) {
 			T							old						= elements[i];
 			elements[i]					= elements[lastElement - i];
 			elements[lastElement - i]	= old;
@@ -355,26 +357,26 @@ namespace llc
 	}
 
 	tplt<tpnm T>
-	::llc::error_t			find					(const T & valueToFind, const ::llc::view<const T> & target, uint32_t offset = 0)		{
-		for(uint32_t iOffset = offset, offsetStop = target.size(); iOffset < offsetStop; ++iOffset)
+	::llc::error_t			find					(cnst T & valueToFind, cnst ::llc::view<cnst T> & target, u2_t offset = 0)		{
+		for(u2_t iOffset = offset, offsetStop = target.size(); iOffset < offsetStop; ++iOffset)
 			if(valueToFind == target[iOffset])
 				return (s2_t)iOffset;
 		return -1;
 	}
 
 	tplt<tpnm T>
-	::llc::error_t					rfind					(const T & valueToFind, const ::llc::view<const T> & target, s2_t offset = 0)		{
-		for(uint32_t iOffset = target.size() - 1 - offset; iOffset < target.size(); --iOffset)
+	::llc::error_t					rfind					(cnst T & valueToFind, cnst ::llc::view<cnst T> & target, s2_t offset = 0)		{
+		for(u2_t iOffset = target.size() - 1 - offset; iOffset < target.size(); --iOffset)
 			if(valueToFind == target[iOffset])
 				return iOffset;
 		return -1;
 	}
 
 	tplt<tpnm T>
-	::llc::error_t					find_sequence_obj		(const ::llc::view<T> & sequence, const ::llc::view<T> & target, uint32_t offset = 0)	{
+	::llc::error_t					find_sequence_obj		(cnst ::llc::view<T> & sequence, cnst ::llc::view<T> & target, u2_t offset = 0)	{
 		for(s2_t iOffset = (s2_t)offset, offsetStop = ((s2_t)target.size() - sequence.size()) + 1; iOffset < offsetStop; ++iOffset) {
 			bool								equal					= true;
-			for(uint32_t iSequenceElement = 0; iSequenceElement < sequence.size(); ++iSequenceElement) {
+			for(u2_t iSequenceElement = 0; iSequenceElement < sequence.size(); ++iSequenceElement) {
 				if(sequence[iSequenceElement] != target[iOffset + iSequenceElement]) {
 					equal							= false;
 					break;
@@ -387,10 +389,10 @@ namespace llc
 	}
 
 	tplt<tpnm T>
-	::llc::error_t					rfind_sequence_obj		(const ::llc::view<T> & sequence, const ::llc::view<T> & target, uint32_t offset = 0)	{
+	::llc::error_t					rfind_sequence_obj		(cnst ::llc::view<T> & sequence, cnst ::llc::view<T> & target, u2_t offset = 0)	{
 		for(s2_t iOffset = (s2_t)(target.size() - sequence.size() - offset); iOffset >= 0; --iOffset) {
 			bool								equal					= true;
-			for(uint32_t iSequenceElement = 0; iSequenceElement < sequence.size(); ++iSequenceElement) {
+			for(u2_t iSequenceElement = 0; iSequenceElement < sequence.size(); ++iSequenceElement) {
 				if(sequence[iSequenceElement] != target[iOffset + iSequenceElement]) {
 					equal							= false;
 					break;
@@ -403,7 +405,7 @@ namespace llc
 	}
 
 	tplt<tpnm T>
-	::llc::error_t					find_sequence_pod		(const ::llc::view<T> & sequence, const ::llc::view<T> & target, uint32_t offset = 0)	{
+	::llc::error_t					find_sequence_pod		(cnst ::llc::view<T> & sequence, cnst ::llc::view<T> & target, u2_t offset = 0)	{
 		for(s2_t iOffset = (s2_t)offset, offsetStop = ((s2_t)target.size() - sequence.size()) + 1; iOffset < offsetStop; ++iOffset)
 			if(0 == memcmp(sequence.begin(), &target[iOffset], sequence.size() * sizeof(T)))
 				return iOffset;
@@ -411,34 +413,34 @@ namespace llc
 	}
 
 	tplt<tpnm T>
-	::llc::error_t					rfind_sequence_pod		(const ::llc::view<T> & sequence, const ::llc::view<T>& target, uint32_t offset = 0)	{
+	::llc::error_t					rfind_sequence_pod		(cnst ::llc::view<T> & sequence, cnst ::llc::view<T>& target, u2_t offset = 0)	{
 		for(s2_t iOffset = (s2_t)(target.size() - sequence.size() - offset); iOffset >= 0; --iOffset)
 			if(0 == memcmp(sequence.begin(), &target[iOffset], sequence.size() * sizeof(T)))
 				return iOffset;
 		return -1;
 	}
 
-	stainli	::llc::error_t			find_string				(const ::llc::vcs & toFind, const ::llc::vcc & target, uint32_t offset = 0) { return ::llc::find_sequence_pod (toFind, target, offset); }
-	stainli	::llc::error_t			rfind_string			(const ::llc::vcs & toFind, const ::llc::vcc & target, uint32_t offset = 0) { return ::llc::rfind_sequence_pod(toFind, target, offset); }
+	stainli	::llc::error_t			find_string				(cnst ::llc::vcs & toFind, cnst ::llc::vcc & target, u2_t offset = 0) { return ::llc::find_sequence_pod (toFind, target, offset); }
+	stainli	::llc::error_t			rfind_string			(cnst ::llc::vcs & toFind, cnst ::llc::vcc & target, u2_t offset = 0) { return ::llc::rfind_sequence_pod(toFind, target, offset); }
 
 	tplt<tpnm T>
-	::llc::error_t					split					(const T & valueToFind, const ::llc::view<T> & original, ::llc::view<T> & left, ::llc::view<T> & right) {
-		const ::llc::error_t				iValue					= ::llc::find(valueToFind, original);
+	::llc::error_t					split					(cnst T & valueToFind, cnst ::llc::view<T> & original, ::llc::view<T> & left, ::llc::view<T> & right) {
+		cnst ::llc::error_t				iValue					= ::llc::find(valueToFind, original);
 		if(0 > iValue) {
 			left							= original;
 			right							= {};
 		}
 		else {
 			llc_necs(original.slice(left, 0, iValue));
-			const uint32_t						offsetRight				= iValue + 1;
+			cnst u2_t						offsetRight				= iValue + 1;
 			llc_necs(original.slice(right, offsetRight, original.size() - offsetRight));
 		}
 		return iValue;
 	}
 
 	tplt<tpnm T>
-	::llc::error_t					splitAt					(const T & valueToFind, const ::llc::view<T> & original, ::llc::view<T> & left, ::llc::view<T> & right) {
-		const ::llc::error_t				iValue					= ::llc::find(valueToFind, original);
+	::llc::error_t					splitAt					(cnst T & valueToFind, cnst ::llc::view<T> & original, ::llc::view<T> & left, ::llc::view<T> & right) {
+		cnst ::llc::error_t				iValue					= ::llc::find(valueToFind, original);
 		if(0 > iValue) { // Read until the end unless fragment is found.
 			left							= original;
 			right							= {};
@@ -452,8 +454,8 @@ namespace llc
 
 	// Returns the index of the start of the sequence if the latter found.
 	tplt<tpnm T>
-	::llc::error_t					split					(const ::llc::view<T> & sequenceToFind, const ::llc::view<T> & original, ::llc::view<T> & left, ::llc::view<T> & right) {
-		const ::llc::error_t				iValue					= ::llc::find_sequence_pod(sequenceToFind, original);
+	::llc::error_t					split					(cnst ::llc::view<T> & sequenceToFind, cnst ::llc::view<T> & original, ::llc::view<T> & left, ::llc::view<T> & right) {
+		cnst ::llc::error_t				iValue					= ::llc::find_sequence_pod(sequenceToFind, original);
 		if(0 > iValue) {
 			left							= original;
 			right							= {};
@@ -466,13 +468,13 @@ namespace llc
 	}
 
 	tplt<tpnm T>
-	inline	::llc::error_t			split					(const ::llc::view<T> & sequenceToFind, ::llc::view<T> & inputOrLeft, ::llc::view<T> & right) {
+	inline	::llc::error_t			split					(cnst ::llc::view<T> & sequenceToFind, ::llc::view<T> & inputOrLeft, ::llc::view<T> & right) {
 		return ::llc::split(sequenceToFind, inputOrLeft, inputOrLeft, right);
 	}
 
 	tplt<tpnm T>
-	::llc::error_t					splitAt					(const ::llc::view<T> & sequenceToFind, const ::llc::view<T> & original, ::llc::view<T> & left, ::llc::view<T> & right) {
-		const ::llc::error_t				iValue					= ::llc::find_sequence_pod(sequenceToFind, original);
+	::llc::error_t					splitAt					(cnst ::llc::view<T> & sequenceToFind, cnst ::llc::view<T> & original, ::llc::view<T> & left, ::llc::view<T> & right) {
+		cnst ::llc::error_t				iValue					= ::llc::find_sequence_pod(sequenceToFind, original);
 		if(0 > iValue) { // Read until the end unless fragment is found.
 			left							= original;
 			right							= {};
@@ -488,8 +490,8 @@ namespace llc
 		ree_if(0 == input.size(), "%s", "Cannot get reference to max element of an empty array.");
 		*result				= &input[0];
 		s2_t					iMax					= 0;
-		for(uint32_t iElement = 1; iElement < input.size(); ++iElement) {
-			const T					& currentElement		= input[iElement];
+		for(u2_t iElement = 1; iElement < input.size(); ++iElement) {
+			cnst T					& currentElement		= input[iElement];
 			if(currentElement > **result) {
 				*result					= &currentElement;
 				iMax					= iElement;
@@ -502,8 +504,8 @@ namespace llc
 		ree_if(0 == input.size(), "%s", "Cannot get reference to min element of an empty array.");
 		*result				= &input[0];
 		s2_t					iMin					= 0;
-		for(uint32_t iElement = 1; iElement < input.size(); ++iElement) {
-			const T					& currentElement		= input[iElement];
+		for(u2_t iElement = 1; iElement < input.size(); ++iElement) {
+			cnst T					& currentElement		= input[iElement];
 			if(currentElement < **result) {
 				*result				= &currentElement;
 				iMin				= iElement;
@@ -514,7 +516,7 @@ namespace llc
 
 	tplT	T&			max		(::llc::view<T> elements)		{ T * rmax	{}; if_fail_e(::llc::max(elements, &rmax));	return *rmax; }
 	tplT	T&			min		(::llc::view<T> elements)		{ T * rmin	{}; if_fail_e(::llc::min(elements, &rmin));	return *rmin; }
-	tplT	T			sum		(::llc::view<const T> elements)	{ T result	{}; for(T element : elements) result += element; return result; }
+	tplT	T			sum		(::llc::view<cnst T> elements)	{ T result	{}; for(T element : elements) result += element; return result; }
 	tplT	stainli	T&	be2le	(T & number)					{ ::llc::reverse<i0u_t>({(i0u_t*)&number, sizeof(T)}); return number; }
 } // namespace
 
