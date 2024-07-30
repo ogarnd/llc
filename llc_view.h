@@ -144,6 +144,7 @@ namespace llc
 
 #pragma pack(pop)
 
+	typedef	::llc::view<b8_t>	vb8_t;
 	typedef	::llc::view<uc_t>	vuc_t, vuc, vuchar;
 	typedef	::llc::view<sc_t>	vsc_t, vc, vchar;
 	typedef	::llc::view<u0_t>	vu0_t, vu8;
@@ -157,6 +158,7 @@ namespace llc
 	typedef	::llc::view<f2_t>	vf2_t, vf32;
 	typedef	::llc::view<f3_t>	vf3_t, vf64;
 
+	typedef	::llc::view<b8_c>	vcb8_t;
 	typedef	::llc::view<uc_c>	vcuc_t, vcuc, vcuchar;
 	typedef	::llc::view<sc_c>	vcsc_t, vcc, vcchar;
 	typedef	::llc::view<u0_c>	vcu0_t, vcu8;
@@ -170,6 +172,7 @@ namespace llc
 	typedef	::llc::view<f2_c>	vcf2_t, vcf32;
 	typedef	::llc::view<f3_c>	vcf3_t, vcf64;
 
+	typedef	cnst vb8_t 		vb8_c;
 	typedef	cnst vuc_t 		vuc_c;
 	typedef	cnst vsc_t 		vsc_c;
 	typedef	cnst vu0_t 		vu0_c;
@@ -182,6 +185,8 @@ namespace llc
 	typedef	cnst vs3_t 		vs3_c;
 	typedef	cnst vf2_t 		vf2_c;
 	typedef	cnst vf3_t 		vf3_c;
+
+	typedef	cnst vcb8_t 		vcb8_c;
 	typedef	cnst vcuc_t 		vcuc_c;
 	typedef	cnst vcsc_t 		vcsc_c;
 	typedef	cnst vcu0_t 		vcu0_c;
