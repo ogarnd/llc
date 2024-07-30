@@ -52,6 +52,16 @@ namespace llc
 	typedef	cnst f2_t		f2_c, f2s_c;
 	typedef	cnst f3_t		f3_c, f3s_c;
 
+#define tplN0u     tplt<u0_t N>
+#define tplN1u     tplt<u1_t N>
+#define tplN2u     tplt<u2_t N>
+#define tplN3u     tplt<u3_t N>
+#define	tplTIn     tplt<tpnm TIn>
+#define	tplTOut    tplt<tpnm TOut>
+#define	tplTN2     tplt<tpnm T     , u2_t N>
+#define	tplTOutN2  tplt<tpnm TOut  , u2_t N>
+#define	tplTInN2   tplt<tpnm TIn   , u2_t N>
+
 #if defined(LLC_ANDROID) || defined(LLC_CLANG)
 #	pragma clang diagnostic push
 #	pragma clang diagnostic ignored "-Wtautological-constant-out-of-range-compare"
@@ -61,16 +71,6 @@ namespace llc
 #if defined(LLC_ANDROID) || defined(LLC_CLANG)
 #	pragma clang diagnostic pop
 #endif
-
-#define tpltN0u     tplt<u0_t N>
-#define tpltN1u     tplt<u1_t N>
-#define tpltN2u     tplt<u2_t N>
-#define tpltN3u     tplt<u3_t N>
-#define	tpltTIn     tplt<tpnm TIn>
-#define	tpltTOut    tplt<tpnm TOut>
-#define	tpltTN2     tplt<tpnm T     , u2_t N>
-#define	tpltTOutN2  tplt<tpnm TOut  , u2_t N>
-#define	tpltTInN2   tplt<tpnm TIn   , u2_t N>
 
 	stacxpr	u0_c	PLATFORM_BYTE_BIT_COUNT					= 8;
 #if defined LLC_WINDOWS

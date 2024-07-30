@@ -78,13 +78,14 @@
 // These aliases make keyword width to be consistent and makes the code less verbose.
 //#define inln              inline
 //#define sttc              static
-//#define oprt              operatr
+#define oprt                operator
+#define tpdf                typedef
 #define cnst                const
 #define nxpt                noexcept
-#define cnstnxpt            cnst nxpt
 #define vltl                volatile
-#define cnstvltl            cnst vltl
 #define cxpr                constexpr
+#define cnstnxpt            cnst nxpt
+#define cnstvltl            cnst vltl
 #define tplt                template
 #define tpnm                typename
 #define unsgnd              unsigned

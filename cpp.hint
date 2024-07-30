@@ -100,9 +100,9 @@
 #define vltl	            
 #define tpnm	            
 #define tplt	            
-#define tpltT	            
-#define tpltTInTOut        
-#define tpltT_Nu32         
+#define tplT	            
+#define tplTInTOut        
+#define tplT_Nu32         
 
 #define prtctd              
 #define privte              

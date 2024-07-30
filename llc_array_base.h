@@ -45,8 +45,7 @@ namespace llc
 
 	// Base for arrays that keeps track of its actual size.
 #pragma pack(push, 1)
-	tplt<tpnm T>
-	class array_base : public view<T> {
+	tplT class array_base : public view<T> {
 		static	uint32_t		calc_reserve_count		(const uint32_t newCountRequested, uint32_t & outCount)	noexcept	{ 
 			stacxpr	uint32_t			MAX_COUNT				= 0x3FFFFFFFU;
 			if(MAX_COUNT < newCountRequested)

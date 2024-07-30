@@ -259,11 +259,11 @@ namespace llc
 
 	}; // array_obj
 
-	tplt <tpnm T>	using aobj		= ::llc::array_obj<T>; 
-	tplt <tpnm T>	using ao		= ::llc::aobj<T>; 
+	tplT	using aobj		= ::llc::array_obj<T>; 
+	tplT	using ao		= ::llc::aobj<T>; 
 
-	tplt <tpnm T>	using aview		= ::llc::aobj	<::llc::view<T>>; 
-	tplt <tpnm T>	using av		= ::llc::aview	<T>; 
+	tplT	using aview		= ::llc::aobj	<::llc::view<T>>; 
+	tplT	using av		= ::llc::aview	<T>; 
 
 	typedef	::llc::aview<uc_t	>	avuc;
 	typedef	::llc::aview<char		>	avc;
@@ -293,8 +293,7 @@ namespace llc
 	typedef	::llc::aview<const int64_t	>	avci64;
 
 
-	tplt<tpnm T>
-	::llc::error_t							split					(const ::llc::view<const T> & target, const T & separator, ::llc::aobj<::llc::view<const T>> & split)	{
+	tplT	::llc::error_t							split					(const ::llc::view<const T> & target, const T & separator, ::llc::aobj<::llc::view<const T>> & split)	{
 		uint32_t									lastOffset				= 0;
 		for(uint32_t iChar = 0; iChar < target.size(); ++iChar) {
 			if(target[iChar] == separator) {
@@ -309,8 +308,7 @@ namespace llc
 		return (int32_t)split.size();
 	}
 
-	tplt<tpnm T>
-	::llc::error_t							split					(const ::llc::view<const T> & target, const ::llc::view<const T>& separators, ::llc::aobj<::llc::view<const T>> & split)	{
+	tplT	::llc::error_t							split					(const ::llc::view<const T> & target, const ::llc::view<const T>& separators, ::llc::aobj<::llc::view<const T>> & split)	{
 		uint32_t									lastOffset				= 0;
 		for(uint32_t iChar = 0; iChar < target.size(); ++iChar) {
 			for(uint32_t iSeparator = 0; iSeparator < separators.size(); ++iSeparator) {
@@ -327,8 +325,7 @@ namespace llc
 		return (int32_t)split.size();
 	}
 
-	tplt<tpnm T>
-	::llc::error_t							split					(const ::llc::vcs & target, const T & separator, ::llc::aobj<::llc::vcs> & split)	{
+	tplT	::llc::error_t							split					(const ::llc::vcs & target, const T & separator, ::llc::aobj<::llc::vcs> & split)	{
 		int32_t										lastOffset				= 0;
 		for(int32_t iChar = 0, countChars = target.size(); iChar < countChars; ++iChar) {
 			if(target[iChar] == separator) {

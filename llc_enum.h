@@ -294,8 +294,8 @@ namespace llc
 #define GDEFINE_ENUM_STRUCT(EnumName, IntType)																								\
 	struct EnumName {																														\
 		IntType				Value			;																								\
-		inline	operatr		IntType&		()			nxpt	{ return Value; }															\
-		inlcxpr	operatr		const IntType&	()	const	nxpt	{ return Value; }															\
+		inline	oprt		IntType&		()			nxpt	{ return Value; }															\
+		inlcxpr	oprt		const IntType&	()	const	nxpt	{ return Value; }															\
 	};																																		\
 	static	const uint32_t	__sei_##EnumName##enumInit	= ::llc::enum_definition<EnumName>::init(#EnumName);								\
 	stincxp	EnumName		operator &	(EnumName  a, EnumName b)	noexcept	{ return {a & (IntType)b};				}	\

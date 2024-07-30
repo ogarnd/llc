@@ -35,10 +35,10 @@ namespace llc
 
 		inline						~SFile			()						{ llc_safe_fclose(File); }
 
-		inlcxpr	operatr				T&				()						{ return File; }
+		inlcxpr		oprt			T&				()						{ return File; }
 
-		tpltTOut	err_t			read			(view<TOut> output)		{ if(0 == File) llc_necall(::llc::fopen_s(&File, Name.begin(), "rb"), "%s", Name.begin()); auto nread = fread(output.begin(), sizeof(TOut), output.size(), File); fail_if_neu(nread, output.size()); return nread; }
-		tpltTOutN2	inline	err_t	read			(TOut (&output)[N])		{ return read<TOut>(output); }
+		tplTOut		err_t			read			(view<TOut> output)		{ if(0 == File) llc_necall(::llc::fopen_s(&File, Name.begin(), "rb"), "%s", Name.begin()); auto nread = fread(output.begin(), sizeof(TOut), output.size(), File); fail_if_neu(nread, output.size()); return nread; }
+		tplTOutN2	inline	err_t	read			(TOut (&output)[N])		{ return read<TOut>(output); }
 	};
 
 	struct CFile : SFile<FILE*> {};
