@@ -5,7 +5,7 @@
 
 namespace llc
 {
-	typedef	int32_t	error_t, err_t;
+	typedef	s2_t	error_t, err_t;
 
 	stincxp	bool	failed		(const error_t errorCode)	noexcept	{ return errorCode < 0;		}
 	stincxp	bool	succeeded	(const error_t errorCode)	noexcept	{ return 0 <= errorCode;	}
@@ -33,25 +33,32 @@ namespace llc
 	stacxpr	::llc::error_t OS_READ              = ::llc::OS_NO_MEMORY         - 1;
 	stacxpr	::llc::error_t OS_WRITE             = ::llc::OS_READ              - 1;
 
-	stacxpr	::llc::error_t ESP_NO_MEM              = -0x101 ;
-	stacxpr	::llc::error_t ESP_INVALID_ARG         = -0x102 ;
-	stacxpr	::llc::error_t ESP_INVALID_STATE       = -0x103 ;
-	stacxpr	::llc::error_t ESP_INVALID_SIZE        = -0x104 ;
-	stacxpr	::llc::error_t ESP_NOT_FOUND           = -0x105 ;
-	stacxpr	::llc::error_t ESP_NOT_SUPPORTED       = -0x106 ;
-	stacxpr	::llc::error_t ESP_TIMEOUT             = -0x107 ;
-	stacxpr	::llc::error_t ESP_INVALID_RESPONSE    = -0x108 ;
-	stacxpr	::llc::error_t ESP_INVALID_CRC         = -0x109 ;
-	stacxpr	::llc::error_t ESP_INVALID_VERSION     = -0x10A ;
-	stacxpr	::llc::error_t ESP_INVALID_MAC         = -0x10B ;
-	stacxpr	::llc::error_t ESP_NOT_FINISHED        = -0x10C ;
-	stacxpr	::llc::error_t ESP_WIFI_BASE           = -0x3000;
-	stacxpr	::llc::error_t ESP_MESH_BASE           = -0x4000;
-	stacxpr	::llc::error_t ESP_FLASH_BASE          = -0x6000;
-	stacxpr	::llc::error_t ESP_HW_CRYPTO_BASE      = -0xc000;
-	stacxpr	::llc::error_t ESP_MEMPROT_BASE        = -0xd000;
-	stacxpr	::llc::error_t ESP_FLASH_OP_FAIL		= ESP_FLASH_BASE - 1;
-	stacxpr	::llc::error_t ESP_FLASH_OP_TIMEOUT		= ESP_FLASH_BASE - 2;
+	stacxpr	::llc::error_t ESP_NO_MEM                     = -0x101 ;
+	stacxpr	::llc::error_t ESP_INVALID_ARG                = -0x102 ;
+	stacxpr	::llc::error_t ESP_INVALID_STATE              = -0x103 ;
+	stacxpr	::llc::error_t ESP_INVALID_SIZE               = -0x104 ;
+	stacxpr	::llc::error_t ESP_NOT_FOUND                  = -0x105 ;
+	stacxpr	::llc::error_t ESP_NOT_SUPPORTED              = -0x106 ;
+	stacxpr	::llc::error_t ESP_TIMEOUT                    = -0x107 ;
+	stacxpr	::llc::error_t ESP_INVALID_RESPONSE           = -0x108 ;
+	stacxpr	::llc::error_t ESP_INVALID_CRC                = -0x109 ;
+	stacxpr	::llc::error_t ESP_INVALID_VERSION            = -0x10A ;
+	stacxpr	::llc::error_t ESP_INVALID_MAC                = -0x10B ;
+	stacxpr	::llc::error_t ESP_NOT_FINISHED               = -0x10C ;
+	stacxpr	::llc::error_t ESP_OTA_BASE                   = -0x1500;
+	stacxpr	::llc::error_t ESP_OTA_PARTITION_CONFLICT     = ESP_OTA_BASE                - 1;
+	stacxpr	::llc::error_t ESP_OTA_SELECT_INFO_INVALID    = ESP_OTA_PARTITION_CONFLICT  - 1;
+	stacxpr	::llc::error_t ESP_OTA_VALIDATE_FAILED        = ESP_OTA_SELECT_INFO_INVALID - 1;
+	stacxpr	::llc::error_t ESP_OTA_SMALL_SEC_VER          = ESP_OTA_VALIDATE_FAILED     - 1;
+	stacxpr	::llc::error_t ESP_OTA_ROLLBACK_FAILED        = ESP_OTA_SMALL_SEC_VER       - 1;
+	stacxpr	::llc::error_t ESP_OTA_ROLLBACK_INVALID_STATE = ESP_OTA_ROLLBACK_FAILED     - 1;
+	stacxpr	::llc::error_t ESP_WIFI_BASE                  = -0x3000;
+	stacxpr	::llc::error_t ESP_MESH_BASE                  = -0x4000;
+	stacxpr	::llc::error_t ESP_FLASH_BASE                 = -0x6000;
+	stacxpr	::llc::error_t ESP_FLASH_OP_FAIL              = ESP_FLASH_BASE    - 1;
+	stacxpr	::llc::error_t ESP_FLASH_OP_TIMEOUT           = ESP_FLASH_OP_FAIL - 1;
+	stacxpr	::llc::error_t ESP_HW_CRYPTO_BASE             = -0xc000;
+	stacxpr	::llc::error_t ESP_MEMPROT_BASE               = -0xd000;
 
 } // namespace
 

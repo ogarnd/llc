@@ -5,28 +5,35 @@
 
 namespace llc
 {
-    GDEFINE_ENUM_TYPE (ESP_ERROR, int32_t);
-    GDEFINE_ENUM_VALUE(ESP_ERROR, OK                            , OS_OK                );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, NO_MEM                        , ESP_NO_MEM           );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_ARG                   , ESP_INVALID_ARG      );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_STATE                 , ESP_INVALID_STATE    );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_SIZE                  , ESP_INVALID_SIZE     );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, NOT_FOUND                     , ESP_NOT_FOUND        );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, NOT_SUPPORTED                 , ESP_NOT_SUPPORTED    );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, TIMEOUT                       , ESP_TIMEOUT          );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_RESPONSE              , ESP_INVALID_RESPONSE );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_CRC                   , ESP_INVALID_CRC      );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_VERSION               , ESP_INVALID_VERSION  );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_MAC                   , ESP_INVALID_MAC      );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, NOT_FINISHED                  , ESP_NOT_FINISHED     );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, WIFI_BASE                     , ESP_WIFI_BASE        );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, MESH_BASE                     , ESP_MESH_BASE        );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, FLASH_BASE                    , ESP_FLASH_BASE       );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, HW_CRYPTO_BASE                , ESP_HW_CRYPTO_BASE   );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, MEMPROT_BASE                  , ESP_MEMPROT_BASE     );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, FLASH_OP_TIMEOUT              , ESP_FLASH_OP_TIMEOUT );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, FLASH_OP_FAIL                 , ESP_FLASH_OP_FAIL    );
-    GDEFINE_ENUM_VALUE(ESP_ERROR, FAIL                          , OS_ERROR             );
+    GDEFINE_ENUM_TYPE (ESP_ERROR, int32_t);                 
+    GDEFINE_ENUM_VALUE(ESP_ERROR, OK                            , OS_OK                                 );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, NO_MEM                        , ESP_NO_MEM                            );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_ARG                   , ESP_INVALID_ARG                       );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_STATE                 , ESP_INVALID_STATE                     );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_SIZE                  , ESP_INVALID_SIZE                      );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, NOT_FOUND                     , ESP_NOT_FOUND                         );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, NOT_SUPPORTED                 , ESP_NOT_SUPPORTED                     );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, TIMEOUT                       , ESP_TIMEOUT                           );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_RESPONSE              , ESP_INVALID_RESPONSE                  );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_CRC                   , ESP_INVALID_CRC                       );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_VERSION               , ESP_INVALID_VERSION                   );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, INVALID_MAC                   , ESP_INVALID_MAC                       );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, NOT_FINISHED                  , ESP_NOT_FINISHED                      );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, WIFI_BASE                     , ESP_WIFI_BASE                         );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, MESH_BASE                     , ESP_MESH_BASE                         );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, FLASH_BASE                    , ESP_FLASH_BASE                        );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, HW_CRYPTO_BASE                , ESP_HW_CRYPTO_BASE                    );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, MEMPROT_BASE                  , ESP_MEMPROT_BASE                      );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, FLASH_OP_TIMEOUT              , ESP_FLASH_OP_TIMEOUT                  );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, FLASH_OP_FAIL                 , ESP_FLASH_OP_FAIL                     );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, OTA_BASE                      , ESP_OTA_BASE                          );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, OTA_PARTITION_CONFLICT        , ESP_OTA_PARTITION_CONFLICT            );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, OTA_SELECT_INFO_INVALID       , ESP_OTA_SELECT_INFO_INVALID           );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, OTA_VALIDATE_FAILED           , ESP_OTA_VALIDATE_FAILED               ); // Partition contained invalid app image. Also returned if secure boot is enabled and signature validation failed.
+    GDEFINE_ENUM_VALUE(ESP_ERROR, OTA_SMALL_SEC_VER             , ESP_OTA_SMALL_SEC_VER                 );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, OTA_ROLLBACK_FAILED           , ESP_OTA_ROLLBACK_FAILED               );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, OTA_ROLLBACK_INVALID_STATE    , ESP_OTA_ROLLBACK_INVALID_STATE        );
+    GDEFINE_ENUM_VALUE(ESP_ERROR, FAIL                          , OS_ERROR                              );
 
     GDEFINE_ENUM_TYPE (ESP_TCP, int32_t);
     GDEFINE_ENUM_VALUE(ESP_TCP, OK                    ,  0);
