@@ -79,8 +79,10 @@
 //#define inln              inline
 //#define sttc              static
 #define oprt                operator
-#define tpdf                typedef
+#define tydf                typedef
 #define cnst                const
+#define tydfcnst            tydf cnst
+
 #define nxpt                noexcept
 #define vltl                volatile
 #define cxpr                constexpr
@@ -109,6 +111,7 @@
 
 #define tplT                tplt<tpnm T>
 #define tpl_t               tplt<tpnm _t>
+#define tpl_t2              tplt<tpnm _t2>
 #define tplTInTOut          tplt<tpnm TIn, tpnm TOut>
 #define tplTstruct          tplT struct
 #define tplTndstcxp	        tplT ndstcxp

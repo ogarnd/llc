@@ -6,38 +6,40 @@
 namespace llc
 {
 #pragma pack(push, 1)
-	tplT
-	struct range {	
+	tpl_t struct range {	
+		tydf		_t	T;
 		T							Offset, Count;	
 		LLC_DEFAULT_OPERATOR(range <T>, Offset == other.Offset && Count == other.Count); 
 
-		tplt<tpnm _t2>
+		tpl_t2
 		inlcxpr	range<_t2>			Cast		()		const	noexcept	{ return{(_t2)Offset, (_t2)Count}; } 
-		inlcxpr	range<uint8_t>		u8			()		const	noexcept	{ return Cast<uint8_t	>(); }
-		inlcxpr	range<uint16_t>		u16			()		const	noexcept	{ return Cast<uint16_t	>(); }
-		inlcxpr	range<uint32_t>		u32			()		const	noexcept	{ return Cast<uint32_t	>(); }
-		inlcxpr	range<uint64_t>		u64			()		const	noexcept	{ return Cast<uint64_t	>(); }
-		inlcxpr	range<int8_t>		i8			()		const	noexcept	{ return Cast<int8_t	>(); }
-		inlcxpr	range<int16_t>		i16			()		const	noexcept	{ return Cast<int16_t	>(); }
-		inlcxpr	range<int32_t>		i32			()		const	noexcept	{ return Cast<int32_t	>(); }
-		inlcxpr	range<int64_t>		i64			()		const	noexcept	{ return Cast<int64_t	>(); }
-		inlcxpr	range<float>		f32			()		const	noexcept	{ return Cast<float		>(); }
-		inlcxpr	range<double>		f64			()		const	noexcept	{ return Cast<double	>(); }
+		inlcxpr	range<uc_t>			uc			()		const	noexcept	{ return Cast<uc_t>(); }
+		inlcxpr	range<sc_t>			sc			()		const	noexcept	{ return Cast<sc_t>(); }
+		inlcxpr	range<u0_t>			u0			()		const	noexcept	{ return Cast<u0_t>(); }
+		inlcxpr	range<u1_t>			u1			()		const	noexcept	{ return Cast<u1_t>(); }
+		inlcxpr	range<u2_t>			u2			()		const	noexcept	{ return Cast<u2_t>(); }
+		inlcxpr	range<u3_t>			u3			()		const	noexcept	{ return Cast<u3_t>(); }
+		inlcxpr	range<s0_t>			s0			()		const	noexcept	{ return Cast<s0_t>(); }
+		inlcxpr	range<s1_t>			s1			()		const	noexcept	{ return Cast<s1_t>(); }
+		inlcxpr	range<s2_t>			s2			()		const	noexcept	{ return Cast<s2_t>(); }
+		inlcxpr	range<s3_t>			s3			()		const	noexcept	{ return Cast<s3_t>(); }
+		inlcxpr	range<f2_t>			f2			()		const	noexcept	{ return Cast<f2_t>(); }
+		inlcxpr	range<f3_t>			f3			()		const	noexcept	{ return Cast<f3_t>(); }
 	};
 #pragma pack(pop)
 
-	typedef	range<char		>	rangechar;
-	typedef	range<uc_t	>	rangeuchar;
-	typedef range<float		>	rangef32;
-	typedef range<double	>	rangef64;
-	typedef range<uint8_t	>	rangeu8;
-	typedef range<uint16_t	>	rangeu16;
-	typedef range<uint32_t	>	rangeu32;
-	typedef range<uint64_t	>	rangeu64;
-	typedef range<int8_t	>	rangei8;
-	typedef range<int16_t	>	rangei16;
-	typedef range<int32_t	>	rangei32;
-	typedef range<int64_t	>	rangei64;
+	typedef	range<uc_t>	rangeuc_t;	typedef	const rangeuc_t	rangeuc_c;
+	typedef	range<sc_t>	rangesc_t;	typedef	const rangesc_t	rangesc_c;
+	typedef	range<u0_t>	rangeu0_t;	typedef	const rangeu0_t	rangeu0_c;
+	typedef	range<u1_t>	rangeu1_t;	typedef	const rangeu1_t	rangeu1_c;
+	typedef	range<u2_t>	rangeu2_t;	typedef	const rangeu2_t	rangeu2_c;
+	typedef	range<u3_t>	rangeu3_t;	typedef	const rangeu3_t	rangeu3_c;
+	typedef	range<s0_t>	ranges0_t;	typedef	const ranges0_t	ranges0_c;
+	typedef	range<s1_t>	ranges1_t;	typedef	const ranges1_t	ranges1_c;
+	typedef	range<s2_t>	ranges2_t;	typedef	const ranges2_t	ranges2_c;
+	typedef	range<s3_t>	ranges3_t;	typedef	const ranges3_t	ranges3_c;
+	typedef	range<f2_t>	rangef2_t;	typedef	const rangef2_t	rangef2_c;
+	typedef	range<f3_t>	rangef3_t;	typedef	const rangef3_t	rangef3_c;
 }
 
 #endif // GPK_RANGE_H

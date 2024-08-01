@@ -25,7 +25,7 @@ namespace llc
 	typedef ::llc::FEventHandlerConst<EVENT_SCREEN>	FScreenEventConst;
 
 	struct SEventArgsScreenCreate {
-		::llc::n2u16		Size;
+		::llc::n2u1_t		Size;
 #ifdef LLC_WINDOWS
 		CREATESTRUCT		PlatformDetail;
 #endif
@@ -40,8 +40,8 @@ namespace llc
 	stainli	::llc::error_t	eventEnqueueScreenShow			(::llc::apobj<::llc::SEventSystem> & queue, uint8_t key)		{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Screen, ::llc::EVENT_SCREEN_Show		, key); }
 	stainli	::llc::error_t	eventEnqueueScreenHide			(::llc::apobj<::llc::SEventSystem> & queue, uint8_t key)		{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Screen, ::llc::EVENT_SCREEN_Hide		, key); }
 	stainli	::llc::error_t	eventEnqueueScreenConstraints	(::llc::apobj<::llc::SEventSystem> & queue, uint8_t key)		{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Screen, ::llc::EVENT_SCREEN_Constraints, key); }
-	stainli	::llc::error_t	eventEnqueueScreenMove			(::llc::apobj<::llc::SEventSystem> & queue, ::llc::n2u16 coord)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Screen, ::llc::EVENT_SCREEN_Move		, coord); }
-	stainli	::llc::error_t	eventEnqueueScreenResize		(::llc::apobj<::llc::SEventSystem> & queue, ::llc::n2u16 size)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Screen, ::llc::EVENT_SCREEN_Resize		, size); }
+	stainli	::llc::error_t	eventEnqueueScreenMove			(::llc::apobj<::llc::SEventSystem> & queue, ::llc::n2u1_t coord)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Screen, ::llc::EVENT_SCREEN_Move		, coord); }
+	stainli	::llc::error_t	eventEnqueueScreenResize		(::llc::apobj<::llc::SEventSystem> & queue, ::llc::n2u1_t size)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Screen, ::llc::EVENT_SCREEN_Resize		, size); }
 } // namespace 
 
 #endif // LLC_EVENT_SCREEN_H_23627

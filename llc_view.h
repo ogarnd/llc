@@ -513,6 +513,22 @@ namespace llc
 	tplT	T&			min		(::llc::view<T> elements)		{ T * rmin	{}; if_fail_e(::llc::min(elements, &rmin));	return *rmin; }
 	tplT	T			sum		(::llc::view<cnst T> elements)	{ T result	{}; for(T element : elements) result += element; return result; }
 	tplT	stainli	T&	be2le	(T & number)					{ ::llc::reverse<i0u_t>({(i0u_t*)&number, sizeof(T)}); return number; }
+
+#define LLC_USING_VIEW()												\
+	using	::llc::vb8_t, ::llc::vb8_c, ::llc::vcb8_t, ::llc::vcb8_c	\
+		,	::llc::vuc_t, ::llc::vuc_c, ::llc::vcuc_t, ::llc::vcuc_c	\
+		,	::llc::vsc_t, ::llc::vsc_c, ::llc::vcsc_t, ::llc::vcsc_c	\
+		,	::llc::vu0_t, ::llc::vu0_c, ::llc::vcu0_t, ::llc::vcu0_c	\
+		,	::llc::vu1_t, ::llc::vu1_c, ::llc::vcu1_t, ::llc::vcu1_c	\
+		,	::llc::vu2_t, ::llc::vu2_c, ::llc::vcu2_t, ::llc::vcu2_c	\
+		,	::llc::vu3_t, ::llc::vu3_c, ::llc::vcu3_t, ::llc::vcu3_c	\
+		,	::llc::vs0_t, ::llc::vs0_c, ::llc::vcs0_t, ::llc::vcs0_c	\
+		,	::llc::vs1_t, ::llc::vs1_c, ::llc::vcs1_t, ::llc::vcs1_c	\
+		,	::llc::vs2_t, ::llc::vs2_c, ::llc::vcs2_t, ::llc::vcs2_c	\
+		,	::llc::vs3_t, ::llc::vs3_c, ::llc::vcs3_t, ::llc::vcs3_c	\
+		,	::llc::vf2_t, ::llc::vf2_c, ::llc::vcf2_t, ::llc::vcf2_c	\
+		,	::llc::vf3_t, ::llc::vf3_c, ::llc::vcf3_t, ::llc::vcf3_c
+
 } // namespace
 
 #endif // LLC_ARRAY_VIEW_H_23627

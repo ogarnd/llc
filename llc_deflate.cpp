@@ -190,8 +190,8 @@ stacxpr	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	{ // Build access tables.
 		uint32_t					offsetInfo					= 0;
 		for(uint32_t iFile = 0; iFile < output.Names.size(); ++iFile) {
-			const ::llc::rangeu32		& fileLocation				= *(const ::llc::rangeu32*)&output.DataInfo[offsetInfo];
-			offsetInfo				+= sizeof(::llc::rangeu32);
+			const ::llc::rangeu2_t		& fileLocation				= *(const ::llc::rangeu2_t*)&output.DataInfo[offsetInfo];
+			offsetInfo				+= sizeof(::llc::rangeu2_t);
 			const uint32_t				lenName						= *(uint32_t*)&output.DataInfo[offsetInfo];
 			offsetInfo				+= sizeof(uint32_t);
 			output.Names[iFile]	= {(const char*)&output.DataInfo[offsetInfo], lenName};
@@ -214,7 +214,7 @@ stacxpr	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 		llc_necall(llc::pathList(nameFolderSrc, listFiles), "Failed to list folder: %s.", nameFolderSrc.begin());
 
 		::llc::au8					contentsTemp			= {};
-		::llc::rangeu32				fileLocation			= {0, 0};
+		::llc::rangeu2_t			fileLocation			= {0, 0};
 		for(uint32_t iFile = 0; iFile < listFiles.size(); ++iFile) {
 			fileLocation.Offset		= contentsPacked.size();
 			const ::llc::vcs			pathToLoad				= {listFiles[iFile].begin(), listFiles[iFile].size()};

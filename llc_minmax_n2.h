@@ -8,18 +8,18 @@
 namespace llc
 {
 #pragma pack(push, 1)
-	typedef	minmax<n2char>	minmax2char;
-	typedef	minmax<n2uchar>	minmax2uchar;
-	typedef	minmax<n2f32>	minmax2f32;
-	typedef	minmax<n2f64>	minmax2f64;
-	typedef	minmax<n2u8 >	minmax2u8;
-	typedef	minmax<n2u16>	minmax2u16;
-	typedef	minmax<n2u32>	minmax2u32;
-	typedef	minmax<n2u64>	minmax2u64;
-	typedef	minmax<n2i8 >	minmax2i8;
-	typedef	minmax<n2i16>	minmax2i16;
-	typedef	minmax<n2i32>	minmax2i32;
-	typedef	minmax<n2i64>	minmax2i64;
+	tydf	minmax<n2uc_t>	minmax2uc_t;	tydfcnst	minmax2uc_t	minmax2uc_c;
+	tydf	minmax<n2sc_t>	minmax2sc_t;	tydfcnst	minmax2sc_t	minmax2sc_c;
+	tydf	minmax<n2u0_t>	minmax2u0_t;	tydfcnst	minmax2u0_t	minmax2u0_c;
+	tydf	minmax<n2u1_t>	minmax2u1_t;	tydfcnst	minmax2u1_t	minmax2u1_c;
+	tydf	minmax<n2u2_t>	minmax2u2_t;	tydfcnst	minmax2u2_t	minmax2u2_c;
+	tydf	minmax<n2u3_t>	minmax2u3_t;	tydfcnst	minmax2u3_t	minmax2u3_c;
+	tydf	minmax<n2s0_t>	minmax2s0_t;	tydfcnst	minmax2s0_t	minmax2s0_c;
+	tydf	minmax<n2s1_t>	minmax2s1_t;	tydfcnst	minmax2s1_t	minmax2s1_c;
+	tydf	minmax<n2s2_t>	minmax2s2_t;	tydfcnst	minmax2s2_t	minmax2s2_c;
+	tydf	minmax<n2s3_t>	minmax2s3_t;	tydfcnst	minmax2s3_t	minmax2s3_c;
+	tydf	minmax<n2f2_t>	minmax2f2_t;	tydfcnst	minmax2f2_t	minmax2f2_c;
+	tydf	minmax<n2f3_t>	minmax2f3_t;	tydfcnst	minmax2f3_t	minmax2f3_c;
 #pragma pack(pop)
 } // namespace
 

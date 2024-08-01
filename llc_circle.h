@@ -6,23 +6,25 @@
 namespace llc
 {
 #pragma pack(push, 1)	// You can read about pragma pack() here: https://www.google.com/search?q=pragma+pack
-	tplt<tpnm T> 
-	struct circle { 
-		double			Radius; 
+	tpl_t struct circle { 
+		tydf	_t		T;
+		f3_t			Radius; 
 		::llc::n2<T>	Center; 
 
 		LLC_DEFAULT_OPERATOR(circle<T>, Center == other.Center && Radius == other.Radius); 
 	};
-	typedef circle<float>		circlef32, circlef;
-	typedef circle<double>		circlef64, circled;
-	typedef circle<uint8_t>		circleu8;
-	typedef circle<uint16_t>	circleu16;
-	typedef circle<uint32_t>	circleu32;
-	typedef circle<uint64_t>	circleu64;
-	typedef circle<int8_t>		circlei8;
-	typedef circle<int16_t>		circlei16;
-	typedef circle<int32_t>		circlei32;
-	typedef circle<int64_t>		circlei64;
+	tydf	circle<uc_t>	circleuc_t;	tydfcnst circleuc_t	circleuc_c;
+	tydf	circle<sc_t>	circlesc_t;	tydfcnst circlesc_t	circlesc_c;
+	tydf	circle<u0_t>	circleu0_t;	tydfcnst circleu0_t	circleu0_c;
+	tydf	circle<u1_t>	circleu1_t;	tydfcnst circleu1_t	circleu1_c;
+	tydf	circle<u2_t>	circleu2_t;	tydfcnst circleu2_t	circleu2_c;
+	tydf	circle<u3_t>	circleu3_t;	tydfcnst circleu3_t	circleu3_c;
+	tydf	circle<s0_t>	circles0_t;	tydfcnst circles0_t	circles0_c;
+	tydf	circle<s1_t>	circles1_t;	tydfcnst circles1_t	circles1_c;
+	tydf	circle<s2_t>	circles2_t;	tydfcnst circles2_t	circles2_c;
+	tydf	circle<s3_t>	circles3_t;	tydfcnst circles3_t	circles3_c;
+	tydf	circle<f2_t>	circlef2_t;	tydfcnst circlef2_t	circlef2_c;
+	tydf	circle<f3_t>	circlef3_t;	tydfcnst circlef3_t	circlef3_c;
 #pragma pack(pop)
 } // namespace
 

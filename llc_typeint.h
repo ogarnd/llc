@@ -116,7 +116,22 @@ namespace llc
 	tplT		nodscrd	T&		global		()						nxpt	{ static T instance = {}; return instance; }
 
 	tplT	struct srcdst { T src, dst; }; 
-	tplT	struct dstsrc { T dst, src; }; 
+	tplT	struct dstsrc { T dst, src; };
+#define LLC_USING_TYPEINT()				\
+	using	::llc::b8_t, ::llc::b8_c	\
+		,	::llc::uc_t, ::llc::uc_c	\
+		,	::llc::sc_t, ::llc::sc_c	\
+		,	::llc::u0_t, ::llc::u0_c	\
+		,	::llc::u1_t, ::llc::u1_c	\
+		,	::llc::u2_t, ::llc::u2_c	\
+		,	::llc::u3_t, ::llc::u3_c	\
+		,	::llc::s0_t, ::llc::s0_c	\
+		,	::llc::s1_t, ::llc::s1_c	\
+		,	::llc::s2_t, ::llc::s2_c	\
+		,	::llc::s3_t, ::llc::s3_c	\
+		,	::llc::f2_t, ::llc::f2_c	\
+		,	::llc::f3_t, ::llc::f3_c;
+
 } // namespace
 
 #if !defined(LLC_ANDROID) && !defined(LLC_ESP32) && !defined(LLC_ARDUINO)

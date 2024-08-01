@@ -39,10 +39,10 @@ namespace llc
 	GDEFINE_ENUM_VALUE(EVENT_TOUCH, End			, 1);
 	GDEFINE_ENUM_VALUE(EVENT_TOUCH, Update		, 2);
 	GDEFINE_ENUM_VALUE(EVENT_TOUCH, Ownership	, 3);
-	stainli	::llc::error_t	eventEnqueueTouchBegin		(::llc::apobj<::llc::SEventSystem> & queue, ::llc::n2u16 coord)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Touch, ::llc::EVENT_TOUCH_Begin	, coord); }
-	stainli	::llc::error_t	eventEnqueueTouchEnd		(::llc::apobj<::llc::SEventSystem> & queue, ::llc::n2u16 coord)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Touch, ::llc::EVENT_TOUCH_End		, coord); }
-	stainli	::llc::error_t	eventEnqueueTouchUpdate		(::llc::apobj<::llc::SEventSystem> & queue, ::llc::n2u16 coord)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Touch, ::llc::EVENT_TOUCH_Update	, coord); }
-	stainli	::llc::error_t	eventEnqueueTouchOwnership	(::llc::apobj<::llc::SEventSystem> & queue, ::llc::n2u16 coord)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Touch, ::llc::EVENT_TOUCH_Ownership, coord); }
+	stainli	::llc::error_t	eventEnqueueTouchBegin		(::llc::apobj<::llc::SEventSystem> & queue, ::llc::n2u1_t coord)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Touch, ::llc::EVENT_TOUCH_Begin	, coord); }
+	stainli	::llc::error_t	eventEnqueueTouchEnd		(::llc::apobj<::llc::SEventSystem> & queue, ::llc::n2u1_t coord)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Touch, ::llc::EVENT_TOUCH_End		, coord); }
+	stainli	::llc::error_t	eventEnqueueTouchUpdate		(::llc::apobj<::llc::SEventSystem> & queue, ::llc::n2u1_t coord)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Touch, ::llc::EVENT_TOUCH_Update	, coord); }
+	stainli	::llc::error_t	eventEnqueueTouchOwnership	(::llc::apobj<::llc::SEventSystem> & queue, ::llc::n2u1_t coord)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Touch, ::llc::EVENT_TOUCH_Ownership, coord); }
 
 	GDEFINE_ENUM_TYPE(EVENT_JOYPAD, uint8_t);
 	GDEFINE_ENUM_VALUE(EVENT_JOYPAD, Move		, 0);

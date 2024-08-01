@@ -11,10 +11,10 @@ namespace llc
 	llc::err_t			appendCSSBorderWidth					(::llc::achar & output, uint8_t borderWidth, bool absoluteSize = true);
 	llc::err_t			appendCSSControlWidth					(::llc::achar & output, uint16_t outerLimit, bool absoluteSize = false);
 	llc::err_t			appendCSSControlHeight					(::llc::achar & output, uint16_t outerLimit, bool absoluteSize = false);
-	llc::err_t			appendCSSControlSize					(::llc::achar & output, ::llc::n2u16 outerLimit, bool absoluteSize = false);
-	llc::err_t			appendCSSSizeWithBorderWidthAbsolute	(::llc::achar & output, ::llc::n2u16 outerLimit, uint8_t borderWidth);
-	llc::err_t			appendCSSSizeWithBorderWidthRelative	(::llc::achar & output, ::llc::n2u16 outerLimit, uint8_t borderWidth);
-	llc::err_t			appendCSSSizeWithBorderWidth			(::llc::achar & output, ::llc::n2u16 outerLimit, uint8_t borderWidth, bool absoluteSize = false);
+	llc::err_t			appendCSSControlSize					(::llc::achar & output, ::llc::n2u1_t outerLimit, bool absoluteSize = false);
+	llc::err_t			appendCSSSizeWithBorderWidthAbsolute	(::llc::achar & output, ::llc::n2u1_t outerLimit, uint8_t borderWidth);
+	llc::err_t			appendCSSSizeWithBorderWidthRelative	(::llc::achar & output, ::llc::n2u1_t outerLimit, uint8_t borderWidth);
+	llc::err_t			appendCSSSizeWithBorderWidth			(::llc::achar & output, ::llc::n2u1_t outerLimit, uint8_t borderWidth, bool absoluteSize = false);
 } // namespace 
 
 #endif // LLC_APPEND_CSS_H

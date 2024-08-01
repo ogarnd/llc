@@ -4,7 +4,7 @@
 #include "llc_math.h"
 #include <ctype.h>
 
-bool										llc::isSpaceCharacter		(const char characterToTest)		{
+bool					llc::isSpaceCharacter						(const char characterToTest)		{
 	switch(characterToTest) {
 	case ' ': case '\t': case '\r': case '\n'	: case '\f'	: case '\b'	:
 		return true;
@@ -13,7 +13,7 @@ bool										llc::isSpaceCharacter		(const char characterToTest)		{
 	}
 }
 
-::llc::error_t			llc::skipToNextCharacter					(uint32_t & indexCurrentChar, const ::llc::vcc & expression)		{
+::llc::error_t			llc::skipToNextCharacter					(u2_t & indexCurrentChar, const ::llc::vcc & expression)		{
 	while(indexCurrentChar < expression.size()) {
 		if(::llc::isSpaceCharacter(expression[indexCurrentChar]))
 			++indexCurrentChar;
@@ -23,13 +23,13 @@ bool										llc::isSpaceCharacter		(const char characterToTest)		{
 	return 0;
 }
 
-::llc::error_t			llc::parseArbitraryBaseInteger				(uint32_t base, const ::llc::vcc & symbolList, const ::llc::vcc & sourceChars, uint64_t* number_)	{
-	uint32_t										totalCharsProcessed							= 0;
+::llc::error_t			llc::parseArbitraryBaseInteger				(u2_t base, const ::llc::vcc & symbolList, const ::llc::vcc & sourceChars, u3_t * number_)	{
+	u2_t										totalCharsProcessed							= 0;
 	::llc::apod<char>								stringToParse								= {};
-	for(uint32_t iChar = 0; iChar < sourceChars.size() && 0 != sourceChars[iChar];) {
+	for(u2_t iChar = 0; iChar < sourceChars.size() && 0 != sourceChars[iChar];) {
 		const char										sourceChar									= (char)tolower(sourceChars[iChar]);
 		bool											bSymbolProcessed							= false;
-		for(uint32_t iSymbol = 0; iSymbol < base; ++iSymbol) {
+		for(u2_t iSymbol = 0; iSymbol < base; ++iSymbol) {
 			if(symbolList[iSymbol] == sourceChar) {
 				bSymbolProcessed							= true;
 				llc_necs(stringToParse.push_back(sourceChar));
@@ -43,11 +43,11 @@ bool										llc::isSpaceCharacter		(const char characterToTest)		{
 			break;	// number ends with any character that is not a symbol
 	}
 	llc_necs(llc::reverse(stringToParse));		// we assigned the digits backwards so we need to reverse the string.
-	uint64_t										number										= 0;
+	u3_t										number										= 0;
 	totalCharsProcessed							= 0;
-	for(uint32_t iChar = 0; iChar < stringToParse.size() && 0 != stringToParse[iChar];) {
+	for(u2_t iChar = 0; iChar < stringToParse.size() && 0 != stringToParse[iChar];) {
 		bool											bSymbolProcessed							= false;
-		for( uint32_t iSymbol = 0; iSymbol < base; ++iSymbol )
+		for( u2_t iSymbol = 0; iSymbol < base; ++iSymbol )
 			if(symbolList[iSymbol] == stringToParse[iChar]) {
 				number										+= iSymbol * ::llc::powui(base, totalCharsProcessed);
 				bSymbolProcessed							= true;
@@ -145,11 +145,11 @@ bool										llc::isSpaceCharacter		(const char characterToTest)		{
 }
 
 ::llc::error_t			llc::stripLiteralGetViews		(::llc::aobj<::llc::vcc> & out_views, const ::llc::view<const ::llc::SStripLiteralType> & in_resultOfParser, const ::llc::vcc & in_format)		{
-	for(uint32_t iType = 0; iType < in_resultOfParser.size(); ++iType) {
+	for(u2_t iType = 0; iType < in_resultOfParser.size(); ++iType) {
 		const ::llc::SStripLiteralType					& type						= in_resultOfParser[iType];
 		::llc::vcs						view						= {};
-		uint32_t										offsetView					= 0;
-		uint32_t										lenView						= 0;
+		u2_t										offsetView					= 0;
+		u2_t										lenView						= 0;
 		if(type.Type == ::llc::STRIP_LITERAL_TYPE_TOKEN) {
 			offsetView									= ::llc::min(in_format.size() - 1, type.Span.Begin + 1);
 			lenView										= type.Span.End - type.Span.Begin - 2;
