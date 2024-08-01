@@ -35,26 +35,26 @@ namespace llc
 			other.Size				= other.Count			= 0;
 			other.Data				= 0;
 		}
-		inline					array_pod			(const array_pod<T> & other)						: array_pod((const view<const T>&) other) {}
-								array_pod			(const view<const T> & other)						{
+		inline					array_pod			(cnst array_pod<T> & other)						: array_pod((cnst view<cnst T>&) other) {}
+								array_pod			(cnst view<cnst T> & other)						{
 			gsthrow_if(resize(other.size()) != (s2_t)other.size());
 			memcpy(Data, other.begin(), other.byte_count());
 		}
 		tplt<size_t _count>
-								array_pod			(const T (&other)[_count])							{
+								array_pod			(cnst T (&other)[_count])							{
 			gsthrow_if(resize(_count) != (s2_t)_count);
 			memcpy(Data, other, _count * sizeof(T));
 		}
-		inlcxpr	operator		view<const T>	()									const	noexcept	{ return {Data, Count}; }
-		TArray&					operator =			(const array_pod<T>& other)							{ return operator=((const view<T> &) other); }
-		TArray&					operator =			(const view<const T> & other)						{
+		inlcxpr	operator		view<cnst T>	()									cnst	noexcept	{ return {Data, Count}; }
+		TArray&					operator =			(cnst array_pod<T>& other)							{ return operator=((cnst view<T> &) other); }
+		TArray&					operator =			(cnst view<cnst T> & other)						{
 			gsthrow_if(resize(other.size()) != (s2_t)other.size());
 			if(Count)
 				memcpy(Data, other.begin(), other.byte_count());
 			return *this;
 		}
 		tplt<size_t sizeStatic>
-		TArray&					operator =			(const T (&init)[sizeStatic])						{
+		TArray&					operator =			(cnst T (&init)[sizeStatic])						{
 			gsthrow_if(resize(sizeStatic) != sizeStatic);
 			memcpy(Data, init, Count * sizeof(T));
 			*(u1_t*)&Data[Count]		= 0;
@@ -77,35 +77,35 @@ namespace llc
 			return Count;
 		}
 		// Returns the index of the pushed value or -1 on failure
-		::llc::err_t			push_back			(const T & newValue)					noexcept	{
-			const s2_t				oldSize				= Count;
+		::llc::err_t			push_back			(cnst T & newValue)					noexcept	{
+			cnst s2_t				oldSize				= Count;
 			llc_necs(resize(oldSize + 1, newValue));
 			return oldSize;
 		}
-		inline	::llc::err_t	append_string		(const llc::function<err_t(TArray&)> & funcAppend)	noexcept	{ return funcAppend ? funcAppend(*this) : 0; }
+		inline	::llc::err_t	append_string		(cnst llc::function<err_t(TArray&)> & funcAppend)	noexcept	{ return funcAppend ? funcAppend(*this) : 0; }
 		tplt<size_t _len>
-		inline	::llc::err_t	append_string		(const T (&newChain)[_len])							noexcept	{ return append(::llc::vcs{newChain}); }
-		inline	::llc::err_t	append_string		(const ::llc::vcs & newChain)						noexcept	{ return append(newChain.begin(), newChain.size()); }
-		inline	::llc::err_t	append_string		(const T & element)									noexcept	{ llc_necs(push_back(element)); return 1; }
-		inline	::llc::err_t	append_strings		(const ::llc::view<const ::llc::vcs> & newChains)	noexcept	{ 
+		inline	::llc::err_t	append_string		(cnst T (&newChain)[_len])							noexcept	{ return append(::llc::vcs{newChain}); }
+		inline	::llc::err_t	append_string		(cnst ::llc::vcs & newChain)						noexcept	{ return append(newChain.begin(), newChain.size()); }
+		inline	::llc::err_t	append_string		(cnst T & element)									noexcept	{ llc_necs(push_back(element)); return 1; }
+		inline	::llc::err_t	append_strings		(cnst ::llc::view<cnst ::llc::vcs> & newChains)	noexcept	{ 
 			s2_t					appended				= 0;
 			for(u2_t i = 0, stop = newChains.size(); i < stop; ++i) {
-				const ::llc::vcs & newChain = newChains[i];
+				cnst ::llc::vcs & newChain = newChains[i];
 				llc_necs(append(newChain));
 				appended += newChain.size();
 			}
 			return appended;
 		}
 		tplt<size_t _len>
-		inline	::llc::err_t	append				(const T (&newChain)[_len])									noexcept	{ return append(newChain, (u2_t)_len); }
-		inline	::llc::err_t	append				(const ::llc::view<const T> & newChain)						noexcept	{ return append(newChain.begin(), newChain.size());	}
-		inline	::llc::err_t	append				(const ::llc::view<const ::llc::view<const T>> & newChains)	noexcept	{ 
+		inline	::llc::err_t	append				(cnst T (&newChain)[_len])									noexcept	{ return append(newChain, (u2_t)_len); }
+		inline	::llc::err_t	append				(cnst ::llc::view<cnst T> & newChain)						noexcept	{ return append(newChain.begin(), newChain.size());	}
+		inline	::llc::err_t	append				(cnst ::llc::view<cnst ::llc::view<cnst T>> & newChains)	noexcept	{ 
 			s2_t count = 0;
 			err_t err = 0;
-			newChains.for_each([this, &count, &err](const view<const T> &newChain) { if(false == failed(err)) { if_fail_e(err = append(newChain)); count += newChain.size(); } }); 
+			newChains.for_each([this, &count, &err](cnst view<cnst T> &newChain) { if(false == failed(err)) { if_fail_e(err = append(newChain)); count += newChain.size(); } }); 
 			return failed(err) ? err : count;
 		}
-		::llc::err_t			append				(const T * chainToAppend, u2_t chainLength)				noexcept	{
+		::llc::err_t			append				(cnst T * chainToAppend, u2_t chainLength)				noexcept	{
 			if(0 == chainLength)
 				return Count;
 			u2_c				newCount			= Count + chainLength;
@@ -145,7 +145,7 @@ namespace llc
 			return Count;
 		}
 		// Returns the new size of the array.
-		::llc::err_t			resize				(u2_t newCount, const T & newValue)	noexcept	{
+		::llc::err_t			resize				(u2_t newCount, cnst T & newValue)	noexcept	{
 			llc_necs(reserve(newCount));
 			if(Data) {
 				for(; Count < newCount; ++Count)
@@ -155,7 +155,7 @@ namespace llc
 			return Count;
 		}
 		// returns the new size of the list or -1 on failure.
-		::llc::err_t			insert				(u2_t index, const T & newValue)	noexcept	{
+		::llc::err_t			insert				(u2_t index, cnst T & newValue)	noexcept	{
 			ree_if(index > Count, LLC_FMT_U32_GT_U32, index, Count);
 			u2_c				newCount			= Count + 1;
 			if(Size < newCount) {
@@ -181,7 +181,7 @@ namespace llc
 			return Count = newCount;
 		}
 		// returns the new size of the list or -1 on failure.
-		::llc::err_t			insert				(u2_t index, const T * chainToInsert, u2_t chainLength)	noexcept	{
+		::llc::err_t			insert				(u2_t index, cnst T * chainToInsert, u2_t chainLength)	noexcept	{
 			ree_if(index > Count, LLC_FMT_U32_GT_U32, index, Count);
 
 			u2_c				newCount			= Count + chainLength;
@@ -208,8 +208,8 @@ namespace llc
 			return Count = newCount;
 		}
 		tplt<size_t _chainLength>
-		inline	::llc::err_t	insert				(u2_t index, const T (&chainToInsert)[_chainLength])		noexcept	{ return insert(index, chainToInsert, (u2_t)_chainLength); }
-		inline	::llc::err_t	insert				(u2_t index, ::llc::view<const T> chainToInsert)			noexcept	{ return insert(index, chainToInsert.begin(), chainToInsert.size()); }
+		inline	::llc::err_t	insert				(u2_t index, cnst T (&chainToInsert)[_chainLength])		noexcept	{ return insert(index, chainToInsert, (u2_t)_chainLength); }
+		inline	::llc::err_t	insert				(u2_t index, ::llc::view<cnst T> chainToInsert)			noexcept	{ return insert(index, chainToInsert.begin(), chainToInsert.size()); }
 		// Returns the new size of the list or -1 if the array pointer is not initialized.
 		::llc::err_t			remove_unordered	(u2_t index)												noexcept	{
 			ree_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
@@ -218,8 +218,8 @@ namespace llc
 			return Count;
 		}
 		// returns the new array size or -1 if failed.
-		::llc::err_t			erase				(const T * address)												noexcept	{
-			const ptrdiff_t				ptrDiff				= ptrdiff_t(address) - (ptrdiff_t)Data;
+		::llc::err_t			erase				(cnst T * address)												noexcept	{
+			cnst ptrdiff_t				ptrDiff				= ptrdiff_t(address) - (ptrdiff_t)Data;
 			u2_c				index				= (u2_t)(ptrDiff / (ptrdiff_t)sizeof(T));
 			ree_if(index >= Count, LLC_FMT_U32_GE_U32 ", p: 0x%p", index, Count, address);
 			return remove(index);
@@ -240,24 +240,24 @@ namespace llc
 	tplt <tpnm T>	using apod		= ::llc::array_pod<T>;
 	tplt <tpnm T>	using ap		= ::llc::apod	<T>;
 
-	typedef apod<uc_t>	auchar, auc;
-	typedef apod<sc_t>	achar , ac ;
-	typedef apod<u0_t>	au8	;
-	typedef apod<u1_t>	au16;
-	typedef apod<u2_t>	au32;
-	typedef apod<u3_t>	au64;
-	typedef apod<s0_t>	ai8	;
-	typedef apod<s1_t>	ai16;
-	typedef apod<s2_t>	ai32;
-	typedef apod<s3_t>	ai64;
-	typedef apod<f2_t>	af32;
-	typedef apod<f3_t>	af64;
+	typedef	apod<uc_t>	auc_t;	tydfcnst	auc_t	auc_c;
+	typedef	apod<sc_t>	asc_t;	tydfcnst	asc_t	asc_c;
+	typedef	apod<u0_t>	au0_t;	tydfcnst	au0_t	au0_c;
+	typedef	apod<u1_t>	au1_t;	tydfcnst	au1_t	au1_c;
+	typedef	apod<u2_t>	au2_t;	tydfcnst	au2_t	au2_c;
+	typedef	apod<u3_t>	au3_t;	tydfcnst	au3_t	au3_c;
+	typedef	apod<s0_t>	as0_t;	tydfcnst	as0_t	as0_c;
+	typedef	apod<s1_t>	as1_t;	tydfcnst	as1_t	as1_c;
+	typedef	apod<s2_t>	as2_t;	tydfcnst	as2_t	as2_c;
+	typedef	apod<s3_t>	as3_t;	tydfcnst	as3_t	as3_c;
+	typedef	apod<f2_t>	af2_t;	tydfcnst	af2_t	af2_c;
+	typedef	apod<f3_t>	af3_t;	tydfcnst	af3_t	af3_c;
 
-	llc::achar				toString		(const ::llc::vcc & strToLog);
+	llc::asc_t				toString		(cnst ::llc::vcc & strToLog);
 
-	::llc::err_t			camelCase		(::llc::vcc input, ::llc::achar & camelCased);
+	::llc::err_t			camelCase		(::llc::vcc input, ::llc::asc_t & camelCased);
 
-	::llc::err_t			join			(::llc::achar & query, char separator, ::llc::vcvsc_t fields);
+	::llc::err_t			join			(::llc::asc_t & query, char separator, ::llc::vcvsc_t fields);
 } // namespace
 
 #endif // LLC_ARRAY_POD_H_23627

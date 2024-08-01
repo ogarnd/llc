@@ -93,7 +93,7 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 	ree_if(0 != ::llc::fopen_s(&fp, {fileNameSrc}, LLC_OPEN_MODE_READ), "Failed to open '%s'.", fileNameSrc.begin());
 	ree_if(0 == fp, "Failed to open '%s'.", fileNameSrc.begin());
 
-	::llc::ai8					partInMemory;
+	::llc::as0_t					partInMemory;
 	llc_necall(partInMemory.resize(sizePartMax), "Failed to allocate buffer for file part. Out of memory? File part size: %" LLC_FMT_U32 ".", sizePartMax);
 
 	// -- Write parts to disk.
@@ -149,8 +149,8 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 
 #define LLC_DEBUG_FILE_CONTENTS
 
-::llc::error_t			llc::fileToMemory			(vcs usfileName, ::llc::au8 & fileInMemory, uint32_t maxSize, uint64_t offset)		{
-	const ::llc::achar			fileName					= ::llc::toString(usfileName);
+::llc::error_t			llc::fileToMemory			(vcs usfileName, ::llc::au0_t & fileInMemory, uint32_t maxSize, uint64_t offset)		{
+	const ::llc::asc_t			fileName					= ::llc::toString(usfileName);
 	llc_file_info_printf("Loading '%s'.", fileName.begin());
 
 #if defined(LLC_ESP32) || defined(ESP8266)
@@ -198,8 +198,8 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 	return result;
 }
 
-::llc::error_t			llc::fileFromMemory			(vcs usfileName, const ::llc::vcu8 & fileInMemory, bool append)	{
-	const ::llc::achar			fileName					= ::llc::toString(usfileName);
+::llc::error_t			llc::fileFromMemory			(vcs usfileName, const ::llc::vcu0_t & fileInMemory, bool append)	{
+	const ::llc::asc_t			fileName					= ::llc::toString(usfileName);
 #ifdef LLC_DEBUG_FILE_CONTENTS
 	llc_file_info_printf("%s '%s':\n%s\n", append ? "Appending to" : "Writing", fileName.begin(), fileInMemory.size() ? fileInMemory.begin() : (const uint8_t*)"");
 #else
@@ -226,7 +226,7 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 }
 
 ::llc::error_t			llc::fileDelete				(vcs usfileName)	{
-	const ::llc::achar			fileName					= ::llc::toString(usfileName);
+	const ::llc::asc_t			fileName					= ::llc::toString(usfileName);
 	llc_file_info_printf("Deleting '%s'.", fileName.begin());
 #if defined(LLC_ESP32) || defined(ESP8266)
 	ree_if(0 == ::getSoCFileSystem().remove(fileName.begin()), "Failed to delete '%s'.", fileName.begin());
@@ -241,15 +241,15 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, const uint32_t 
 	return 0;
 }
 
-::llc::error_t			llc::fileToMemory	(vcs folderPath, vcs fileName, ::llc::au8 & fileBytes, uint32_t maxSize, uint64_t offset) {
-	::llc::achar			filePath			= {};
+::llc::error_t			llc::fileToMemory	(vcs folderPath, vcs fileName, ::llc::au0_t & fileBytes, uint32_t maxSize, uint64_t offset) {
+	::llc::asc_t			filePath			= {};
 	llc_necall(llc::pathNameCompose(folderPath, fileName, filePath), "folderPath: '%s', fileName: '%s'.", folderPath.begin(), fileName.begin());
 	llc_necall(llc::fileToMemory({filePath}, fileBytes, maxSize, offset), "folderPath: '%s', fileName: '%s'.", folderPath.begin(), fileName.begin());
 	return 0;
 }
 
-::llc::error_t			llc::fileFromMemory	(vcs folderPath, vcs fileName, const ::llc::vcu8 & fileInMemory, bool append) {
-	::llc::achar			filePath			= {}; 
+::llc::error_t			llc::fileFromMemory	(vcs folderPath, vcs fileName, const ::llc::vcu0_t & fileInMemory, bool append) {
+	::llc::asc_t			filePath			= {}; 
 	llc_necall(llc::pathNameCompose(folderPath, fileName, filePath), "folderPath: '%s', fileName: '%s'.", folderPath.begin(), fileName.begin());
 	llc_necall(llc::fileFromMemory({filePath}, fileInMemory, append), "folderPath: '%s', fileName: '%s', append: %s.", folderPath.begin(), fileName.begin(), ::llc::bool2char(append));
 	return 0;

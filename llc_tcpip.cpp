@@ -161,7 +161,7 @@
 	return ::llc::tcpipAddressFromSockaddr(sockaddr_ipv4, a1, a2, a3, a4, port);
 }
 
-::llc::error_t			llc::tcpipAddress	(uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint8_t* a1, uint8_t* a2, uint8_t* a3, uint8_t* a4)										{
+::llc::error_t			llc::tcpipAddress	(uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4)										{
 	char						host_name[257]								= {};
 #if defined(ESP8266)
 	sprintf(host_name, "%s", wifi_station_get_hostname());
@@ -181,7 +181,7 @@
 	return ::llc::tcpipAddress(host_name, portRequested, adapterIndex, mode, address);
 }
 
-::llc::error_t			llc::tcpipAddress	(const char* szHostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint8_t* a1, uint8_t* a2, uint8_t* a3, uint8_t * a4, uint16_t * port)				{
+::llc::error_t			llc::tcpipAddress	(const char* szHostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4, uint16_t * port)				{
 	::llc::SIPv4End 		addr; 
 	llc_necs(llc::tcpipAddress(szHostName, portRequested, adapterIndex, mode, addr.IP, addr.Port));
 	llc_safe_assign(a1, addr[0]);

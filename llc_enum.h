@@ -242,7 +242,7 @@ namespace llc
 	tplt <tpnm TEnum>	TEnum	get_value			(const ::llc::vcc & valueLabel)			{ return ::llc::get_enum<TEnum>().get_value(valueLabel); }
 
 	tplt <tpnm TEnum>	TEnum	get_value_camelcased(const ::llc::vcc & uncased)			{
-		::llc::achar					camelCased;
+		::llc::asc_t					camelCased;
 		::llc::camelCase(uncased, camelCased);
 		return ::llc::get_enum<TEnum>().get_value(camelCased);
 	}

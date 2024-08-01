@@ -2,21 +2,21 @@
 // The API is very simple and looks like this (I am using C99 <stdint.h>-style annotated types):
 //
 // /* Initialize context calling one of: */
-// void AES_init_ctx(struct AES_ctx* ctx, const uint8_t* key);
-// void AES_init_ctx_iv(struct AES_ctx* ctx, const uint8_t* key, const uint8_t* iv);
+// void AES_init_ctx(struct AES_ctx* ctx, const uint8_t * key);
+// void AES_init_ctx_iv(struct AES_ctx* ctx, const uint8_t * key, const uint8_t * iv);
 //
 // /* ... or reset IV at random point: */
-// void AES_ctx_set_iv(struct AES_ctx* ctx, const uint8_t* iv);
+// void AES_ctx_set_iv(struct AES_ctx* ctx, const uint8_t * iv);
 //
 // /* Then start encrypting and decrypting with the functions below: */
-// void AES_ECB_encrypt(struct AES_ctx* ctx, uint8_t* buf);
-// void AES_ECB_decrypt(struct AES_ctx* ctx, uint8_t* buf);
+// void AES_ECB_encrypt(struct AES_ctx* ctx, uint8_t * buf);
+// void AES_ECB_decrypt(struct AES_ctx* ctx, uint8_t * buf);
 //
-// void AES_CBC_encrypt_buffer(struct AES_ctx* ctx, uint8_t* buf, uint32_t length);
-// void AES_CBC_decrypt_buffer(struct AES_ctx* ctx, uint8_t* buf, uint32_t length);
+// void AES_CBC_encrypt_buffer(struct AES_ctx* ctx, uint8_t * buf, uint32_t length);
+// void AES_CBC_decrypt_buffer(struct AES_ctx* ctx, uint8_t * buf, uint32_t length);
 //
 // /* Same function for encrypting as for decrypting in CTR mode */
-// void AES_CTR_xcrypt_buffer(struct AES_ctx* ctx, uint8_t* buf, uint32_t length);
+// void AES_CTR_xcrypt_buffer(struct AES_ctx* ctx, uint8_t * buf, uint32_t length);
 // Note:
 //
 // No padding is provided so for CBC and ECB all buffers should be multiples of 16 bytes. For padding PKCS7 is recommendable.
@@ -145,7 +145,7 @@ stainli	uint8_t						getSBoxValue							(uint8_t num)														{ return  sbo
 stainli	uint8_t						getSBoxInvert							(uint8_t num)														{ return rsbox[num]; }
 
 // This function produces Nb(Nr+1) round keys. The round keys are used in each round to decrypt the states.
-static	void						KeyExpansion							(uint8_t* RoundKey, const uint8_t* Key, ::llc::AES_LEVEL level)		{
+static	void						KeyExpansion							(uint8_t* RoundKey, const uint8_t * Key, ::llc::AES_LEVEL level)		{
 	uint32_t											Nk = 0, Nr = 0;
 	switch(level) {
 	case ::llc::AES_LEVEL_128: Nk = 4; Nr = 10; break;
@@ -193,9 +193,9 @@ static	void						KeyExpansion							(uint8_t* RoundKey, const uint8_t* Key, ::ll
 	}
 }
 
-void											llc::aesInitCtx							(::llc::SAESContext* ctx, const uint8_t* key, ::llc::AES_LEVEL level)						{ ctx->Level = level; ctx->RoundKey.resize(::llc::AES_LEVEL_PROPERTIES[level].KeyExpSize); KeyExpansion(ctx->RoundKey.begin(), key, level); }
-void											llc::aesInitCtxIV						(::llc::SAESContext* ctx, const uint8_t* key, ::llc::AES_LEVEL level, const uint8_t* iv)	{ ctx->Level = level; ctx->RoundKey.resize(::llc::AES_LEVEL_PROPERTIES[level].KeyExpSize); KeyExpansion(ctx->RoundKey.begin(), key, level); memcpy(ctx->Iv, iv, AES_SIZEBLOCK); }
-void											llc::aesCtxSetIV						(::llc::SAESContext* ctx, const uint8_t* iv)												{ memcpy(ctx->Iv, iv, AES_SIZEBLOCK); }
+void											llc::aesInitCtx							(::llc::SAESContext* ctx, const uint8_t * key, ::llc::AES_LEVEL level)						{ ctx->Level = level; ctx->RoundKey.resize(::llc::AES_LEVEL_PROPERTIES[level].KeyExpSize); KeyExpansion(ctx->RoundKey.begin(), key, level); }
+void											llc::aesInitCtxIV						(::llc::SAESContext* ctx, const uint8_t * key, ::llc::AES_LEVEL level, const uint8_t * iv)	{ ctx->Level = level; ctx->RoundKey.resize(::llc::AES_LEVEL_PROPERTIES[level].KeyExpSize); KeyExpansion(ctx->RoundKey.begin(), key, level); memcpy(ctx->Iv, iv, AES_SIZEBLOCK); }
+void											llc::aesCtxSetIV						(::llc::SAESContext* ctx, const uint8_t * iv)												{ memcpy(ctx->Iv, iv, AES_SIZEBLOCK); }
 
 // This function adds the round key to state. The round key is added to	 the state by an XOR function.
 static	void										AddRoundKey								(uint8_t round,state_t* state,uint8_t* RoundKey)											{
@@ -317,7 +317,7 @@ static	void										InvShiftRows							(state_t* state)												{
 }
 
 // Cipher is the main function that encrypts the PlainText. Encrypts the PlainText with the Key using AES algorithm.
-static	void									Cipher									(state_t* state, uint8_t* RoundKey, ::llc::AES_LEVEL level)		{
+static	void									Cipher									(state_t* state, uint8_t * RoundKey, ::llc::AES_LEVEL level)		{
 	AddRoundKey(0, state, RoundKey);	// Add the First round key to the state before starting the rounds.
 	uint8_t												Nr										= 0;
 	switch(level) {
@@ -338,7 +338,7 @@ static	void									Cipher									(state_t* state, uint8_t* RoundKey, ::llc::AE
 }
 
 // Decrypts the PlainText with the Key using AES algorithm.
-static	void									InvCipher							(state_t* state, uint8_t* RoundKey, ::llc::AES_LEVEL level)			{
+static	void									InvCipher							(state_t* state, uint8_t * RoundKey, ::llc::AES_LEVEL level)			{
 	uint8_t												Nr									= 0;
 	switch(level) {
 	case ::llc::AES_LEVEL_128: Nr = 10; break;
@@ -358,7 +358,7 @@ static	void									InvCipher							(state_t* state, uint8_t* RoundKey, ::llc::A
 	AddRoundKey(0, state, RoundKey);
 }
 
-static	void									XorWithIv							(uint8_t* buf, uint8_t* Iv)											{
+static	void									XorWithIv							(uint8_t* buf, uint8_t * Iv)											{
 	for (uint8_t i = 0; i < ::llc::AES_SIZEBLOCK; ++i) // The block in AES is always 128bit no matter the key size
 		buf[i]											^= Iv[i];
 }
@@ -390,7 +390,7 @@ void											llc::aesCBCDecryptBuffer			(::llc::SAESContext * ctx, uint8_t * b
 }
 
 // Symmetrical operation: same function for encrypting as for decrypting. Note any IV/nonce should never be reused with the same key
-void											llc::aesCTRXCryptBuffer				(::llc::SAESContext* ctx, uint8_t* buf, uint32_t length)			{
+void											llc::aesCTRXCryptBuffer				(::llc::SAESContext* ctx, uint8_t * buf, uint32_t length)			{
 	uint8_t												buffer	[::llc::AES_SIZEBLOCK];
 	int													bi									= ::llc::AES_SIZEBLOCK;
 	for (uint32_t i = 0; i < length; ++i, ++bi) {
@@ -411,7 +411,7 @@ void											llc::aesCTRXCryptBuffer				(::llc::SAESContext* ctx, uint8_t* buf
 	}
 }
 
-::llc::error_t			llc::aesEncode			(const ::llc::vcu8 & messageToEncrypt, const ::llc::vcu8 & encryptionKey, ::llc::AES_LEVEL level, ::llc::au8 & outputEncrypted)	{
+::llc::error_t			llc::aesEncode			(const ::llc::vcu0_t & messageToEncrypt, const ::llc::vcu0_t & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputEncrypted)	{
 	uint8_t													iv		[::llc::AES_SIZEIV]				= {};
 	const double											fraction								= (1.0 / (65535>>1)) * 255.0;
 	for(uint32_t iVal = 0; iVal < ::llc::AES_SIZEIV; ++iVal)
@@ -423,11 +423,11 @@ void											llc::aesCTRXCryptBuffer				(::llc::SAESContext* ctx, uint8_t* buf
 	return 0;
 }
 
-::llc::error_t			llc::aesDecode			(const ::llc::vcu8 & messageEncrypted, const ::llc::vcu8 & encryptionKey, ::llc::AES_LEVEL level, ::llc::au8 & outputDecrypted)	{
+::llc::error_t			llc::aesDecode			(const ::llc::vcu0_t & messageEncrypted, const ::llc::vcu0_t & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputDecrypted)	{
 	return ::llc::aesDecode({messageEncrypted.begin(), messageEncrypted.size() - ::llc::AES_SIZEIV}, {&messageEncrypted[messageEncrypted.size() - ::llc::AES_SIZEIV], ::llc::AES_SIZEIV}, encryptionKey, level, outputDecrypted);
 }
 
-::llc::error_t			llc::aesEncode		(const ::llc::vcu8 & messageToEncrypt, const ::llc::vcu8 & iv, const ::llc::vcu8 & encryptionKey, ::llc::AES_LEVEL level, ::llc::au8 & outputEncrypted) {
+::llc::error_t			llc::aesEncode		(const ::llc::vcu0_t & messageToEncrypt, const ::llc::vcu0_t & iv, const ::llc::vcu0_t & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputEncrypted) {
 	ree_if(0 == messageToEncrypt.size(), "Cannot encode empty message at address %p.", messageToEncrypt);
 	ree_if(encryptionKey.size() != 32, "Invalid key length! Key must be exactly 32 bytes long. Key size: %" LLC_FMT_U32 ".", encryptionKey.size());
 	int8_t													excedent								= messageToEncrypt.size() % ::llc::AES_SIZEBLOCK;
@@ -444,7 +444,7 @@ void											llc::aesCTRXCryptBuffer				(::llc::SAESContext* ctx, uint8_t* buf
 	return 0;
 }
 
-::llc::error_t			llc::aesDecode		(const ::llc::vcu8 & messageEncrypted, const ::llc::vcu8 & iv, const ::llc::vcu8 & encryptionKey, ::llc::AES_LEVEL level, ::llc::au8 & outputDecrypted) {
+::llc::error_t			llc::aesDecode		(const ::llc::vcu0_t & messageEncrypted, const ::llc::vcu0_t & iv, const ::llc::vcu0_t & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputDecrypted) {
 	ree_if(0 == messageEncrypted.size(), "Cannot encode empty message at address %p.", messageEncrypted.begin());
 	ree_if(messageEncrypted.size() % ::llc::AES_SIZEBLOCK, "Invalid data length: %" LLC_FMT_U32 ".", messageEncrypted.size());
 	ree_if(encryptionKey.size() != 32, "Invalid key length! Key must be exactly 32 bytes long. Key size: %" LLC_FMT_U32 ".", encryptionKey.size());

@@ -5,46 +5,46 @@
 
 namespace llc
 {
-	stacxpr	::llc::vcc		b64Symbols		= {64, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"};
-	stacxpr	::llc::vcc		b64SymbolsFS	= {64, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"};
+	stacxpr	vcsc_t		b64Symbols		= {64, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"};
+	stacxpr	vcsc_t		b64SymbolsFS	= {64, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"};
 
-	::llc::error_t			base64Encode	(const ::llc::vcc & base64Symbols, char base64PadSymbol, const ::llc::vcu8 & inputBinary	, ::llc::au8 & out_base64	);
-	::llc::error_t			base64Decode	(const ::llc::vcc & base64Symbols, char base64PadSymbol, const ::llc::vcu8 & in_base64	, ::llc::au8 & outputBinary	);
+	err_t			base64Encode	(cnst vcsc_t & base64Symbols, char base64PadSymbol, cnst vcu0_t & in_binary	, au0_t & out_base64);
+	err_t			base64Decode	(cnst vcsc_t & base64Symbols, char base64PadSymbol, cnst vcu0_t & in_base64	, au0_t & out_binary);
 
-	stainli	::llc::error_t	base64Encode	(const ::llc::vcu8 & inputBinary, ::llc::au8 & out_base64	) { return ::llc::base64Encode(b64Symbols	, '=', inputBinary	, out_base64	); }
-	stainli	::llc::error_t	base64Decode	(const ::llc::vcu8 & in_base64  , ::llc::au8 & outputBinary	) { return ::llc::base64Decode(b64Symbols	, '=', in_base64	, outputBinary	); }
-	stainli	::llc::error_t	base64EncodeFS	(const ::llc::vcu8 & inputBinary, ::llc::au8 & out_base64	) { return ::llc::base64Encode(b64SymbolsFS	, '=', inputBinary	, out_base64	); }
-	stainli	::llc::error_t	base64DecodeFS	(const ::llc::vcu8 & in_base64  , ::llc::au8 & outputBinary	) { return ::llc::base64Decode(b64SymbolsFS	, '=',  in_base64, outputBinary	); }
-																						   
-	stainli	::llc::error_t	base64Encode	(const ::llc::vci8 & inputBinary, ::llc::au8 & out_base64	) { return ::llc::base64Encode(b64Symbols	, '=', *(::llc::vcu8*)&inputBinary	, out_base64	); }
-	stainli	::llc::error_t	base64Decode	(const ::llc::vci8 & in_base64  , ::llc::au8 & outputBinary	) { return ::llc::base64Decode(b64Symbols	, '=', *(::llc::vcu8*)&in_base64	, outputBinary	); }
-	stainli	::llc::error_t	base64EncodeFS	(const ::llc::vci8 & inputBinary, ::llc::au8 & out_base64	) { return ::llc::base64Encode(b64SymbolsFS	, '=', *(::llc::vcu8*)&inputBinary	, out_base64	); }
-	stainli	::llc::error_t	base64DecodeFS	(const ::llc::vci8 & in_base64  , ::llc::au8 & outputBinary	) { return ::llc::base64Decode(b64SymbolsFS	, '=', *(::llc::vcu8*)& in_base64, outputBinary	); }
-																						   
-	stainli	::llc::error_t	base64Encode	(const ::llc::vcu8 & inputBinary, ::llc::ai8 & out_base64	) { return ::llc::base64Encode(b64Symbols	, '=', inputBinary	, *(::llc::au8*)&out_base64		); }
-	stainli	::llc::error_t	base64Decode	(const ::llc::vcu8 & in_base64  , ::llc::ai8 & outputBinary	) { return ::llc::base64Decode(b64Symbols	, '=', in_base64	, *(::llc::au8*)&outputBinary	); }
-	stainli	::llc::error_t	base64EncodeFS	(const ::llc::vcu8 & inputBinary, ::llc::ai8 & out_base64	) { return ::llc::base64Encode(b64SymbolsFS	, '=', inputBinary	, *(::llc::au8*)&out_base64		); }
-	stainli	::llc::error_t	base64DecodeFS	(const ::llc::vcu8 & in_base64  , ::llc::ai8 & outputBinary	) { return ::llc::base64Decode(b64SymbolsFS	, '=', in_base64	, *(::llc::au8*)&outputBinary	); }
-																						   
-	stainli	::llc::error_t	base64Encode	(const ::llc::vci8 & inputBinary, ::llc::ai8 & out_base64	) { return ::llc::base64Encode(b64Symbols	, '=', *(::llc::vcu8*)&inputBinary	, *(::llc::au8*)&out_base64 	); }
-	stainli	::llc::error_t	base64Decode	(const ::llc::vci8 & in_base64  , ::llc::ai8 & outputBinary	) { return ::llc::base64Decode(b64Symbols	, '=', *(::llc::vcu8*)&in_base64	, *(::llc::au8*)&outputBinary	); }
-	stainli	::llc::error_t	base64EncodeFS	(const ::llc::vci8 & inputBinary, ::llc::ai8 & out_base64	) { return ::llc::base64Encode(b64SymbolsFS	, '=', *(::llc::vcu8*)&inputBinary	, *(::llc::au8*)&out_base64 	); }
-	stainli	::llc::error_t	base64DecodeFS	(const ::llc::vci8 & in_base64  , ::llc::ai8 & outputBinary	) { return ::llc::base64Decode(b64SymbolsFS	, '=', *(::llc::vcu8*)&in_base64	, *(::llc::au8*)&outputBinary	); }
+	stainli	err_t	base64Encode	(cnst vcu0_t & in_binary, au0_t & out_base64) { return base64Encode(b64Symbols		, '=', in_binary, out_base64); }
+	stainli	err_t	base64Decode	(cnst vcu0_t & in_base64, au0_t & out_binary) { return base64Decode(b64Symbols		, '=', in_base64, out_binary); }
+	stainli	err_t	base64EncodeFS	(cnst vcu0_t & in_binary, au0_t & out_base64) { return base64Encode(b64SymbolsFS	, '=', in_binary, out_base64); }
+	stainli	err_t	base64DecodeFS	(cnst vcu0_t & in_base64, au0_t & out_binary) { return base64Decode(b64SymbolsFS	, '=', in_base64, out_binary); }
+																					 
+	stainli	err_t	base64Encode	(cnst vcs0_t & in_binary, au0_t & out_base64) { return base64Encode(b64Symbols		, '=', *(vcu0_t*)&in_binary, out_base64); }
+	stainli	err_t	base64Decode	(cnst vcs0_t & in_base64, au0_t & out_binary) { return base64Decode(b64Symbols		, '=', *(vcu0_t*)&in_base64, out_binary); }
+	stainli	err_t	base64EncodeFS	(cnst vcs0_t & in_binary, au0_t & out_base64) { return base64Encode(b64SymbolsFS	, '=', *(vcu0_t*)&in_binary, out_base64); }
+	stainli	err_t	base64DecodeFS	(cnst vcs0_t & in_base64, au0_t & out_binary) { return base64Decode(b64SymbolsFS	, '=', *(vcu0_t*)&in_base64, out_binary); }
+																					 
+	stainli	err_t	base64Encode	(cnst vcu0_t & in_binary, as0_t & out_base64) { return base64Encode(b64Symbols		, '=', in_binary, *(au0_t*)&out_base64); }
+	stainli	err_t	base64Decode	(cnst vcu0_t & in_base64, as0_t & out_binary) { return base64Decode(b64Symbols		, '=', in_base64, *(au0_t*)&out_binary); }
+	stainli	err_t	base64EncodeFS	(cnst vcu0_t & in_binary, as0_t & out_base64) { return base64Encode(b64SymbolsFS	, '=', in_binary, *(au0_t*)&out_base64); }
+	stainli	err_t	base64DecodeFS	(cnst vcu0_t & in_base64, as0_t & out_binary) { return base64Decode(b64SymbolsFS	, '=', in_base64, *(au0_t*)&out_binary); }
+																					 
+	stainli	err_t	base64Encode	(cnst vcs0_t & in_binary, as0_t & out_base64) { return base64Encode(b64Symbols		, '=', *(vcu0_t*)&in_binary, *(au0_t*)&out_base64); }
+	stainli	err_t	base64Decode	(cnst vcs0_t & in_base64, as0_t & out_binary) { return base64Decode(b64Symbols		, '=', *(vcu0_t*)&in_base64, *(au0_t*)&out_binary); }
+	stainli	err_t	base64EncodeFS	(cnst vcs0_t & in_binary, as0_t & out_base64) { return base64Encode(b64SymbolsFS	, '=', *(vcu0_t*)&in_binary, *(au0_t*)&out_base64); }
+	stainli	err_t	base64DecodeFS	(cnst vcs0_t & in_base64, as0_t & out_binary) { return base64Decode(b64SymbolsFS	, '=', *(vcu0_t*)&in_base64, *(au0_t*)&out_binary); }
 
-	stainli	::llc::error_t	base64Encode	(const ::llc::vcc  & inputBinary, ::llc::au8 & out_base64	) { return ::llc::base64Encode(b64Symbols	, '=', *(::llc::vcu8*)&inputBinary, out_base64	); }
-	stainli	::llc::error_t	base64Decode	(const ::llc::vcu8 & in_base64  , ::llc::ac  & outputBinary	) { return ::llc::base64Decode(b64Symbols	, '=', in_base64, *(::llc::au8*)&outputBinary	); }
-	stainli	::llc::error_t	base64EncodeFS	(const ::llc::vcc  & inputBinary, ::llc::au8 & out_base64	) { return ::llc::base64Encode(b64SymbolsFS	, '=', *(::llc::vcu8*)&inputBinary, out_base64	); }
-	stainli	::llc::error_t	base64DecodeFS	(const ::llc::vcu8 & in_base64  , ::llc::ac  & outputBinary	) { return ::llc::base64Decode(b64SymbolsFS	, '=', in_base64, *(::llc::au8*)&outputBinary	); }
+	stainli	err_t	base64Encode	(cnst vcsc_t & in_binary, au0_t & out_base64) { return base64Encode(b64Symbols		, '=', *(vcu0_t*)&in_binary, out_base64	); }
+	stainli	err_t	base64Decode	(cnst vcu0_t & in_base64, asc_t & out_binary) { return base64Decode(b64Symbols		, '=', in_base64, *(au0_t*)&out_binary	); }
+	stainli	err_t	base64EncodeFS	(cnst vcsc_t & in_binary, au0_t & out_base64) { return base64Encode(b64SymbolsFS	, '=', *(vcu0_t*)&in_binary, out_base64	); }
+	stainli	err_t	base64DecodeFS	(cnst vcu0_t & in_base64, asc_t & out_binary) { return base64Decode(b64SymbolsFS	, '=', in_base64, *(au0_t*)&out_binary	); }
 
-	stainli	::llc::error_t	base64Encode	(const ::llc::vcu8 & inputBinary, ::llc::ac  & out_base64  ) { return ::llc::base64Encode(b64Symbols  , '=', inputBinary	, *(::llc::au8*)&out_base64 	); }
-	stainli	::llc::error_t	base64Decode	(const ::llc::vcc  & in_base64  , ::llc::au8 & outputBinary) { return ::llc::base64Decode(b64Symbols  , '=', *(::llc::vcu8*)&in_base64	, outputBinary	); }
-	stainli	::llc::error_t	base64EncodeFS	(const ::llc::vcu8 & inputBinary, ::llc::ac  & out_base64  ) { return ::llc::base64Encode(b64SymbolsFS, '=', inputBinary	, *(::llc::au8*)&out_base64 	); }
-	stainli	::llc::error_t	base64DecodeFS	(const ::llc::vcc  & in_base64  , ::llc::au8 & outputBinary) { return ::llc::base64Decode(b64SymbolsFS, '=', *(::llc::vcu8*)&in_base64	, outputBinary	); }
+	stainli	err_t	base64Encode	(cnst vcu0_t & in_binary, asc_t & out_base64) { return base64Encode(b64Symbols  	, '=', in_binary, *(au0_t*)&out_base64 	); }
+	stainli	err_t	base64Decode	(cnst vcsc_t & in_base64, au0_t & out_binary) { return base64Decode(b64Symbols  	, '=', *(vcu0_t*)&in_base64, out_binary	); }
+	stainli	err_t	base64EncodeFS	(cnst vcu0_t & in_binary, asc_t & out_base64) { return base64Encode(b64SymbolsFS	, '=', in_binary, *(au0_t*)&out_base64 	); }
+	stainli	err_t	base64DecodeFS	(cnst vcsc_t & in_base64, au0_t & out_binary) { return base64Decode(b64SymbolsFS	, '=', *(vcu0_t*)&in_base64, out_binary	); }
 
-	stainli	::llc::error_t	base64Encode	(const ::llc::vcc &  inputBinary, ::llc::ac & out_base64  ) { return ::llc::base64Encode(b64Symbols  , '=', *(::llc::vcu8*)&inputBinary	, *(::llc::au8*)&out_base64 	); }
-	stainli	::llc::error_t	base64Decode	(const ::llc::vcc &  in_base64  , ::llc::ac & outputBinary) { return ::llc::base64Decode(b64Symbols  , '=', *(::llc::vcu8*)&in_base64	, *(::llc::au8*)&outputBinary	); }
-	stainli	::llc::error_t	base64EncodeFS	(const ::llc::vcc &  inputBinary, ::llc::ac & out_base64  ) { return ::llc::base64Encode(b64SymbolsFS, '=', *(::llc::vcu8*)&inputBinary	, *(::llc::au8*)&out_base64 	); }
-	stainli	::llc::error_t	base64DecodeFS	(const ::llc::vcc &  in_base64  , ::llc::ac & outputBinary) { return ::llc::base64Decode(b64SymbolsFS, '=', *(::llc::vcu8*)&in_base64	, *(::llc::au8*)&outputBinary	); }
+	stainli	err_t	base64Encode	(cnst vcsc_t & in_binary, asc_t & out_base64) { return base64Encode(b64Symbols  	, '=', *(vcu0_t*)&in_binary, *(au0_t*)&out_base64); }
+	stainli	err_t	base64Decode	(cnst vcsc_t & in_base64, asc_t & out_binary) { return base64Decode(b64Symbols  	, '=', *(vcu0_t*)&in_base64, *(au0_t*)&out_binary); }
+	stainli	err_t	base64EncodeFS	(cnst vcsc_t & in_binary, asc_t & out_base64) { return base64Encode(b64SymbolsFS	, '=', *(vcu0_t*)&in_binary, *(au0_t*)&out_base64); }
+	stainli	err_t	base64DecodeFS	(cnst vcsc_t & in_base64, asc_t & out_binary) { return base64Decode(b64SymbolsFS	, '=', *(vcu0_t*)&in_base64, *(au0_t*)&out_binary); }
 } // namespace
 
 #endif // LLC_BASE64_H_23627

@@ -18,8 +18,8 @@ namespace llc
 	typedef	::llc::view<const ::llc::u8rgba	>	vcrgba	, vc8rgba	;
 	typedef	::llc::view<const ::llc::u8rgb	>	vcrgb	, vc8rgb		;
 
-	::llc::error_t 		vcu82bgra8	(const ::llc::vcu8 & bytes, ::llc::bgra8 & colorToSet);
-	::llc::error_t 		vcu82bgr8	(const ::llc::vcu8 & bytes, ::llc::bgr8 & colorToSet);
+	::llc::error_t 		vcu82bgra8	(const ::llc::vcu0_t & bytes, ::llc::bgra8 & colorToSet);
+	::llc::error_t 		vcu82bgr8	(const ::llc::vcu0_t & bytes, ::llc::bgr8 & colorToSet);
 } // namespace
 
 #endif // LLC_VIEW_COLOR_H_23627

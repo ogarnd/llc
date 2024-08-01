@@ -16,15 +16,15 @@ namespace llc
 		typedef	SEventView<T>		TEView;
 
 		T				Type		= {};
-		::llc::vcu8		Data		= {};
+		::llc::vcu0_t		Data		= {};
 
-		::llc::error_t	Save		(::llc::au8 & output)	const	{
+		::llc::error_t	Save		(::llc::au0_t & output)	const	{
 			llc_necs(llc::savePOD (output, Type));
 			llc_necs(llc::saveView(output, Data));
 			return 0;
 		}
 
-		::llc::error_t	Load		(::llc::vcu8 & input)			{
+		::llc::error_t	Load		(::llc::vcu0_t & input)			{
 			llc_necs(llc::loadPOD (input, Type));
 			llc_necs(llc::loadView(input, Data));
 			return 0;
@@ -45,11 +45,11 @@ namespace llc
 		typedef ::llc::SEvent<T>	TEvent;
 
 		T				Type		= {};
-		::llc::au8		Data		= {};
+		::llc::au0_t		Data		= {};
 
 						SEvent		(const TEvent &)							= default;
 		constexpr		SEvent		(T type = {})						: Type(type) {}
-						SEvent		(T type, const ::llc::vcu8 data)	: Type(type), Data(data.cu8()) {}
+						SEvent		(T type, const ::llc::vcu0_t data)	: Type(type), Data(data.cu8()) {}
 						SEvent		(const TEView & eventView)			: Type(eventView.Type), Data(eventView.Data) {}
 
 		TEvent&			operator= 	(const TEvent &)				= default;
@@ -57,13 +57,13 @@ namespace llc
 
 		operator		TEView		()						const	{ return {Type, Data.cu8()}; }
 
-		::llc::error_t	Save		(::llc::au8 & output)	const	{
+		::llc::error_t	Save		(::llc::au0_t & output)	const	{
 			llc_necs(llc::savePOD(output, Type));
 			llc_necs(llc::saveView(output, Data));
 			return 0;
 		}
 
-		::llc::error_t	Load		(::llc::vcu8 & input)			{
+		::llc::error_t	Load		(::llc::vcu0_t & input)			{
 			llc_necs(llc::loadPOD(input, Type));
 			llc_necs(llc::loadView(input, Data));
 			return 0;
@@ -71,7 +71,7 @@ namespace llc
 
 		tplt<tpnm _tETypeOther>
 		::llc::error_t	ExtractChild(::llc::SEvent<_tETypeOther> & outputEvent)		const	{
-			::llc::vcu8			input				= Data;
+			::llc::vcu0_t			input				= Data;
 			llc_necs(outputEvent.Load(input));
 			llc_event_printf("%s", ::llc::get_value_namep(outputEvent.Type)); 
 			return 0; 
@@ -79,7 +79,7 @@ namespace llc
 
 		tplt<tpnm _tETypeOther>
 		::llc::error_t	ExtractChild(::llc::SEView<_tETypeOther> & outputEvent)	const	{
-			::llc::vcu8			input				= Data;
+			::llc::vcu0_t			input				= Data;
 			llc_necs(outputEvent.Load(input));
 			llc_event_printf("%s", ::llc::get_value_namep(outputEvent.Type)); 
 			return 0; 
@@ -93,13 +93,13 @@ namespace llc
 	tplt<tpnm T> using TEventQueue 			= ::llc::apobj<::llc::SEvent<T>>;
 
 	tplt <tpnm _tEvntParent, tpnm _tEvntChild>
-	static	::llc::error_t	eventWrapChild		(::llc::SEvent<_tEvntParent> & parentEvent, _tEvntChild childEventType, ::llc::vcu8 eventData) {
+	static	::llc::error_t	eventWrapChild		(::llc::SEvent<_tEvntParent> & parentEvent, _tEvntChild childEventType, ::llc::vcu0_t eventData) {
 		::llc::SEView<_tEvntChild>	childEvent			= {childEventType, eventData};
 		return childEvent.Save(parentEvent.Data);
 	}
 
 	tplt <tpnm _tEvntParent, tpnm _tEvntChild>
-	static	::llc::error_t	eventEnqueueChild	(::llc::TEventQueue<_tEvntParent> & eventQueue, _tEvntParent parentEventType, _tEvntChild childEventType, ::llc::vcu8 eventData) {
+	static	::llc::error_t	eventEnqueueChild	(::llc::TEventQueue<_tEvntParent> & eventQueue, _tEvntParent parentEventType, _tEvntChild childEventType, ::llc::vcu0_t eventData) {
 		::llc::PEvent<_tEvntParent>	parentEvent			= {};
 		parentEvent->Type = parentEventType;
 		llc_necs(llc::eventWrapChild(*parentEvent, childEventType, eventData));
@@ -108,12 +108,12 @@ namespace llc
 
 	tplt <tpnm _tEvntParent, tpnm _tEvntChild, tpnm _tPOD>
 	static	::llc::error_t	eventEnqueueChild	(::llc::TEventQueue<_tEvntParent> & eventQueue, _tEvntParent parentEventType, _tEvntChild childEventType, ::llc::view<const _tPOD> eventData) {
-		return ::llc::eventEnqueueChild(eventQueue, parentEventType, childEventType, ::llc::vcu8{(const uint8_t*)eventData.begin(), eventData.byte_count()});
+		return ::llc::eventEnqueueChild(eventQueue, parentEventType, childEventType, ::llc::vcu0_t{(const uint8_t*)eventData.begin(), eventData.byte_count()});
 	}
 
 	tplt <tpnm _tEvntParent, tpnm _tEvntChild, tpnm _tPOD>
 	static	::llc::error_t	eventEnqueueChild	(::llc::TEventQueue<_tEvntParent> & eventQueue, _tEvntParent parentEventType, _tEvntChild childEventType, const _tPOD & childEventDataType) {
-		return ::llc::eventEnqueueChild(eventQueue, parentEventType, childEventType, ::llc::vcu8{(const uint8_t*)&childEventDataType, sizeof(_tPOD)});
+		return ::llc::eventEnqueueChild(eventQueue, parentEventType, childEventType, ::llc::vcu0_t{(const uint8_t*)&childEventDataType, sizeof(_tPOD)});
 	}
 
 	tplt<tpnm _tChildEvent, tpnm _tParentEvent>

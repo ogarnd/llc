@@ -29,7 +29,7 @@ namespace llc
 		inline	bool		operator!=		(const label & other)			const	noexcept	{ return !operator==(other); }
 	};
 
-	stainli ::llc::error_t	loadLabel		(::llc::vcu8 & input, ::llc::vcc & output) { 
+	stainli ::llc::error_t	loadLabel		(::llc::vcu0_t & input, ::llc::vcc & output) { 
 		uint32_t					bytesRead		= 0;
 		llc_necs(bytesRead = ::llc::viewRead(output, input)); 
 		llc_necs(input.slice(input, bytesRead));

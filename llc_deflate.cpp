@@ -20,7 +20,7 @@
 
 stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 
-::llc::error_t			llc::crcGenerate			(const ::llc::vcu8 & bytes, uint64_t & crc)	{
+::llc::error_t			llc::crcGenerate			(const ::llc::vcu0_t & bytes, uint64_t & crc)	{
 	crc						= 0;
 	const uint32_t				lastPos						= bytes.size() - 1;
 	for(uint32_t i=0; i < bytes.size(); ++i) {
@@ -30,14 +30,14 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 	return 0;
 }
 
-::llc::error_t			llc::crcGenerateAndAppend	(::llc::au8 & bytes)	{
+::llc::error_t			llc::crcGenerateAndAppend	(::llc::au0_t & bytes)	{
 	uint64_t					crcToStore					= 0;
 	::llc::crcGenerate(bytes, crcToStore);
 	llc_necs(bytes.append((const uint8_t*)&crcToStore, sizeof(uint64_t)));;
 	return 0;
 }
 
-::llc::error_t			llc::crcVerifyAndRemove		(::llc::au8 & bytes)	{
+::llc::error_t			llc::crcVerifyAndRemove		(::llc::au0_t & bytes)	{
 	ree_if(bytes.size() < 8, "Invalid input. No CRC can be found in an array of %u bytes.", bytes.size());
 	uint64_t					check						= 0;
 	const uint32_t				startOfCRC					= bytes.size() - 8;
@@ -48,7 +48,7 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 	return 0;
 }
 
-::llc::error_t			llc::arrayDeflate		(const ::llc::vcu8 & inflated, ::llc::au8 & deflated, const uint32_t chunkSize)	{
+::llc::error_t			llc::arrayDeflate		(const ::llc::vcu0_t & inflated, ::llc::au0_t & deflated, const uint32_t chunkSize)	{
 #if defined(LLC_ESP32) || defined(LLC_ARDUINO)
 #	ifdef LLC_ESP32
 	deflated				= inflated;
@@ -63,7 +63,7 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 
 	strm.avail_in			= inflated.size();
 	strm.next_in			= (Bytef*)inflated.begin();
-	::llc::au8					block;
+	::llc::au0_t					block;
 	llc_necs(block.resize(chunkSize));
 	while(true) {
 		strm.avail_out			= block.size();
@@ -85,7 +85,7 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 	return 0;
 }
 
-::llc::error_t			llc::arrayInflate		(const ::llc::vcu8 & deflated, ::llc::au8 & inflated, const uint32_t chunkSize)	{
+::llc::error_t			llc::arrayInflate		(const ::llc::vcu0_t & deflated, ::llc::au0_t & inflated, const uint32_t chunkSize)	{
 #if defined(LLC_ESP32) || defined(LLC_ARDUINO)
 #	ifdef LLC_ESP32
 	inflated				= deflated;
@@ -100,7 +100,7 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 
 	strm.avail_in			= (uint32_t)deflated.size();
 	strm.next_in			= (Bytef *)deflated.begin();
-	::llc::au8					block;
+	::llc::au0_t					block;
 	llc_necs(block.resize(chunkSize));
 	while(true) {
 		strm.avail_out			= (uint32_t)block.size();
@@ -128,7 +128,7 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 }
 
 ::llc::error_t			llc::folderUnpack			(::llc::SFolderInMemory & out_loaded, const ::llc::vcs nameFileSrc)					{
-	::llc::au8					rawFileInMemory				= {};
+	::llc::au0_t					rawFileInMemory				= {};
 	llc_necall(llc::fileToMemory(nameFileSrc, rawFileInMemory), "Failed to load pak file: %s.", nameFileSrc);
 	llc_necall(llc::folderUnpack(out_loaded, rawFileInMemory), "Failed to unpack pak file: %s.", nameFileSrc);
 	return 0;
@@ -136,8 +136,8 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 
 ::llc::error_t			llc::folderToDisk			(const ::llc::SFolderPackage & folderPackage, const ::llc::vcs nameFileDst)			{
 	const ::llc::SPackHeader 	& fileHeader				= folderPackage.PackageInfo;
-	const ::llc::au8			& compressedTableFiles		= folderPackage.CompressedTableFiles		;
-	const ::llc::au8			& compressedContentsPacked	= folderPackage.CompressedContentsPacked	;
+	const ::llc::au0_t			& compressedTableFiles		= folderPackage.CompressedTableFiles		;
+	const ::llc::au0_t			& compressedContentsPacked	= folderPackage.CompressedContentsPacked	;
 	{
 		FILE						* fp						= 0;
 		llc_necall(::llc::fopen_s(&fp, nameFileDst, "wb"), "'%s'", nameFileDst.begin());
@@ -154,11 +154,11 @@ stacxpr	uint32_t		DEFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 ::llc::error_t			llc::folderPack				(::llc::SFolderPackage & output, const ::llc::vcs nameFolderSrc) {
 	::llc::SPackHeader 			& fileHeader			= output.PackageInfo = {};
 	// -- The following two arrays store the file table and the file contents that are going to be compressed and stored on disk
-	::llc::ac					finalPathName			= {};
+	::llc::asc_t					finalPathName			= {};
 	finalPathName.resize(1024*8);
 
-	::llc::au8					tableFiles				;
-	::llc::au8					contentsPacked			;
+	::llc::au0_t					tableFiles				;
+	::llc::au0_t					contentsPacked			;
 
 	llc_necs(llc::folderLoad(nameFolderSrc, tableFiles, contentsPacked));
 
@@ -166,8 +166,8 @@ stacxpr	uint32_t		DEFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 
 	fileHeader.SizeUncompressedTableFiles		= tableFiles		.size();
 	fileHeader.SizeUncompressedContentsPacked	= contentsPacked	.size();
-	::llc::au8					& compressedTableFiles		= output.CompressedTableFiles		;
-	::llc::au8					& compressedContentsPacked	= output.CompressedContentsPacked	;
+	::llc::au0_t					& compressedTableFiles		= output.CompressedTableFiles		;
+	::llc::au0_t					& compressedContentsPacked	= output.CompressedContentsPacked	;
 	{	// compress
 		llc_necall(llc::arrayDeflate(tableFiles		, compressedTableFiles		, ::DEFLATE_CHUNK_SIZE), "%s", "Unknown error.");
 		llc_necall(llc::arrayDeflate(contentsPacked	, compressedContentsPacked	, ::DEFLATE_CHUNK_SIZE), "%s", "Unknown error.");
@@ -179,7 +179,7 @@ stacxpr	uint32_t		DEFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 }
 
 stacxpr	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
-::llc::error_t			llc::folderUnpack			(::llc::SFolderInMemory & output, const ::llc::vcu8 & rawFileInMemory)		{
+::llc::error_t			llc::folderUnpack			(::llc::SFolderInMemory & output, const ::llc::vcu0_t & rawFileInMemory)		{
 	const ::llc::SPackHeader	& header					= *(::llc::SPackHeader*)&rawFileInMemory[0];
 	output.Names	.resize(header.TotalFileCount);
 	output.Contents	.resize(header.TotalFileCount);
@@ -204,16 +204,16 @@ stacxpr	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 
 ::llc::error_t			llc::folderLoad			
 	( const ::llc::vcs	nameFolderSrc 
-	, ::llc::au8		& tableFiles				
-	, ::llc::au8		& contentsPacked			
+	, ::llc::au0_t		& tableFiles				
+	, ::llc::au0_t		& contentsPacked			
 	) {
 	// -- The following two arrays store the file table and the file contents that are going to be compressed and stored on disk
 	uint32_t					totalFileCount			= 0;
 	{
-		::llc::aobj<::llc::ac>		listFiles				= {};
+		::llc::aobj<::llc::asc_t>		listFiles				= {};
 		llc_necall(llc::pathList(nameFolderSrc, listFiles), "Failed to list folder: %s.", nameFolderSrc.begin());
 
-		::llc::au8					contentsTemp			= {};
+		::llc::au0_t					contentsTemp			= {};
 		::llc::rangeu2_t			fileLocation			= {0, 0};
 		for(uint32_t iFile = 0; iFile < listFiles.size(); ++iFile) {
 			fileLocation.Offset		= contentsPacked.size();
@@ -239,14 +239,14 @@ stacxpr	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 // Write folder to disk.
 ::llc::error_t			llc::folderToDisk			(const ::llc::SFolderInMemory & virtualFolder, ::llc::vcs destinationPath)				{
 	char						bufferFormat	[32]		= {};
-	::llc::ac					finalPathName				= {};
+	::llc::asc_t					finalPathName				= {};
 	finalPathName.resize(8 * 1024);
 	finalPathName.fill(0);
 	FILE						* fp						= 0;
 	for(uint32_t iFile = 0, countFiles = virtualFolder.Names.size(); iFile < countFiles; ++iFile) {
 		llc_safe_fclose(fp);
 		const ::llc::vcs			& fileName					= virtualFolder.Names		[iFile];
-		const ::llc::vcu8			& fileContent				= virtualFolder.Contents	[iFile];
+		const ::llc::vcu0_t			& fileContent				= virtualFolder.Contents	[iFile];
 		sprintf_s(bufferFormat, "%%.%us%%.%us", destinationPath.size(), fileName.size());
 		snprintf(finalPathName.begin(), finalPathName.size(), bufferFormat, destinationPath.begin(), fileName.begin());
 		info_printf("File found (%u):'%s'. Size: %u.", iFile, finalPathName.begin(), fileContent.size());
@@ -280,7 +280,7 @@ stacxpr	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	return 0;
 }
 
-::llc::error_t			llc::inflateToMemory  		(::llc::au8 & tempCache, const ::llc::vcc & fileName, ::llc::au8 & output) {
+::llc::error_t			llc::inflateToMemory  		(::llc::au0_t & tempCache, const ::llc::vcc & fileName, ::llc::au0_t & output) {
 	llc_necs(llc::fileToMemory(fileName, tempCache));
 	info_printf("File size: %u.", tempCache.size());
 
@@ -289,7 +289,7 @@ stacxpr	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	return 0; 
 }
 
-::llc::error_t			llc::deflateFromMemory		(::llc::au8 & tempCache, const ::llc::vcc & fileName, const ::llc::vcu8 & input) {
+::llc::error_t			llc::deflateFromMemory		(::llc::au0_t & tempCache, const ::llc::vcc & fileName, const ::llc::vcu0_t & input) {
 	info_printf("Input size: %u.", input.size());
 	llc_necs(llc::arrayDeflate(input, tempCache));
 
@@ -297,7 +297,7 @@ stacxpr	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	return ::llc::fileFromMemory(fileName, tempCache);
 }
 
-::llc::error_t			llc::fileFromMemorySecure	(::llc::SLoadCache & recycle, const ::llc::vcc & fileName, const ::llc::vcu8 & key, const bool deflate, const ::llc::vcu8 & blockBytes) {
+::llc::error_t			llc::fileFromMemorySecure	(::llc::SLoadCache & recycle, const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, const ::llc::vcu0_t & blockBytes) {
 	if(false == deflate && 0 == key.size())
 		recycle.Encrypted		= blockBytes;
 	else {
@@ -315,7 +315,7 @@ stacxpr	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	return 0;
 }
 
-::llc::error_t			llc::fileToMemorySecure		(::llc::SLoadCache & recycle, const ::llc::vcc & fileName, const ::llc::vcu8 & key, const bool deflate, ::llc::au8 & loadedBytes)								{
+::llc::error_t			llc::fileToMemorySecure		(::llc::SLoadCache & recycle, const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::au0_t & loadedBytes)								{
 	::llc::vcs					strFilename					= {fileName.begin(), fileName.size()};
 	if(false == deflate && 0 == key.size()) {
 		llc_necall(llc::fileToMemory(strFilename, loadedBytes), "Failed to read file: %s.", ::llc::toString(fileName).begin());

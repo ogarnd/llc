@@ -1,7 +1,7 @@
 #include "llc_append_html.h"
 
 #ifndef LLC_ATMEL
-llc::err_t	llc::appendHtmlScripts	(::llc::achar & output, llc::vcvcs filenames) { 
+llc::err_t	llc::appendHtmlScripts	(::llc::asc_t & output, llc::vcvcs filenames) { 
 	::llc::err_t 		result 				= 0;
 	stacxpr	const char	FMT_ATTR_SRC_JS	[]	= "type=\"text/javascript\" src=\"/%s.js\"";
 	for(uint32_t iFile = 0; iFile < filenames.size(); ++iFile) {
@@ -11,7 +11,7 @@ llc::err_t	llc::appendHtmlScripts	(::llc::achar & output, llc::vcvcs filenames) 
 	}
 	return result;
 }
-llc::err_t	llc::appendHtmlStyles	(::llc::achar & output, llc::vcvcs filenames) { 
+llc::err_t	llc::appendHtmlStyles	(::llc::asc_t & output, llc::vcvcs filenames) { 
 	::llc::err_t 		result 				= 0;
 	stacxpr	const char	FMT_ATTR_HREF_CSS	[]	= "rel=\"stylesheet\" href=\"/%s.css\"";
 	for(uint32_t iFile = 0; iFile < filenames.size(); ++iFile) {
@@ -21,7 +21,7 @@ llc::err_t	llc::appendHtmlStyles	(::llc::achar & output, llc::vcvcs filenames) {
 	}
 	return result;
 }
-llc::err_t	llc::appendHtmlHead	(::llc::achar & output, ::llc::vcs title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS) {
+llc::err_t	llc::appendHtmlHead	(::llc::asc_t & output, ::llc::vcs title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS) {
 	return ::llc::appendXmlTag(output, "head", vcs{}, [&output, title, filesCSS, filesJS]() { 
 		return ::llc::appendXmlTag		(output, "title", vcs{}, title)
 			+  ::llc::appendHtmlStyles	(output, filesCSS)
@@ -29,14 +29,14 @@ llc::err_t	llc::appendHtmlHead	(::llc::achar & output, ::llc::vcs title, ::llc::
 			; 
 	});
 }
-llc::err_t	llc::appendHtmlPage	(::llc::achar & output, const ::llc::FAppend & funcAppendHead, const ::llc::FAppend & funcAppendBody) {
+llc::err_t	llc::appendHtmlPage	(::llc::asc_t & output, const ::llc::FAppend & funcAppendHead, const ::llc::FAppend & funcAppendBody) {
 	return ::llc::appendXmlTag(output, "html", vcs{}, [&output, funcAppendHead, funcAppendBody]() {
 		return ::llc::appendXmlTag(output, "head", vcs{}, [&output, funcAppendHead]() { return funcAppendHead(output); })
 			+  ::llc::appendXmlTag(output, "body", vcs{}, [&output, funcAppendBody]() { return funcAppendBody(output); })
 			;
 	});
 }
-llc::err_t	llc::appendHtmlPage	(::llc::achar & output, ::llc::vcs title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS, const ::llc::FAppend & funcAppendBody, ::llc::vcs postScript) {
+llc::err_t	llc::appendHtmlPage	(::llc::asc_t & output, ::llc::vcs title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS, const ::llc::FAppend & funcAppendBody, ::llc::vcs postScript) {
 	return ::llc::appendXmlTag(output, "html", vcs{}, [&output, &title, &filesCSS, &filesJS, &funcAppendBody, &postScript]() {
 		return ::llc::appendHtmlHead(output, title, filesCSS, filesJS)
 			+  ::llc::appendXmlTag(output, "body", vcs{}, [&output, funcAppendBody]() { return funcAppendBody(output); })
@@ -44,7 +44,7 @@ llc::err_t	llc::appendHtmlPage	(::llc::achar & output, ::llc::vcs title, ::llc::
 			;
 	});
 }
-llc::err_t	llc::appendHtmlPage	(::llc::achar & output, const ::llc::FAppend & funcAppendCSS, const ::llc::FAppend & funcAppendJS, const ::llc::FAppend & funcAppendBody) {
+llc::err_t	llc::appendHtmlPage	(::llc::asc_t & output, const ::llc::FAppend & funcAppendCSS, const ::llc::FAppend & funcAppendJS, const ::llc::FAppend & funcAppendBody) {
 	return ::llc::appendXmlTag(output, "html", vcs{}, [&output, funcAppendBody, funcAppendCSS, funcAppendJS]() {
 		return ::llc::appendXmlTag(output, "head", vcs{}, [&output, funcAppendCSS, funcAppendJS]() {
 			return ::llc::appendXmlTag(output, "style" , vcs{}, [&output, funcAppendCSS]() { return funcAppendCSS ? funcAppendCSS(output) : 0; })

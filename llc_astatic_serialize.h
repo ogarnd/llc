@@ -8,7 +8,7 @@
 namespace llc
 {
 	tplt<tpnm _tPOD, uint32_t _nSize> 
-	::llc::error_t			loadView					(::llc::vcu8 & input, ::llc::astatic<_tPOD, _nSize> & output) { 
+	::llc::error_t			loadView					(::llc::vcu0_t & input, ::llc::astatic<_tPOD, _nSize> & output) { 
 		::llc::view<const _tPOD>	readView					= {}; 
 		uint32_t					bytesRead					= 0;
 		llc_necs(bytesRead = ::llc::viewRead(readView, input)); 

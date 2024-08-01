@@ -3,7 +3,7 @@
 #include "llc_parse.h"
 #include "llc_apod_serialize.h"
 
-::llc::error_t			llc::join				(::llc::achar & output, char separator, ::llc::vcvsc_t fields)	{
+::llc::error_t			llc::join				(::llc::asc_t & output, char separator, ::llc::vcvsc_t fields)	{
 	for(uint32_t iField = 0; iField < fields.size();) {
 		llc_necall(output.append(fields[iField]), "%" LLC_FMT_U32 "", iField);
 		if(++iField < fields.size())
@@ -12,8 +12,8 @@
 	return 0;
 }
 
-::llc::achar		llc::toString			(const ::llc::vcc & strToLog)	{
-	::llc::achar			sprintfable				= strToLog;
+::llc::asc_t		llc::toString			(const ::llc::vcc & strToLog)	{
+	::llc::asc_t			sprintfable				= strToLog;
 	if(sprintfable.size() && sprintfable[sprintfable.size() - 1] == 0) { // it already contains a null, so resize it to avoid counting it as part of the array.
 		sprintfable.resize(sprintfable.size() - 1);
 		return sprintfable;
@@ -62,7 +62,7 @@
 	return -1;
 }
 
-::llc::error_t			llc::keyValConstStringSerialize		(const ::llc::view<const ::llc::TKeyValConstString> & keyVals, ::llc::vcvsc_c & keysToSave, ::llc::au8 & output)	{
+::llc::error_t			llc::keyValConstStringSerialize		(const ::llc::view<const ::llc::TKeyValConstString> & keyVals, ::llc::vcvsc_c & keysToSave, ::llc::au0_t & output)	{
 	::llc::apod<::llc::TKeyValConstString>	keyValsToSave					= {};
 	for(uint32_t iKey = 0; iKey < keyVals.size(); ++iKey) {
 		for(uint32_t iRef = 0; iRef < keysToSave.size(); ++iRef) {
@@ -81,7 +81,7 @@
 	return 0;
 }
 
-::llc::error_t			llc::keyValConstStringDeserialize	(const ::llc::vcu8 & input, ::llc::aobj<::llc::TKeyValConstString> & output)	{
+::llc::error_t			llc::keyValConstStringDeserialize	(const ::llc::vcu0_t & input, ::llc::aobj<::llc::TKeyValConstString> & output)	{
 	uint32_t					offset								= 0;
 	const uint32_t				keysToRead							= *(const uint32_t*)input.begin();
 	offset					+= (uint32_t)sizeof(uint32_t);

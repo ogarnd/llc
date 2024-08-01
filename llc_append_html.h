@@ -5,19 +5,19 @@
 
 namespace llc
 {
-	stainli	llc::err_t	appendHtmlHead		(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "head", tagAttributes, innerHtml); }
-	stainli	llc::err_t	appendHtmlBody		(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "body", tagAttributes, innerHtml); }
-	stainli	llc::err_t	appendHtmlScript	(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "script", tagAttributes, innerHtml); }
-	stainli	llc::err_t	appendHtmlTable		(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "table", tagAttributes, innerHtml); }
-	stainli	llc::err_t	appendHtmlTableRow	(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "tr", tagAttributes, innerHtml); }
-	stainli	llc::err_t	appendHtmlTableCol	(::llc::achar & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "td", tagAttributes, innerHtml); }
+	stainli	llc::err_t	appendHtmlHead		(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "head", tagAttributes, innerHtml); }
+	stainli	llc::err_t	appendHtmlBody		(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "body", tagAttributes, innerHtml); }
+	stainli	llc::err_t	appendHtmlScript	(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "script", tagAttributes, innerHtml); }
+	stainli	llc::err_t	appendHtmlTable		(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "table", tagAttributes, innerHtml); }
+	stainli	llc::err_t	appendHtmlTableRow	(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "tr", tagAttributes, innerHtml); }
+	stainli	llc::err_t	appendHtmlTableCol	(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "td", tagAttributes, innerHtml); }
 	
-	llc::err_t			appendHtmlStyles	(::llc::achar & output, llc::vcvcs filenames);
-	llc::err_t			appendHtmlScripts	(::llc::achar & output, llc::vcvcs filenames);
-	llc::err_t			appendHtmlHead		(::llc::achar & output, ::llc::vcs title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS);
-	llc::err_t			appendHtmlPage		(::llc::achar & output, const ::llc::FAppend & funcAppendHead, const ::llc::FAppend & funcAppendBody);
-	llc::err_t			appendHtmlPage		(::llc::achar & output, const ::llc::FAppend & funcAppendCSS, const ::llc::FAppend & funcAppendJS, const ::llc::FAppend & funcAppendBody);
-	llc::err_t			appendHtmlPage		(::llc::achar & output, ::llc::vcs title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS, const ::llc::FAppend & funcAppendBody, ::llc::vcs postScript = {});
+	llc::err_t			appendHtmlStyles	(::llc::asc_t & output, llc::vcvcs filenames);
+	llc::err_t			appendHtmlScripts	(::llc::asc_t & output, llc::vcvcs filenames);
+	llc::err_t			appendHtmlHead		(::llc::asc_t & output, ::llc::vcs title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS);
+	llc::err_t			appendHtmlPage		(::llc::asc_t & output, const ::llc::FAppend & funcAppendHead, const ::llc::FAppend & funcAppendBody);
+	llc::err_t			appendHtmlPage		(::llc::asc_t & output, const ::llc::FAppend & funcAppendCSS, const ::llc::FAppend & funcAppendJS, const ::llc::FAppend & funcAppendBody);
+	llc::err_t			appendHtmlPage		(::llc::asc_t & output, ::llc::vcs title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS, const ::llc::FAppend & funcAppendBody, ::llc::vcs postScript = {});
 } // namespace 
 
 #endif // LLC_APPEND_HTML_H

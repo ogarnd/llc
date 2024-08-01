@@ -161,11 +161,11 @@ namespace llc
 	typedef	::llc::view<b8_c>	vcb8_t;
 	typedef	::llc::view<uc_c>	vcuc_t, vcuc, vcuchar;
 	typedef	::llc::view<sc_c>	vcsc_t, vcc, vcchar;
-	typedef	::llc::view<u0_c>	vcu0_t, vcu8;
+	typedef	::llc::view<u0_c>	vcu0_t, vcu0_t;
 	typedef	::llc::view<u1_c>	vcu1_t, vcu16;
 	typedef	::llc::view<u2_c>	vcu2_t, vcu32;
 	typedef	::llc::view<u3_c>	vcu3_t, vcu64;
-	typedef	::llc::view<s0_c>	vcs0_t, vci8;
+	typedef	::llc::view<s0_c>	vcs0_t, vcs0_t;
 	typedef	::llc::view<s1_c>	vcs1_t, vci16;
 	typedef	::llc::view<s2_c>	vcs2_t, vci32;
 	typedef	::llc::view<s3_c>	vcs3_t, vci64;

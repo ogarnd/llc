@@ -6,32 +6,32 @@
 
 namespace llc
 {
-	::llc::error_t						hexEncode				(const ::llc::vcu8 & inputBinary, ::llc::ac  & out_hexed	);
-	::llc::error_t						hexDecode				(const ::llc::vcc  & in_hexed   , ::llc::au8 & outputBinary	);
-	::llc::error_t						hexDecode				(const ::llc::vcc  & in_hexed   , ::llc::ai8 & outputBinary	);
-	stainli	::llc::error_t				hexEncode				(const ::llc::vci8 & inputBinary, ::llc::ac  & out_hexed	)			{ return hexEncode(::llc::vcu8{(const uint8_t*)inputBinary.begin(), inputBinary.size()}, out_hexed); }
+	::llc::error_t						hexEncode				(const ::llc::vcu0_t & inputBinary, ::llc::asc_t  & out_hexed	);
+	::llc::error_t						hexDecode				(const ::llc::vcc  & in_hexed   , ::llc::au0_t & outputBinary	);
+	::llc::error_t						hexDecode				(const ::llc::vcc  & in_hexed   , ::llc::as0_t & outputBinary	);
+	stainli	::llc::error_t				hexEncode				(const ::llc::vcs0_t & inputBinary, ::llc::asc_t  & out_hexed	)			{ return hexEncode(::llc::vcu0_t{(const uint8_t*)inputBinary.begin(), inputBinary.size()}, out_hexed); }
 
 	// Based on Gary Ardell's code for VB.
-	::llc::error_t						ardellEncode			(::llc::ai32 & cache, const ::llc::vcu8 & input, uint64_t key, bool salt, ::llc::au8 & output);
-	::llc::error_t						ardellDecode			(::llc::ai32 & cache, const ::llc::vcu8 & input, uint64_t key, bool salt, ::llc::au8 & output);
+	::llc::error_t						ardellEncode			(::llc::as2_t & cache, const ::llc::vcu0_t & input, uint64_t key, bool salt, ::llc::au0_t & output);
+	::llc::error_t						ardellDecode			(::llc::as2_t & cache, const ::llc::vcu0_t & input, uint64_t key, bool salt, ::llc::au0_t & output);
 
-	stainli	::llc::error_t				ardellEncode			(const ::llc::vcu8 & input, uint64_t key, bool salt, ::llc::au8 & output)	{ ::llc::ai32 tempCache; return ::llc::ardellEncode(tempCache, input, key, salt, output); }
-	stainli	::llc::error_t				ardellDecode			(const ::llc::vcu8 & input, uint64_t key, bool salt, ::llc::au8 & output)	{ ::llc::ai32 tempCache; return ::llc::ardellDecode(tempCache, input, key, salt, output); }
-	stainli	::llc::error_t				ardellEncode			(const ::llc::vci8 & input, uint64_t key, bool salt, ::llc::au8 & output)	{ ::llc::ai32 tempCache; return ::llc::ardellEncode(tempCache, *(const ::llc::vcu8*)&input, key, salt, output); }
-	stainli	::llc::error_t				ardellDecode			(const ::llc::vcu8 & input, uint64_t key, bool salt, ::llc::ai8 & output)	{ ::llc::ai32 tempCache; return ::llc::ardellDecode(tempCache, input, key, salt, *(::llc::au8*)&output); }
-	stainli	::llc::error_t				ardellEncode			(const ::llc::vcc  & input, uint64_t key, bool salt, ::llc::au8 & output)	{ ::llc::ai32 tempCache; return ::llc::ardellEncode(tempCache, *(const ::llc::vcu8*)&input, key, salt, output); }
-	stainli	::llc::error_t				ardellDecode			(const ::llc::vcu8 & input, uint64_t key, bool salt, ::llc::ac  & output)	{ ::llc::ai32 tempCache; return ::llc::ardellDecode(tempCache, input, key, salt, *(::llc::au8*)&output); }
+	stainli	::llc::error_t				ardellEncode			(const ::llc::vcu0_t & input, uint64_t key, bool salt, ::llc::au0_t & output)	{ ::llc::as2_t tempCache; return ::llc::ardellEncode(tempCache, input, key, salt, output); }
+	stainli	::llc::error_t				ardellDecode			(const ::llc::vcu0_t & input, uint64_t key, bool salt, ::llc::au0_t & output)	{ ::llc::as2_t tempCache; return ::llc::ardellDecode(tempCache, input, key, salt, output); }
+	stainli	::llc::error_t				ardellEncode			(const ::llc::vcs0_t & input, uint64_t key, bool salt, ::llc::au0_t & output)	{ ::llc::as2_t tempCache; return ::llc::ardellEncode(tempCache, *(const ::llc::vcu0_t*)&input, key, salt, output); }
+	stainli	::llc::error_t				ardellDecode			(const ::llc::vcu0_t & input, uint64_t key, bool salt, ::llc::as0_t & output)	{ ::llc::as2_t tempCache; return ::llc::ardellDecode(tempCache, input, key, salt, *(::llc::au0_t*)&output); }
+	stainli	::llc::error_t				ardellEncode			(const ::llc::vcc  & input, uint64_t key, bool salt, ::llc::au0_t & output)	{ ::llc::as2_t tempCache; return ::llc::ardellEncode(tempCache, *(const ::llc::vcu0_t*)&input, key, salt, output); }
+	stainli	::llc::error_t				ardellDecode			(const ::llc::vcu0_t & input, uint64_t key, bool salt, ::llc::asc_t  & output)	{ ::llc::as2_t tempCache; return ::llc::ardellDecode(tempCache, input, key, salt, *(::llc::au0_t*)&output); }
 
-	stainli	::llc::error_t				ardellEncode			(::llc::ai32 & cache, const ::llc::vci8 & input, uint64_t key, bool salt, ::llc::au8 & output)	{ return ::llc::ardellEncode(cache, *(const ::llc::vcu8*)&input, key, salt, output); }
-	stainli	::llc::error_t				ardellDecode			(::llc::ai32 & cache, const ::llc::vcu8 & input, uint64_t key, bool salt, ::llc::ai8 & output)	{ return ::llc::ardellDecode(cache, input, key, salt, *(::llc::au8*)&output); }
-	stainli	::llc::error_t				ardellEncode			(::llc::ai32 & cache, const ::llc::vcc  & input, uint64_t key, bool salt, ::llc::au8 & output)	{ return ::llc::ardellEncode(cache, *(const ::llc::vcu8*)&input, key, salt, output); }
-	stainli	::llc::error_t				ardellDecode			(::llc::ai32 & cache, const ::llc::vcu8 & input, uint64_t key, bool salt, ::llc::ac  & output)	{ return ::llc::ardellDecode(cache, input, key, salt, *(::llc::au8*)&output); }
+	stainli	::llc::error_t				ardellEncode			(::llc::as2_t & cache, const ::llc::vcs0_t & input, uint64_t key, bool salt, ::llc::au0_t & output)	{ return ::llc::ardellEncode(cache, *(const ::llc::vcu0_t*)&input, key, salt, output); }
+	stainli	::llc::error_t				ardellDecode			(::llc::as2_t & cache, const ::llc::vcu0_t & input, uint64_t key, bool salt, ::llc::as0_t & output)	{ return ::llc::ardellDecode(cache, input, key, salt, *(::llc::au0_t*)&output); }
+	stainli	::llc::error_t				ardellEncode			(::llc::as2_t & cache, const ::llc::vcc  & input, uint64_t key, bool salt, ::llc::au0_t & output)	{ return ::llc::ardellEncode(cache, *(const ::llc::vcu0_t*)&input, key, salt, output); }
+	stainli	::llc::error_t				ardellDecode			(::llc::as2_t & cache, const ::llc::vcu0_t & input, uint64_t key, bool salt, ::llc::asc_t  & output)	{ return ::llc::ardellDecode(cache, input, key, salt, *(::llc::au0_t*)&output); }
 
-	::llc::error_t						saltDataSalt			(const ::llc::vcu8 & binary, ::llc::au8 & salted);
-	::llc::error_t						saltDataUnsalt			(const ::llc::vcu8 & salted, ::llc::au8 & binary);
+	::llc::error_t						saltDataSalt			(const ::llc::vcu0_t & binary, ::llc::au0_t & salted);
+	::llc::error_t						saltDataUnsalt			(const ::llc::vcu0_t & salted, ::llc::au0_t & binary);
 
 	tplt<tpnm _tBase>
-	::llc::error_t						rleEncode				(const ::llc::view<_tBase> & decoded, ::llc::au8 & encoded) {
+	::llc::error_t						rleEncode				(const ::llc::view<_tBase> & decoded, ::llc::au0_t & encoded) {
 		uint32_t								idxLatest				= 0;
 		stacxpr	const uint32_t					sizeBlock				= sizeof(_tBase) + 1;
 		for(uint32_t iIn = 0; iIn < decoded.size(); ++iIn) {
@@ -51,7 +51,7 @@ namespace llc
 	}
 
 	tplt<tpnm _tBase>
-	::llc::error_t						rleDecode			(const ::llc::vcu8 & encoded, ::llc::apod<_tBase> & decoded) {
+	::llc::error_t						rleDecode			(const ::llc::vcu0_t & encoded, ::llc::apod<_tBase> & decoded) {
 		stacxpr	const uint32_t					sizeBlock			= sizeof(_tBase) + 1;
   		for(uint32_t iIn = 0; iIn < encoded.size(); iIn += sizeBlock) {
 			const _tBase 							& current			= *(_tBase*)&encoded[iIn];
@@ -64,10 +64,10 @@ namespace llc
 	}
 
 	// Description at http://en.wikipedia.org/wiki/UTF-8
-	::llc::error_t			utf8FromCodePoint	(uint32_t codePoint, ::llc::ac & hexDigits);
-	::llc::error_t			digest				(const ::llc::vcu8 & input, ::llc::au32 & digest);
-	::llc::error_t			digest				(const ::llc::vcu8 & input, ::llc::ac & digest);
-	stainli	::llc::error_t	digest				(const ::llc::vcc & input, ::llc::ac & digest) { return ::llc::digest(*(const ::llc::vcu8*)&input, digest); }
+	::llc::error_t			utf8FromCodePoint	(uint32_t codePoint, ::llc::asc_t & hexDigits);
+	::llc::error_t			digest				(const ::llc::vcu0_t & input, ::llc::au2_t & digest);
+	::llc::error_t			digest				(const ::llc::vcu0_t & input, ::llc::asc_t & digest);
+	stainli	::llc::error_t	digest				(const ::llc::vcc & input, ::llc::asc_t & digest) { return ::llc::digest(*(const ::llc::vcu0_t*)&input, digest); }
 }
 
 #endif // LLC_ENCODING_H_23627

@@ -6,11 +6,11 @@
 
 namespace llc
 {
-	::llc::error_t		appendString		(::llc::achar & output, llc::SIPv4 ip, char separator = '.');
-	::llc::error_t		appendBraced		(::llc::achar & output, llc::SIPv4 ip, char separator = ',');
-	::llc::error_t		appendQuoted		(::llc::achar & output, llc::SIPv4 ip, char separator = '.');
-	::llc::error_t		appendBracedPrefixed(::llc::achar & output, llc::SIPv4 ip, bool usePrefix, char prefix = ',', char ip_separator = ',');
-	::llc::error_t		appendQuotedPrefixed(::llc::achar & output, llc::SIPv4 ip, bool usePrefix, char prefix = ',', char ip_separator = '.');
+	::llc::error_t		appendString		(::llc::asc_t & output, llc::SIPv4 ip, char separator = '.');
+	::llc::error_t		appendBraced		(::llc::asc_t & output, llc::SIPv4 ip, char separator = ',');
+	::llc::error_t		appendQuoted		(::llc::asc_t & output, llc::SIPv4 ip, char separator = '.');
+	::llc::error_t		appendBracedPrefixed(::llc::asc_t & output, llc::SIPv4 ip, bool usePrefix, char prefix = ',', char ip_separator = ',');
+	::llc::error_t		appendQuotedPrefixed(::llc::asc_t & output, llc::SIPv4 ip, bool usePrefix, char prefix = ',', char ip_separator = '.');
 } // namespace
 
 #endif // LLC_APOD_TCPIP_H

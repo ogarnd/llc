@@ -63,7 +63,7 @@ stacxpr	uint32_t LLC_MAX_PATH = 256;
 		;
 }
 //
-::llc::error_t			llc::pathNameCompose		(const ::llc::vcc & path, const ::llc::vcc & fileName, ::llc::achar & out_composed)		{
+::llc::error_t			llc::pathNameCompose		(const ::llc::vcc & path, const ::llc::vcc & fileName, ::llc::asc_t & out_composed)		{
 	if(path.size()) {
 		for(uint32_t iChar = 0; iChar < path.size(); ++iChar) {
 			const char					curChar						= path[iChar];
@@ -119,7 +119,7 @@ stacxpr	const char		parDir	[]					= "..";
 #endif
 
 ::llc::error_t			llc::pathList				(const ::llc::vcs & pathToList, ::llc::aachar & output, bool listFolders, const ::llc::vcs extension)	{
-	::llc::achar				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcs{pathToList.begin(), pathToList.size() - 1};
+	::llc::asc_t				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcs{pathToList.begin(), pathToList.size() - 1};
 	char						bufferFormat[16]			=  {};
 	snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U32 "s/*.*", withoutTrailingSlash.size());
 	char						sPath	[LLC_MAX_PATH]		= {};
@@ -152,7 +152,7 @@ stacxpr	const char		parDir	[]					= "..";
 	dirent						* drnt						= 0;
 	dir						= opendir(withoutTrailingSlash.begin());
 	while ((drnt = readdir(dir)) != NULL) {
-		::llc::achar				name						= ::llc::vcs{drnt->d_name, (uint32_t)-1};
+		::llc::asc_t				name						= ::llc::vcs{drnt->d_name, (uint32_t)-1};
 		if (name != curDir && name != parDir) {
 			if(drnt->d_type == DT_DIR && false == listFolders)
 				continue;
@@ -167,7 +167,7 @@ stacxpr	const char		parDir	[]					= "..";
 
 
 ::llc::error_t			llc::pathList				(const ::llc::vcs & pathToList, ::llc::SPathContents & pathContents, const llc::vcs extension)						{
-	::llc::achar				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcs{pathToList.begin(), pathToList.size() - 1};
+	::llc::asc_t				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcs{pathToList.begin(), pathToList.size() - 1};
 	char						bufferFormat[36]			= {};
 	snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U32 "s/*.*", withoutTrailingSlash.size());
 	char						sPath[LLC_MAX_PATH]			= {};

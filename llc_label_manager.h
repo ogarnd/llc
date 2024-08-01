@@ -17,7 +17,7 @@ namespace llc
 		::llc::vcc							Empty;
 
 	public:	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-		::llc::au32							Counts;
+		::llc::au2_t							Counts;
 		::llc::apod<const char*>			Texts;
 
 											~CLabelManager				()																{
@@ -30,7 +30,7 @@ namespace llc
 			Texts		.push_back(Empty.begin()); 
 		}
 
-		::llc::error_t						Save		(::llc::au8 & output)						const	{
+		::llc::error_t						Save		(::llc::au0_t & output)						const	{
 			llc_necs(llc::saveView(output, Counts));
 			for(uint32_t iArray = 0; iArray < Counts.size(); ++iArray)
 				llc_necs(output.append((const uint8_t*)Texts[iArray], Counts[iArray]));
@@ -38,7 +38,7 @@ namespace llc
 			return 0;
 		}
 
-		::llc::error_t						Load		(::llc::vcu8 & input) {
+		::llc::error_t						Load		(::llc::vcu0_t & input) {
 			llc_necs(llc::loadView(input, Counts));
 			::llc::vcc					out_view; 
 			uint32_t					offsetByte					= 0;

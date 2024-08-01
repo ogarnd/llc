@@ -92,11 +92,11 @@ namespace llc
 
 	tplN2u	using astvcuc 	= ::llc::astatic<::llc::vcuc 	, N>; tplN2u	using astaticvcuc 	= ::llc::astvcuc <N>;
 	tplN2u	using astvcc	= ::llc::astatic<::llc::vcc		, N>; tplN2u	using astaticvcc	= ::llc::astvcc  <N>;
-	tplN2u	using astvcu8 	= ::llc::astatic<::llc::vcu8 	, N>; tplN2u	using astaticvcu8 	= ::llc::astvcu8 <N>;
+	tplN2u	using astvcu8 	= ::llc::astatic<::llc::vcu0_t 	, N>; tplN2u	using astaticvcu8 	= ::llc::astvcu8 <N>;
 	tplN2u	using astvcu16	= ::llc::astatic<::llc::vcu16	, N>; tplN2u	using astaticvcu16	= ::llc::astvcu16<N>;
 	tplN2u	using astvcu32	= ::llc::astatic<::llc::vcu32	, N>; tplN2u	using astaticvcu32	= ::llc::astvcu32<N>;
 	tplN2u	using astvcu64	= ::llc::astatic<::llc::vcu64	, N>; tplN2u	using astaticvcu64	= ::llc::astvcu64<N>;
-	tplN2u	using astvci8 	= ::llc::astatic<::llc::vci8 	, N>; tplN2u	using astaticvci8 	= ::llc::astvci8 <N>;
+	tplN2u	using astvci8 	= ::llc::astatic<::llc::vcs0_t 	, N>; tplN2u	using astaticvci8 	= ::llc::astvci8 <N>;
 	tplN2u	using astvci16	= ::llc::astatic<::llc::vci16	, N>; tplN2u	using astaticvci16	= ::llc::astvci16<N>;
 	tplN2u	using astvci32	= ::llc::astatic<::llc::vci32	, N>; tplN2u	using astaticvci32	= ::llc::astvci32<N>;
 	tplN2u	using astvci64	= ::llc::astatic<::llc::vci64	, N>; tplN2u	using astaticvci64	= ::llc::astvci64<N>;

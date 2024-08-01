@@ -10,18 +10,18 @@ namespace llc
 	tplt<size_t _size>
 	class block_container_nts {
 		::llc::apobj<::llc::astaticc<_size>>	Blocks;
-		::llc::au32								RemainingSpace;
+		::llc::au2_t								RemainingSpace;
 
 	public:	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		::llc::error_t						clear						()								{ return ::llc::clear(Blocks, RemainingSpace); }
-		::llc::error_t						Save						(::llc::au8 & output)	const	{
+		::llc::error_t						Save						(::llc::au0_t & output)	const	{
 			llc_necs(llc::saveView(output, RemainingSpace));
 			for(uint32_t iArray = 0; iArray < RemainingSpace.size(); ++iArray)
 				llc_necs(llc::saveView(output, *Blocks[iArray]));
 			return 0;
 		}
 
-		::llc::error_t						Load						(::llc::vcu8 & input)			{
+		::llc::error_t						Load						(::llc::vcu0_t & input)			{
 			clear();
 			llc_necs(llc::loadView(input, RemainingSpace));
 			llc_necs(Blocks.resize(RemainingSpace.size()));

@@ -19,7 +19,7 @@
 	return 0; 
 }
 
-::llc::error_t			llc::camelCase		(::llc::vcc input, ::llc::achar & camelCased) {
+::llc::error_t			llc::camelCase		(::llc::vcc input, ::llc::asc_t & camelCased) {
 	bool						capsNext			= true;
 	for(uint32_t i = 0; i < input.size(); ++i) {
 		char						current				= input[i];

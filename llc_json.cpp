@@ -14,7 +14,7 @@ LLC_USING_TYPEINT();
 ::llc::error_t			llc::jsonCompareNumber		(const ::llc::SJSONNode & node, const ::llc::view<::llc::vcc> & views, const ::llc::SJSONNode & other, const ::llc::view<::llc::vcc> & otherViews) { if(node.Children.size() != other.Children.size()) return 0; if(node.Children.size() == 0) return 1; if(node.Token->Type != other.Token->Type) return 0; return (views[node.ObjectIndex] == otherViews[other.ObjectIndex]) ? 1 : 0; }
 
 ::llc::error_t			llc::jsonMapToFields
-(	::llc::ai32											& indicesOfFields
+(	::llc::as2_t											& indicesOfFields
 ,	const ::llc::view<const ::llc::SJSONFieldBinding>	fields
 ,	const ::llc::view<const ::llc::TKeyValConstChar>	fieldMaps
 ) {
@@ -30,7 +30,7 @@ LLC_USING_TYPEINT();
 }
 
 ::llc::error_t			llc::jsonFieldsToMap
-(	::llc::ai32											& indicesOfMaps
+(	::llc::as2_t											& indicesOfMaps
 ,	const ::llc::view<const ::llc::SJSONFieldBinding>	fields
 ,	const ::llc::view<const ::llc::TKeyValConstChar>	fieldMaps
 ) {
@@ -572,7 +572,7 @@ static	::llc::error_t	jsonParseDocumentCharacter	(::llc::SJSONReaderState & stat
 	return ::llc::jsonTreeRebuild(reader.Token, reader.Tree);
 }
 
-::llc::error_t			llc::jsonObjectKeyList		(const ::llc::SJSONNode & node_object, const ::llc::view<::llc::vcc> & views, ::llc::ai32 & indices, ::llc::avcc & keys)	{
+::llc::error_t			llc::jsonObjectKeyList		(const ::llc::SJSONNode & node_object, const ::llc::view<::llc::vcc> & views, ::llc::as2_t & indices, ::llc::avcc & keys)	{
 	ree_if(::llc::JSON_TYPE_OBJECT != node_object.Token->Type, "Invalid node type: %" LLC_FMT_I32 " (%s). Only objects are allowed to be accessed by key.", node_object.Token->Type, ::llc::get_value_label(node_object.Token->Type).begin());
 	for(u2_t iNode = 0, countNodes = node_object.Children.size(); iNode < countNodes; iNode += 2) {
 		const ::llc::SJSONNode		* node					= node_object.Children[iNode];
@@ -584,7 +584,7 @@ static	::llc::error_t	jsonParseDocumentCharacter	(::llc::SJSONReaderState & stat
 	return indices.size();
 }
 
-::llc::error_t			llc::jsonObjectKeyList		(const ::llc::SJSONNode & node_object, ::llc::ai32 & indices)	{
+::llc::error_t			llc::jsonObjectKeyList		(const ::llc::SJSONNode & node_object, ::llc::as2_t & indices)	{
 	ree_if(::llc::JSON_TYPE_OBJECT != node_object.Token->Type, "Invalid node type: %" LLC_FMT_I32 " (%s). Only objects are allowed to be accessed by key.", node_object.Token->Type, ::llc::get_value_label(node_object.Token->Type).begin());
 	for(u2_t iNode = 0, countNodes = node_object.Children.size(); iNode < countNodes; iNode += 2) {
 		const ::llc::SJSONNode		* node						= node_object.Children[iNode];

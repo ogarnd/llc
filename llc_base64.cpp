@@ -25,7 +25,7 @@ static	::llc::error_t	base64EncodeTriplet								(const ::llc::vcc & base64Symbo
 	}
 	return 0;
 }
-::llc::error_t			llc::base64Encode								(const ::llc::vcc & base64Symbols, char base64PadSymbol, const ::llc::vcu8 & inputBytes, ::llc::au8 & out_base64)	{
+::llc::error_t			llc::base64Encode								(const ::llc::vcc & base64Symbols, char base64PadSymbol, const ::llc::vcu0_t & inputBytes, ::llc::au0_t & out_base64)	{
 	rni_if(0 == inputBytes.size(), "%s", "Empty input stream.");
 	const uint32_t				packsNeeded														= inputBytes.size() / 3 + one_if(inputBytes.size() % 3);
 	uint32_t					iOutput64														= out_base64.size(); //
@@ -72,7 +72,7 @@ static	::llc::error_t	base64DecodeQuad												(::llc::vu8 inputQuad, ::llc::
 	return 0;
 }
 
-::llc::error_t			llc::base64Decode								(const ::llc::vcc & base64Symbols, char base64PadSymbol, const ::llc::vcu8 & in_base64, ::llc::au8 & outputBytes)	{
+::llc::error_t			llc::base64Decode								(const ::llc::vcc & base64Symbols, char base64PadSymbol, const ::llc::vcu0_t & in_base64, ::llc::au0_t & outputBytes)	{
 	rni_if(0 == in_base64.size(), "%s", "Empty base64 string.");
 	int32_t														lengthInput														= in_base64.size();
 	if(uint32_t mymod = in_base64.size() % 4) {

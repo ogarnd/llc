@@ -15,7 +15,7 @@
 stacxpr const char HEX_DIGITS_UPPER	[]	= "0123456789ABCDEF";
 stacxpr const char HEX_DIGITS_LOWER	[]	= "0123456789abcdef";
 
-::llc::error_t			llc::saltDataSalt				(const ::llc::vcu8 & binary, ::llc::au8 & salted)				{
+::llc::error_t			llc::saltDataSalt				(const ::llc::vcu0_t & binary, ::llc::au0_t & salted)				{
 	llc_necs(salted.resize(binary.size() * 2));
 	uint8_t						* pSalted						= salted.begin();
 	const uint8_t				* pBinary						= binary.begin();
@@ -26,7 +26,7 @@ stacxpr const char HEX_DIGITS_LOWER	[]	= "0123456789abcdef";
 	return 0;
 }
 
-::llc::error_t			llc::saltDataUnsalt				(const ::llc::vcu8 & salted, ::llc::au8 & binary)				{
+::llc::error_t			llc::saltDataUnsalt				(const ::llc::vcu0_t & salted, ::llc::au0_t & binary)				{
 	llc_necs(binary.resize(salted.size() / 2));
 	const uint8_t				* pSalted						= salted.begin();
 	uint8_t						* pBinary						= binary.begin();
@@ -53,7 +53,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::hexEncode					(const ::llc::vcu8 & in_binary, ::llc::ac & out_hexed	)	{
+::llc::error_t			llc::hexEncode					(const ::llc::vcu0_t & in_binary, ::llc::asc_t & out_hexed	)	{
 	uint32_t					offset							= out_hexed.size();
 	llc_necs(out_hexed.resize(offset + in_binary.size() * 2));
 	char						* pHexed						= out_hexed.begin();
@@ -63,7 +63,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::hexDecode					(const ::llc::vcc & in_hexed	, ::llc::au8 & out_binary)	{
+::llc::error_t			llc::hexDecode					(const ::llc::vcc & in_hexed	, ::llc::au0_t & out_binary)	{
 	uint32_t					offset							= out_binary.size();
 	uint32_t					binarySize						= in_hexed.size() >> 1;
 	llc_necs(out_binary.resize(offset + binarySize));
@@ -74,7 +74,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::hexDecode					(const ::llc::vcc & in_hexed	, ::llc::ai8 & out_binary)	{
+::llc::error_t			llc::hexDecode					(const ::llc::vcc & in_hexed	, ::llc::as0_t & out_binary)	{
 	uint32_t					offset							= out_binary.size();
 	uint32_t					binarySize						= in_hexed.size() >> 1;
 	llc_necs(out_binary.resize(offset + binarySize));
@@ -85,7 +85,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::ardellEncode				(ai32 & cache, const ::llc::vcu8 & input, uint64_t key, bool salt, ::llc::au8 & output)						{
+::llc::error_t			llc::ardellEncode				(as2_t & cache, const ::llc::vcu0_t & input, uint64_t key, bool salt, ::llc::au0_t & output)						{
 	// Originally written by Gary Ardell as Visual Basic code. free from all copyright restrictions.
 	char						saltValue		[4]				= {};
 	if (salt)
@@ -127,7 +127,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::ardellDecode				(::llc::ai32 & cache, const ::llc::vcu8 & input, uint64_t key, bool salt, ::llc::au8 & output)		{
+::llc::error_t			llc::ardellDecode				(::llc::as2_t & cache, const ::llc::vcu0_t & input, uint64_t key, bool salt, ::llc::au0_t & output)		{
 	// Originally written by Gary Ardell as Visual Basic code. free from all copyright restrictions.
 	const int32_t				keyFinal[8]						=
 		{ (int32_t)(11 + (key % 233))
@@ -157,7 +157,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::utf8FromCodePoint			(uint32_t codePoint, ::llc::ac & hexDigits) {
+::llc::error_t			llc::utf8FromCodePoint			(uint32_t codePoint, ::llc::asc_t & hexDigits) {
 	const uint32_t				offset							= hexDigits.size();
 	if (codePoint <= 0x7f) {
 		hexDigits.resize(offset + 1);
@@ -183,9 +183,9 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::digest				(const ::llc::vcu8 & input, ::llc::au32 & digest)		{
+::llc::error_t			llc::digest				(const ::llc::vcu0_t & input, ::llc::au2_t & digest)		{
 	uint32_t					x								= 0;
-	::llc::au32					filtered						= {};
+	::llc::au2_t					filtered						= {};
 	for(uint32_t i = 0; i < input.size() - 8; ++i) {
 		x	+= ::llc::noise1DBase32(input[i])
 			+  ::llc::noise1DBase32(input[i + 1])
@@ -218,9 +218,9 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::digest									(const ::llc::vcu8 & input, ::llc::ac & digest)		{
+::llc::error_t			llc::digest									(const ::llc::vcu0_t & input, ::llc::asc_t & digest)		{
 	uint32_t					x								= 0;
-	::llc::au32					filtered						= {};
+	::llc::au2_t					filtered						= {};
 	for(uint32_t i = 0; i < input.size() - 8; ++i) {
 		x	+= ::llc::noise1DBase32(input[i])
 			+  ::llc::noise1DBase32(input[i + 1])
