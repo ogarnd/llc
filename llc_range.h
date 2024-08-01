@@ -42,4 +42,4 @@ namespace llc
 	typedef	range<f3_t>	rangef3_t;	typedef	const rangef3_t	rangef3_c;
 }
 
-#endif // GPK_RANGE_H
+#endif // LLC_RANGE_H
