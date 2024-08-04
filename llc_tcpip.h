@@ -14,10 +14,10 @@ namespace llc
 		
 							SIPv4				(llc::vcs strIP)							{ ::llc::tcpipAddress(strIP, IP); }
 							
-		inlcxpr				SIPv4				()								noexcept	= default;
-		inlcxpr				SIPv4				(const SIPv4 &)					noexcept	= default;
-		inlcxpr				SIPv4				(uint32_t little_endian)		noexcept	: IP(little_endian) {}
-		cnstxpr				SIPv4				(uint8_t _0, uint8_t _1, uint8_t _2, uint8_t _3 = 0)
+		inxp				SIPv4				()								noexcept	= default;
+		inxp				SIPv4				(const SIPv4 &)					noexcept	= default;
+		inxp				SIPv4				(uint32_t little_endian)		noexcept	: IP(little_endian) {}
+		cxpr				SIPv4				(uint8_t _0, uint8_t _1, uint8_t _2, uint8_t _3 = 0)
 			: IP
 			{ ::llc::byte_to<uint32_t>(_0, 0)
 			| ::llc::byte_to<uint32_t>(_1, 1)
@@ -27,11 +27,11 @@ namespace llc
 
 		LLC_DEFAULT_OPERATOR(SIPv4, IP == other.IP);
 
-		inlcxpr	uint8_t		operator[]			(uint8_t index)		const	noexcept	{ return ::llc::byte_at(IP, index); }
-		uint8_t&			operator[]			(uint8_t index)				noexcept	{ return *(((uint8_t*)&IP) + index); }
+		inxp	uint8_t		oper[]			(uint8_t index)		const	noexcept	{ return ::llc::byte_at(IP, index); }
+		uint8_t&			oper[]			(uint8_t index)				noexcept	{ return *(((uint8_t*)&IP) + index); }
 
-		inlcxpr	operator	uint32_t			()					const	noexcept	{ return IP; }
-		cnstxpr	operator	llc::astu8<4>		()					const	noexcept	{
+		inxp	oper	uint32_t			()					const	noexcept	{ return IP; }
+		cxpr	oper	llc::astu8<4>		()					const	noexcept	{
 			return 
 				{ ::llc::byte_at(IP, 0)
 				, ::llc::byte_at(IP, 1) 
@@ -59,15 +59,15 @@ namespace llc
 		}
 	};
 
-	stainli	::llc::astchar<16>	str			(const llc::SIPv4 ip)	{ return ip.toString<16>(); }
+	stin	::llc::astchar<16>	str			(const llc::SIPv4 ip)	{ return ip.toString<16>(); }
 
-	typedef struct SIPv4End : SIPv4 {
+	tydf struct SIPv4End : SIPv4 {
 		uint16_t			Port				= {};
 
 		LLC_DEFAULT_OPERATOR(SIPv4End, IP == other.IP && Port == other.Port);
 
 		template<size_t buflen>
-		operator			llc::astchar<min((size_t)22, buflen)>	()		const	noexcept	{
+		oper			llc::astchar<min((size_t)22, buflen)>	()		const	noexcept	{
 			if(0 == Port)
 				return *(const SIPv4*)this;
 
@@ -88,7 +88,7 @@ namespace llc
 		::llc::SIPv4	Gateway		= {};
 		::llc::SIPv4	NetMask		= {};
 
-		cnstxpr	::llc::SIPv4	NetworkID	()	const	noexcept	{
+		cxpr	::llc::SIPv4	NetworkID	()	const	noexcept	{
 			return ::llc::SIPv4
 				( NetMask[0] & IPv4[0]
 				, NetMask[1] & IPv4[1]
@@ -97,7 +97,7 @@ namespace llc
 				);
 		}
 
-		cnstxpr	::llc::SIPv4	BroadcastIP	()	const	noexcept	{
+		cxpr	::llc::SIPv4	BroadcastIP	()	const	noexcept	{
 			return ::llc::SIPv4
 				( ~NetMask[0] & IPv4[0]
 				, ~NetMask[1] & IPv4[1]
@@ -131,29 +131,29 @@ namespace llc
 							, (uint32_t)::llc::byte_at(addr.IP, 3)	\
 							, (uint32_t)addr.Port
 
-	stainli	::llc::error_t	tcpipAddress		(::llc::vcs strIP, ::llc::SIPv4 & ipv4) { return ::llc::tcpipAddress(strIP, ipv4.IP); }
+	stin	::llc::error_t	tcpipAddress		(::llc::vcs strIP, ::llc::SIPv4 & ipv4) { return ::llc::tcpipAddress(strIP, ipv4.IP); }
 
 
 			::llc::error_t	tcpipAddress		(const char* szHostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint32_t & address, uint16_t & port);
 			::llc::error_t	tcpipAddress		(const char* szHostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4, uint16_t* port = 0);
 
 			::llc::error_t	tcpipAddress		(::llc::vcs hostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4, uint16_t* port = 0);
-	stainli	::llc::error_t	tcpipAddress		(const char* szHostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint32_t & address)				{
+	stin	::llc::error_t	tcpipAddress		(const char* szHostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint32_t & address)				{
 		uint16_t port = 0;
 		return llc::tcpipAddress(szHostName, portRequested, adapterIndex, mode, address, port);
 	}
 
 			::llc::error_t	tcpipAddress		(uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint32_t & address);
 			::llc::error_t	tcpipAddress		(uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4);
-	stainli	::llc::error_t	tcpipAddress		(uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, SIPv4End & address)							{
+	stin	::llc::error_t	tcpipAddress		(uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, SIPv4End & address)							{
 		address.Port			= portRequested;
 		llc_necs(llc::tcpipAddress(portRequested, adapterIndex, mode, address.IP));
 		return 0;
 	}
-	stainli	::llc::error_t	tcpipAddress		(const char * hostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, SIPv4End & address)	{
+	stin	::llc::error_t	tcpipAddress		(const char * hostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, SIPv4End & address)	{
 		return ::llc::tcpipAddress(hostName, portRequested, adapterIndex, mode, address.IP, (address.Port = portRequested));
 	}
-	stainli	::llc::error_t	tcpipAddress		(const ::llc::vcs & hostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, SIPv4End & address)	{
+	stin	::llc::error_t	tcpipAddress		(const ::llc::vcs & hostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, SIPv4End & address)	{
 		return ::llc::tcpipAddress(hostName.begin(), portRequested, adapterIndex, mode, address.IP, (address.Port = portRequested));
 	}
 

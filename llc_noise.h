@@ -6,19 +6,19 @@
 namespace llc
 {
 
-	stacxpr	u3_c		NOISE_SEED			= 16381; // 525253
+	stxp	u3_c		NOISE_SEED			= 16381; // 525253
 
-	ndstinx	u2_t		noise1DBu2			(u2_t x, u2_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return x * (x * x * noiseSeed + 715827883UL  ) + 1500450271UL; }	// 1073741824.0
-	ndstinx	u3_t		noise1DBu3			(u3_t x, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return x * (x * x * noiseSeed + 715827883ULL ) + 10657331232548839ULL; }
-	ndstinx	u2_t		noise1DBase32		(u2_t x, u2_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return noise1DBu2((x << 13) ^ x, noiseSeed); }	// 1073741824.0
-	ndstinx	u3_t		noise1DBase			(u3_t x, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return noise1DBu3((x << 13) ^ x, noiseSeed); }
-	ndstinx	f3_t		noise1D				(u3_t x, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return ( 1.0 - (::llc::noise1DBase(x, noiseSeed)  & 0x7fFFffFFffFFffFFULL) / 4611686018427387904.0); }
-	ndstinx	f3_t		noiseNormal1D		(u3_t x, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return ::llc::noise1D(x, noiseSeed) *.5 + .5f; }
+	nsix	u2_t		noise1DBu2			(u2_t x, u2_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return x * (x * x * noiseSeed + 715827883UL  ) + 1500450271UL; }	// 1073741824.0
+	nsix	u3_t		noise1DBu3			(u3_t x, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return x * (x * x * noiseSeed + 715827883ULL ) + 10657331232548839ULL; }
+	nsix	u2_t		noise1DBase32		(u2_t x, u2_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return noise1DBu2((x << 13) ^ x, noiseSeed); }	// 1073741824.0
+	nsix	u3_t		noise1DBase			(u3_t x, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return noise1DBu3((x << 13) ^ x, noiseSeed); }
+	nsix	f3_t		noise1D				(u3_t x, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return ( 1.0 - (::llc::noise1DBase(x, noiseSeed)  & 0x7fFFffFFffFFffFFULL) / 4611686018427387904.0); }
+	nsix	f3_t		noiseNormal1D		(u3_t x, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return ::llc::noise1D(x, noiseSeed) *.5 + .5f; }
 		   
-	ndstinx	f3_t		noise2D				(u2_t x, u2_t y			, u2_t nWidth				, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return ::llc::noise1D			(x + y * nWidth, noiseSeed);	}
-	ndstinx	f3_t		noiseNormal2D		(u2_t x, u2_t y			, u2_t nWidth				, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return ::llc::noiseNormal1D	(x + y * nWidth, noiseSeed);	}
-	ndstinx	f3_t		noise3D				(u2_t x, u2_t y, u2_t z	, u2_t nWidth, u2_t nHeight	, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return ::llc::noise1D			(x + y * nWidth + z * nHeight * nWidth, noiseSeed);	}
-	ndstinx	f3_t		noiseNormal3D		(u2_t x, u2_t y, u2_t z	, u2_t nWidth, u2_t nHeight	, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return ::llc::noiseNormal1D	(x + y * nWidth + z * nHeight * nWidth, noiseSeed);	}
+	nsix	f3_t		noise2D				(u2_t x, u2_t y			, u2_t nWidth				, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return ::llc::noise1D			(x + y * nWidth, noiseSeed);	}
+	nsix	f3_t		noiseNormal2D		(u2_t x, u2_t y			, u2_t nWidth				, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return ::llc::noiseNormal1D	(x + y * nWidth, noiseSeed);	}
+	nsix	f3_t		noise3D				(u2_t x, u2_t y, u2_t z	, u2_t nWidth, u2_t nHeight	, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return ::llc::noise1D			(x + y * nWidth + z * nHeight * nWidth, noiseSeed);	}
+	nsix	f3_t		noiseNormal3D		(u2_t x, u2_t y, u2_t z	, u2_t nWidth, u2_t nHeight	, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return ::llc::noiseNormal1D	(x + y * nWidth + z * nHeight * nWidth, noiseSeed);	}
 
 #pragma pack(push, 1)
 	struct SPRNG {
@@ -38,7 +38,7 @@ namespace llc
 #pragma pack(pop)
 
 // --- Some primes that may come in handy
-	stacxpr	u1_t		primes16bit []		=
+	stxp	u1_t		primes16bit []		=
 	{ 14951,  14957,  14969,  14983,  15013,  15017,  15031,  15053,  15061, 15073
 	, 15077,  15083,  15091,  15101,  15107,  15121,  15131,  15137,  15139, 15149
 	, 15161,  15173,  15187,  15193,  15199,  15217,  15227,  15233,  15241, 15259

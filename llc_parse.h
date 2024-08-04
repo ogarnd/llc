@@ -6,8 +6,8 @@
 
 namespace llc
 {
-	stacxpr	::llc::vcc		DIGITS_HEX						= ::llc::vcc{16, "0123456789abcdef"};
-	stacxpr	::llc::vcc		DIGITS_DECIMAL					= ::llc::vcc{10, "0123456789"};
+	stxp	::llc::vcc		DIGITS_HEX						= ::llc::vcc{16, "0123456789abcdef"};
+	stxp	::llc::vcc		DIGITS_DECIMAL					= ::llc::vcc{10, "0123456789"};
 	err_t			parseArbitraryBaseInteger		(u2_t base, const ::llc::vcc & symbolList, const ::llc::vcc & sourceChars, u3_t * number_);
 	tplt<tpnm _tInt>	
 	inline	err_t	parseIntegerDecimal				(const ::llc::vcc & sourceChars, _tInt & number_)	{ 

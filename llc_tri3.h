@@ -9,24 +9,24 @@ namespace llc
 {
 #pragma pack(push, 1)
 	tplt<tpnm _tDimension>	struct tri3 : public tri<::llc::n3<_tDimension>>		{
-		typedef	_tDimension		T;
-		typedef	::llc::n3<T>	TVertex;
+		tydf	_tDimension		T;
+		tydf	::llc::n3<T>	TVertex;
 
 		using	tri<TVertex>	::A;
 		using	tri<TVertex>	::B;
 		using	tri<TVertex>	::C;
 		using	tri<TVertex>	::tri;
 
-		inlcxpr	tri3<float>		f32			()		const	noexcept	{ return {A.f32(), B.f32(), C.f32()}; }
-		inlcxpr	tri3<double>	f64			()		const	noexcept	{ return {A.f64(), B.f64(), C.f64()}; }
-		inlcxpr	tri3<uint8_t>	i8			()		const	noexcept	{ return {A.i8 (), B.i8 (), C.i8 ()}; }
-		inlcxpr	tri3<uint16_t>	i16			()		const	noexcept	{ return {A.i16(), B.i16(), C.i16()}; }
-		inlcxpr	tri3<uint32_t>	i32			()		const	noexcept	{ return {A.i32(), B.i32(), C.i32()}; }
-		inlcxpr	tri3<uint64_t>	i64			()		const	noexcept	{ return {A.i64(), B.i64(), C.i64()}; }
-		inlcxpr	tri3<int8_t>	u8			()		const	noexcept	{ return {A.u8 (), B.u8 (), C.u8 ()}; }
-		inlcxpr	tri3<int16_t>	u16			()		const	noexcept	{ return {A.u16(), B.u16(), C.u16()}; }
-		inlcxpr	tri3<int32_t>	u32			()		const	noexcept	{ return {A.u32(), B.u32(), C.u32()}; }
-		inlcxpr	tri3<int64_t>	u64			()		const	noexcept	{ return {A.u64(), B.u64(), C.u64()}; }
+		inxp	tri3<float>		f32			()		const	noexcept	{ return {A.f32(), B.f32(), C.f32()}; }
+		inxp	tri3<double>	f64			()		const	noexcept	{ return {A.f64(), B.f64(), C.f64()}; }
+		inxp	tri3<uint8_t>	i8			()		const	noexcept	{ return {A.i8 (), B.i8 (), C.i8 ()}; }
+		inxp	tri3<uint16_t>	i16			()		const	noexcept	{ return {A.i16(), B.i16(), C.i16()}; }
+		inxp	tri3<uint32_t>	i32			()		const	noexcept	{ return {A.i32(), B.i32(), C.i32()}; }
+		inxp	tri3<uint64_t>	i64			()		const	noexcept	{ return {A.i64(), B.i64(), C.i64()}; }
+		inxp	tri3<int8_t>	u8			()		const	noexcept	{ return {A.u8 (), B.u8 (), C.u8 ()}; }
+		inxp	tri3<int16_t>	u16			()		const	noexcept	{ return {A.u16(), B.u16(), C.u16()}; }
+		inxp	tri3<int32_t>	u32			()		const	noexcept	{ return {A.u32(), B.u32(), C.u32()}; }
+		inxp	tri3<int64_t>	u64			()		const	noexcept	{ return {A.u64(), B.u64(), C.u64()}; }
 
 		tplt<tpnm _tOther>
 		tri3<_tOther>			Cast		()		const	noexcept		{
@@ -75,31 +75,31 @@ namespace llc
 			return *this;
 		}
 	};
-	typedef	tri3<char>		tri3char;
-	typedef	tri3<uchar_t>	tri3uchar;
-	typedef	tri3<float>		tri3f32;
-	typedef	tri3<double>	tri3f64;
-	typedef	tri3<uint8_t>	tri3u8;
-	typedef	tri3<uint16_t>	tri3u16;
-	typedef	tri3<uint32_t>	tri3u32;
-	typedef	tri3<uint64_t>	tri3u64;
-	typedef	tri3<int8_t>	tri3i8;
-	typedef	tri3<int16_t>	tri3i16;
-	typedef	tri3<int32_t>	tri3i32;
-	typedef	tri3<int64_t>	tri3i64;
+	tydf	tri3<char>		tri3char;
+	tydf	tri3<uchar_t>	tri3uchar;
+	tydf	tri3<float>		tri3f32;
+	tydf	tri3<double>	tri3f64;
+	tydf	tri3<uint8_t>	tri3u8;
+	tydf	tri3<uint16_t>	tri3u16;
+	tydf	tri3<uint32_t>	tri3u32;
+	tydf	tri3<uint64_t>	tri3u64;
+	tydf	tri3<int8_t>	tri3i8;
+	tydf	tri3<int16_t>	tri3i16;
+	tydf	tri3<int32_t>	tri3i32;
+	tydf	tri3<int64_t>	tri3i64;
 
-	typedef	minmax<tri3char>	minmaxtri3char;
-	typedef	minmax<tri3uchar>	minmaxtri3uchar;
-	typedef	minmax<tri3f32>		minmaxtri3f32;
-	typedef	minmax<tri3f64>		minmaxtri3f64;
-	typedef	minmax<tri3u8 >		minmaxtri3u8;
-	typedef	minmax<tri3u16>		minmaxtri3u16;
-	typedef	minmax<tri3u32>		minmaxtri3u32;
-	typedef	minmax<tri3u64>		minmaxtri3u64;
-	typedef	minmax<tri3i8 >		minmaxtri3i8;
-	typedef	minmax<tri3i16>		minmaxtri3i16;
-	typedef	minmax<tri3i32>		minmaxtri3i32;
-	typedef	minmax<tri3i64>		minmaxtri3i64;
+	tydf	minmax<tri3char>	minmaxtri3char;
+	tydf	minmax<tri3uchar>	minmaxtri3uchar;
+	tydf	minmax<tri3f32>		minmaxtri3f32;
+	tydf	minmax<tri3f64>		minmaxtri3f64;
+	tydf	minmax<tri3u8 >		minmaxtri3u8;
+	tydf	minmax<tri3u16>		minmaxtri3u16;
+	tydf	minmax<tri3u32>		minmaxtri3u32;
+	tydf	minmax<tri3u64>		minmaxtri3u64;
+	tydf	minmax<tri3i8 >		minmaxtri3i8;
+	tydf	minmax<tri3i16>		minmaxtri3i16;
+	tydf	minmax<tri3i32>		minmaxtri3i32;
+	tydf	minmax<tri3i64>		minmaxtri3i64;
 #pragma pack(pop)
 
 	tplt<tpnm T>

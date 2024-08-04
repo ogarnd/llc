@@ -61,7 +61,7 @@
 	if(0 == strPort.size()) 
 		return ::llc::tcpipAddress(strIP, ipv4.IP, ipv4.Port);
 
-	const uint32_t				iOffset					= ::llc::tcpipAddress(strIP, ipv4.IP);
+	u2_c				iOffset					= ::llc::tcpipAddress(strIP, ipv4.IP);
 	return iOffset + ::llc::parseIntegerDecimal(strPort, ipv4.Port);
 }
 
@@ -156,7 +156,7 @@
 
 ::llc::error_t			llc::tcpipAddress	(SOCKET socket, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4, uint16_t * port) {
 	sockaddr_in					sockaddr_ipv4		= {};
-	socklen_t					len					= sizeof(sockaddr_in);
+	socklen_t					len					= szof(sockaddr_in);
 	ree_if(getsockname(socket, (sockaddr*)&sockaddr_ipv4, &len) != 0, "%s", "getpeername failed.");
 	return ::llc::tcpipAddressFromSockaddr(sockaddr_ipv4, a1, a2, a3, a4, port);
 }
@@ -213,7 +213,7 @@
 	uint32_t					iAddress										= 0;
 	bool						addressFound									= false;
 	for(const addrinfo* ptr = createdAddrInfo; ptr != NULL; ptr = ptr->ai_next)  {	// Retrieve each address and print out the hex bytes
-		verbose_printf("getaddrinfo response at index %" LLC_FMT_U32 ".", iAddress);
+		verbose_printf("getaddrinfo response at index %" LLC_FMT_U2 ".", iAddress);
 		verbose_printf("Flags: 0x%x.", ptr->ai_flags);
 		verbose_printf("%s", "Family: ");
 		char						ipstringbuffer	[46]							= {};
@@ -295,7 +295,7 @@
 		//	break;
 		//}
 		//++iAddress;
-		verbose_printf("Length of this sockaddr: %" LLC_FMT_U32 "", (uint32_t)ptr->ai_addrlen);
+		verbose_printf("Length of this sockaddr: %" LLC_FMT_U2 "", (uint32_t)ptr->ai_addrlen);
 		verbose_printf("Canonical name: %s", ptr->ai_canonname);
 		if(addressFound)
 			break;

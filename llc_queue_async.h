@@ -12,8 +12,8 @@ namespace llc
 {
 	tplt<tpnm _t, tpnm _tContainer>
 	struct queue_async {
-		typedef	_t	 		T;
-		typedef	_tContainer	TContainer;
+		tydf	_t	 		T;
+		tydf	_tContainer	TContainer;
 
 		TContainer				Queue	= {};
 		::std::mutex			Lock	= {};

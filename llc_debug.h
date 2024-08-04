@@ -15,7 +15,7 @@
 #define LLC_DEBUG_H
 
 #ifndef LLC_DEBUG_ENABLED
-namespace llc { stacxpr size_t DEBUG_BUILD = 0; } 
+namespace llc { stxp size_t DEBUG_BUILD = 0; } 
 #	define LLC_PLATFORM_CRT_BREAKPOINT()		do {} while(0)
 #	define LLC_PLATFORM_CRT_CHECK_MEMORY()		do {} while(0)
 #	ifndef ARDUINOJSON_ENABLE_COMMENTS
@@ -26,7 +26,7 @@ namespace llc { stacxpr size_t DEBUG_BUILD = 0; }
 //#	define LLC_SUCCESS_PRINTF_ENABLED	// Uncomment as needed
 //#	define LLC_VERBOSE_PRINTF_ENABLED	// Uncomment as needed
 #else
-namespace llc { stacxpr size_t DEBUG_BUILD = (size_t)-1; } 
+namespace llc { stxp size_t DEBUG_BUILD = (size_t)-1; } 
 #	define LLC_ERROR_PRINTF_ENABLED
 #	define LLC_WARNING_PRINTF_ENABLED
 #	define LLC_INFO_PRINTF_ENABLED
@@ -54,7 +54,7 @@ namespace llc { stacxpr size_t DEBUG_BUILD = (size_t)-1; }
 #			include <esp_heap_caps.h>
 #			include <freertos/FreeRTOS.h>
 #			include <freertos/task.h>
-#			define LLC_PLATFORM_CRT_CHECK_MEMORY() do { info_printf("Available RAM - Heap: %" LLC_FMT_U32 " bytes, Stack: %" LLC_FMT_U32 " bytes.", heap_caps_get_free_size(MALLOC_CAP_8BIT), uxTaskGetStackHighWaterMark(NULL)); } while(0)
+#			define LLC_PLATFORM_CRT_CHECK_MEMORY() do { info_printf("Available RAM - Heap: %" LLC_FMT_U2 " bytes, Stack: %" LLC_FMT_U2 " bytes.", heap_caps_get_free_size(MALLOC_CAP_8BIT), uxTaskGetStackHighWaterMark(NULL)); } while(0)
 #		endif
 #	endif
 #endif

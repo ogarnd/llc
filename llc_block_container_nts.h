@@ -31,11 +31,11 @@ namespace llc
 		}
 
 		::llc::error_t						push_sequence				(const char* sequence, uint32_t length, ::llc::vcc & out_view)	{
-			const uint32_t							lengthPlusOne				= length + 1;
+			u2_c							lengthPlusOne				= length + 1;
 			for(uint32_t iBlock = 0; iBlock < Blocks.size(); ++iBlock) {
 				uint32_t								& blkRemainingSpace			= RemainingSpace[iBlock];
 				if(blkRemainingSpace >= lengthPlusOne) {
-					char									* sequenceStart				= &Blocks[iBlock]->operator[](_size - blkRemainingSpace);
+					char									* sequenceStart				= &Blocks[iBlock]->oper[](_size - blkRemainingSpace);
 					out_view							= {sequenceStart, length};
 					memcpy(sequenceStart, sequence, length);
 					sequenceStart[lengthPlusOne]		= 0;
@@ -46,7 +46,7 @@ namespace llc
 			int32_t									indexNewBlock				= Blocks.size();
 			llc_necs(Blocks			.resize(Blocks.size() + 1));
 			llc_necs(RemainingSpace	.resize(Blocks.size() + 1, _size - length - 1));
-			out_view							= {&Blocks[indexNewBlock]->operator[](0), length};
+			out_view							= {&Blocks[indexNewBlock]->oper[](0), length};
 			memcpy(Blocks[indexNewBlock]->Storage, sequence, length);
 			return indexNewBlock;
 		}

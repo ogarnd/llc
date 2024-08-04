@@ -27,9 +27,9 @@ static	::llc::error_t	base64EncodeTriplet								(const ::llc::vcc & base64Symbo
 }
 ::llc::error_t			llc::base64Encode								(const ::llc::vcc & base64Symbols, char base64PadSymbol, const ::llc::vcu0_t & inputBytes, ::llc::au0_t & out_base64)	{
 	rni_if(0 == inputBytes.size(), "%s", "Empty input stream.");
-	const uint32_t				packsNeeded														= inputBytes.size() / 3 + one_if(inputBytes.size() % 3);
+	u2_c				packsNeeded														= inputBytes.size() / 3 + one_if(inputBytes.size() % 3);
 	uint32_t					iOutput64														= out_base64.size(); //
-	llc_necall(out_base64.resize(out_base64.size() + packsNeeded * 4), "Out of memory? out_base64.size() : %" LLC_FMT_U32 ". packsNeeded : %" LLC_FMT_U32 ".", iOutput64, packsNeeded);
+	llc_necall(out_base64.resize(out_base64.size() + packsNeeded * 4), "Out of memory? out_base64.size() : %" LLC_FMT_U2 ". packsNeeded : %" LLC_FMT_U2 ".", iOutput64, packsNeeded);
 	for(uint32_t iInputByte = 0, inputByteCount = inputBytes.size(); iInputByte < inputByteCount; iInputByte += 3) { // process each byte triplet and turn it into 4 bytes padded with 2 bit
 		const bool													use1															= ((int32_t)iInputByte) < (((int32_t)inputByteCount) - 1);
 		const bool													use2															= ((int32_t)iInputByte) < (((int32_t)inputByteCount) - 2);
@@ -41,7 +41,7 @@ static	::llc::error_t	base64EncodeTriplet								(const ::llc::vcc & base64Symbo
 		::base64EncodeTriplet(base64Symbols, inputTriplet, {&out_base64[iOutput64], 4});
 		iOutput64												+= 4;
 	}
-	const uint32_t				modTriplet														= inputBytes.size() % 3;
+	u2_c				modTriplet														= inputBytes.size() % 3;
 	if(0 != modTriplet) { // pad with '='
 		out_base64[out_base64.size() - 1]						= base64PadSymbol;
 		if(1 == modTriplet) // pad with another '='
@@ -86,9 +86,9 @@ static	::llc::error_t	base64DecodeQuad												(::llc::vu8 inputQuad, ::llc::
 		base64SymbolRemap[(uint32_t)base64Symbols[iSymbol]]		= (uint8_t)iSymbol;
 
 	// --- Decode input symbols
-	const uint32_t				packsNeeded														= lengthInput / 4;
+	u2_c				packsNeeded														= lengthInput / 4;
 	uint32_t					iOutputByte														= outputBytes.size();
-	llc_necall(outputBytes.resize(outputBytes.size() + packsNeeded * 3), "Out of memory? outputBinary.size() : %" LLC_FMT_U32 ". packsNeeded : %" LLC_FMT_U32 ".", iOutputByte, packsNeeded); // Append result
+	llc_necall(outputBytes.resize(outputBytes.size() + packsNeeded * 3), "Out of memory? outputBinary.size() : %" LLC_FMT_U2 ". packsNeeded : %" LLC_FMT_U2 ".", iOutputByte, packsNeeded); // Append result
 	for(uint32_t iInput64 = 0, symbolCount = lengthInput; iInput64 < symbolCount; iInput64 += 4) {
 		uint8_t														inputQuad	[4]													=
 			{ base64SymbolRemap[((uint8_t)in_base64[iInput64 + 0]) % ::llc::size(base64SymbolRemap)]

@@ -21,7 +21,7 @@
 namespace llc
 {
 #ifndef LLC_WINDOWS
-typedef int SOCKET;
+tydf int SOCKET;
 #	ifndef INVALID_SOCKET
 #		define INVALID_SOCKET -1
 #	endif
@@ -40,7 +40,7 @@ typedef int SOCKET;
 	::llc::error_t			tcpipAddressFromSockaddr	(const sockaddr_in & sockaddr, uint32_t & address, uint16_t & port);
 	::llc::error_t			tcpipAddress				(SOCKET socket, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4, uint16_t * port);
 
-	stainli	::llc::error_t	tcpipAddressToSockaddr		(const ::llc::SIPv4End & addr, sockaddr_in & sockaddr)	{ return tcpipAddressToSockaddr		
+	stin	::llc::error_t	tcpipAddressToSockaddr		(const ::llc::SIPv4End & addr, sockaddr_in & sockaddr)	{ return tcpipAddressToSockaddr		
 		( ::llc::byte_at(addr.IP, 0)
 		, ::llc::byte_at(addr.IP, 1)
 		, ::llc::byte_at(addr.IP, 2)
@@ -48,8 +48,8 @@ typedef int SOCKET;
 		, addr.Port, sockaddr
 		); 
 	}
-	stainli	::llc::error_t	tcpipAddressFromSockaddr	(const sockaddr_in & sockaddr, ::llc::SIPv4End & address)	{ return tcpipAddressFromSockaddr	(sockaddr	, &address[0], &address[1], &address[2], &address[3], &address.Port); }
-	stainli	::llc::error_t	tcpipAddress				(SOCKET socket, ::llc::SIPv4End & address)					{ return tcpipAddress				(socket		, &address[0], &address[1], &address[2], &address[3], &address.Port); }
+	stin	::llc::error_t	tcpipAddressFromSockaddr	(const sockaddr_in & sockaddr, ::llc::SIPv4End & address)	{ return tcpipAddressFromSockaddr	(sockaddr	, &address[0], &address[1], &address[2], &address[3], &address.Port); }
+	stin	::llc::error_t	tcpipAddress				(SOCKET socket, ::llc::SIPv4End & address)					{ return tcpipAddress				(socket		, &address[0], &address[1], &address[2], &address[3], &address.Port); }
 } // namespace
 
 

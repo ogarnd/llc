@@ -13,9 +13,9 @@
 namespace llc
 {
 #ifdef LLC_WINDOWS
-	ndstain int64_t	ftell		(FILE * fp) { return ::_ftelli64(fp); }
+	ndsi int64_t	ftell		(FILE * fp) { return ::_ftelli64(fp); }
 #else
-	ndstain int64_t	ftell		(FILE * fp) { return ::ftell(fp); }
+	ndsi int64_t	ftell		(FILE * fp) { return ::ftell(fp); }
 #endif
 	// fseek
 	GDEFINE_ENUM_TYPE(FSEEK, uint8_t);
@@ -23,12 +23,12 @@ namespace llc
 	GDEFINE_ENUM_VALUE(FSEEK, CUR, SEEK_CUR);
 	GDEFINE_ENUM_VALUE(FSEEK, END, SEEK_END);
 #ifdef LLC_WINDOWS
-	ndstain err_t	fseek		(FILE * fp, int64_t offset, FSEEK origin) { if_true_vef(-1, _fseeki64(fp, offset, origin), "%p, %" LLC_FMT_I64 ", %X'%s'.", fp, offset, origin, get_value_namep(origin)); return 0; }
+	ndsi err_t	fseek		(FILE * fp, int64_t offset, FSEEK origin) { if_true_vef(-1, _fseeki64(fp, offset, origin), "%p, %" LLC_FMT_S3 ", %X'%s'.", fp, offset, origin, get_value_namep(origin)); return 0; }
 #else
-	ndstain err_t	fseek		(FILE * fp, int64_t offset, FSEEK origin) { if_true_vef(-1, fseek(fp, offset, origin), "%p, %" LLC_FMT_I64 ", %X'%s'.", fp, offset, origin, get_value_namep(origin)); return 0; }
+	ndsi err_t	fseek		(FILE * fp, int64_t offset, FSEEK origin) { if_true_vef(-1, fseek(fp, offset, origin), "%p, %" LLC_FMT_S3 ", %X'%s'.", fp, offset, origin, get_value_namep(origin)); return 0; }
 #endif
 	// fopen_s
-	ndstain err_t	fopen_s		(FILE* * out_fp, vcs filename, vcs mode) {
+	ndsi err_t	fopen_s		(FILE* * out_fp, vcs filename, vcs mode) {
 		rees_if(0 == filename.size());
 		ree_if(0 == out_fp			, "'%s'", filename.begin());
 		ree_if(0 == mode.size()		, "'%s'", filename.begin());
@@ -40,9 +40,9 @@ namespace llc
 		return 0;
 #endif
 	}
-	ndstain			err_t	fopen_s		(FILE* * out_fp, vs filename, vcs mode)						{ return fopen_s(out_fp, vcs{filename}, mode); }
-	tplN1u	ndstain err_t	fopen_s		(FILE* * out_fp, const char (&filename)[N], vcs mode)		{ return fopen_s(out_fp, vcc{filename}, mode); }
-	ndstain			err_t	fopen_s		(FILE* * out_fp, vcs filename, vcs mode, uint64_t offset)	{ llc_necs(::llc::fopen_s(out_fp, filename, mode)); return 0 == offset ? 0 : ::llc::fseek(*out_fp, offset, FSEEK_SET); }
+	ndsi			err_t	fopen_s		(FILE* * out_fp, vs filename, vcs mode)						{ return fopen_s(out_fp, filename.cc(), mode); }
+	tplN1u	ndsi	err_t	fopen_s		(FILE* * out_fp, sc_c (&filename)[N], vcs mode)				{ return fopen_s(out_fp, vcc{filename}, mode); }
+	ndsi			err_t	fopen_s		(FILE* * out_fp, vcs filename, vcs mode, uint64_t offset)	{ llc_necs(::llc::fopen_s(out_fp, filename, mode)); return 0 == offset ? 0 : ::llc::fseek(*out_fp, offset, FSEEK_SET); }
 } // namespace
 
 #endif // LLC_CSTDIO_H

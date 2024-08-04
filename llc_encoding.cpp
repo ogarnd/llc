@@ -12,8 +12,8 @@
 #	include <random>
 #endif
 
-stacxpr const char HEX_DIGITS_UPPER	[]	= "0123456789ABCDEF";
-stacxpr const char HEX_DIGITS_LOWER	[]	= "0123456789abcdef";
+stxp const char HEX_DIGITS_UPPER	[]	= "0123456789ABCDEF";
+stxp const char HEX_DIGITS_LOWER	[]	= "0123456789abcdef";
 
 ::llc::error_t			llc::saltDataSalt				(const ::llc::vcu0_t & binary, ::llc::au0_t & salted)				{
 	llc_necs(salted.resize(binary.size() * 2));
@@ -147,7 +147,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	for(i = n - 1	; i >= 1	; --i)	sn[i]			= sn[i] ^ sn[i - 1] ^ (keyFinal[0] * sn[i - 1]) % 256;
 
 	uint32_t					outputOffset					= output.size();
-	const uint32_t				finalStringSize					= salt ? n - 4 : n;
+	u2_c				finalStringSize					= salt ? n - 4 : n;
 	const ::llc::vci32			finalValues						= {salt ? &sn[2] : sn, finalStringSize};
 	llc_necs(output.resize(outputOffset + finalStringSize));
 	uint8_t						* outputFast					= output.begin();
@@ -158,7 +158,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 }
 
 ::llc::error_t			llc::utf8FromCodePoint			(uint32_t codePoint, ::llc::asc_t & hexDigits) {
-	const uint32_t				offset							= hexDigits.size();
+	u2_c				offset							= hexDigits.size();
 	if (codePoint <= 0x7f) {
 		hexDigits.resize(offset + 1);
 		hexDigits[offset + 0]	= static_cast<char>(codePoint);
@@ -251,7 +251,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	}
 	char						temp		[32]				= {};
 	for(uint32_t i = 0; i < ::llc::min(filtered.size(), (uint32_t)8U); ++i) {
-		snprintf(temp, ::llc::size(temp) - 2, "%" LLC_FMT_I32, filtered[i]);
+		snprintf(temp, ::llc::size(temp) - 2, "%" LLC_FMT_S2, filtered[i]);
 		llc_necs(digest.append_string(temp));
 	}
 	return 0;

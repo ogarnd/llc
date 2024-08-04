@@ -11,8 +11,8 @@ namespace llc
 	llc::err_t			appendKeyList	(::llc::asc_t & output, ::llc::vcs key, ::llc::vcs valuesNotEnclosed, bool prependComma = false);
 	llc::err_t			appendKeyString	(::llc::asc_t & output, ::llc::vcs key, ::llc::vcs value			, bool prependComma = false);
 	template<size_t nSize>
-	stainli	llc::err_t	appendKeyString	(::llc::asc_t & output, ::llc::vcs key, const char(&value)[nSize]	, bool prependComma = false)	{ return appendKeyString(output, key, ::llc::vcs{value}, prependComma); }
-	stainli	llc::err_t	appendKeyString	(::llc::asc_t & output, ::llc::vcs key, const ::llc::vcc & value	, bool prependComma = false)	{ return appendKeyString(output, key, ::llc::vcs{value}, prependComma); }
+	stin	llc::err_t	appendKeyString	(::llc::asc_t & output, ::llc::vcs key, const char(&value)[nSize]	, bool prependComma = false)	{ return appendKeyString(output, key, ::llc::vcs{value}, prependComma); }
+	stin	llc::err_t	appendKeyString	(::llc::asc_t & output, ::llc::vcs key, const ::llc::vcc & value	, bool prependComma = false)	{ return appendKeyString(output, key, ::llc::vcs{value}, prependComma); }
 
 } // namespace 
 

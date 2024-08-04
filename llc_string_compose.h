@@ -12,9 +12,9 @@ namespace llc
 	llc::err_t			append_string			(::llc::asc_t & output, const char (&arg)[NLen])			{ return output.append_string(arg); }
 	tplt<size_t NLen>	
 	llc::err_t			append_string			(::llc::asc_t & output, const ::llc::astchar<NLen> & arg)	{ return output.append_string(arg.Storage); }
-	stainli	llc::err_t	append_string			(::llc::asc_t & output, const ::llc::asc_t & arg)			{ return output.append_string(arg.cc()); }
+	stin	llc::err_t	append_string			(::llc::asc_t & output, const ::llc::asc_t & arg)			{ return output.append_string(arg.cc()); }
 
-	tplt<tpnm... _tArgs>	
+	tpl_vtArgs	
 	llc::err_t			append_strings			(::llc::asc_t & output, _tArgs&&... args)	{ 
 		err_t				err			= 0;
 		const int32_t		results[]	= {err = (failed(err) ? -1 : append_string(output, args))..., 0}; 
@@ -29,7 +29,7 @@ namespace llc
 		return failed(err) ? err : ::llc::sum(::llc::vci32{results}); 
 	}
 
-	typedef ::llc::function<llc::err_t(::llc::asc_t & )> FAppend;
+	tydf ::llc::function<llc::err_t(::llc::asc_t & )> FAppend;
 
 	llc::err_t			appendNclosd			(::llc::asc_t & output, ::llc::vcs textToEnclose);
 	llc::err_t			appendBraced			(::llc::asc_t & output, ::llc::vcs textToEnclose);

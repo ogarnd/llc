@@ -20,15 +20,15 @@
 
 namespace llc
 {
-	typedef	error_t	(*log_print_t)		(const char * text);
+	tydf	error_t	(*log_print_t)		(const char * text);
 	error_t			_base_log_print		(const char * text);
-	typedef	error_t	(*log_write_t)		(const char * text, uint32_t textLen);
+	tydf	error_t	(*log_write_t)		(const char * text, uint32_t textLen);
 	error_t			_base_log_write		(const char * text, uint32_t textLen);
 #define base_log_write(text, textLen)	::llc::_base_log_write(text, textLen)
 #define base_log_print(text)			::llc::_base_log_print(text)
 
 #ifdef LLC_LOG_ARDUINO_FLASHSTRINGHELPER
-	typedef	error_t	(*log_print_P_t)	(const __FlashStringHelper * text);
+	tydf	error_t	(*log_print_P_t)	(const __FlashStringHelper * text);
 	error_t			_base_log_print_P	(const __FlashStringHelper * text);
 #	define base_log_print_P(text)	::llc::_base_log_print_P(text)
 #	define base_log_print_F(text)	base_log_print_P(F(text))
@@ -41,8 +41,8 @@ namespace llc
 		( log_print_t	funcLogPrint
 		, log_write_t	funcLogWrite
 		);
-	tplt<tpnm... _tArgs>
-	stincxp	void	dummy				(_tArgs&&...)		{}
+	tpl_vtArgs
+	sinx	void	dummy				(_tArgs&&...)		{}
 } // namespace
 
 #ifdef LLC_WINDOWS

@@ -18,11 +18,13 @@
 
 #include "llc_range.h"
 
-stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
+LLC_USING_TYPEINT();
+
+stxp	u2_c	LLC_CRC_CRC_SEED			= 18973;
 
 ::llc::error_t			llc::crcGenerate			(const ::llc::vcu0_t & bytes, uint64_t & crc)	{
 	crc						= 0;
-	const uint32_t				lastPos						= bytes.size() - 1;
+	u2_c				lastPos						= bytes.size() - 1;
 	for(uint32_t i=0; i < bytes.size(); ++i) {
 		crc						+= ::llc::noise1DBase(bytes[i], ::LLC_CRC_CRC_SEED);
 		crc						+= ::llc::noise1DBase(bytes[lastPos - i], ::LLC_CRC_CRC_SEED);
@@ -33,14 +35,14 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 ::llc::error_t			llc::crcGenerateAndAppend	(::llc::au0_t & bytes)	{
 	uint64_t					crcToStore					= 0;
 	::llc::crcGenerate(bytes, crcToStore);
-	llc_necs(bytes.append((const uint8_t*)&crcToStore, sizeof(uint64_t)));;
+	llc_necs(bytes.append((const uint8_t*)&crcToStore, szof(uint64_t)));;
 	return 0;
 }
 
 ::llc::error_t			llc::crcVerifyAndRemove		(::llc::au0_t & bytes)	{
 	ree_if(bytes.size() < 8, "Invalid input. No CRC can be found in an array of %u bytes.", bytes.size());
 	uint64_t					check						= 0;
-	const uint32_t				startOfCRC					= bytes.size() - 8;
+	u2_c				startOfCRC					= bytes.size() - 8;
 	::llc::crcGenerate({bytes.begin(), startOfCRC}, check);
 	const uint64_t				found						= *(uint64_t*)&bytes[startOfCRC];
 	ree_if(check != found, "CRC Check failed: Stored: %llu. Calculated: %llu.", found, check);
@@ -48,7 +50,7 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 	return 0;
 }
 
-::llc::error_t			llc::arrayDeflate		(const ::llc::vcu0_t & inflated, ::llc::au0_t & deflated, const uint32_t chunkSize)	{
+::llc::error_t			llc::arrayDeflate		(const ::llc::vcu0_t & inflated, ::llc::au0_t & deflated, u2_c chunkSize)	{
 #if defined(LLC_ESP32) || defined(LLC_ARDUINO)
 #	ifdef LLC_ESP32
 	deflated				= inflated;
@@ -70,7 +72,7 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 		strm.next_out			= (Bytef*)block.begin();
 		ret						= deflate(&strm, Z_FINISH);    // no bad return value
 		bef_if(ret == Z_STREAM_ERROR, "Failed to compress: 0x%x.", ret);  // state not clobbered
-		const uint32_t				deflatedSize			= (uint32_t)((uint8_t*)strm.next_out - block.begin());
+		u2_c				deflatedSize			= (uint32_t)((uint8_t*)strm.next_out - block.begin());
 		llc_necs(deflated.append(block.begin(), deflatedSize));
 		if(ret == Z_STREAM_END)
 			break;
@@ -85,7 +87,7 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 	return 0;
 }
 
-::llc::error_t			llc::arrayInflate		(const ::llc::vcu0_t & deflated, ::llc::au0_t & inflated, const uint32_t chunkSize)	{
+::llc::error_t			llc::arrayInflate		(const ::llc::vcu0_t & deflated, ::llc::au0_t & inflated, u2_c chunkSize)	{
 #if defined(LLC_ESP32) || defined(LLC_ARDUINO)
 #	ifdef LLC_ESP32
 	inflated				= deflated;
@@ -116,7 +118,7 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 			break;
 		}
 		ree_if(ret < 0, "Failed to decompress? inflate error: %i.", ret);
-		const uint32_t				inflatedSize			= (uint32_t)((const uint8_t*)strm.next_out - block.begin());
+		u2_c				inflatedSize			= (uint32_t)((const uint8_t*)strm.next_out - block.begin());
 		llc_necs(inflated.append(block.begin(), inflatedSize));
 		if(ret == Z_STREAM_END)
 			break;
@@ -142,7 +144,7 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 		FILE						* fp						= 0;
 		llc_necall(::llc::fopen_s(&fp, nameFileDst, "wb"), "'%s'", nameFileDst.begin());
 		ree_if(0 == fp, "Failed to create file: %s.", ::llc::toString(nameFileDst).begin());
-		fwrite(&fileHeader							, 1, sizeof(::llc::SPackHeader)			, fp);
+		fwrite(&fileHeader							, 1, szof(::llc::SPackHeader)			, fp);
 		fwrite(compressedTableFiles		.begin	()	, 1, compressedTableFiles		.size()	, fp);
 		fwrite(compressedContentsPacked	.begin	()	, 1, compressedContentsPacked	.size()	, fp);
 		fclose(fp);
@@ -150,7 +152,7 @@ stacxpr	const uint32_t	LLC_CRC_CRC_SEED			= 18973;
 	return 0;
 }
 
-stacxpr	uint32_t		DEFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
+stxp	uint32_t		DEFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 ::llc::error_t			llc::folderPack				(::llc::SFolderPackage & output, const ::llc::vcs nameFolderSrc) {
 	::llc::SPackHeader 			& fileHeader			= output.PackageInfo = {};
 	// -- The following two arrays store the file table and the file contents that are going to be compressed and stored on disk
@@ -178,22 +180,22 @@ stacxpr	uint32_t		DEFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	return 0;
 }
 
-stacxpr	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
+stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 ::llc::error_t			llc::folderUnpack			(::llc::SFolderInMemory & output, const ::llc::vcu0_t & rawFileInMemory)		{
 	const ::llc::SPackHeader	& header					= *(::llc::SPackHeader*)&rawFileInMemory[0];
 	output.Names	.resize(header.TotalFileCount);
 	output.Contents	.resize(header.TotalFileCount);
 	output.DataInfo		.clear();
 	output.DataContents	.clear();
-	llc_necs(llc::arrayInflate({&rawFileInMemory[0] + sizeof(::llc::SPackHeader)									, header.SizeCompressedTableFiles		}, output.DataInfo	, ::INFLATE_CHUNK_SIZE));
-	llc_necs(llc::arrayInflate({&rawFileInMemory[0] + sizeof(::llc::SPackHeader) + header.SizeCompressedTableFiles, header.SizeCompressedContentsPacked	}, output.DataContents	, ::INFLATE_CHUNK_SIZE));
+	llc_necs(llc::arrayInflate({&rawFileInMemory[0] + szof(::llc::SPackHeader)									, header.SizeCompressedTableFiles		}, output.DataInfo	, ::INFLATE_CHUNK_SIZE));
+	llc_necs(llc::arrayInflate({&rawFileInMemory[0] + szof(::llc::SPackHeader) + header.SizeCompressedTableFiles, header.SizeCompressedContentsPacked	}, output.DataContents	, ::INFLATE_CHUNK_SIZE));
 	{ // Build access tables.
 		uint32_t					offsetInfo					= 0;
 		for(uint32_t iFile = 0; iFile < output.Names.size(); ++iFile) {
 			const ::llc::rangeu2_t		& fileLocation				= *(const ::llc::rangeu2_t*)&output.DataInfo[offsetInfo];
-			offsetInfo				+= sizeof(::llc::rangeu2_t);
-			const uint32_t				lenName						= *(uint32_t*)&output.DataInfo[offsetInfo];
-			offsetInfo				+= sizeof(uint32_t);
+			offsetInfo				+= szof(::llc::rangeu2_t);
+			u2_c				lenName						= *(uint32_t*)&output.DataInfo[offsetInfo];
+			offsetInfo				+= szof(uint32_t);
 			output.Names[iFile]	= {(const char*)&output.DataInfo[offsetInfo], lenName};
 			offsetInfo				+= lenName;
 			output.Contents[iFile]	= {&output.DataContents	[fileLocation.Offset], fileLocation.Count};

@@ -10,14 +10,14 @@ static	::llc::CLabelManager*	labelManagerSingleton		()			noexcept	{
 	e_if_failed(LabelManager->View(text, stringLen, *this), "text: %s.", text); 
 }
 
-bool	::llc::label::operator==	(const ::llc::vcs & other)		const	noexcept	{
+bool	::llc::label::oper==	(const ::llc::vcs & other)		const	noexcept	{
 	return (Data == other.begin()) 	? true
 		: (Count != other.size()) 	? false 
 		: 0 == memcmp(Data, other.begin(), Count)
 		;
 }
 
-bool	::llc::label::operator==	(const label & other)			const	noexcept	{
+bool	::llc::label::oper==	(const label & other)			const	noexcept	{
 	return (Data == other.Data) 	? true
 		: (Count != other.Count) 	? false
 		: (LabelManager == other.LabelManager) ? false 

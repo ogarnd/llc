@@ -21,17 +21,17 @@ namespace llc
 	GDEFINE_ENUM_VALUE(SYSTEM_EVENT, Wire		,12);
 	GDEFINE_ENUM_VALUE(SYSTEM_EVENT, Bus		,13);
 
-	typedef ::llc::SEvent            <::llc::SYSTEM_EVENT>	SEventSystem;
-	typedef ::llc::SEView            <::llc::SYSTEM_EVENT>	SEViewSystem;
-	typedef ::llc::FEventHandler     <::llc::SYSTEM_EVENT>	FEventSystem;
-	typedef ::llc::FEventHandlerConst<::llc::SYSTEM_EVENT>	FEventSystemConst;
-	typedef ::llc::FEViewHandler     <::llc::SYSTEM_EVENT>	FEViewSystem;
-	typedef ::llc::FEViewHandlerConst<::llc::SYSTEM_EVENT>	FEViewSystemConst;
-	typedef ::llc::pobj <::llc::SEventSystem>				PEventSystem;
-	typedef ::llc::apobj<::llc::SEventSystem>				TQueueSystemEvent;
+	tydf ::llc::SEvent            <::llc::SYSTEM_EVENT>	SEventSystem;
+	tydf ::llc::SEView            <::llc::SYSTEM_EVENT>	SEViewSystem;
+	tydf ::llc::FEventHandler     <::llc::SYSTEM_EVENT>	FEventSystem;
+	tydf ::llc::FEventHandlerConst<::llc::SYSTEM_EVENT>	FEventSystemConst;
+	tydf ::llc::FEViewHandler     <::llc::SYSTEM_EVENT>	FEViewSystem;
+	tydf ::llc::FEViewHandlerConst<::llc::SYSTEM_EVENT>	FEViewSystemConst;
+	tydf ::llc::pobj <::llc::SEventSystem>				PEventSystem;
+	tydf ::llc::apobj<::llc::SEventSystem>				TQueueSystemEvent;
 	
 	template<typename _t>
-	stainli	::llc::error_t	eventEnqueueChild	(::llc::apobj<::llc::SEventSystem> & queue, ::llc::RESULT eventType, _t & eventData)	{ 
+	stin	::llc::error_t	eventEnqueueChild	(::llc::apobj<::llc::SEventSystem> & queue, ::llc::RESULT eventType, _t & eventData)	{ 
 		return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Device, eventType, eventData); 
 	}
 
@@ -48,10 +48,10 @@ namespace llc
 		const uint8_t				Multiplier		: 6;
 		::llc::RESULT				DeviceEvent		= {};
 
-		cnstxpr						SDeviceResult	(::llc::RESULT deviceEvent = ::llc::RESULT_Error)
+		cxpr						SDeviceResult	(::llc::RESULT deviceEvent = ::llc::RESULT_Error)
 			: SystemEvent {::llc::SYSTEM_EVENT_Device}
-			, TailWidth   {::llc::uint_tail_width<uint32_t>((uint32_t)sizeof(::llc::RESULT))}
-			, Multiplier  {::llc::uint_tail_multiplier<uint32_t>((uint32_t)sizeof(::llc::RESULT))}
+			, TailWidth   {::llc::uint_tail_width<uint32_t>((uint32_t)szof(::llc::RESULT))}
+			, Multiplier  {::llc::uint_tail_multiplier<uint32_t>((uint32_t)szof(::llc::RESULT))}
 			, DeviceEvent {deviceEvent}
 			{}
 	};
@@ -61,19 +61,19 @@ namespace llc
 		const uint8_t				Multiplier		: 6;
 		::llc::COMMAND				DeviceEvent		= {};
 
-		cnstxpr						SDeviceCommand	(::llc::COMMAND deviceEvent = ::llc::COMMAND_Ok)
+		cxpr						SDeviceCommand	(::llc::COMMAND deviceEvent = ::llc::COMMAND_Ok)
 			: SystemEvent {::llc::SYSTEM_EVENT_Device}
-			, TailWidth   {::llc::uint_tail_width<uint32_t>((uint32_t)sizeof(::llc::COMMAND))}
-			, Multiplier  {::llc::uint_tail_multiplier<uint32_t>((uint32_t)sizeof(::llc::COMMAND))}
+			, TailWidth   {::llc::uint_tail_width<uint32_t>((uint32_t)szof(::llc::COMMAND))}
+			, Multiplier  {::llc::uint_tail_multiplier<uint32_t>((uint32_t)szof(::llc::COMMAND))}
 			, DeviceEvent {deviceEvent}
 			{}
 	};
 #pragma pack(pop)
 
-	//stainli	::llc::error_t	eventEnqueueRuntimeInit			(::llc::TQueueSystemEvent & queue)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Runtime, ::llc::EVENT_RUNTIME_Init			, ::llc::EVENT_RUNTIME_Init			); }
-	//stainli	::llc::error_t	eventEnqueueRuntimeExit			(::llc::TQueueSystemEvent & queue)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Runtime, ::llc::EVENT_RUNTIME_Exit			, ::llc::EVENT_RUNTIME_Exit			); }
-	//stainli	::llc::error_t	eventEnqueueRuntimeProcessQueue	(::llc::TQueueSystemEvent & queue)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Runtime, ::llc::EVENT_RUNTIME_Process_queue, ::llc::EVENT_RUNTIME_Process_queue); }
-	//stainli	::llc::error_t	eventEnqueueRuntimeProcessEvent	(::llc::TQueueSystemEvent & queue)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Runtime, ::llc::EVENT_RUNTIME_Process_event, ::llc::EVENT_RUNTIME_Process_event); }
+	//stin	::llc::error_t	eventEnqueueRuntimeInit			(::llc::TQueueSystemEvent & queue)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Runtime, ::llc::EVENT_RUNTIME_Init			, ::llc::EVENT_RUNTIME_Init			); }
+	//stin	::llc::error_t	eventEnqueueRuntimeExit			(::llc::TQueueSystemEvent & queue)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Runtime, ::llc::EVENT_RUNTIME_Exit			, ::llc::EVENT_RUNTIME_Exit			); }
+	//stin	::llc::error_t	eventEnqueueRuntimeProcessQueue	(::llc::TQueueSystemEvent & queue)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Runtime, ::llc::EVENT_RUNTIME_Process_queue, ::llc::EVENT_RUNTIME_Process_queue); }
+	//stin	::llc::error_t	eventEnqueueRuntimeProcessEvent	(::llc::TQueueSystemEvent & queue)	{ return ::llc::eventEnqueueChild(queue, ::llc::SYSTEM_EVENT_Runtime, ::llc::EVENT_RUNTIME_Process_event, ::llc::EVENT_RUNTIME_Process_event); }
 } // namespace
 
 #endif // LLC_SYSTEM_EVENT_H_23627

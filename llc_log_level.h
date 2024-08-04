@@ -18,17 +18,17 @@
 namespace llc
 {
 #ifndef LLC_ARDUINO
-	void				_llc_print_system_errors		(const char * prefix, uint32_t prefixLen);
+	void				_llc_print_system_errors		(sc_c * prefix, u2_t prefixLen);
 #endif
-	::llc::error_t		debug_print_prefix				(int8_t severity, const char * path, uint32_t line, const char * function);
+	err_t		debug_print_prefix				(s0_t severity, sc_c * path, u2_t line, sc_c * function);
 
 #ifndef LLC_ATMEL
-	tplt<size_t fmtLen, tpnm... TArgs>
-	static	void		_llc_debug_printf				(int severity, const char * path, uint32_t line, const char * function, const char (&format)[fmtLen], const TArgs... args)			{
+	tplt<u2_t fmtLen, tpnm... TArgs>
+	sttc	void		_llc_debug_printf				(s0_t severity, sc_c * path, u2_t line, sc_c * function, sc_c (&format)[fmtLen], cnst TArgs... args)			{
 		debug_print_prefix((int8_t)severity, path, line, function);
 #else
 	tplt<tpnm... TArgs>
-	static	void		_llc_debug_printf				(const char* function, const __FlashStringHelper* format, const TArgs... args)			{
+	sttc	void		_llc_debug_printf				(sc_c * function, cnst __FlashStringHelper * format, cnst TArgs... args)			{
 		base_log_print_F("{");
 		base_log_print(function);
 		base_log_print_F("}:");
@@ -36,33 +36,33 @@ namespace llc
 
 #ifdef LLC_ESP32 // Use dynamic string buffer to save flash space.
 		if(format) {
-			const uint32_t bufferSize = uint32_t(strlen(format) + 1024 * 2);
+			u2_c bufferSize = u2_t(strlen(format) + 1024 * 2);
 			if(char * customDynamicString = (char*)malloc(bufferSize)) {
-				const	size_t 	stringLength	= snprintf(customDynamicString, bufferSize - 2, format, args...);
-				customDynamicString[::llc::min(stringLength, size_t(bufferSize - 2))] = '\n';
-				customDynamicString[::llc::min(stringLength + 1, size_t(bufferSize - 1))] = 0;
-				base_log_write(customDynamicString, (int)::llc::min(stringLength + 1U, size_t(bufferSize - 1)));
+				u2_c 				stringLength		= (u2_t)snprintf(customDynamicString, bufferSize - 2U, format, args...);
+				customDynamicString[::llc::min(stringLength, bufferSize - 2U)] = '\n';
+				customDynamicString[::llc::min(stringLength + 1, bufferSize - 1U)] = 0;
+				base_log_write(customDynamicString, (int)::llc::min(stringLength + 1U, bufferSize - 1U));
 				free(customDynamicString);
 			}
 		}
 #else
 #	if defined(LLC_ATMEL) || defined(ESP8266)
-		char					customDynamicString	[128]		= {};
-		const	size_t 			stringLength					= snprintf_P(customDynamicString, sizeof(customDynamicString) - 1, (const char*)format, args...);
-		customDynamicString[min(stringLength, (size_t)sizeof(customDynamicString)-1)] = '\n';
+		sc_t					customDynamicString	[128]		= {};
+		u2_c 					stringLength					= (u2_t)snprintf_P(customDynamicString, szof(customDynamicString) - 1U, (cnst char*)format, args...);
+		customDynamicString[::llc::min(stringLength, szof(customDynamicString) - 1U)= '\n';
 	#else
-		char					customDynamicString	[fmtLen + 1024 * 32]	= {};
-		const	size_t 			stringLength					= ::llc::sprintf_s(customDynamicString, format, args...);
-		customDynamicString[min(stringLength, sizeof(customDynamicString)-2)] = '\n';
+		sc_t					customDynamicString	[fmtLen + 1024 * 32]	= {};
+		u2_c 					stringLength					= (u2_t)::llc::sprintf_s(customDynamicString, format, args...);
+		customDynamicString[::llc::min(stringLength, szof(customDynamicString) - 2U)] = '\n';
 		if(2 >= severity)
 			::llc::_llc_print_system_errors("", 0);
 #	endif
-		base_log_write(customDynamicString, (uint32_t)min(sizeof(customDynamicString), stringLength + 1));
+		base_log_write(customDynamicString, min(szof(customDynamicString), stringLength + 1U));
 #endif
 	}
 
-	tplt<tpnm... _tArgs>
-	stincxp	void*		nully				(_tArgs&&...)		{ return 0; }
+	tpl_vtArgs
+	sinx	void*		nully				(_tArgs&&...)		{ return 0; }
 
 }
 
@@ -157,17 +157,17 @@ namespace llc
 #endif
 
 //
-#define llc_rv_hrcall(retVal, hr_call)					do { ::HRESULT errCall_ = (hr_call); if FAILED(errCall_) { llc_debug_printf(0, "%s -> %" LLC_FMT_I32 " (0x%X): '%s'.", #hr_call, errCall_, ::llc::getWindowsErrorAsString(errCall_).begin()); return retVal; } } while(0)
-#define llc_rve_hrcall(retVal, hr_call, format, ...)	do { ::HRESULT errCall_ = (hr_call); if FAILED(errCall_) { llc_debug_printf(0, "%s -> %" LLC_FMT_I32 " (0x%X): '%s' " format, #hr_call, errCall_, ::llc::getWindowsErrorAsString(errCall_).begin(), __VA_ARGS__); return retVal; } } while(0)
+#define llc_rv_hrcall(retVal, hr_call)					do { ::HRESULT errCall_ = (hr_call); if FAILED(errCall_) { llc_debug_printf(0, "%s -> %" LLC_FMT_S2 " (0x%X): '%s'.", #hr_call, errCall_, ::llc::getWindowsErrorAsString(errCall_).begin()); return retVal; } } while(0)
+#define llc_rve_hrcall(retVal, hr_call, format, ...)	do { ::HRESULT errCall_ = (hr_call); if FAILED(errCall_) { llc_debug_printf(0, "%s -> %" LLC_FMT_S2 " (0x%X): '%s' " format, #hr_call, errCall_, ::llc::getWindowsErrorAsString(errCall_).begin(), __VA_ARGS__); return retVal; } } while(0)
 
 #define llc_hrcall(hr_call)				do { llc_rv_hrcall (-1, hr_call)				; } while(0)		// HRESULT call.
 #define llc_hrecall(hr_call, ...)		do { llc_rve_hrcall(-1, hr_call, __VA_ARGS__)	; } while(0)		// HRESULT call.
 
-#define llc_necs(llcl_call)					do { const auto _grr_rslt_val = llcl_call; if(0 > ::llc::error_t(_grr_rslt_val)) { error_printf("%s -> %" LLC_FMT_I32 "", #llcl_call, _grr_rslt_val); return -1; } } while(0) // Non-		propagable error call string.
+#define llc_necs(llcl_call)					do { cnst auto _grr_rslt_val = llcl_call; if(0 > ::llc::err_t(_grr_rslt_val)) { error_printf("%s -> %" LLC_FMT_S2 "", #llcl_call, _grr_rslt_val); return -1; } } while(0) // Non-		propagable error call string.
 #ifdef LLC_WINDOWS
-#	define llc_necall(llcl_call, format, ...)	do { const auto _grr_rslt_val = llcl_call; if(0 > ::llc::error_t(_grr_rslt_val)) { error_printf("%s -> %" LLC_FMT_I32 ": " format, #llcl_call, _grr_rslt_val, __VA_ARGS__); return -1; } } while(0)		// Non-propagable error call.
+#	define llc_necall(llcl_call, format, ...)	do { cnst auto _grr_rslt_val = llcl_call; if(0 > ::llc::err_t(_grr_rslt_val)) { error_printf("%s -> %" LLC_FMT_S2 ": " format, #llcl_call, _grr_rslt_val, __VA_ARGS__); return -1; } } while(0)		// Non-propagable error call.
 #else
-#	define llc_necall(llcl_call, format, ...)	do { const auto _grr_rslt_val = llcl_call; if(0 > ::llc::error_t(_grr_rslt_val)) { error_printf("%s -> %" LLC_FMT_I32 ": " format, #llcl_call, _grr_rslt_val, ##__VA_ARGS__); return -1; } } while(0)		// Non-propagable error call.
+#	define llc_necall(llcl_call, format, ...)	do { cnst auto _grr_rslt_val = llcl_call; if(0 > ::llc::err_t(_grr_rslt_val)) { error_printf("%s -> %" LLC_FMT_S2 ": " format, #llcl_call, _grr_rslt_val, ##__VA_ARGS__); return -1; } } while(0)		// Non-propagable error call.
 #endif
 
 #ifndef gthrow_if
@@ -808,33 +808,33 @@ namespace llc
 #define llc_fail_if_ge(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left >= (n2u_right), str_format, n2u_left, n2u_right)
 #define llc_fail_if_gt(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left  > (n2u_right), str_format, n2u_left, n2u_right)
 
-#define fail_if_eq2u(n2u_left, n2u_right) llc_fail_if_eq(LLC_FMT_EQ_U32, uint32_t(n2u_left), uint32_t(n2u_right))
-#define fail_if_ne2u(n2u_left, n2u_right) llc_fail_if_ne(LLC_FMT_NE_U32, uint32_t(n2u_left), uint32_t(n2u_right))
-#define fail_if_lt2u(n2u_left, n2u_right) llc_fail_if_lt(LLC_FMT_LT_U32, uint32_t(n2u_left), uint32_t(n2u_right))
-#define fail_if_le2u(n2u_left, n2u_right) llc_fail_if_le(LLC_FMT_LE_U32, uint32_t(n2u_left), uint32_t(n2u_right))
-#define fail_if_ge2u(n2u_left, n2u_right) llc_fail_if_ge(LLC_FMT_GE_U32, uint32_t(n2u_left), uint32_t(n2u_right))
-#define fail_if_gt2u(n2u_left, n2u_right) llc_fail_if_gt(LLC_FMT_GT_U32, uint32_t(n2u_left), uint32_t(n2u_right))
+#define fail_if_eq2u(n2u_left, n2u_right) llc_fail_if_eq(LLC_FMT_EQ_U2, u2_t(n2u_left), u2_t(n2u_right))
+#define fail_if_ne2u(n2u_left, n2u_right) llc_fail_if_ne(LLC_FMT_NE_U2, u2_t(n2u_left), u2_t(n2u_right))
+#define fail_if_lt2u(n2u_left, n2u_right) llc_fail_if_lt(LLC_FMT_LT_U2, u2_t(n2u_left), u2_t(n2u_right))
+#define fail_if_le2u(n2u_left, n2u_right) llc_fail_if_le(LLC_FMT_LE_U2, u2_t(n2u_left), u2_t(n2u_right))
+#define fail_if_ge2u(n2u_left, n2u_right) llc_fail_if_ge(LLC_FMT_GE_U2, u2_t(n2u_left), u2_t(n2u_right))
+#define fail_if_gt2u(n2u_left, n2u_right) llc_fail_if_gt(LLC_FMT_GT_U2, u2_t(n2u_left), u2_t(n2u_right))
 
-#define fail_if_eq2s(n2s_left, n2s_right) llc_fail_if_eq(LLC_FMT_EQ_I32, int32_t(n2s_left), int32_t(n2s_right))
-#define fail_if_ne2s(n2s_left, n2s_right) llc_fail_if_ne(LLC_FMT_NE_I32, int32_t(n2s_left), int32_t(n2s_right))
-#define fail_if_lt2s(n2s_left, n2s_right) llc_fail_if_lt(LLC_FMT_LT_I32, int32_t(n2s_left), int32_t(n2s_right))
-#define fail_if_le2s(n2s_left, n2s_right) llc_fail_if_le(LLC_FMT_LE_I32, int32_t(n2s_left), int32_t(n2s_right))
-#define fail_if_ge2s(n2s_left, n2s_right) llc_fail_if_ge(LLC_FMT_GE_I32, int32_t(n2s_left), int32_t(n2s_right))
-#define fail_if_gt2s(n2s_left, n2s_right) llc_fail_if_gt(LLC_FMT_GT_I32, int32_t(n2s_left), int32_t(n2s_right))
+#define fail_if_eq2s(n2s_left, n2s_right) llc_fail_if_eq(LLC_FMT_EQ_S2, int32_t(n2s_left), int32_t(n2s_right))
+#define fail_if_ne2s(n2s_left, n2s_right) llc_fail_if_ne(LLC_FMT_NE_S2, int32_t(n2s_left), int32_t(n2s_right))
+#define fail_if_lt2s(n2s_left, n2s_right) llc_fail_if_lt(LLC_FMT_LT_S2, int32_t(n2s_left), int32_t(n2s_right))
+#define fail_if_le2s(n2s_left, n2s_right) llc_fail_if_le(LLC_FMT_LE_S2, int32_t(n2s_left), int32_t(n2s_right))
+#define fail_if_ge2s(n2s_left, n2s_right) llc_fail_if_ge(LLC_FMT_GE_S2, int32_t(n2s_left), int32_t(n2s_right))
+#define fail_if_gt2s(n2s_left, n2s_right) llc_fail_if_gt(LLC_FMT_GT_S22, int32_t(n2s_left), int32_t(n2s_right))
 
-#define fail_if_eq3u(n3u_left, n3u_right) llc_fail_if_eq(LLC_FMT_EQ_U64, uint64_t(n3u_left), uint64_t(n3u_right))
-#define fail_if_ne3u(n3u_left, n3u_right) llc_fail_if_ne(LLC_FMT_NE_U64, uint64_t(n3u_left), uint64_t(n3u_right))
-#define fail_if_lt3u(n3u_left, n3u_right) llc_fail_if_lt(LLC_FMT_LT_U64, uint64_t(n3u_left), uint64_t(n3u_right))
-#define fail_if_le3u(n3u_left, n3u_right) llc_fail_if_le(LLC_FMT_LE_U64, uint64_t(n3u_left), uint64_t(n3u_right))
-#define fail_if_ge3u(n3u_left, n3u_right) llc_fail_if_ge(LLC_FMT_GE_U64, uint64_t(n3u_left), uint64_t(n3u_right))
-#define fail_if_gt3u(n3u_left, n3u_right) llc_fail_if_gt(LLC_FMT_GT_U64, uint64_t(n3u_left), uint64_t(n3u_right))
+#define fail_if_eq3u(n3u_left, n3u_right) llc_fail_if_eq(LLC_FMT_EQ_U3, uint64_t(n3u_left), uint64_t(n3u_right))
+#define fail_if_ne3u(n3u_left, n3u_right) llc_fail_if_ne(LLC_FMT_NE_U3, uint64_t(n3u_left), uint64_t(n3u_right))
+#define fail_if_lt3u(n3u_left, n3u_right) llc_fail_if_lt(LLC_FMT_LT_U3, uint64_t(n3u_left), uint64_t(n3u_right))
+#define fail_if_le3u(n3u_left, n3u_right) llc_fail_if_le(LLC_FMT_LE_U3, uint64_t(n3u_left), uint64_t(n3u_right))
+#define fail_if_ge3u(n3u_left, n3u_right) llc_fail_if_ge(LLC_FMT_GE_U3, uint64_t(n3u_left), uint64_t(n3u_right))
+#define fail_if_gt3u(n3u_left, n3u_right) llc_fail_if_gt(LLC_FMT_GT_U3, uint64_t(n3u_left), uint64_t(n3u_right))
 
-#define fail_if_eq3s(n3s_left, n3s_right) llc_fail_if_eq(LLC_FMT_EQ_I64, int64_t(n3s_left), int64_t(n3s_right))
-#define fail_if_ne3s(n3s_left, n3s_right) llc_fail_if_ne(LLC_FMT_NE_I64, int64_t(n3s_left), int64_t(n3s_right))
-#define fail_if_lt3s(n3s_left, n3s_right) llc_fail_if_lt(LLC_FMT_LT_I64, int64_t(n3s_left), int64_t(n3s_right))
-#define fail_if_le3s(n3s_left, n3s_right) llc_fail_if_le(LLC_FMT_LE_I64, int64_t(n3s_left), int64_t(n3s_right))
-#define fail_if_ge3s(n3s_left, n3s_right) llc_fail_if_ge(LLC_FMT_GE_I64, int64_t(n3s_left), int64_t(n3s_right))
-#define fail_if_gt3s(n3s_left, n3s_right) llc_fail_if_gt(LLC_FMT_GT_I64, int64_t(n3s_left), int64_t(n3s_right))
+#define fail_if_eq3s(n3s_left, n3s_right) llc_fail_if_eq(LLC_FMT_EQ_S3, int64_t(n3s_left), int64_t(n3s_right))
+#define fail_if_ne3s(n3s_left, n3s_right) llc_fail_if_ne(LLC_FMT_NE_S3, int64_t(n3s_left), int64_t(n3s_right))
+#define fail_if_lt3s(n3s_left, n3s_right) llc_fail_if_lt(LLC_FMT_LT_S3, int64_t(n3s_left), int64_t(n3s_right))
+#define fail_if_le3s(n3s_left, n3s_right) llc_fail_if_le(LLC_FMT_LE_S3, int64_t(n3s_left), int64_t(n3s_right))
+#define fail_if_ge3s(n3s_left, n3s_right) llc_fail_if_ge(LLC_FMT_GE_S3, int64_t(n3s_left), int64_t(n3s_right))
+#define fail_if_gt3s(n3s_left, n3s_right) llc_fail_if_gt(LLC_FMT_GT_S3, int64_t(n3s_left), int64_t(n3s_right))
 
 #define fail_if_equ fail_if_eq2u
 #define fail_if_neu fail_if_ne2u

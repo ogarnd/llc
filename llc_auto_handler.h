@@ -9,21 +9,21 @@ namespace llc
 	 // I have no idea how to call this type so I'm really sorry. Something about raii maybe?
 	tplt<tpnm _tHandle, _tHandle _vDefault>
 	struct auto_handler {
-		typedef	auto_handler<_tHandle, _vDefault>	TWrapper;
+		tydf	auto_handler<_tHandle, _vDefault>	TWrapper;
 
 				_tHandle							Handle							= _vDefault;
-		stacxpr	const _tHandle						VDefault						= _vDefault;
+		stxp	const _tHandle						VDefault						= _vDefault;
 
-		inlcxpr										auto_handler					()								noexcept	= default;
-		inlcxpr										auto_handler					(const _tHandle & other)		noexcept	= delete;
-		inlcxpr										auto_handler					(const TWrapper & other)		noexcept	= delete;
+		inxp										auto_handler					()								noexcept	= default;
+		inxp										auto_handler					(const _tHandle & other)		noexcept	= delete;
+		inxp										auto_handler					(const TWrapper & other)		noexcept	= delete;
 
-		inlcxpr	operator							const _tHandle&					()						const	noexcept	{ return Handle;		}
+		inxp	oper							const _tHandle&					()						const	noexcept	{ return Handle;		}
 
-		inline	TWrapper							operator=						(const _tHandle & other)		noexcept	= delete;
-		inline	_tHandle*							operator&						()								noexcept	{ return &Handle;		}
+		inline	TWrapper							oper=						(const _tHandle & other)		noexcept	= delete;
+		inline	_tHandle*							oper&						()								noexcept	{ return &Handle;		}
 #if !defined(LLC_ATMEL)
-		inlcxpr	const _tHandle*						operator&						()						const	noexcept	{ return &Handle;		}
+		inxp	const _tHandle*						oper&						()						const	noexcept	{ return &Handle;		}
 #endif
 	};
 } // namespace

@@ -17,7 +17,7 @@
 ////#	include <unistd.h>
 #endif
 
-stacxpr	uint32_t LLC_MAX_PATH = 256;
+stxp	uint32_t LLC_MAX_PATH = 256;
 //
 ::llc::error_t			llc::pathCreate				(const ::llc::vcs & pathName, sc_c separator) {
 	rww_if(0 == pathName.begin(), "%s.", "pathName is null.");
@@ -32,13 +32,13 @@ stacxpr	uint32_t LLC_MAX_PATH = 256;
 				break;
 			continue;
 		}
-		ree_if(0 == strncpy_s(folder, pathName.begin(), (offsetBar < 0) ? pathName.size() : offsetBar), "String buffer overflow? Path size: %" LLC_FMT_U32 ".", pathName.size());
+		ree_if(0 == strncpy_s(folder, pathName.begin(), (offsetBar < 0) ? pathName.size() : offsetBar), "String buffer overflow? Path size: %" LLC_FMT_U2 ".", pathName.size());
 		if(0 == strcmp(".", folder))
 			continue;
 #if defined(LLC_WINDOWS)
 		if(!CreateDirectoryA(folder, NULL)) {
 			DWORD						err							= GetLastError();
-			ree_if(err != ERROR_ALREADY_EXISTS, "Failed to create directory: %s. hr: (%" LLC_FMT_U32 ")", folder, err);
+			ree_if(err != ERROR_ALREADY_EXISTS, "Failed to create directory: %s. hr: (%" LLC_FMT_U2 ")", folder, err);
 		}
 #else
 		struct stat st = {0};
@@ -114,14 +114,14 @@ stacxpr	uint32_t LLC_MAX_PATH = 256;
 }
 
 #if !defined(LLC_ESP8266) // && !defined(LLC_ESP32) && !defined(LLC_ARDUINO) 
-stacxpr	const char		curDir	[]					= ".";
-stacxpr	const char		parDir	[]					= "..";
+stxp	const char		curDir	[]					= ".";
+stxp	const char		parDir	[]					= "..";
 #endif
 
 ::llc::error_t			llc::pathList				(const ::llc::vcs & pathToList, ::llc::aachar & output, bool listFolders, const ::llc::vcs extension)	{
 	::llc::asc_t				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcs{pathToList.begin(), pathToList.size() - 1};
 	char						bufferFormat[16]			=  {};
-	snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U32 "s/*.*", withoutTrailingSlash.size());
+	snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U2 "s/*.*", withoutTrailingSlash.size());
 	char						sPath	[LLC_MAX_PATH]		= {};
 	llc_necall(snprintf(sPath, ::llc::size(sPath) - 2, bufferFormat, withoutTrailingSlash.begin()), "bufferFormat: '%s'. withoutTrailingSlash: '%s'", bufferFormat, withoutTrailingSlash.begin());
 
@@ -133,7 +133,7 @@ stacxpr	const char		parDir	[]					= "..";
 	do if(	0 != strcmp(fdFile.cFileName, curDir)
 		 &&	0 != strcmp(fdFile.cFileName, parDir)
 		) {
-		snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U32 "s/%%s", withoutTrailingSlash.size());
+		snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U2 "s/%%s", withoutTrailingSlash.size());
 		int32_t						lenPath						= snprintf(sPath, ::llc::size(sPath) - 2, bufferFormat, withoutTrailingSlash.begin(), fdFile.cFileName);
 		if((fdFile.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && false == listFolders)
 			continue;
@@ -169,7 +169,7 @@ stacxpr	const char		parDir	[]					= "..";
 ::llc::error_t			llc::pathList				(const ::llc::vcs & pathToList, ::llc::SPathContents & pathContents, const llc::vcs extension)						{
 	::llc::asc_t				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcs{pathToList.begin(), pathToList.size() - 1};
 	char						bufferFormat[36]			= {};
-	snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U32 "s/*.*", withoutTrailingSlash.size());
+	snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U2 "s/*.*", withoutTrailingSlash.size());
 	char						sPath[LLC_MAX_PATH]			= {};
 	llc_necall(snprintf(sPath, ::llc::size(sPath) - 2, bufferFormat, withoutTrailingSlash.begin()), "%s", "Path too long?");
 #if defined(LLC_WINDOWS)
@@ -181,7 +181,7 @@ stacxpr	const char		parDir	[]					= "..";
 		 &&	0 != strcmp(fdFile.cFileName, parDir)
 		) {
 		//_CrtCheckMemory();
-		snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U32 "s/%%s", withoutTrailingSlash.size());
+		snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U2 "s/%%s", withoutTrailingSlash.size());
 		int32_t						lenPath						= snprintf(sPath, ::llc::size(sPath) - 2, bufferFormat, withoutTrailingSlash.begin(), fdFile.cFileName);
 		if(fdFile.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
 			::llc::error_t				newFolderIndex				= pathContents.Folders.push_back({});
@@ -193,7 +193,7 @@ stacxpr	const char		parDir	[]					= "..";
 			int32_t						indexFile;
 			llc_necall(indexFile = pathContents.Files.push_back(::llc::view<const char>{sPath, (uint32_t)lenPath}), "%s", "Failed to push path to output list");
 			//pathContents.Files[indexFile].push_back(0);
-			verbose_printf("File %" LLC_FMT_U32 ": %s.", indexFile, sPath);
+			verbose_printf("File %" LLC_FMT_U2 ": %s.", indexFile, sPath);
 		}
 		//_CrtCheckMemory();
 	}

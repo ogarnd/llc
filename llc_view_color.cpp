@@ -1,7 +1,7 @@
 #include "llc_view_color.h"
 
 ::llc::error_t llc::vcu82bgr8(const ::llc::vcu0_t & bytes, ::llc::bgr8 & colorToSet) {
-	rees_if(sizeof(::llc::bgr8) > bytes.size());
+	rees_if(szof(::llc::bgr8) > bytes.size());
 	colorToSet.r = bytes[2]; 
 	colorToSet.g = bytes[1]; 
 	colorToSet.b = bytes[0]; 
@@ -9,7 +9,7 @@
 }
 
 ::llc::error_t llc::vcu82bgra8(const ::llc::vcu0_t & bytes, ::llc::bgra8 & colorToSet) {
-	rees_if(sizeof(::llc::bgra8) > bytes.size());
+	rees_if(szof(::llc::bgra8) > bytes.size());
 	colorToSet.a = bytes[3];
 	colorToSet.r = bytes[2]; 
 	colorToSet.g = bytes[1]; 

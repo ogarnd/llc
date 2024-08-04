@@ -11,10 +11,10 @@ namespace llc
 					_tVal									Val;
 	};
 
-	typedef		::llc::SKeyVal<::llc::vcc, ::llc::vcc>
+	tydf		::llc::SKeyVal<::llc::vcc, ::llc::vcc>
 														TKeyValConstChar, TKeyValConstString;
 
-	//typedef		::llc::SKeyVal<::llc::vcs, ::llc::vcs> TKeyValConstString;
+	//tydf		::llc::SKeyVal<::llc::vcs, ::llc::vcs> TKeyValConstString;
 
 				::llc::error_t							token_split						(char token, const ::llc::vcs& input_string, TKeyValConstChar& output_views);
 	inline		::llc::error_t							keyval_split					(const ::llc::vcs& input_string, TKeyValConstString& out_keyval) { return ::llc::token_split('=', input_string, out_keyval); }

@@ -110,19 +110,21 @@
 #define cnst
 
 #define operatr	            
-#define cnstxpr	            
-#define inlcxpr	            
-#define stacxpr	            
-#define stainli	            
-#define stincxp	            
+#define cxpr	            
+#define inxp	            
+#define stxp	            
+#define stin	            
+#define sinx	            
 
-#define nodscrd             
-#define ndsttic             
-#define ndinlne             
-#define ndcnxpr             
-#define ndstain             
-#define ndstcxp             
-#define ndincxp             
-#define ndstinx             
+#define ndsc             
+#define ndst             
+#define ndin             
+#define ndxp             
+#define ndsi             
+#define ndsx             
+#define ndix             
+#define nsix             
 
-#define cxp_if
+#define cxpr_if
+
+#define LLC_USING_TYPEINT

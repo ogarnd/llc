@@ -9,9 +9,9 @@ namespace llc
 {
 	tplt<tpnm _tObj>
 	struct array_obj : public array_base<_tObj> {
-		typedef	_tObj			T						;
-		typedef	view<T>			TView					;
-		typedef	array_obj<T>	TArray					;
+		tydf	_tObj			T						;
+		tydf	view<T>			TView					;
+		tydf	array_obj<T>	TArray					;
 
 		using array_base<T>		::Count					;
 		using array_base<T>		::Data					;
@@ -20,7 +20,7 @@ namespace llc
 
 		inline					~array_obj			()			{ for(uint32_t i = 0; i < Count; ++i) Data[i].~T(); }	// dtor
 
-		inlcxpr					array_obj			()			= default;
+		inxp					array_obj			()			= default;
 		inline					array_obj			(TArray&& other)											noexcept	{
 			Size					= other.Size;
 			Count					= other.Count;
@@ -33,7 +33,7 @@ namespace llc
 								array_obj			(const view<const T> & other)										{
 			uint32_t					newCount			= other.size();
 			if(newCount) {
-				gthrow_if(errored(reserve(newCount)), "Requested size: %" LLC_FMT_U32 ". ", (uint32_t)newCount);
+				gthrow_if(errored(reserve(newCount)), "Requested size: %" LLC_FMT_U2 ". ", (uint32_t)newCount);
 				for(; Count < newCount; ++Count)
 					new (&Data[Count]) T(other.begin()[Count]);
 			}
@@ -41,20 +41,20 @@ namespace llc
 								array_obj			(const view<T> & other)												{
 			uint32_t					newCount			= other.size();
 			if(newCount) {
-				gthrow_if(errored(reserve(newCount)), "Requested size: %" LLC_FMT_U32 ". ", (uint32_t)newCount);
+				gthrow_if(errored(reserve(newCount)), "Requested size: %" LLC_FMT_U2 ". ", (uint32_t)newCount);
 				for(; Count < newCount; ++Count)
 					new (&Data[Count]) T(other.begin()[Count]);
 			}
 		}
 								array_obj			(::std::initializer_list<T> init)				{
-			gthrow_if(errored(append(init.begin(), (uint32_t)init.size())), "Failed to resize array! Why? Initializer list size: %" LLC_FMT_U32 ".", (uint32_t)init.size());
+			gthrow_if(errored(append(init.begin(), (uint32_t)init.size())), "Failed to resize array! Why? Initializer list size: %" LLC_FMT_U2 ".", (uint32_t)init.size());
 		}
 		tplt<size_t _count>
 								array_obj			(const T (&other)[_count])							{
-			gthrow_if(errored(append(other, (uint32_t)_count)), "Failed to resize array! Why? Initializer list size: %" LLC_FMT_U32 ".", (uint32_t)_count);
+			gthrow_if(errored(append(other, (uint32_t)_count)), "Failed to resize array! Why? Initializer list size: %" LLC_FMT_U2 ".", (uint32_t)_count);
 		}
-		inlcxpr	operator		view<const T>		()									const	noexcept	{ return {Data, Count}; }
-		inline	TArray&			operator=			(const TArray & other)									{
+		inxp	oper		view<const T>		()									const	noexcept	{ return {Data, Count}; }
+		inline	TArray&			oper=			(const TArray & other)									{
 			gsthrow_if(resize(other.size()) != (int32_t)other.size());
 			for(uint32_t iElement = 0; iElement < Count; ++iElement)
 				Data[iElement]			= other[iElement];
@@ -66,8 +66,8 @@ namespace llc
 		::llc::error_t			reserve				(uint32_t newCount)										{
 			if(newCount > Size) {
 				T							* newData			= 0;
-				const uint32_t				newSize				= alloc_with_reserve(newCount, newData);
-				ree_if(0 == newData, "newCount: %" LLC_FMT_I32 ", newSize: %" LLC_FMT_I32 "", newCount, newSize);
+				u2_c				newSize				= alloc_with_reserve(newCount, newData);
+				ree_if(0 == newData, "newCount: %" LLC_FMT_S2 ", newSize: %" LLC_FMT_S2 "", newCount, newSize);
 				for(uint32_t iElement = 0; iElement < Count; ++iElement) {
 					new (&newData[iElement]) T(Data[iElement]);
 					Data[iElement].~T();
@@ -137,14 +137,14 @@ namespace llc
 		inline	::llc::error_t	erase				(const T * address)																	{
 			ree_if(0 == Data, "Uninitialized array pointer! Invalid address to erase: %p.", address);
 			const ptrdiff_t				ptrDiff				= ptrdiff_t(address) - (ptrdiff_t)Data;
-			const uint32_t				index				= (uint32_t)(ptrDiff / (ptrdiff_t)sizeof(T));
-			ree_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
+			u2_c				index				= (uint32_t)(ptrDiff / (ptrdiff_t)szof(T));
+			ree_if(index >= Count, LLC_FMT_GE_U2, index, Count);
 			return remove(index);
 		}
 
 		::llc::error_t			remove				(uint32_t index)																		{
-			ree_if(0 == Data, "Uninitialized array pointer! Invalid index to erase: %" LLC_FMT_U32 ".", index);
-			ree_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
+			ree_if(0 == Data, "Uninitialized array pointer! Invalid index to erase: %" LLC_FMT_U2 ".", index);
+			ree_if(index >= Count, LLC_FMT_GE_U2, index, Count);
 			--Count;
 			while(index < Count) {
 				Data[index].~T();							// Destroy old
@@ -157,8 +157,8 @@ namespace llc
 
 		// Returns the new size of the list or -1 if the array pointer is not initialized.
 		::llc::error_t			remove_unordered	(uint32_t index)																		{
-			ree_if(0 == Data, "Uninitialized array pointer! Invalid index to erase: %" LLC_FMT_U32 ".", index);
-			ree_if(index >= Count, LLC_FMT_U32_GE_U32, index, Count);
+			ree_if(0 == Data, "Uninitialized array pointer! Invalid index to erase: %" LLC_FMT_U2 ".", index);
+			ree_if(index >= Count, LLC_FMT_GE_U2, index, Count);
 			Data[index].~T();							// Destroy old
 			if(1 == Count || index == (Count - 1))
 				--Count;
@@ -177,7 +177,7 @@ namespace llc
 				return Count;
 
 			llc_necs(reserve(Count + chainLength));
-			const uint32_t				iFirst				= Count;
+			u2_c				iFirst				= Count;
 			for(uint32_t i = 0; i < chainLength; ++i)
 				new (&Data[Count++]) T{chainToAppend[i]};
 			return iFirst;
@@ -185,11 +185,11 @@ namespace llc
 
 		// returns the new size of the list or -1 on failure.
 		::llc::error_t			insert				(uint32_t index, const T & newValue)										noexcept	{
-			ree_if(index > Count, "Invalid index: %" LLC_FMT_U32 ".", index);
-			const uint32_t				newCount			= Count + 1;
+			ree_if(index > Count, "Invalid index: %" LLC_FMT_U2 ".", index);
+			u2_c				newCount			= Count + 1;
 			if(Size < newCount) {
 				T							* newData			= 0;
-				const uint32_t				newSize				= alloc_with_reserve(newCount, newData);
+				u2_c				newSize				= alloc_with_reserve(newCount, newData);
 				rees_if(0 == newData);
 				for(uint32_t i = 0; i < index; ++i) {
 					new (&newData[i]) T(Data[i]);
@@ -217,12 +217,12 @@ namespace llc
 
 		// returns the new size of the list or -1 on failure.
 		::llc::error_t			insert				(uint32_t index, const T * chainToInsert, uint32_t chainLength)			noexcept	{
-			ree_if(index > Count, "Invalid index: %" LLC_FMT_U32 ".", index);
+			ree_if(index > Count, "Invalid index: %" LLC_FMT_U2 ".", index);
 
-			const uint32_t				newCount			= Count + chainLength;
+			u2_c				newCount			= Count + chainLength;
 			if(Size < newCount) {
 				T							* newData			= 0;
-				const uint32_t				newSize				= alloc_with_reserve(newCount, newData);
+				u2_c				newSize				= alloc_with_reserve(newCount, newData);
 				rees_if(0 == newData);
 				for(uint32_t i = 0; i < index; ++i) {
 					new (&newData[i]) T(Data[i]);
@@ -265,32 +265,32 @@ namespace llc
 	tplT	using aview		= ::llc::aobj	<::llc::view<T>>; 
 	tplT	using av		= ::llc::aview	<T>; 
 
-	typedef	::llc::aview<uc_t	>	avuc;
-	typedef	::llc::aview<char		>	avc;
-	typedef	::llc::aview<float		>	avf32, avf;
-	typedef	::llc::aview<double		>	avf64, avd;
-	typedef	::llc::aview<uint8_t	>	avu8;
-	typedef	::llc::aview<uint16_t	>	avu16;
-	typedef	::llc::aview<uint32_t	>	avu32;
-	typedef	::llc::aview<uint64_t	>	avu64;
-	typedef	::llc::aview<int8_t		>	avi8;
-	typedef	::llc::aview<int16_t	>	avi16;
-	typedef	::llc::aview<int32_t	>	avi32;
-	typedef	::llc::aview<int64_t	>	avi64;
+	tydf	::llc::aview<uc_t	>	avuc;
+	tydf	::llc::aview<char		>	avc;
+	tydf	::llc::aview<float		>	avf32, avf;
+	tydf	::llc::aview<double		>	avf64, avd;
+	tydf	::llc::aview<uint8_t	>	avu8;
+	tydf	::llc::aview<uint16_t	>	avu16;
+	tydf	::llc::aview<uint32_t	>	avu32;
+	tydf	::llc::aview<uint64_t	>	avu64;
+	tydf	::llc::aview<int8_t		>	avi8;
+	tydf	::llc::aview<int16_t	>	avi16;
+	tydf	::llc::aview<int32_t	>	avi32;
+	tydf	::llc::aview<int64_t	>	avi64;
 
 	// view<const> common typedefs
-	typedef	::llc::aview<const uc_t	>	avcuc;
-	typedef	::llc::aview<const char		>	avcc;
-	typedef	::llc::aview<const float	>	avcf32, avcf;
-	typedef	::llc::aview<const double	>	avcf64, avcd;
-	typedef	::llc::aview<const uint8_t	>	avcu8;
-	typedef	::llc::aview<const uint16_t	>	avcu16;
-	typedef	::llc::aview<const uint32_t	>	avcu32;
-	typedef	::llc::aview<const uint64_t	>	avcu64;
-	typedef	::llc::aview<const int8_t	>	avci8;
-	typedef	::llc::aview<const int16_t	>	avci16;
-	typedef	::llc::aview<const int32_t	>	avci32;
-	typedef	::llc::aview<const int64_t	>	avci64;
+	tydf	::llc::aview<const uc_t	>	avcuc;
+	tydf	::llc::aview<const char		>	avcc;
+	tydf	::llc::aview<const float	>	avcf32, avcf;
+	tydf	::llc::aview<const double	>	avcf64, avcd;
+	tydf	::llc::aview<const uint8_t	>	avcu8;
+	tydf	::llc::aview<const uint16_t	>	avcu16;
+	tydf	::llc::aview<u2_c	>	avcu32;
+	tydf	::llc::aview<const uint64_t	>	avcu64;
+	tydf	::llc::aview<const int8_t	>	avci8;
+	tydf	::llc::aview<const int16_t	>	avci16;
+	tydf	::llc::aview<const int32_t	>	avci32;
+	tydf	::llc::aview<const int64_t	>	avci64;
 
 
 	tplT	::llc::error_t							split					(const ::llc::view<const T> & target, const T & separator, ::llc::aobj<::llc::view<const T>> & split)	{
@@ -344,7 +344,7 @@ namespace llc
 
 
 
-	typedef ::llc::SKeyVal<::llc::vcs, ::llc::aobj<::llc::vcs>>	TKeyValConstStringArray;
+	tydf ::llc::SKeyVal<::llc::vcs, ::llc::aobj<::llc::vcs>>	TKeyValConstStringArray;
 	//------------------------------------------------------------------------------------------------------------
 	::llc::error_t							keyValConstStringDeserialize	(const ::llc::vcu0_t & input, ::llc::aobj<::llc::TKeyValConstChar> & output);
 

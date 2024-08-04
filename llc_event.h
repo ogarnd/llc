@@ -10,13 +10,12 @@
 
 namespace llc
 {
-	tplt<tpnm _tEventType>
-	struct SEventView {
-		typedef	_tEventType			T;
-		typedef	SEventView<T>		TEView;
+	tpl_t struct SEventView {
+		tdfT(_t);
+		tydf	SEventView<T>		TEView;
 
 		T				Type		= {};
-		::llc::vcu0_t		Data		= {};
+		::llc::vcu0_t	Data		= {};
 
 		::llc::error_t	Save		(::llc::au0_t & output)	const	{
 			llc_necs(llc::savePOD (output, Type));
@@ -40,9 +39,9 @@ namespace llc
 
 	tplt<tpnm _tEventType>
 	struct SEvent {
-		typedef _tEventType			T;
-		typedef ::llc::SEView<T>	TEView;
-		typedef ::llc::SEvent<T>	TEvent;
+		tydf _tEventType			T;
+		tydf ::llc::SEView<T>	TEView;
+		tydf ::llc::SEvent<T>	TEvent;
 
 		T				Type		= {};
 		::llc::au0_t		Data		= {};
@@ -52,10 +51,10 @@ namespace llc
 						SEvent		(T type, const ::llc::vcu0_t data)	: Type(type), Data(data.cu8()) {}
 						SEvent		(const TEView & eventView)			: Type(eventView.Type), Data(eventView.Data) {}
 
-		TEvent&			operator= 	(const TEvent &)				= default;
-		TEvent&			operator= 	(const TEView & eventView)		{ Type = eventView.Type; Data = eventView.Data; return *this; }
+		TEvent&			oper= 	(const TEvent &)				= default;
+		TEvent&			oper= 	(const TEView & eventView)		{ Type = eventView.Type; Data = eventView.Data; return *this; }
 
-		operator		TEView		()						const	{ return {Type, Data.cu8()}; }
+		oper		TEView		()						const	{ return {Type, Data.cu8()}; }
 
 		::llc::error_t	Save		(::llc::au0_t & output)	const	{
 			llc_necs(llc::savePOD(output, Type));
@@ -113,7 +112,7 @@ namespace llc
 
 	tplt <tpnm _tEvntParent, tpnm _tEvntChild, tpnm _tPOD>
 	static	::llc::error_t	eventEnqueueChild	(::llc::TEventQueue<_tEvntParent> & eventQueue, _tEvntParent parentEventType, _tEvntChild childEventType, const _tPOD & childEventDataType) {
-		return ::llc::eventEnqueueChild(eventQueue, parentEventType, childEventType, ::llc::vcu0_t{(const uint8_t*)&childEventDataType, sizeof(_tPOD)});
+		return ::llc::eventEnqueueChild(eventQueue, parentEventType, childEventType, ::llc::vcu0_t{(const uint8_t*)&childEventDataType, szof(_tPOD)});
 	}
 
 	tplt<tpnm _tChildEvent, tpnm _tParentEvent>
@@ -123,14 +122,14 @@ namespace llc
 		return funcHandleChild(childEvent);
 	}
 
-	typedef ::llc::SEvent            <::llc::RESULT>	SEventResult;
-	typedef ::llc::SEventView        <::llc::RESULT>	SEViewResult;
-	typedef ::llc::FEventHandler     <::llc::RESULT>	FEventResult;
-	typedef ::llc::FEventHandlerConst<::llc::RESULT>	FEventResultConst;
-	typedef ::llc::SEvent            <::llc::COMMAND>	SEventCommand;
-	typedef ::llc::SEventView        <::llc::COMMAND>	SEViewCommand;
-	typedef ::llc::FEventHandler     <::llc::COMMAND>	FEventCommand;
-	typedef ::llc::FEventHandlerConst<::llc::COMMAND>	FEventCommandConst;
+	tydf ::llc::SEvent            <::llc::RESULT>	SEventResult;
+	tydf ::llc::SEventView        <::llc::RESULT>	SEViewResult;
+	tydf ::llc::FEventHandler     <::llc::RESULT>	FEventResult;
+	tydf ::llc::FEventHandlerConst<::llc::RESULT>	FEventResultConst;
+	tydf ::llc::SEvent            <::llc::COMMAND>	SEventCommand;
+	tydf ::llc::SEventView        <::llc::COMMAND>	SEViewCommand;
+	tydf ::llc::FEventHandler     <::llc::COMMAND>	FEventCommand;
+	tydf ::llc::FEventHandlerConst<::llc::COMMAND>	FEventCommandConst;
 }
 
 #define llc_warning_unhandled_event(eventUnhandled)	warning_printf("Unhandled '%s' event: '%s' (0x%llX)(%lli)(%c)"	, ::llc::get_enum_namep((eventUnhandled).Type), ::llc::get_value_namep((eventUnhandled).Type), (uint64_t)(eventUnhandled).Type, (int64_t)(eventUnhandled).Type, char((eventUnhandled).Type ? (eventUnhandled).Type : ' '))

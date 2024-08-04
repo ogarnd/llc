@@ -3,7 +3,7 @@
 #ifndef LLC_ATMEL
 llc::err_t	llc::appendHtmlScripts	(::llc::asc_t & output, llc::vcvcs filenames) { 
 	::llc::err_t 		result 				= 0;
-	stacxpr	const char	FMT_ATTR_SRC_JS	[]	= "type=\"text/javascript\" src=\"/%s.js\"";
+	stxp	const char	FMT_ATTR_SRC_JS	[]	= "type=\"text/javascript\" src=\"/%s.js\"";
 	for(uint32_t iFile = 0; iFile < filenames.size(); ++iFile) {
 		char 				cooked	[128] 		= {};
 		if_fail_e(::llc::sprintf_s(cooked, FMT_ATTR_SRC_JS, filenames[iFile].begin()));
@@ -13,7 +13,7 @@ llc::err_t	llc::appendHtmlScripts	(::llc::asc_t & output, llc::vcvcs filenames) 
 }
 llc::err_t	llc::appendHtmlStyles	(::llc::asc_t & output, llc::vcvcs filenames) { 
 	::llc::err_t 		result 				= 0;
-	stacxpr	const char	FMT_ATTR_HREF_CSS	[]	= "rel=\"stylesheet\" href=\"/%s.css\"";
+	stxp	const char	FMT_ATTR_HREF_CSS	[]	= "rel=\"stylesheet\" href=\"/%s.css\"";
 	for(uint32_t iFile = 0; iFile < filenames.size(); ++iFile) {
 		char 				cooked	[128] 		= {};
 		if_fail_e(::llc::sprintf_s(cooked, FMT_ATTR_HREF_CSS, filenames[iFile].begin()));

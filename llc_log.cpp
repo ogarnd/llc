@@ -27,13 +27,13 @@
 #endif
 
 #ifdef LLC_ATMEL
-stacxpr		int		LOG_PREFIX_BUFFER_SIZE	= 64;
+stxp		int		LOG_PREFIX_BUFFER_SIZE	= 64;
 #else
-stacxpr		int		LOG_PREFIX_BUFFER_SIZE	= 256;
+stxp		int		LOG_PREFIX_BUFFER_SIZE	= 256;
 #endif
 
 ::llc::error_t			llc::debug_print_prefix				(int8_t severity, const char * path, uint32_t line, const char * function) {
-	stacxpr sc_c	STR_DEBUG_PREFIX[]					= "%i|%llu|%s(%" LLC_FMT_U32 "){%s}:";
+	stxp sc_c	STR_DEBUG_PREFIX[]					= "%i|%llu|%s(%" LLC_FMT_U2 "){%s}:";
 	char			formatted[::LOG_PREFIX_BUFFER_SIZE]	= {};
 	snprintf(formatted, llc::size(formatted), STR_DEBUG_PREFIX, severity, ::llc::timeCurrentInMs(), path, line, function);
 	return base_log_print(formatted);
@@ -100,7 +100,7 @@ static	::llc::error_t	getSystemErrorAsString			(const uint64_t lastError, char* 
 		;
 #else
 	(void) bufferSize;
-	sprintf(buffer, "%" LLC_FMT_U32 ".", (uint32_t)lastError);
+	sprintf(buffer, "%" LLC_FMT_U2 ".", (uint32_t)lastError);
 	return 0;
 #endif
 }

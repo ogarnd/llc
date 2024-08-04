@@ -7,11 +7,11 @@ namespace llc
 {
 	class CLabelManager	{
 #if defined(LLC_ARDUINO)
-		stacxpr	const uint32_t	BLOCK_SIZE	= 1024 >> 1;
+		stxp	u2_c	BLOCK_SIZE	= 1024 >> 1;
 #elif defined(LLC_ESP32)
-		stacxpr	const uint32_t	BLOCK_SIZE	= 1024 * 4;
+		stxp	u2_c	BLOCK_SIZE	= 1024 * 4;
 #else
-		stacxpr	const uint32_t	BLOCK_SIZE	= 1024 * 64;
+		stxp	u2_c	BLOCK_SIZE	= 1024 * 64;
 #endif
 		::llc::block_container_nts<BLOCK_SIZE>	Characters;
 		::llc::vcc							Empty;
@@ -57,7 +57,7 @@ namespace llc
 		inline	::llc::error_t				View		(const char* elements, uint16_t count)	{ ::llc::vcc out_view; return View(elements, count, out_view); }
 
 		::llc::error_t						Index		(const ::llc::vcc & elements) {
-			ree_if(elements.size() >= CLabelManager::BLOCK_SIZE, "Data too large: %" LLC_FMT_U32 ".", elements.size());
+			ree_if(elements.size() >= CLabelManager::BLOCK_SIZE, "Data too large: %" LLC_FMT_U2 ".", elements.size());
 
 			for(uint32_t iView = 0, countLabels = Texts.size(); iView < countLabels; ++iView) {
 				if(elements.size() != Counts[iView])
@@ -77,11 +77,11 @@ namespace llc
 			}
 
 			uint32_t								ntslen						= 0;
-			for(const uint32_t countChars = ::llc::min(textLen, CLabelManager::BLOCK_SIZE - 1); ntslen < countChars; ++ntslen)
+			for(u2_c countChars = ::llc::min(textLen, CLabelManager::BLOCK_SIZE - 1); ntslen < countChars; ++ntslen)
 				if(0 == text[ntslen])
 					break;
 
-			const uint32_t							viewIndex					= (uint32_t)Index({text, ntslen});
+			u2_c							viewIndex					= (uint32_t)Index({text, ntslen});
 			if(viewIndex < Texts.size()) {
 				out_view							= {Texts[viewIndex], Counts[viewIndex]};
 				return viewIndex;

@@ -15,7 +15,7 @@ namespace llc
 	::llc::error_t						pathList				(const ::llc::SPathContents & input, ::llc::aasc_t & output	, ::llc::vcs extension = {});	// recursively walk over a pathcontents hierarchy and store all the file names into "output"
 	::llc::error_t						pathList				(const ::llc::SPathContents & input, ::llc::avcc & output	, ::llc::vcs extension = {});	// recursively walk over a pathcontents hierarchy and store all the file names into "output"
 	::llc::error_t						pathList				(const ::llc::vcs & pathToList, SPathContents & out_Contents, ::llc::vcs extension = {});		// Recursive
-	stainli	::llc::error_t				pathList				(const ::llc::vcs & pathToList, ::llc::aachar & output		, ::llc::vcs extension = {}) {
+	stin	::llc::error_t				pathList				(const ::llc::vcs & pathToList, ::llc::aachar & output		, ::llc::vcs extension = {}) {
 		::llc::SPathContents					tree					= {};
 		int32_t									error					= ::llc::pathList(pathToList, tree, extension);
 		llc_necs(error |= ::llc::pathList(tree, output, extension));
