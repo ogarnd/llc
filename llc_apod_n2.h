@@ -10,18 +10,18 @@ namespace llc
 #pragma pack(push, 1)
 	tplT using	an2	= ::llc::apod<::llc::n2<T>>;
 
-	tydf	::llc::an2<sc_t>	an2sc_t;	tydfcnst	an2sc_t	an2sc_c;
-	tydf	::llc::an2<uc_t>	an2uc_t;	tydfcnst	an2uc_t	an2uc_c;
-	tydf	::llc::an2<u0_t>	an2u0_t;	tydfcnst	an2u0_t	an2u0_c;
-	tydf	::llc::an2<u1_t>	an2u1_t;	tydfcnst	an2u1_t	an2u1_c;
-	tydf	::llc::an2<u2_t>	an2u2_t;	tydfcnst	an2u2_t	an2u2_c;
-	tydf	::llc::an2<u3_t>	an2u3_t;	tydfcnst	an2u3_t	an2u3_c;
-	tydf	::llc::an2<s0_t>	an2s0_t;	tydfcnst	an2s0_t	an2s0_c;
-	tydf	::llc::an2<s1_t>	an2s1_t;	tydfcnst	an2s1_t	an2s1_c;
-	tydf	::llc::an2<s2_t>	an2s2_t;	tydfcnst	an2s2_t	an2s2_c;
-	tydf	::llc::an2<s3_t>	an2s3_t;	tydfcnst	an2s3_t	an2s3_c;
-	tydf	::llc::an2<f2_t>	an2f2_t;	tydfcnst	an2f2_t	an2f2_c;
-	tydf	::llc::an2<f3_t>	an2f3_t;	tydfcnst	an2f3_t	an2f3_c;
+	tydf	::llc::an2<sc_t>	an2sc_t;	tdcs	an2sc_t	an2sc_c;
+	tydf	::llc::an2<uc_t>	an2uc_t;	tdcs	an2uc_t	an2uc_c;
+	tydf	::llc::an2<u0_t>	an2u0_t;	tdcs	an2u0_t	an2u0_c;
+	tydf	::llc::an2<u1_t>	an2u1_t;	tdcs	an2u1_t	an2u1_c;
+	tydf	::llc::an2<u2_t>	an2u2_t;	tdcs	an2u2_t	an2u2_c;
+	tydf	::llc::an2<u3_t>	an2u3_t;	tdcs	an2u3_t	an2u3_c;
+	tydf	::llc::an2<s0_t>	an2s0_t;	tdcs	an2s0_t	an2s0_c;
+	tydf	::llc::an2<s1_t>	an2s1_t;	tdcs	an2s1_t	an2s1_c;
+	tydf	::llc::an2<s2_t>	an2s2_t;	tdcs	an2s2_t	an2s2_c;
+	tydf	::llc::an2<s3_t>	an2s3_t;	tdcs	an2s3_t	an2s3_c;
+	tydf	::llc::an2<f2_t>	an2f2_t;	tdcs	an2f2_t	an2f2_c;
+	tydf	::llc::an2<f3_t>	an2f3_t;	tdcs	an2f3_t	an2f3_c;
 #pragma pack(pop)
 } // namespace
 

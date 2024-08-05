@@ -8,17 +8,17 @@
 
 namespace llc
 {
-	//ndstain	::llc::vcc		tovcc   (const Stream   & srcstr)							{ return srcstr.length() ? ::llc::vcc{srcstr.begin(), srcstr.length()} : vcs{}; }
-	//stainli	::llc::error_t	tovcc   (::llc::vcc		& output, const Stream	& srcstr)	{ return (output = ::llc::tovcc(srcstr)).size(); }
-	//stainli	::llc::error_t	tolabel (::llc::vcc		& output, const Stream	& srcstr)	{ return (output = ::llc::label(::llc::tovcc(srcstr))).size(); }
-	//stainli	::llc::error_t	toachar (::llc::asc_t	& output, const Stream	& srcstr)	{ llc_necs(output.reserve(srcstr.length())); return (output = ::llc::tovcc(srcstr)).size(); }
-	//stainli	::llc::error_t	append 	(::llc::asc_t	& output, const Stream	& srcstr)	{ return output.append(::llc::tovcc(srcstr)); }
+	//ndsi	vcsc_t		tovcc   (cnst Stream   & srcstr)							{ rtrn srcstr.length() ? vcsc_t{srcstr.begin(), srcstr.length()} : vcs{}; }
+	//stin	err_t	tovcc   (vcsc_t		& output, cnst Stream	& srcstr)	{ rtrn (output = tovcc(srcstr)).size(); }
+	//stin	err_t	tolabel (vcsc_t		& output, cnst Stream	& srcstr)	{ rtrn (output = label(tovcc(srcstr))).size(); }
+	//stin	err_t	toachar (asc_t	& output, cnst Stream	& srcstr)	{ llc_necs(output.reserve(srcstr.length())); rtrn (output = tovcc(srcstr)).size(); }
+	//stin	err_t	append 	(asc_t	& output, cnst Stream	& srcstr)	{ rtrn output.append(tovcc(srcstr)); }
 
-	//ndstain	::llc::vcc		tolabel (const Stream & srcstr)	{ return ::llc::label(::llc::tovcc(srcstr)); }
-	//ndstain	::llc::asc_t	toachar (const Stream & srcstr)	{ return ::llc::tovcc(srcstr); }
-	//ndstain	::llc::vcc		str		(const Stream & srcstr)	{ return ::llc::tovcc(srcstr); }
-	ndstain	uint32_t 		size	(const Stream & srcstr)	{ return (*((Stream*)&srcstr)).available(); }
-	ndstain	uint32_t 		size	(Stream & srcstr)		{ return srcstr.available(); }
+	//ndsi	vcsc_t		tolabel (cnst Stream & srcstr)	{ rtrn label(tovcc(srcstr)); }
+	//ndsi	asc_t	toachar (cnst Stream & srcstr)	{ rtrn tovcc(srcstr); }
+	//ndsi	vcsc_t		str		(cnst Stream & srcstr)	{ rtrn tovcc(srcstr); }
+	ndsi	u2_t 		size	(cnst Stream & srcstr)	{ rtrn (*((Stream*)&srcstr)).available(); }
+	ndsi	u2_t 		size	(Stream & srcstr)		{ rtrn srcstr.available(); }
 } // namespace
 #endif // LLC_ARDUINO
 

@@ -5,14 +5,14 @@
 
 ::llc::error_t			llc::join				(::llc::asc_t & output, char separator, ::llc::vcvsc_t fields)	{
 	for(uint32_t iField = 0; iField < fields.size();) {
-		llc_necall(output.append(fields[iField]), "%" LLC_FMT_U32 "", iField);
+		llc_necall(output.append(fields[iField]), "%" LLC_FMT_U2 "", iField);
 		if(++iField < fields.size())
-			llc_necall(output.push_back(separator), "%" LLC_FMT_U32 "", iField);
+			llc_necall(output.push_back(separator), "%" LLC_FMT_U2 "", iField);
 	}
 	return 0;
 }
 
-::llc::asc_t		llc::toString			(const ::llc::vcc & strToLog)	{
+::llc::asc_t		llc::toString			(::llc::vcsc_c & strToLog)	{
 	::llc::asc_t			sprintfable				= strToLog;
 	if(sprintfable.size() && sprintfable[sprintfable.size() - 1] == 0) { // it already contains a null, so resize it to avoid counting it as part of the array.
 		sprintfable.resize(sprintfable.size() - 1);
@@ -39,7 +39,7 @@
 	return 0;
 }
 
-::llc::error_t			llc::find				(const ::llc::vcs & keyToFind, const ::llc::view<const ::llc::TKeyValConstString> & keyvals, ::llc::vcc & out_val)		{
+::llc::error_t			llc::find				(const ::llc::vcs & keyToFind, const ::llc::view<const ::llc::TKeyValConstString> & keyvals, ::llc::vcsc_t & out_val)		{
 	::llc::error_t				index					= ::llc::find(keyToFind, keyvals);
 	out_val					= (-1 == index) ? ::llc::vcs{} : keyvals[index].Val;
 	return index;
@@ -54,7 +54,7 @@
 	return indexKey;
 }
 
-::llc::error_t			llc::keyValVerify		(const ::llc::view<::llc::TKeyValConstString> & environViews, const ::llc::vcc & keyToVerify, const ::llc::vcc & valueToVerify)	{
+::llc::error_t			llc::keyValVerify		(const ::llc::view<::llc::TKeyValConstString> & environViews, ::llc::vcsc_c & keyToVerify, ::llc::vcsc_c & valueToVerify)	{
 	for(uint32_t iKey = 0; iKey < environViews.size(); ++iKey) {
 		if(environViews[iKey].Key == keyToVerify)
 			return (environViews[iKey].Val == valueToVerify) ? iKey : -1;
@@ -67,12 +67,12 @@
 	for(uint32_t iKey = 0; iKey < keyVals.size(); ++iKey) {
 		for(uint32_t iRef = 0; iRef < keysToSave.size(); ++iRef) {
 			const ::llc::TKeyValConstString	& kvToCheck						= keyVals[iKey];
-			const ::llc::vcc				& keyToSave						= keysToSave[iRef];
+			::llc::vcsc_c				& keyToSave						= keysToSave[iRef];
 			if(kvToCheck.Key == keyToSave)
 				keyValsToSave.push_back(kvToCheck);
 		}
 	}
-	output.append((const uint8_t*)&keyValsToSave.size(), sizeof(uint32_t));
+	output.append((const uint8_t*)&keyValsToSave.size(), szof(uint32_t));
 	uint32_t					iOffset								= 0;
 	for(uint32_t iKey = 0; iKey < keyValsToSave.size(); ++iKey) {
 		iOffset					+= ::llc::saveView(output, keyValsToSave[iKey].Key);
@@ -83,8 +83,8 @@
 
 ::llc::error_t			llc::keyValConstStringDeserialize	(const ::llc::vcu0_t & input, ::llc::aobj<::llc::TKeyValConstString> & output)	{
 	uint32_t					offset								= 0;
-	const uint32_t				keysToRead							= *(const uint32_t*)input.begin();
-	offset					+= (uint32_t)sizeof(uint32_t);
+	u2_c				keysToRead							= *(u2_c*)input.begin();
+	offset					+= (uint32_t)szof(uint32_t);
 	output.resize(keysToRead);
 	for(uint32_t iKey = 0; iKey < keysToRead; ++iKey) {
 		offset					+= ::llc::viewRead(output[iKey].Key, {&input[offset], input.size() - offset});

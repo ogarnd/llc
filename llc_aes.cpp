@@ -88,16 +88,18 @@
 
 #ifndef LLC_ATMEL
 
+LLC_USING_TYPEINT();
+
 // Defines: The number of columns comprising a state in AES. This is a constant in AES. Value=4
-stacxpr	const uint32_t				AES_Nb									= 4;
+stxp	u2_c				AES_Nb									= 4;
 
 // Private variables:
-typedef	uint8_t						state_t[4][4];	// array holding the intermediate results during decryption.
+tydf	uint8_t						state_t[4][4];	// array holding the intermediate results during decryption.
 
 // The lookup-tables are marked const so they can be placed in read-only storage instead of RAM
 // The numbers below can be computed dynamically trading ROM for RAM -
 // This can be useful in (embedded) bootloader applications, where ROM is often limited.
-stacxpr	const uint8_t				sbox	[256]							= {
+stxp	const uint8_t				sbox	[256]							= {
   //0     1    2      3     4    5     6     7      8    9     A      B    C     D     E     F
   0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
   0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0,
@@ -116,7 +118,7 @@ stacxpr	const uint8_t				sbox	[256]							= {
   0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf,
   0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16 };
 
-stacxpr	const uint8_t				rsbox	[256]							= {
+stxp	const uint8_t				rsbox	[256]							= {
   0x52, 0x09, 0x6a, 0xd5, 0x30, 0x36, 0xa5, 0x38, 0xbf, 0x40, 0xa3, 0x9e, 0x81, 0xf3, 0xd7, 0xfb,
   0x7c, 0xe3, 0x39, 0x82, 0x9b, 0x2f, 0xff, 0x87, 0x34, 0x8e, 0x43, 0x44, 0xc4, 0xde, 0xe9, 0xcb,
   0x54, 0x7b, 0x94, 0x32, 0xa6, 0xc2, 0x23, 0x3d, 0xee, 0x4c, 0x95, 0x0b, 0x42, 0xfa, 0xc3, 0x4e,
@@ -135,14 +137,14 @@ stacxpr	const uint8_t				rsbox	[256]							= {
   0x17, 0x2b, 0x04, 0x7e, 0xba, 0x77, 0xd6, 0x26, 0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d };
 
 // The round constant word array, Rcon[i], contains the values given by x to the power (i-1) being powers of x (x is denoted as {02}) in the field GF(2^8)
-stacxpr	uint8_t						Rcon	[11]							= {0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36 };
+stxp	uint8_t						Rcon	[11]							= {0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36 };
 
 // Jordan Goulder points out in PR #12 (https://github.com/kokke/tiny-AES-C/pull/12), that you can remove most of the elements in the Rcon array, because they are unused.
 // From Wikipedia's article on the Rijndael key schedule @ https://en.wikipedia.org/wiki/Rijndael_key_schedule#Rcon
 // "Only the first some of these constants are actually used – up to rcon[10] for AES-128 (as 11 round keys are needed),
 //  up to rcon[8] for AES-192, up to rcon[7] for AES-256. rcon[0] is not used in AES algorithm."
-stainli	uint8_t						getSBoxValue							(uint8_t num)														{ return  sbox[num]; }
-stainli	uint8_t						getSBoxInvert							(uint8_t num)														{ return rsbox[num]; }
+stin	uint8_t						getSBoxValue							(uint8_t num)														{ return  sbox[num]; }
+stin	uint8_t						getSBoxInvert							(uint8_t num)														{ return rsbox[num]; }
 
 // This function produces Nb(Nr+1) round keys. The round keys are used in each round to decrypt the states.
 static	void						KeyExpansion							(uint8_t* RoundKey, const uint8_t * Key, ::llc::AES_LEVEL level)		{
@@ -429,7 +431,7 @@ void											llc::aesCTRXCryptBuffer				(::llc::SAESContext* ctx, uint8_t * bu
 
 ::llc::error_t			llc::aesEncode		(const ::llc::vcu0_t & messageToEncrypt, const ::llc::vcu0_t & iv, const ::llc::vcu0_t & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputEncrypted) {
 	ree_if(0 == messageToEncrypt.size(), "Cannot encode empty message at address %p.", messageToEncrypt);
-	ree_if(encryptionKey.size() != 32, "Invalid key length! Key must be exactly 32 bytes long. Key size: %" LLC_FMT_U32 ".", encryptionKey.size());
+	ree_if(encryptionKey.size() != 32, "Invalid key length! Key must be exactly 32 bytes long. Key size: %" LLC_FMT_U2 ".", encryptionKey.size());
 	int8_t													excedent								= messageToEncrypt.size() % ::llc::AES_SIZEBLOCK;
 	int8_t													paddingRequired							= (int8_t)(::llc::AES_SIZEBLOCK - excedent);
 	outputEncrypted.clear();
@@ -446,8 +448,8 @@ void											llc::aesCTRXCryptBuffer				(::llc::SAESContext* ctx, uint8_t * bu
 
 ::llc::error_t			llc::aesDecode		(const ::llc::vcu0_t & messageEncrypted, const ::llc::vcu0_t & iv, const ::llc::vcu0_t & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputDecrypted) {
 	ree_if(0 == messageEncrypted.size(), "Cannot encode empty message at address %p.", messageEncrypted.begin());
-	ree_if(messageEncrypted.size() % ::llc::AES_SIZEBLOCK, "Invalid data length: %" LLC_FMT_U32 ".", messageEncrypted.size());
-	ree_if(encryptionKey.size() != 32, "Invalid key length! Key must be exactly 32 bytes long. Key size: %" LLC_FMT_U32 ".", encryptionKey.size());
+	ree_if(messageEncrypted.size() % ::llc::AES_SIZEBLOCK, "Invalid data length: %" LLC_FMT_U2 ".", messageEncrypted.size());
+	ree_if(encryptionKey.size() != 32, "Invalid key length! Key must be exactly 32 bytes long. Key size: %" LLC_FMT_U2 ".", encryptionKey.size());
 	llc_necs(outputDecrypted.resize(messageEncrypted.size()));
 	memcpy(outputDecrypted.begin(), messageEncrypted.begin(), outputDecrypted.size());
 	::llc::SAESContext										aes;

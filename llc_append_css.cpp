@@ -2,7 +2,7 @@
 
 llc::err_t	llc::appendCSSBorderWidth			(::llc::asc_t & output, uint8_t borderWidth, bool absoluteSize)	{
 	char				cssBuffer	[32]		= {};
-	stacxpr char		cssFormat	[]			= "border-width:%" LLC_FMT_U32 "%s;";
+	stxp char		cssFormat	[]			= "border-width:%" LLC_FMT_U2 "%s;";
 	const char			* unit					= absoluteSize ? "px" : "%";
 	const int32_t		len						= ::llc::sprintf_s(cssBuffer, cssFormat, borderWidth, unit);
 	llc_necs(output.append_string(cssBuffer));
@@ -10,7 +10,7 @@ llc::err_t	llc::appendCSSBorderWidth			(::llc::asc_t & output, uint8_t borderWid
 }
 llc::err_t	llc::appendCSSControlWidth			(::llc::asc_t & output, uint16_t outerLimit, bool absoluteSize)	{
 	char				cssBuffer	[24]		= {};
-	stacxpr char		cssFormat	[]			= "width:%" LLC_FMT_U32 "%s;";
+	stxp char		cssFormat	[]			= "width:%" LLC_FMT_U2 "%s;";
 	const char			* unit					= absoluteSize ? "px" : "%";
 	const int32_t 		len						= ::llc::sprintf_s(cssBuffer, cssFormat, outerLimit, unit);
 	llc_necs(output.append_string(cssBuffer));
@@ -18,7 +18,7 @@ llc::err_t	llc::appendCSSControlWidth			(::llc::asc_t & output, uint16_t outerLi
 }
 llc::err_t	llc::appendCSSControlHeight		(::llc::asc_t & output, uint16_t outerLimit, bool absoluteSize)	{
 	char				cssBuffer	[24]		= {};
-	stacxpr char		cssFormat	[]			= "height:%" LLC_FMT_U32 "%s;";
+	stxp char		cssFormat	[]			= "height:%" LLC_FMT_U2 "%s;";
 	const char			* unit					= absoluteSize ? "px" : "%";
 	const int32_t 		len						= ::llc::sprintf_s(cssBuffer, cssFormat, outerLimit, unit);
 	llc_necs(output.append_string(cssBuffer));
@@ -33,7 +33,7 @@ llc::err_t	llc::appendCSSSizeWithBorderWidthAbsolute	(::llc::asc_t & output, ::l
 llc::err_t	llc::appendCSSSizeWithBorderWidthRelative	(::llc::asc_t & output, ::llc::n2u1_t outerLimit, uint8_t borderWidth)	{
 	//const ::llc::n2u1_t	contentLimit 			= llc::n2s2_t{outerLimit.x - borderWidth * 2, outerLimit.y - borderWidth * 2}.u1();
 	char				cssBuffer	[128]		= {};
-	stacxpr char		cssFormat	[]			= "width:calc(%" LLC_FMT_U32 "%% - %" LLC_FMT_U32 "px);height:calc(%" LLC_FMT_U32 "%% - %" LLC_FMT_U32 "px);";
+	stxp char		cssFormat	[]			= "width:calc(%" LLC_FMT_U2 "%% - %" LLC_FMT_U2 "px);height:calc(%" LLC_FMT_U2 "%% - %" LLC_FMT_U2 "px);";
 	const int32_t 		len						= ::llc::sprintf_s(cssBuffer, cssFormat, outerLimit.x, borderWidth * 2, outerLimit.y, borderWidth * 2);
 	llc_necs(output.append_string(cssBuffer));
 	return len + appendCSSBorderWidth(output, borderWidth);

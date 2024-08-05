@@ -76,27 +76,93 @@
 #endif
 
 // These aliases make keyword width to be consistent and makes the code less verbose.
-//#define inln              inline
-//#define sttc              static
-#define oprt                operator
-#define tydf                typedef
-#define cnst                const
-#define tydfcnst            tydf cnst
+#define tydf			typedef
+#define cnst			const
+#define tdcs			tydf cnst
+#define vltl			volatile
+#define tdvl			tydf vltl
+#define csvl			cnst vltl
+#define tdcv			tydf csvl
+#define nxpt			noexcept
+#define csnx			cnst nxpt
+#define sttc			static
+#define inln			inline
+#define stin			sttc inln
+#define cxpr			constexpr
+#define stxp			sttc cxpr
+#define inxp			inln cxpr
+#define sinx			stin cxpr
+#define ndsc			[[nodiscard]]
+#define ndcs			ndsc cnst
+#define ndst			ndsc sttc
+#define ndin			ndsc inln
+#define ndsi			ndsc stin
+#define ndxp			ndsc cxpr
+#define ndsx			ndsc stxp
+#define ndix			ndsc inxp
+#define nsix			ndsc sinx
+#define rtrn			return
+#define dflt			default
+#define oper			operator
+#define tplt			template
+#define tpnm			typename
+#define sgnd			signed
+#define unsd			unsigned
+#define usng			using
+#define stct			struct
+#define clss			class
+#define pblc			public
+#define prtc			protected
+#define prvt			private
 
-#define nxpt                noexcept
-#define vltl                volatile
-#define cxpr                constexpr
+#define tpl(typeName)	tplt<tpnm typeName>
+#define tdfT(type)		tydf	type	T
+#define tplT			tpl(T)
+#define tplT2			tpl(T2)
+#define tpl_t			tpl(_t)
+#define tpl_t2			tpl(_t2)
+#define tplTstct		tplT	stct
+#define tplTusng		tplT	usng
+#define tplTndsx		tplT	ndsx
+#define tplTsinx		tplT	sinx
+#define tplTstxp		tplT	stxp
+#define tplTnsix		tplT	nsix
+#define tpl_tstct		tpl_t	stct
+#define tpl_tusng		tpl_t	usng
+#define tpl_tndsx		tpl_t	ndsx
+#define tpl_tsinx		tpl_t	sinx
+#define tpl_tstxp		tpl_t	stxp
+#define tpl_tnsix		tpl_t	nsix 
+
+#define tplTInTOut		tplt<tpnm TIn, tpnm TOut>
+#define tpl_vtArgs		tplt<tpnm... _tArgs>
+
+#define cxpr_if(condition)		if cxpr(condition)
+#define cxpr_if_not(condition)	if cxpr(not(condition))
+#define if_not(condition)		if(not(condition))
+
+#define	LLC_STRINGIFY(x) #x
+#define	LLC_TOSTRING(x)  LLC_STRINGIFY(x)
+
+
+#define LLCREP0(param)			  (param)
+#define LLCREP1(param)			  LLCREP0(param), (param)
+#define LLCREP2(param)			  LLCREP1(param), (param)
+#define LLCREP3(param)			  LLCREP2(param), (param)
+#define LLCREP4(param)			  LLCREP3(param), (param)
+#define LLCREP5(param)			  LLCREP4(param), (param)
+#define LLCREP6(param)			  LLCREP5(param), (param)
+#define LLCREP7(param)			  LLCREP6(param), (param)
+
 #define cnstnxpt            cnst nxpt
 #define cnstvltl            cnst vltl
-#define tplt                template
-#define tpnm                typename
 #define unsgnd              unsigned
 #define operatr	            operator
 #define cnstxpr	            constexpr
-#define inlcxpr	            inline  cnstxpr
-#define stacxpr	            static  cnstxpr
-#define stainli	            static  inline
-#define stincxp	            stainli cnstxpr
+#define inlcxpr	            inln  cxpr
+#define stacxpr	            stTc  cxpr
+#define stainli	            stTc  inln
+#define stincxp	            stin cxpr
 #define prtctd              protected
 #define privte              private
 
@@ -109,19 +175,11 @@
 #define ndincxp             ndinlne cnstxpr
 #define ndstinx             ndstain cnstxpr
 
-#define tplT                tplt<tpnm T>
-#define tpl_t               tplt<tpnm _t>
-#define tpl_t2              tplt<tpnm _t2>
-#define tplTInTOut          tplt<tpnm TIn, tpnm TOut>
 #define tplTstruct          tplT struct
 #define tplTndstcxp	        tplT ndstcxp
 #define tplTstincxp	        tplT stincxp
 #define tplTstacxpr	        tplT stacxpr
 #define tplTndstinx	        tplT ndstinx
-
-#define cxp_if(condition)       if cnstxpr(condition)
-#define cxp_if_not(condition)   if cnstxpr(not(condition))
-#define if_not(condition)       if(not(condition))
 
 #define	LLC_STRINGIFY(x) #x
 #define	LLC_TOSTRING(x)  LLC_STRINGIFY(x)
@@ -229,79 +287,5 @@
 #define LLC_FMT_LT_I64  LLC_FMT_I64_LT_I64
 #define LLC_FMT_LT_U64  LLC_FMT_U64_LT_U64
 
-
-#define LLCREP0(param)              (param)
-#define LLCREP1(param)              LLCREP0(param), (param)
-#define LLCREP2(param)              LLCREP1(param), (param)
-#define LLCREP3(param)              LLCREP2(param), (param)
-#define LLCREP4(param)              LLCREP3(param), (param)
-#define LLCREP5(param)              LLCREP4(param), (param)
-#define LLCREP6(param)              LLCREP5(param), (param)
-#define LLCREP7(param)              LLCREP6(param), (param)
-
-namespace llc
-{
-    enum OPCODE_SET : unsigned char
-        { OPCODE_SET_UNKNOWN
-        , OPCODE_SET_ARM32
-        , OPCODE_SET_ARM64
-        , OPCODE_SET_AVR
-        , OPCODE_SET_PIC16F
-        , OPCODE_SET_PIC18F
-        , OPCODE_SET_STM32
-        , OPCODE_SET_X86
-        , OPCODE_SET_X86_64
-        , OPCODE_SET_XTENSA_LX6_SINGLE
-        , OPCODE_SET_XTENSA_LX6_DUAL
-        , OPCODE_SET_XTENSA_LX7
-        , OPCODE_SET_CUSTOM         = 0x40U
-        };
-    enum OPCODE_EXT : unsigned char
-        { OPCODE_EXT_NONE
-        , OPCODE_EXT_AVX
-        , OPCODE_EXT_MMX
-        , OPCODE_EXT_SSE
-        , OPCODE_EXT_SSE2
-        , OPCODE_EXT_SSE3
-        , OPCODE_EXT_SSE4
-        , OPCODE_EXT_CUSTOM         = 0x40U
-        };
-    enum DEVICE_TYPE : unsigned char
-        { DEVICE_TYPE_UNKNOWN
-        , DEVICE_TYPE_ANDROID
-        , DEVICE_TYPE_IPHONE
-        , DEVICE_TYPE_PC
-        , DEVICE_TYPE_RASPBERRY_PI_3
-        , DEVICE_TYPE_RASPBERRY_PI_4
-        , DEVICE_TYPE_MAC
-        , DEVICE_TYPE_CUSTOM        = 0x40U
-        };
-    enum OS_FAMILY : unsigned char
-        { OS_FAMILY_UNKNOWN
-        , OS_FAMILY_ANDROID
-        , OS_FAMILY_ARDUINO
-        , OS_FAMILY_FREERTOS
-        , OS_FAMILY_IOS
-        , OS_FAMILY_LINUX
-        , OS_FAMILY_MACOS
-        , OS_FAMILY_NO_OS
-        , OS_FAMILY_PI
-        , OS_FAMILY_RTOS
-        , OS_FAMILY_WINDOWS
-        , OS_FAMILY_CUSTOM          = 0x40U
-        };
-
-#define GDEFINE_ENUM_NAMEP(TEnum)               ndstinx const char* get_enum_namep  (const TEnum&)  nxpt { return #TEnum; }
-    GDEFINE_ENUM_NAMEP(DEVICE_TYPE  );
-    GDEFINE_ENUM_NAMEP(OPCODE_SET   );
-    GDEFINE_ENUM_NAMEP(OPCODE_EXT   );
-    GDEFINE_ENUM_NAMEP(OS_FAMILY    );
-
-#define llc_enum_value_log(printf_fn, enumVal)  printf_fn("'%s':(0x%X)(%" LLC_FMT_I32 ")(%c)'%s'", ::llc::get_enum_namep LLCREP3(enumVal) ? char(enumVal) : '?', ::llc::get_value_namep(enumVal))
-    nodscrd cnst char*  get_value_namep (DEVICE_TYPE value) nxpt;
-    nodscrd cnst char*  get_value_namep (OPCODE_SET  value) nxpt;
-    nodscrd cnst char*  get_value_namep (OPCODE_EXT  value) nxpt;
-    nodscrd cnst char*  get_value_namep (OS_FAMILY   value) nxpt;
-} // namespace
 
 #endif // LLC_PLATFORM_GLOBALS_H_23627

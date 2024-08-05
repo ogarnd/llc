@@ -1,9 +1,9 @@
- #include "llc_platform_globals.h"
+ #include "llc_error.h"
 
-#define GDEFINE_ENUM_CASE_DEFAULT(TEnum, TValue)    default                 : return #TValue
-#define GDEFINE_ENUM_CASE(TEnum, TValue)            case TEnum##_##TValue   : return #TValue
+#define GDEFINE_ENUM_CASE_DEFAULT(TEnum, TValue)    default                 : rtrn #TValue
+#define GDEFINE_ENUM_CASE(TEnum, TValue)            case TEnum##_##TValue   : rtrn #TValue
 
-const char* llc::get_value_namep     (DEVICE_TYPE    value)  nxpt {
+llc::sc_c* llc::get_value_namep     (DEVICE_TYPE    value)  nxpt {
     switch(value) {
     GDEFINE_ENUM_CASE_DEFAULT(DEVICE_TYPE, UNKNOWN);
     GDEFINE_ENUM_CASE(DEVICE_TYPE, UNKNOWN          );
@@ -16,7 +16,7 @@ const char* llc::get_value_namep     (DEVICE_TYPE    value)  nxpt {
     GDEFINE_ENUM_CASE(DEVICE_TYPE, CUSTOM           );
     }
 }
-const char* llc::get_value_namep     (OPCODE_SET     value)  nxpt {
+llc::sc_c* llc::get_value_namep     (OPCODE_SET     value)  nxpt {
     switch(value) {
     GDEFINE_ENUM_CASE_DEFAULT(OPCODE_SET, UNKNOWN);
     GDEFINE_ENUM_CASE(OPCODE_SET, UNKNOWN);
@@ -34,7 +34,7 @@ const char* llc::get_value_namep     (OPCODE_SET     value)  nxpt {
     GDEFINE_ENUM_CASE(OPCODE_SET, CUSTOM);
     }
 }
-const char* llc::get_value_namep     (OPCODE_EXT     value)  nxpt {
+llc::sc_c* llc::get_value_namep     (OPCODE_EXT     value)  nxpt {
     switch(value) {
     GDEFINE_ENUM_CASE_DEFAULT(OPCODE_EXT, NONE);
     GDEFINE_ENUM_CASE(OPCODE_EXT, NONE);
@@ -47,7 +47,7 @@ const char* llc::get_value_namep     (OPCODE_EXT     value)  nxpt {
     GDEFINE_ENUM_CASE(OPCODE_EXT, CUSTOM);
     }
 }
-const char* llc::get_value_namep     (OS_FAMILY      value)  nxpt {
+llc::sc_c* llc::get_value_namep     (OS_FAMILY      value)  nxpt {
     switch(value) {
     GDEFINE_ENUM_CASE_DEFAULT(OS_FAMILY, UNKNOWN);
     GDEFINE_ENUM_CASE(OS_FAMILY, UNKNOWN    );

@@ -10,7 +10,7 @@
 	if(0 == lastError)
 		return {};
 	char						* messageBuffer					= nullptr;
-	const uint32_t				size							= FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, (DWORD)lastError, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&messageBuffer, 0, NULL);
+	u2_c				size							= FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, (DWORD)lastError, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&messageBuffer, 0, NULL);
 
 	ve_if(::llc::apod<char>(), nullptr == messageBuffer)
 	else {
@@ -35,7 +35,7 @@
 	return sizeNeededForMultiByte;
 }
 
-::llc::error_t			llc::mbstowcs					(::llc::apod<wchar_t> & output, const ::llc::vcc input)	{
+::llc::error_t			llc::mbstowcs					(::llc::apod<wchar_t> & output, ::llc::vcsc_c input)	{
 	if(0 == input.size())
 		return 0;
 

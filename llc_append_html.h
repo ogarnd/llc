@@ -5,12 +5,12 @@
 
 namespace llc
 {
-	stainli	llc::err_t	appendHtmlHead		(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "head", tagAttributes, innerHtml); }
-	stainli	llc::err_t	appendHtmlBody		(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "body", tagAttributes, innerHtml); }
-	stainli	llc::err_t	appendHtmlScript	(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "script", tagAttributes, innerHtml); }
-	stainli	llc::err_t	appendHtmlTable		(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "table", tagAttributes, innerHtml); }
-	stainli	llc::err_t	appendHtmlTableRow	(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "tr", tagAttributes, innerHtml); }
-	stainli	llc::err_t	appendHtmlTableCol	(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "td", tagAttributes, innerHtml); }
+	stin	llc::err_t	appendHtmlHead		(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "head", tagAttributes, innerHtml); }
+	stin	llc::err_t	appendHtmlBody		(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "body", tagAttributes, innerHtml); }
+	stin	llc::err_t	appendHtmlScript	(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "script", tagAttributes, innerHtml); }
+	stin	llc::err_t	appendHtmlTable		(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "table", tagAttributes, innerHtml); }
+	stin	llc::err_t	appendHtmlTableRow	(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "tr", tagAttributes, innerHtml); }
+	stin	llc::err_t	appendHtmlTableCol	(::llc::asc_t & output, ::llc::vcs tagAttributes, ::llc::vcs innerHtml)	{ return ::llc::appendXmlTag(output, "td", tagAttributes, innerHtml); }
 	
 	llc::err_t			appendHtmlStyles	(::llc::asc_t & output, llc::vcvcs filenames);
 	llc::err_t			appendHtmlScripts	(::llc::asc_t & output, llc::vcvcs filenames);

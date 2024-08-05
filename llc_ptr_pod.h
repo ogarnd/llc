@@ -5,23 +5,20 @@
 
 namespace llc
 {
-	tplt<tpnm _tPOD>
-	class ppod : public ::llc::pnco<_tPOD> {
-	public:
-		typedef _tPOD			T;
-		typedef	::llc::pnco<T>	TNCOPtr;
-		typedef	::llc::gref<T>	TRef;
+#pragma pack(push, 1)
+	tpl_tstct ppod : pblc ::llc::pnco<_t> {
+		tdfTTCnst(_t);
+		tydf		pnco<T>	TNCOPtr;
+		tydf		gref<T>	TRef;
+		usng		TNCOPtr	::Reference;
 
-		using	TNCOPtr			::Reference;
-								
-		inline	const T*		operator->	()		const	noexcept	{ return Reference->Instance;														}
-		inline	T*				operator->	()				noexcept	{ return (0 == Reference) ? ::llc::ref_allocate(&Reference) : Reference->Instance;	}
-
-		tplt<tpnm... _tArgsConstructor>
-		inline	T*				create		(_tArgsConstructor &&... argsConstructor)	noexcept	{ return ::llc::ref_create(&Reference, argsConstructor...);							}
-		inline	T*				allocate	()											noexcept	{ return ::llc::ref_allocate(&Reference);											}
+					inln	TCnst*	oper->		()							csnx		{ return Reference->Instance;														}
+					inln	T*		oper->		()								nxpt	{ return (0 == Reference) ? ::llc::ref_allocate(&Reference) : Reference->Instance;	}
+		tpl_vtArgs	inln	T*		create		(_tArgs &&... constructorArgs)	nxpt	{ return ::llc::ref_create(&Reference, constructorArgs...);							}
+					inln	T*		allocate	()								nxpt	{ return ::llc::ref_allocate(&Reference);											}
 	};
-	tplt<tpnm T> using pp	= ::llc::ppod<T>;
+	tplT using pp	= ::llc::ppod<T>;
+#pragma pack(pop)
 } // namespace
 
 #endif // LLC_PTR_POD_H_23627

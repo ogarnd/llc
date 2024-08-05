@@ -6,11 +6,11 @@
 
 namespace llc
 {
-	stacxpr	::llc::vcc		DIGITS_HEX						= ::llc::vcc{16, "0123456789abcdef"};
-	stacxpr	::llc::vcc		DIGITS_DECIMAL					= ::llc::vcc{10, "0123456789"};
-	err_t			parseArbitraryBaseInteger		(u2_t base, const ::llc::vcc & symbolList, const ::llc::vcc & sourceChars, u3_t * number_);
+	stxp	::llc::vcsc_t		DIGITS_HEX						= ::llc::vcsc_t{16, "0123456789abcdef"};
+	stxp	::llc::vcsc_t		DIGITS_DECIMAL					= ::llc::vcsc_t{10, "0123456789"};
+	err_t			parseArbitraryBaseInteger		(u2_t base, ::llc::vcsc_c & symbolList, ::llc::vcsc_c & sourceChars, u3_t * number_);
 	tplt<tpnm _tInt>	
-	inline	err_t	parseIntegerDecimal				(const ::llc::vcc & sourceChars, _tInt & number_)	{ 
+	inline	err_t	parseIntegerDecimal				(::llc::vcsc_c & sourceChars, _tInt & number_)	{ 
 		u3_t					number							= 0; 
 		err_t				countDigits; 
 		llc_necs(countDigits = ::llc::parseArbitraryBaseInteger(10, ::llc::vcs{"0123456789"}, sourceChars, &number)); 
@@ -19,7 +19,7 @@ namespace llc
 	}
 
 	tplt<tpnm _tInt>	
-	inline	err_t	parseIntegerHexadecimal			(const ::llc::vcc & sourceChars, _tInt & number_)	{ 
+	inline	err_t	parseIntegerHexadecimal			(::llc::vcsc_c & sourceChars, _tInt & number_)	{ 
 		u3_t					number							= 0; 
 		err_t countDigits;
 		llc_necs(countDigits = ::llc::parseArbitraryBaseInteger(16, ::llc::vcs{"0123456789abcdef"}, sourceChars, &number)); 
@@ -50,12 +50,12 @@ namespace llc
 		s2_t						BracketsToSkip					= 0;
 	};
 #pragma pack(pop)
-	err_t				stripLiteralParse				(::llc::SStripLiteralState	& stateReading	, ::llc::apod<::llc::SStripLiteralType> & out_types, const ::llc::vcc & in_format);
-	err_t				stripLiteralParseStep			(::llc::SStripLiteralState	& work_state	, ::llc::apod<::llc::SStripLiteralType> & out_types, const ::llc::vcc & in_format);
-	err_t				stripLiteralGetViews			(::llc::aobj<::llc::vcc>	& out_views, const ::llc::view<const ::llc::SStripLiteralType> & in_resultOfParser, const ::llc::vcc & in_format);
+	err_t				stripLiteralParse				(::llc::SStripLiteralState	& stateReading	, ::llc::apod<::llc::SStripLiteralType> & out_types, ::llc::vcsc_c & in_format);
+	err_t				stripLiteralParseStep			(::llc::SStripLiteralState	& work_state	, ::llc::apod<::llc::SStripLiteralType> & out_types, ::llc::vcsc_c & in_format);
+	err_t				stripLiteralGetViews			(::llc::aobj<::llc::vcsc_t>	& out_views, const ::llc::view<const ::llc::SStripLiteralType> & in_resultOfParser, ::llc::vcsc_c & in_format);
 
 	bool						isSpaceCharacter				(const char characterToTest);
-	err_t				skipToNextCharacter				(u2_t & indexCurrentChar, const ::llc::vcc & expression);
+	err_t				skipToNextCharacter				(u2_t & indexCurrentChar, ::llc::vcsc_c & expression);
 
 } // namespace
 

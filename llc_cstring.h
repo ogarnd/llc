@@ -19,28 +19,28 @@ namespace llc
 #if defined(LLC_WINDOWS)
 #	pragma warning(disable : 4996)
 #endif
-	stainli	int	strcat_s		(char *dst, size_t bufferSize, const char *src)										{
+	stin	int	strcat_s		(sc_t * dst, u2_t bufferSize, sc_c * src)										{
 		if((uint32_t)strlen(dst)+(uint32_t)strlen(src)+1U > (uint32_t)bufferSize)
 			return -1;
 		strcat(dst, src);
 		return 0;
 	}
 
-	stainli	int	strcpy_s		(char *dst, size_t bufferSize, const char *src)										{
+	stin	int	strcpy_s		(sc_t * dst, u2_t bufferSize, sc_c * src)										{
 		if((uint32_t)strlen(src)+1U > (uint32_t)bufferSize)
 			return -1;
 		strcpy(dst, src);
 		return 0;
 	}
 
-	stainli	int	strncpy_s		(char *dst, const char *src, size_t bufferSize)										{
+	stin	int	strncpy_s		(sc_t * dst, sc_c * src, u2_t bufferSize)										{
 		//if((uint32_t)strlen(src)+1U > (uint32_t)bufferSize)
 		//	return -1;
 		strncpy(dst, src, bufferSize);
 		return 0;
 	}
 
-	stainli	int	_snprintf_s		(char* buffer, size_t bufferSize, size_t count, const char* format, ...)			{
+	stin	int	_snprintf_s		(sc_t * buffer, u2_t bufferSize, u2_t count, sc_c * format, ...)			{
 		va_list			args			= {};
 		va_start(args, format);
 		const int		result			= vsnprintf( buffer, max(count, bufferSize - 1), format, args );
@@ -48,8 +48,8 @@ namespace llc
 		return result;
 	}
 
-	tplt<size_t _bufferSize>
-	stainli	int	_snprintf_s		(char (&buffer)[_bufferSize], size_t count, const char* format, ...)				{
+	tplt<u2_t _bufferSize>
+	stin	int	_snprintf_s		(char (&buffer)[_bufferSize], u2_t count, sc_c * format, ...)				{
 		va_list			args			= {};
 		va_start(args, format);
 		const int		result			= _snprintf_s( buffer, _bufferSize, count, format, args );
@@ -57,7 +57,7 @@ namespace llc
 		return result;
 	}
 
-	//stainli	int	sprintf_s		(char *buffer, size_t bufferSize, const char *format, ...)							{
+	//stin	int	sprintf_s		(sc_t * buffer, u2_t bufferSize, sc_c * format, ...)							{
 	//	va_list			args			= {};
 	//	va_start(args, format);
 	//	const int		result			= vsprintf(buffer, format, args);
@@ -66,7 +66,7 @@ namespace llc
 	//}
 
 #ifdef LLC_ATMEL
-	stainli	int	vsprintf_s		(char *buffer, size_t bufferSize, const char *format, ...)							{
+	stin	int	vsprintf_s		(sc_t * buffer, u2_t bufferSize, sc_c * format, ...)							{
 		va_list			args			= {};
 		va_start(args, format);
 		const int		result			= ::vsnprintf(buffer, bufferSize - 1, format, args);
@@ -74,8 +74,8 @@ namespace llc
 		return result;
 	}
 
-	tplt<size_t _bufferSize>
-	stainli	int	sprintf_s		(char (&buffer)[_bufferSize], const char* format, ...)								{
+	tplt<u2_t _bufferSize>
+	stin	int	sprintf_s		(char (&buffer)[_bufferSize], sc_c * format, ...)								{
 		va_list			args			= {};
 		va_start(args, format);
 		const int		result			= ::vsnprintf(buffer, _bufferSize - 1, format, args);
@@ -83,7 +83,7 @@ namespace llc
 		return result;
 	}
 
-	stainli	int	sprintf_s		(char *buffer , uint32_t bufferSize, const char* format, ...)								{
+	stin	int	sprintf_s		(sc_t * buffer , uint32_t bufferSize, sc_c * format, ...)								{
 		va_list			args			= {};
 		va_start(args, format);
 		const int		result			= ::vsnprintf(buffer, bufferSize - 1, format, args);
@@ -91,7 +91,7 @@ namespace llc
 		return result;
 	}
 #else
-	stainli	int	vsprintf_s		(char *buffer, size_t bufferSize, const char *format, ...)							{
+	stin	int	vsprintf_s		(sc_t * buffer, u2_t bufferSize, sc_c * format, ...)							{
 		va_list			args			= {};
 		va_start(args, format);
 		const int		result			= std::vsnprintf(buffer, bufferSize - 1, format, args);
@@ -99,8 +99,8 @@ namespace llc
 		return result;
 	}
 
-	tplt<size_t _bufferSize>
-	stainli	int	sprintf_s		(char (&buffer)[_bufferSize], const char* format, ...)								{
+	tplt<u2_t _bufferSize>
+	stin	int	sprintf_s		(char (&buffer)[_bufferSize], sc_c * format, ...)								{
 		va_list			args			= {};
 		va_start(args, format);
 		const int		result			= std::vsnprintf(buffer, _bufferSize - 1, format, args);
@@ -108,7 +108,7 @@ namespace llc
 		return result;
 	}
 
-	stainli	int	sprintf_s		(char *buffer , uint32_t bufferSize, const char* format, ...)								{
+	stin	int	sprintf_s		(sc_t * buffer , u2_t bufferSize, sc_c * format, ...)								{
 		va_list			args			= {};
 		va_start(args, format);
 		const int		result			= std::vsnprintf(buffer, bufferSize - 1, format, args);
@@ -116,11 +116,11 @@ namespace llc
 		return result;
 	}
 #endif
-	tplt<size_t _Size> stainli	int	strcat_s		( char (&dst)[_Size], const char *src )						{ return strcat_s	(dst, _Size, src);				}
-	tplt<size_t _Size> stainli	int	strcpy_s		( char (&dst)[_Size], const char *src )						{ return strcpy_s	(dst, _Size, src);				}
-	tplt<size_t _Size> stainli	int	strncpy_s		( char (&dst)[_Size], const char *src )						{ return strncpy_s	(dst, src, _Size);				}
-	stainli	int	_vsnprintf_s	( char* buffer, size_t bufferSize, size_t count, const char* format, va_list args )	{ return vsnprintf	(buffer, max(count, bufferSize - 1), format, args);	}
-	stainli	int	vsprintf_s		( char *buffer, size_t bufferSize, const char *format, va_list args )				{ return vsnprintf	(buffer, bufferSize - 1, format, args);			}
+	tplt<u2_t _Size> stin	int	strcat_s		( char (&dst)[_Size], sc_c * src )						{ return strcat_s	(dst, _Size, src);				}
+	tplt<u2_t _Size> stin	int	strcpy_s		( char (&dst)[_Size], sc_c * src )						{ return strcpy_s	(dst, _Size, src);				}
+	tplt<u2_t _Size> stin	int	strncpy_s		( char (&dst)[_Size], sc_c * src )						{ return strncpy_s	(dst, src, _Size);				}
+	stin	int	_vsnprintf_s	( sc_t * buffer, u2_t bufferSize, u2_t count, sc_c * format, va_list args )	{ return vsnprintf	(buffer, max(count, bufferSize - 1), format, args);	}
+	stin	int	vsprintf_s		( sc_t * buffer, u2_t bufferSize, sc_c * format, va_list args )				{ return vsnprintf	(buffer, bufferSize - 1, format, args);			}
 #if defined(LLC_WINDOWS)
 #	pragma warning(default: 4996)
 #endif

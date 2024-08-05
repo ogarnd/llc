@@ -18,14 +18,14 @@
 namespace llc
 {
 #ifdef LLC_WINDOWS
-	stainli	::llc::error_t	sleep	(uint32_t milliseconds)		noexcept	{ Sleep(milliseconds); return 0; }
-	stainli ::llc::error_t	sleepUs	(uint64_t microseconds)		noexcept	{ std::this_thread::sleep_for(std::chrono::microseconds(microseconds)); return 0; }
+	stin err_t	sleep	(uint32_t milliseconds)		noexcept	{ Sleep(milliseconds); return 0; }
+	stin err_t	sleepUs	(uint64_t microseconds)		noexcept	{ std::this_thread::sleep_for(std::chrono::microseconds(microseconds)); return 0; }
 #elif defined(LLC_ARDUINO)
-	stainli ::llc::error_t	sleep	(uint32_t milliseconds)		noexcept	{ ::delay(milliseconds); return 0; }
-	stainli ::llc::error_t	sleepUs	(uint32_t milliseconds)		noexcept	{ ::delayMicroseconds(milliseconds); return 0; }
+	stin err_t	sleep	(uint32_t milliseconds)		noexcept	{ ::delay(milliseconds); return 0; }
+	stin err_t	sleepUs	(uint32_t milliseconds)		noexcept	{ ::delayMicroseconds(milliseconds); return 0; }
 #else
-	stainli ::llc::error_t	sleep	(uint32_t milliseconds)		noexcept	{ std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds)); return 0; }
-	stainli ::llc::error_t	sleepUs	(uint64_t microseconds)		noexcept	{ std::this_thread::sleep_for(std::chrono::microseconds(microseconds)); return 0; }
+	stin err_t	sleep	(uint32_t milliseconds)		noexcept	{ std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds)); return 0; }
+	stin err_t	sleepUs	(uint64_t microseconds)		noexcept	{ std::this_thread::sleep_for(std::chrono::microseconds(microseconds)); return 0; }
 #endif
 
 #ifdef LLC_MTSUPPORT

@@ -30,9 +30,9 @@ namespace llc
 	tplt<>	inline	err_t	saveView	<u2_c>	(au0_t & output, vcu2_c & viewToSerialize)		{ return saveUIntView(output, viewToSerialize); }
 	tplt<>	inline	err_t	saveView	<u3_c>	(au0_t & output, vcu3_c & viewToSerialize)		{ return saveUIntView(output, viewToSerialize); }
 
-	tplT	stainli	err_t	saveView			(as0_t & output, cnst view<T> & headerToWrite)	{ return saveView(*(au0_t*)&output, headerToWrite); }
-	tplT			err_t	savePOD				(au0_t & output, cnst T & input)	{ llc_necs(output.append((cnst uint8_t*)&input, sizeof(T))); return sizeof(T); }
-	tplT	stainli	err_t	savePOD				(as0_t & output, cnst T & input)	{ return savePOD(*(au0_t*)&output, input); }
+	tplT	stin	err_t	saveView			(as0_t & output, cnst view<T> & headerToWrite)	{ return saveView(*(au0_t*)&output, headerToWrite); }
+	tplT			err_t	savePOD				(au0_t & output, cnst T & input)	{ llc_necs(output.append((cnst uint8_t*)&input, szof(T))); return szof(T); }
+	tplT	stin	err_t	savePOD				(as0_t & output, cnst T & input)	{ return savePOD(*(au0_t*)&output, input); }
 	tplT			err_t	saveUInt			(au0_t & output, cnst T & input)	{ 
 		cnst packed_uint<T>			packedInput			= input; 
 		llc_necs(output.append(packedInput.cu8())); 
@@ -46,8 +46,8 @@ namespace llc
 		output						= readView;// llc_necs(output.append(readView)); 
 		return 0;
 	}
-	tplT	stainli err_t	loadView			(vcs0_t & input, apod<T> & output) { return loadView(*(vcu0_t*)& input, output); }
-	tplT	stainli err_t	loadView			(vcc  & input, apod<T> & output) { return loadView(*(vcu0_t*)& input, output); }
+	tplT	stin err_t	loadView			(vcs0_t & input, apod<T> & output) { return loadView(*(vcu0_t*)& input, output); }
+	tplT	stin err_t	loadView			(vcsc_t  & input, apod<T> & output) { return loadView(*(vcu0_t*)& input, output); }
 
 	err_t						keyValConstStringSerialize	(cnst view<cnst TKeyValConstChar> & keyVals, vcvsc_c & keysToSave, au0_t & output);
 } // namespace

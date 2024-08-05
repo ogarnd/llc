@@ -7,14 +7,14 @@ namespace llc
 {
 	class CLabelManager	{
 #if defined(LLC_ARDUINO)
-		stacxpr	const uint32_t	BLOCK_SIZE	= 1024 >> 1;
+		stxp	u2_c	BLOCK_SIZE	= 1024 >> 1;
 #elif defined(LLC_ESP32)
-		stacxpr	const uint32_t	BLOCK_SIZE	= 1024 * 4;
+		stxp	u2_c	BLOCK_SIZE	= 1024 * 4;
 #else
-		stacxpr	const uint32_t	BLOCK_SIZE	= 1024 * 64;
+		stxp	u2_c	BLOCK_SIZE	= 1024 * 64;
 #endif
 		::llc::block_container_nts<BLOCK_SIZE>	Characters;
-		::llc::vcc							Empty;
+		::llc::vcsc_t							Empty;
 
 	public:	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		::llc::au2_t							Counts;
@@ -40,7 +40,7 @@ namespace llc
 
 		::llc::error_t						Load		(::llc::vcu0_t & input) {
 			llc_necs(llc::loadView(input, Counts));
-			::llc::vcc					out_view; 
+			::llc::vcsc_t					out_view; 
 			uint32_t					offsetByte					= 0;
 			for(uint32_t iArray = 0; iArray < Counts.size(); ++iArray) {
 				uint32_t					elementCount				= Counts[iArray];
@@ -53,11 +53,11 @@ namespace llc
 		}
 
 		inline	::llc::error_t				Size		()					const	noexcept	{ return Texts.size(); }
-		inline	::llc::vcc					View		(uint32_t index)	const				{ return {Texts[index], Counts[index]}; }
-		inline	::llc::error_t				View		(const char* elements, uint16_t count)	{ ::llc::vcc out_view; return View(elements, count, out_view); }
+		inline	::llc::vcsc_t					View		(uint32_t index)	const				{ return {Texts[index], Counts[index]}; }
+		inline	::llc::error_t				View		(const char* elements, uint16_t count)	{ ::llc::vcsc_t out_view; return View(elements, count, out_view); }
 
-		::llc::error_t						Index		(const ::llc::vcc & elements) {
-			ree_if(elements.size() >= CLabelManager::BLOCK_SIZE, "Data too large: %" LLC_FMT_U32 ".", elements.size());
+		::llc::error_t						Index		(::llc::vcsc_c & elements) {
+			ree_if(elements.size() >= CLabelManager::BLOCK_SIZE, "Data too large: %" LLC_FMT_U2 ".", elements.size());
 
 			for(uint32_t iView = 0, countLabels = Texts.size(); iView < countLabels; ++iView) {
 				if(elements.size() != Counts[iView])
@@ -70,18 +70,18 @@ namespace llc
 			return -1;
 		}
 
-		::llc::error_t						View		(const char* text, uint32_t textLen, ::llc::vcc & out_view)		{
+		::llc::error_t						View		(const char* text, uint32_t textLen, ::llc::vcsc_t & out_view)		{
 			if(0 == textLen || 0 == text || 0 == text[0]) {
 				out_view							= Empty;
 				return 0;
 			}
 
 			uint32_t								ntslen						= 0;
-			for(const uint32_t countChars = ::llc::min(textLen, CLabelManager::BLOCK_SIZE - 1); ntslen < countChars; ++ntslen)
+			for(u2_c countChars = ::llc::min(textLen, CLabelManager::BLOCK_SIZE - 1); ntslen < countChars; ++ntslen)
 				if(0 == text[ntslen])
 					break;
 
-			const uint32_t							viewIndex					= (uint32_t)Index({text, ntslen});
+			u2_c							viewIndex					= (uint32_t)Index({text, ntslen});
 			if(viewIndex < Texts.size()) {
 				out_view							= {Texts[viewIndex], Counts[viewIndex]};
 				return viewIndex;

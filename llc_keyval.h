@@ -11,18 +11,18 @@ namespace llc
 					_tVal									Val;
 	};
 
-	typedef		::llc::SKeyVal<::llc::vcc, ::llc::vcc>
+	tydf		::llc::SKeyVal<::llc::vcsc_t, ::llc::vcsc_t>
 														TKeyValConstChar, TKeyValConstString;
 
-	//typedef		::llc::SKeyVal<::llc::vcs, ::llc::vcs> TKeyValConstString;
+	//tydf		::llc::SKeyVal<::llc::vcs, ::llc::vcs> TKeyValConstString;
 
 				::llc::error_t							token_split						(char token, const ::llc::vcs& input_string, TKeyValConstChar& output_views);
 	inline		::llc::error_t							keyval_split					(const ::llc::vcs& input_string, TKeyValConstString& out_keyval) { return ::llc::token_split('=', input_string, out_keyval); }
 
 	tplt<tpnm _tVal>
-				::llc::error_t							find			(const ::llc::vcs & keyToFind, const ::llc::view<const ::llc::SKeyVal<::llc::vcc, _tVal>> & keyvals)	{
+				::llc::error_t							find			(const ::llc::vcs & keyToFind, const ::llc::view<const ::llc::SKeyVal<::llc::vcsc_t, _tVal>> & keyvals)	{
 		for(uint32_t iKeyVal = 0; iKeyVal < keyvals.size(); ++iKeyVal) {
-			const ::llc::vcc							& keyCurrent					= keyvals[iKeyVal].Key;
+			::llc::vcsc_c							& keyCurrent					= keyvals[iKeyVal].Key;
 			if(keyToFind == keyCurrent)
 				return iKeyVal;
 		}
@@ -36,8 +36,8 @@ namespace llc
 		return index;
 	}
 
-				::llc::error_t							find			(const ::llc::vcs & keyToFind, const ::llc::view<const ::llc::TKeyValConstString> & keyvals, ::llc::vcc & out_val);
-				::llc::error_t							keyValVerify					(const ::llc::view<::llc::TKeyValConstString> & environViews, const ::llc::vcc & keyToVerify, const ::llc::vcc & valueToVerify);
+				::llc::error_t							find			(const ::llc::vcs & keyToFind, const ::llc::view<const ::llc::TKeyValConstString> & keyvals, ::llc::vcsc_t & out_val);
+				::llc::error_t							keyValVerify					(const ::llc::view<::llc::TKeyValConstString> & environViews, ::llc::vcsc_c & keyToVerify, ::llc::vcsc_c & valueToVerify);
 				::llc::error_t							keyvalNumeric					(const ::llc::vcs & key, const ::llc::view<const ::llc::TKeyValConstString> keyVals, uint64_t * outputNumber);
 	tplt <tpnm _tNumeric>
 				::llc::error_t							keyvalNumeric					(const ::llc::vcs & key, const ::llc::view<const ::llc::TKeyValConstString> keyVals, _tNumeric & outputNumber)	{
@@ -49,7 +49,7 @@ namespace llc
 	}
 
 	tplt <tpnm... _tArgs>
-	::llc::error_t				keyValVerify					(const ::llc::view<::llc::TKeyValConstString> & environViews, const ::llc::vcc & keyToVerify, const ::llc::view<const ::llc::vcc>& valueToVerify)	{
+	::llc::error_t				keyValVerify					(const ::llc::view<::llc::TKeyValConstString> & environViews, ::llc::vcsc_c & keyToVerify, const ::llc::view<::llc::vcsc_c>& valueToVerify)	{
 		for(uint32_t iKey = 0; iKey < valueToVerify.size(); ++iKey) {
 			const ::llc::error_t			val								= ::llc::keyValVerify(environViews, keyToVerify, valueToVerify[iKey]);
 			if(-1 != val)

@@ -31,22 +31,22 @@ namespace llc
 
 
 #if defined(LLC_ESP32) || defined(LLC_ARDUINO)
-	stacxpr	uint32_t		DEFLATE_DEFAULT_CHUNK_SIZE		= 1024 * 4;
-	stacxpr	uint32_t		INFLATE_DEFAULT_CHUNK_SIZE		= 1024 * 4;
+	stxp	uint32_t		DEFLATE_DEFAULT_CHUNK_SIZE		= 1024 * 4;
+	stxp	uint32_t		INFLATE_DEFAULT_CHUNK_SIZE		= 1024 * 4;
 #else
-	stacxpr	uint32_t		DEFLATE_DEFAULT_CHUNK_SIZE		= 1024 * 32;
-	stacxpr	uint32_t		INFLATE_DEFAULT_CHUNK_SIZE		= 1024 * 32;
+	stxp	uint32_t		DEFLATE_DEFAULT_CHUNK_SIZE		= 1024 * 32;
+	stxp	uint32_t		INFLATE_DEFAULT_CHUNK_SIZE		= 1024 * 32;
 #endif	
 
-	::llc::error_t			arrayDeflate			(const ::llc::vcu0_t & inflated, ::llc::au0_t & deflated, const uint32_t chunkSize = ::llc::DEFLATE_DEFAULT_CHUNK_SIZE);
-	::llc::error_t			arrayInflate			(const ::llc::vcu0_t & deflated, ::llc::au0_t & inflated, const uint32_t chunkSize = ::llc::INFLATE_DEFAULT_CHUNK_SIZE);
+	::llc::error_t			arrayDeflate			(const ::llc::vcu0_t & inflated, ::llc::au0_t & deflated, u2_c chunkSize = ::llc::DEFLATE_DEFAULT_CHUNK_SIZE);
+	::llc::error_t			arrayInflate			(const ::llc::vcu0_t & deflated, ::llc::au0_t & inflated, u2_c chunkSize = ::llc::INFLATE_DEFAULT_CHUNK_SIZE);
 
-	stainli	::llc::error_t	arrayDeflate			(const ::llc::vcs0_t & inflated, ::llc::au0_t & deflated, const uint32_t chunkSize = ::llc::DEFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayDeflate(*(::llc::vcu0_t*)&inflated, deflated, chunkSize); }
-	stainli	::llc::error_t	arrayInflate			(const ::llc::vcs0_t & deflated, ::llc::au0_t & inflated, const uint32_t chunkSize = ::llc::INFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayInflate(*(::llc::vcu0_t*)&deflated, inflated, chunkSize); }
-	stainli	::llc::error_t	arrayDeflate			(const ::llc::vcu0_t & inflated, ::llc::as0_t & deflated, const uint32_t chunkSize = ::llc::DEFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayDeflate(inflated, *(::llc::au0_t*)&deflated, chunkSize); }
-	stainli	::llc::error_t	arrayInflate			(const ::llc::vcu0_t & deflated, ::llc::as0_t & inflated, const uint32_t chunkSize = ::llc::INFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayInflate(deflated, *(::llc::au0_t*)&inflated, chunkSize); }
-	stainli	::llc::error_t	arrayDeflate			(const ::llc::vcs0_t & inflated, ::llc::as0_t & deflated, const uint32_t chunkSize = ::llc::DEFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayDeflate(*(::llc::vcu0_t*)&inflated, *(::llc::au0_t*)&deflated, chunkSize); }
-	stainli	::llc::error_t	arrayInflate			(const ::llc::vcs0_t & deflated, ::llc::as0_t & inflated, const uint32_t chunkSize = ::llc::INFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayInflate(*(::llc::vcu0_t*)&deflated, *(::llc::au0_t*)&inflated, chunkSize); }
+	stin	::llc::error_t	arrayDeflate			(const ::llc::vcs0_t & inflated, ::llc::au0_t & deflated, u2_c chunkSize = ::llc::DEFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayDeflate(*(::llc::vcu0_t*)&inflated, deflated, chunkSize); }
+	stin	::llc::error_t	arrayInflate			(const ::llc::vcs0_t & deflated, ::llc::au0_t & inflated, u2_c chunkSize = ::llc::INFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayInflate(*(::llc::vcu0_t*)&deflated, inflated, chunkSize); }
+	stin	::llc::error_t	arrayDeflate			(const ::llc::vcu0_t & inflated, ::llc::as0_t & deflated, u2_c chunkSize = ::llc::DEFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayDeflate(inflated, *(::llc::au0_t*)&deflated, chunkSize); }
+	stin	::llc::error_t	arrayInflate			(const ::llc::vcu0_t & deflated, ::llc::as0_t & inflated, u2_c chunkSize = ::llc::INFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayInflate(deflated, *(::llc::au0_t*)&inflated, chunkSize); }
+	stin	::llc::error_t	arrayDeflate			(const ::llc::vcs0_t & inflated, ::llc::as0_t & deflated, u2_c chunkSize = ::llc::DEFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayDeflate(*(::llc::vcu0_t*)&inflated, *(::llc::au0_t*)&deflated, chunkSize); }
+	stin	::llc::error_t	arrayInflate			(const ::llc::vcs0_t & deflated, ::llc::as0_t & inflated, u2_c chunkSize = ::llc::INFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayInflate(*(::llc::vcu0_t*)&deflated, *(::llc::au0_t*)&inflated, chunkSize); }
 
 	::llc::error_t			folderLoad					
 		( const ::llc::vcs	nameFolderSrc 
@@ -70,19 +70,19 @@ namespace llc
 		::llc::au0_t				Encrypted;
 	};
 
-	::llc::error_t			inflateToMemory  	(::llc::au0_t & tempCache, const ::llc::vcc & fileName, ::llc::au0_t & output);
-	::llc::error_t			deflateFromMemory	(::llc::au0_t & tempCache, const ::llc::vcc & fileName, const ::llc::vcu0_t & input);
+	::llc::error_t			inflateToMemory  	(::llc::au0_t & tempCache, ::llc::vcsc_c & fileName, ::llc::au0_t & output);
+	::llc::error_t			deflateFromMemory	(::llc::au0_t & tempCache, ::llc::vcsc_c & fileName, const ::llc::vcu0_t & input);
 
-	stainli	::llc::error_t	inflateToMemory			(const ::llc::vcc & fileName, ::llc::au0_t & input)			{ ::llc::au0_t temp; return ::llc::inflateToMemory  (temp, fileName, input); }
-	stainli	::llc::error_t	deflateFromMemory		(const ::llc::vcc & fileName, const ::llc::vcu0_t & input)	{ ::llc::au0_t temp; return ::llc::deflateFromMemory(temp, fileName, input); }
+	stin	::llc::error_t	inflateToMemory			(::llc::vcsc_c & fileName, ::llc::au0_t & input)			{ ::llc::au0_t temp; return ::llc::inflateToMemory  (temp, fileName, input); }
+	stin	::llc::error_t	deflateFromMemory		(::llc::vcsc_c & fileName, const ::llc::vcu0_t & input)	{ ::llc::au0_t temp; return ::llc::deflateFromMemory(temp, fileName, input); }
 
-	::llc::error_t			fileToMemorySecure		(::llc::SLoadCache & recycle, const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::au0_t & output);
-	::llc::error_t			fileFromMemorySecure	(::llc::SLoadCache & recycle, const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, const ::llc::vcu0_t & input);
-	stainli	::llc::error_t	fileToMemorySecure		(::llc::SLoadCache & recycle, const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::asc_t & output)		{ return ::llc::fileToMemorySecure  (recycle, fileName, key, deflate, *(::llc::au0_t*)&output); }
+	::llc::error_t			fileToMemorySecure		(::llc::SLoadCache & recycle, ::llc::vcsc_c & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::au0_t & output);
+	::llc::error_t			fileFromMemorySecure	(::llc::SLoadCache & recycle, ::llc::vcsc_c & fileName, const ::llc::vcu0_t & key, const bool deflate, const ::llc::vcu0_t & input);
+	stin	::llc::error_t	fileToMemorySecure		(::llc::SLoadCache & recycle, ::llc::vcsc_c & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::asc_t & output)		{ return ::llc::fileToMemorySecure  (recycle, fileName, key, deflate, *(::llc::au0_t*)&output); }
 
-	stainli	::llc::error_t	fileToMemorySecure		(const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::asc_t & output)		{ ::llc::SLoadCache temp; return ::llc::fileToMemorySecure  (temp, fileName, key, deflate, *(::llc::au0_t*)&output); }
-	stainli	::llc::error_t	fileToMemorySecure		(const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::au0_t & output)			{ ::llc::SLoadCache temp; return ::llc::fileToMemorySecure  (temp, fileName, key, deflate, output); }
-	stainli	::llc::error_t	fileFromMemorySecure	(const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, const ::llc::vcu0_t & input)	{ ::llc::SLoadCache temp; return ::llc::fileFromMemorySecure(temp, fileName, key, deflate, input); }
+	stin	::llc::error_t	fileToMemorySecure		(::llc::vcsc_c & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::asc_t & output)		{ ::llc::SLoadCache temp; return ::llc::fileToMemorySecure  (temp, fileName, key, deflate, *(::llc::au0_t*)&output); }
+	stin	::llc::error_t	fileToMemorySecure		(::llc::vcsc_c & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::au0_t & output)			{ ::llc::SLoadCache temp; return ::llc::fileToMemorySecure  (temp, fileName, key, deflate, output); }
+	stin	::llc::error_t	fileFromMemorySecure	(::llc::vcsc_c & fileName, const ::llc::vcu0_t & key, const bool deflate, const ::llc::vcu0_t & input)	{ ::llc::SLoadCache temp; return ::llc::fileFromMemorySecure(temp, fileName, key, deflate, input); }
 } // namespace
 
 #endif // LLC_DEFLATE_H_23627

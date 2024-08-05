@@ -11,16 +11,16 @@
 
 namespace llc
 {
-	ndstain	::llc::vcc		tovcc   (const String & srcstr)						    	{ return srcstr.length() ? ::llc::vcc{srcstr.begin(), srcstr.length()} : vcs{}; }
-	stainli	::llc::error_t	tovcc   (::llc::vcc		& output, const String	& srcstr)	{ return (output = ::llc::tovcc(srcstr)).size(); }
-	stainli	::llc::error_t	tolabel (::llc::vcc		& output, const String	& srcstr)	{ return (output = ::llc::label(::llc::tovcc(srcstr))).size(); }
-	stainli	::llc::error_t	toachar (::llc::asc_t	& output, const String	& srcstr)	{ llc_necs(output.reserve(srcstr.length())); return (output = ::llc::tovcc(srcstr)).size(); }
-	stainli	::llc::error_t	append 	(::llc::asc_t	& output, const String	& srcstr)	{ return output.append(::llc::tovcc(srcstr)); }
+	ndsi	::llc::vcsc_t		tovcc   (const String & srcstr)						    	{ return srcstr.length() ? ::llc::vcsc_t{srcstr.begin(), srcstr.length()} : vcs{}; }
+	stin	::llc::error_t	tovcc   (::llc::vcsc_t		& output, const String	& srcstr)	{ return (output = ::llc::tovcc(srcstr)).size(); }
+	stin	::llc::error_t	tolabel (::llc::vcsc_t		& output, const String	& srcstr)	{ return (output = ::llc::label(::llc::tovcc(srcstr))).size(); }
+	stin	::llc::error_t	toachar (::llc::asc_t	& output, const String	& srcstr)	{ llc_necs(output.reserve(srcstr.length())); return (output = ::llc::tovcc(srcstr)).size(); }
+	stin	::llc::error_t	append 	(::llc::asc_t	& output, const String	& srcstr)	{ return output.append(::llc::tovcc(srcstr)); }
 
-	ndstain	::llc::vcc		tolabel (const String & srcstr)	{ return ::llc::label(::llc::tovcc(srcstr)); }
-	ndstain	::llc::asc_t	toachar (const String & srcstr)	{ return ::llc::tovcc(srcstr); }
-	ndstain	::llc::vcc		str		(const String & srcstr)	{ return ::llc::tovcc(srcstr); }
-	ndstain	uint32_t 		size	(const String & srcstr)	{ return srcstr.length(); }
+	ndsi	::llc::vcsc_t		tolabel (const String & srcstr)	{ return ::llc::label(::llc::tovcc(srcstr)); }
+	ndsi	::llc::asc_t	toachar (const String & srcstr)	{ return ::llc::tovcc(srcstr); }
+	ndsi	::llc::vcsc_t		str		(const String & srcstr)	{ return ::llc::tovcc(srcstr); }
+	ndsi	uint32_t 		size	(const String & srcstr)	{ return srcstr.length(); }
 } // namespace
 #endif // LLC_ARDUINO
 
