@@ -12,9 +12,8 @@ namespace llc
 {
 	tpl_t struct SEventView {
 		tdfT(_t);
-		tydf			SEventView<T>	TEView;
-
-		T				Type			= {};
+		tydf	SEventView<T>	TEView;
+		T		Type			= {};
 		vcu0_t	Data			= {};
 
 		error_t	Save		(au0_t & output)	const	{
@@ -44,19 +43,19 @@ namespace llc
 		tydf SEvent<T>	TEvent;
 
 		T				Type		= {};
-		au0_t		Data		= {};
+		au0_t			Data		= {};
 
 						SEvent		(const TEvent &)							= default;
 		constexpr		SEvent		(T type = {})						: Type(type) {}
 						SEvent		(T type, const vcu0_t data)	: Type(type), Data(data.cu8()) {}
 						SEvent		(const TEView & eventView)			: Type(eventView.Type), Data(eventView.Data) {}
 
-		TEvent&			oper= 	(const TEvent &)				= default;
-		TEvent&			oper= 	(const TEView & eventView)		{ Type = eventView.Type; Data = eventView.Data; rtrn *this; }
+		TEvent&			oper= 		(const TEvent &)				= default;
+		TEvent&			oper= 		(const TEView & eventView)		{ Type = eventView.Type; Data = eventView.Data; rtrn *this; }
 
-		oper		TEView		()						const	{ rtrn {Type, Data.cu8()}; }
+		oper			TEView		()						const	{ rtrn {Type, Data.cu8()}; }
 
-		error_t	Save		(au0_t & output)	const	{
+		error_t			Save		(au0_t & output)	const	{
 			llc_necs(savePOD(output, Type));
 			llc_necs(saveView(output, Data));
 			rtrn 0;

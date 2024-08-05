@@ -11,16 +11,16 @@
 
 namespace llc
 {
-	ndsi	::llc::vcsc_t		tovcc   (const String & srcstr)						    	{ return srcstr.length() ? ::llc::vcsc_t{srcstr.begin(), srcstr.length()} : vcs{}; }
-	stin	::llc::error_t	tovcc   (::llc::vcsc_t		& output, const String	& srcstr)	{ return (output = ::llc::tovcc(srcstr)).size(); }
-	stin	::llc::error_t	tolabel (::llc::vcsc_t		& output, const String	& srcstr)	{ return (output = ::llc::label(::llc::tovcc(srcstr))).size(); }
-	stin	::llc::error_t	toachar (::llc::asc_t	& output, const String	& srcstr)	{ llc_necs(output.reserve(srcstr.length())); return (output = ::llc::tovcc(srcstr)).size(); }
-	stin	::llc::error_t	append 	(::llc::asc_t	& output, const String	& srcstr)	{ return output.append(::llc::tovcc(srcstr)); }
+	ndsi	vcsc_t	tovcc   (cnst String & srcstr)					{ rtrn srcstr.length() ? vcsc_t{srcstr.begin(), srcstr.length()} : vcs{}; }
+	stin	err_t	tovcc   (vcsc_t	& output, cnst String & srcstr)	{ rtrn (output = tovcc(srcstr)).size(); }
+	stin	err_t	tolabel (vcsc_t	& output, cnst String & srcstr)	{ rtrn (output = label(tovcc(srcstr))).size(); }
+	stin	err_t	toachar (asc_t	& output, cnst String & srcstr)	{ llc_necs(output.reserve(srcstr.length())); rtrn (output = tovcc(srcstr)).size(); }
+	stin	err_t	append 	(asc_t	& output, cnst String & srcstr)	{ rtrn output.append(tovcc(srcstr)); }
 
-	ndsi	::llc::vcsc_t		tolabel (const String & srcstr)	{ return ::llc::label(::llc::tovcc(srcstr)); }
-	ndsi	::llc::asc_t	toachar (const String & srcstr)	{ return ::llc::tovcc(srcstr); }
-	ndsi	::llc::vcsc_t		str		(const String & srcstr)	{ return ::llc::tovcc(srcstr); }
-	ndsi	uint32_t 		size	(const String & srcstr)	{ return srcstr.length(); }
+	ndsi	vcsc_t	tolabel (cnst String & srcstr)	{ rtrn label(tovcc(srcstr)); }
+	ndsi	asc_t	toachar (cnst String & srcstr)	{ rtrn tovcc(srcstr); }
+	ndsi	vcsc_t	str		(cnst String & srcstr)	{ rtrn tovcc(srcstr); }
+	ndsi	u2_t 	size	(cnst String & srcstr)	{ rtrn srcstr.length(); }
 } // namespace
 #endif // LLC_ARDUINO
 

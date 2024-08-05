@@ -13,15 +13,15 @@ namespace llc
 		::llc::au2_t								RemainingSpace;
 
 	public:	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-		::llc::error_t						clear						()								{ return ::llc::clear(Blocks, RemainingSpace); }
-		::llc::error_t						Save						(::llc::au0_t & output)	const	{
+		err_t						clear						()								{ return ::llc::clear(Blocks, RemainingSpace); }
+		err_t						Save						(::llc::au0_t & output)	const	{
 			llc_necs(llc::saveView(output, RemainingSpace));
 			for(uint32_t iArray = 0; iArray < RemainingSpace.size(); ++iArray)
 				llc_necs(llc::saveView(output, *Blocks[iArray]));
 			return 0;
 		}
 
-		::llc::error_t						Load						(::llc::vcu0_t & input)			{
+		err_t						Load						(::llc::vcu0_t & input)			{
 			clear();
 			llc_necs(llc::loadView(input, RemainingSpace));
 			llc_necs(Blocks.resize(RemainingSpace.size()));
@@ -30,7 +30,7 @@ namespace llc
 			return 0;
 		}
 
-		::llc::error_t						push_sequence				(const char* sequence, uint32_t length, ::llc::vcsc_t & out_view)	{
+		err_t						push_sequence				(sc_c* sequence, uint32_t length, ::llc::vcsc_t & out_view)	{
 			u2_c							lengthPlusOne				= length + 1;
 			for(uint32_t iBlock = 0; iBlock < Blocks.size(); ++iBlock) {
 				uint32_t								& blkRemainingSpace			= RemainingSpace[iBlock];

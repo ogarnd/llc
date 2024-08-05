@@ -18,8 +18,8 @@ namespace llc
 		inln	oper		view<T>			()								{ rtrn {Storage, N}; }
 		inxp	oper		view<TCnst>		()						csnx	{ rtrn {Storage, N}; }
 
-		inln	TCnst&		oper[]			(u2_t index)			cnst	{ gthrow_if(index >= N, LLC_FMT_GE_U2, (s2_t)index, (s2_t)N); rtrn Storage[index]; }
-		inln	T&			oper[]			(u2_t index)					{ gthrow_if(index >= N, LLC_FMT_GE_U2, (s2_t)index, (s2_t)N); rtrn Storage[index]; }
+		inln	TCnst&		oper[]			(u2_t index)			cnst	{ gthrow_if(index >= N, LLC_FMT_GE_U2, index, N); rtrn Storage[index]; }
+		inln	T&			oper[]			(u2_t index)					{ gthrow_if(index >= N, LLC_FMT_GE_U2, index, N); rtrn Storage[index]; }
 		LLC_DEFAULT_OPERATOR(TAStatic
 			, (this->size() != other.size()) ? false
 			: (this->begin() == other.begin()) ? true
@@ -56,7 +56,6 @@ namespace llc
 		}
 	};
 #pragma pack(pop)
-
 	tplTN2usng	asttc		= ::llc::array_static<T, N>;
 	tplTN2usng	astatic		= ::llc::array_static<T, N>;
 

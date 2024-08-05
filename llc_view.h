@@ -44,8 +44,7 @@ namespace llc
 
 		// Operators
 		inxp	oper			view<TCnst>		()									csnx	{ rtrn {Data, Count}; }
-
-		T&						operator[]		(u2_t index)								{
+		T&						oper[]			(u2_t index)								{
 			static T dymmy = {}; 
 			rves_if(dymmy, 0 == Data);
 			gthrow_if(index >= Count, LLC_FMT_GE_U2, index, Count);
@@ -64,21 +63,20 @@ namespace llc
 				rtrn true;
 			rtrn ::llc::equal(other.begin(), this->begin(), this->size());
 		}
-
 		// Methods
 		inxp	u2_t			byte_count		()														csnx	{ rtrn u2_t(Count * sizeof(T));	}
-		inxp	uint64_t		bit_count		()														csnx	{ rtrn byte_count() * 8ULL;			}
+		inxp	u3_t			bit_count		()														csnx	{ rtrn byte_count() * 8ULL;			}
 		inln	view<sc_t>		c				()														nxpt	{ rtrn {(sc_t*)Data, byte_count()}; }
 		inln	view<u0_t>		u8				()														nxpt	{ rtrn {(u0_t*)Data, byte_count()}; }
 		inxp	view<sc_c>		cc				()														csnx	{ rtrn {(sc_c*)Data, byte_count()}; }
 		inxp	view<u0_c>		u8				()														csnx	{ rtrn {(u0_c*)Data, byte_count()}; }
 		inxp	view<u0_c>		cu8				()														csnx	{ rtrn {(u0_c*)Data, byte_count()}; }
 		inxp	u2_c&			size			()														csnx	{ rtrn Count;				}
-		inxp	cnst T*			begin			()														csnx	{ rtrn Data;				}
-		inxp	cnst T*			end				()														csnx	{ rtrn begin() + Count;	}
+		inxp	TCnst*			begin			()														csnx	{ rtrn Data;				}
+		inxp	TCnst*			end				()														csnx	{ rtrn begin() + Count;	}
 		inln	T*				begin			()														nxpt	{ rtrn Data;				}
 		inln	T*				end				()														nxpt	{ rtrn begin() + Count;	}
-		err_t			slice			(TV & out, u2_t offset, u2_t count = (u2_t)-1)				{
+		err_t					slice			(TV & out, u2_t offset, u2_t count = (u2_t)-1)				{
 			reterr_gerror_if(offset > Count, LLC_FMT_GT_U2, offset, (u2_t)Count);
 			u2_c					newSize			= Count - offset;
 			if(count != (u2_t)-1)
@@ -276,10 +274,10 @@ namespace llc
 		ndin	oper	sc_c* 					()  csnx	{ rtrn begin(); }
 	};
 
-	tydf	::llc::view_string			vstr_t, vs;
-	tydf	::llc::view_const_string	vcst_t, vcs;
-	tdcs	vstr_t					vstr_c;
-	tdcs	vcst_t					vcst_c;
+	tydf	view_string			vstr_t, vs;
+	tydf	view_const_string	vcst_t, vcs;
+	tdcs	vstr_t				vstr_c;
+	tdcs	vcst_t				vcst_c;
 
 	stin			llc::vcs	str				(cnst llc::vcs & arg)	{ rtrn arg; } 
 	stin			llc::vcs	str				(cnst llc::vs & arg)	{ rtrn arg.cc(); } 
@@ -496,10 +494,10 @@ namespace llc
 		rtrn iMin;
 	}
 
-	tplT	T&			max		(view<T> elements)		{ T * rmax	{}; if_fail_e(::llc::max(elements, &rmax));	rtrn *rmax; }
-	tplT	T&			min		(view<T> elements)		{ T * rmin	{}; if_fail_e(::llc::min(elements, &rmin));	rtrn *rmin; }
-	tplT	T			sum		(view<cnst T> elements)	{ T result	{}; for(T element : elements) result += element; rtrn result; }
-	tplT	stin	T&	be2le	(T & number)					{ ::llc::reverse<i0u_t>({(i0u_t*)&number, sizeof(T)}); rtrn number; }
+	tplT		T&	max		(view<T> elements)		{ T * rmax	{}; if_fail_e(::llc::max(elements, &rmax));	rtrn *rmax; }
+	tplT		T&	min		(view<T> elements)		{ T * rmin	{}; if_fail_e(::llc::min(elements, &rmin));	rtrn *rmin; }
+	tplT		T	sum		(view<cnst T> elements)	{ T result	{}; for(T element : elements) result += element; rtrn result; }
+	tplTstin	T&	be2le	(T & number)			{ ::llc::reverse<i0u_t>({(i0u_t*)&number, sizeof(T)}); rtrn number; }
 
 #define LLC_USING_VIEW()												\
 	usng	::llc::vb8_t, ::llc::vb8_c, ::llc::vcb8_t, ::llc::vcb8_c	\

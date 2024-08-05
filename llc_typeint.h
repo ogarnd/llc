@@ -75,6 +75,7 @@ namespace llc
 #define tplTInN2	tplt<tpnm TIn	, ::llc::u2_t N>
 #define tpl_t_nu2	tplt<tpnm _t		, ::llc::u2_t _nu2>
 #define tplN2ustct	tplN2u	stct
+#define tplN2ustin	tplN2u	stin
 #define tplN2uusng	tplN2u	usng
 #define tplN2undsx	tplN2u	ndsx
 #define tplN2usinx	tplN2u	sinx
@@ -86,7 +87,6 @@ namespace llc
 #define tplTN2sinx	tplTN2	sinx
 #define tplTN2stxp	tplTN2	stxp
 #define tplTN2nsix	tplTN2	nsix
-
 #if defined(LLC_ANDROID) || defined(LLC_CLANG)
 #	pragma clang diagnostic push
 #	pragma clang diagnostic ignored "-Wtautological-constant-out-of-range-compare"
@@ -178,6 +178,7 @@ namespace llc
 #define LLC_FMT_U0		"u"
 #define LLC_FMT_S1		"i"
 #define LLC_FMT_U1		"u"
+
 //
 #define LLC_FMT_GT_F2	"%" LLC_FMT_F2 " > %" LLC_FMT_F2
 #define LLC_FMT_GT_F3	"%" LLC_FMT_F3 " > %" LLC_FMT_F3
@@ -224,5 +225,4 @@ namespace llc
 #define LLC_FMT_NE_U2	"%" LLC_FMT_U2 " != %" LLC_FMT_U2
 #define LLC_FMT_NE_S3	"%" LLC_FMT_S3 " != %" LLC_FMT_S3
 #define LLC_FMT_NE_U3	"%" LLC_FMT_U3 " != %" LLC_FMT_U3
-//
 #endif // LLC_TYPEINT_H_23627

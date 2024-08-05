@@ -610,6 +610,7 @@ static	::llc::error_t	jsonParseDocumentCharacter	(::llc::SJSONReaderState & stat
 	for(u2_t iNode = 0, countNodes = node_object.Children.size(); iNode < countNodes; iNode += 2) {
 		const ::llc::SJSONNode		* node						= node_object.Children[iNode];
 		ree_if(::llc::JSON_TYPE_STRING != node->Token->Type, "Invalid node type: %" LLC_FMT_U2 " (%s). Only string types (%" LLC_FMT_U2 ") can be keys of JSON objects.", node->Token->Type, ::llc::get_value_label(node->Token->Type).begin(), ::llc::JSON_TYPE_STRING);
+
 		::llc::vcsc_c			& view						= views[node->ObjectIndex];
 		if(key == view)
 			return (::llc::error_t)node->ObjectIndex + 2; // one for value and other for the actual element

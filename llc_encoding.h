@@ -7,6 +7,7 @@
 namespace llc
 {
 	err_t			hexEncode				(vcu0_c & inputBinary, asc_t  & out_hexed	);
+
 	err_t			hexDecode				(const vcsc_t  & in_hexed   , au0_t & outputBinary	);
 	err_t			hexDecode				(const vcsc_t  & in_hexed   , as0_t & outputBinary	);
 	stin	err_t	hexEncode				(const vcs0_t & inputBinary, asc_t  & out_hexed	)			{ return hexEncode(vcu0_t{(const u0_t*)inputBinary.begin(), inputBinary.size()}, out_hexed); }
@@ -19,6 +20,7 @@ namespace llc
 	stin	err_t	ardellDecode			(vcu0_c & input, u3_t key, bool salt, au0_t & output)	{ as2_t tempCache; return ardellDecode(tempCache, input, key, salt, output); }
 	stin	err_t	ardellEncode			(const vcs0_t & input, u3_t key, bool salt, au0_t & output)	{ as2_t tempCache; return ardellEncode(tempCache, *(vcu0_c*)&input, key, salt, output); }
 	stin	err_t	ardellDecode			(vcu0_c & input, u3_t key, bool salt, as0_t & output)	{ as2_t tempCache; return ardellDecode(tempCache, input, key, salt, *(au0_t*)&output); }
+
 	stin	err_t	ardellEncode			(const vcsc_t  & input, u3_t key, bool salt, au0_t & output)	{ as2_t tempCache; return ardellEncode(tempCache, *(vcu0_c*)&input, key, salt, output); }
 	stin	err_t	ardellDecode			(vcu0_c & input, u3_t key, bool salt, asc_t  & output)	{ as2_t tempCache; return ardellDecode(tempCache, input, key, salt, *(au0_t*)&output); }
 
@@ -31,7 +33,7 @@ namespace llc
 	err_t			saltDataUnsalt			(vcu0_c & salted, au0_t & binary);
 
 	tplT err_t		rleEncode				(const view<T> & decoded, au0_t & encoded) {
-		u2_t			idxLatest				= 0;
+		u2_t				idxLatest				= 0;
 		stxp	u2_c		sizeBlock				= szof(T) + 1;
 		for(u2_t iIn = 0; iIn < decoded.size(); ++iIn) {
 			cnst T 				& current				= decoded[iIn];

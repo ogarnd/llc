@@ -7,68 +7,67 @@
 
 namespace llc
 {
-	tplT			err_t	loadPOD			(vcu0_t & input, T & output) { 
+	tplT		err_t	loadPOD			(vcu0_t & input, T & output) { 
 		rees_if(input.byte_count() < szof(T));
 		memcpy(&output, input.begin(), szof(T));
 		llc_necs(input.slice(input, szof(T)));
-		return szof(T);
+		rtrn szof(T);
 	}
-	tplT	stin	err_t	loadPOD			(vcs0_t & input, T & output)	{ return loadPOD (*(vcu0_t*)& input, output); }
-	tplT	stin	err_t	loadPOD			(vcsc_t  & input, T & output)	{ return loadPOD (*(vcu0_t*)& input, output); }
+	tplTstin	err_t	loadPOD			(vcs0_t & input, T & output)	{ rtrn loadPOD (*(vcu0_t*)& input, output); }
+	tplTstin	err_t	loadPOD			(vcsc_t  & input, T & output)	{ rtrn loadPOD (*(vcu0_t*)& input, output); }
 	//
-	tplT			err_t	loadUInt		(vcu0_t & input, T & output)	{
-		const packed_uint<T>		& packedInput	= *(const packed_uint<T>*)input.begin(); 
+	tplT		err_t	loadUInt		(vcu0_t & input, T & output)	{
+		cnst packed_uint<T>		& packedInput	= *(cnst packed_uint<T>*)input.begin(); 
 		if_true_ve(-1, packedInput.ValueWidth() > input.size()); 
 		output					= packedInput.Value(); 
 		llc_necs(input.slice(input, packedInput.ValueWidth())); 
-		return packedInput.ValueWidth();
+		rtrn packedInput.ValueWidth();
 	}
-	tplT	stin	err_t	loadUInt		(vcs0_t & input, T & output)	{ return loadUInt (*(vcu0_t*)& input, output); }
-	tplT	stin	err_t	loadUInt		(vcsc_t  & input, T & output)	{ return loadUInt (*(vcu0_t*)& input, output); }
+	tplTstin	err_t	loadUInt		(vcs0_t & input, T & output)	{ rtrn loadUInt (*(vcu0_t*)& input, output); }
+	tplTstin	err_t	loadUInt		(vcsc_t  & input, T & output)	{ rtrn loadUInt (*(vcu0_t*)& input, output); }
 	//
 	tplt<tpnm T, tpnm TByte>
 	err_t					viewRead		(view<T> & headerToRead, view<TByte> input)	{
-		const packedu32				& header		= *(const packedu32*)input.begin();
-		u2_c				counterWidth	= header.ValueWidth();
+		pku2_c					& header		= *(pku2_c*)input.begin();
+		u2_c					counterWidth	= header.ValueWidth();
 		ree_if(input.size() < counterWidth, LLC_FMT_LT_U2, input.size(), counterWidth);
-		u2_c				elementCount	= header.Value();
-		u2_c				dataSize		= szof(T) * elementCount;
+		u2_c					elementCount	= header.Value();
+		u2_c					dataSize		= szof(T) * elementCount;
 		ree_if(dataSize > (input.size() - counterWidth), "%" LLC_FMT_U2 " > (%" LLC_FMT_U2 "-%" LLC_FMT_U2 ").", dataSize, input.size(), counterWidth);
 		headerToRead			= {(input.size() > counterWidth) ? (T*)&input[counterWidth] : 0, elementCount};
-		return counterWidth + dataSize;
+		rtrn counterWidth + dataSize;
 	}
-	tplT	stin	err_t	viewRead		(view<const T> & headerToRead, const vcu0_t & input)	{ return viewRead<const T, const uint8_t>(headerToRead, input); }
-	tplT	stin	err_t	viewRead		(view<const T> & headerToRead, const vcs0_t & input)	{ return viewRead<const T, const int8_t >(headerToRead, input); }
-	tplT	stin	err_t	viewRead		(view<const T> & headerToRead, const vcsc_t  & input)	{ return viewRead<const T, const char   >(headerToRead, input); }
-	tplT	stin	err_t	viewRead		(view<T> & headerToRead, vu8 input)					{ return viewRead<T, uint8_t>(headerToRead, input); }
-	tplT	stin	err_t	viewRead		(view<T> & headerToRead, vi8 input)					{ return viewRead<T, int8_t >(headerToRead, input); }
-	tplT	stin	err_t	viewRead		(view<T> & headerToRead, vc  input)					{ return viewRead<T, char   >(headerToRead, input); }
+	tplTstin	err_t	viewRead		(view<cnst T> & headerToRead, cnst vcu0_t & input)	{ rtrn viewRead<cnst T, u0_c>(headerToRead, input); }
+	tplTstin	err_t	viewRead		(view<cnst T> & headerToRead, cnst vcs0_t & input)	{ rtrn viewRead<cnst T, s0_c>(headerToRead, input); }
+	tplTstin	err_t	viewRead		(view<cnst T> & headerToRead, cnst vcsc_t  & input)	{ rtrn viewRead<cnst T, sc_c>(headerToRead, input); }
+	tplTstin	err_t	viewRead		(view<T> & headerToRead, vu8 input)					{ rtrn viewRead<T, u0_t>(headerToRead, input); }
+	tplTstin	err_t	viewRead		(view<T> & headerToRead, vi8 input)					{ rtrn viewRead<T, s0_t>(headerToRead, input); }
+	tplTstin	err_t	viewRead		(view<T> & headerToRead, vc  input)					{ rtrn viewRead<T, sc_t>(headerToRead, input); }
 	//
-	tplT			err_t	loadView		(vcu0_t & input, view<const T> & output) { 
-		uint32_t					bytesRead		= 0;
+	tplT		err_t	loadView		(vcu0_t & input, view<cnst T> & output) { 
+		u2_t					bytesRead		= 0;
 		llc_necs(bytesRead = viewRead(output, input)); 
 		llc_necs(input.slice(input, bytesRead));
-		return 0;
+		rtrn 0;
 	}
-	tplT	stin	err_t	loadView	(vcs0_t & input, view<T> & output) { return loadView(*(vcu0_t*)& input, output); }
-	tplT	stin	err_t	loadView	(vcsc_t  & input, view<T> & output) { return loadView(*(vcu0_t*)& input, output); }
+	tplTstin	err_t	loadView	(vcs0_t & input, view<T> & output) { rtrn loadView(*(vcu0_t*)& input, output); }
+	tplTstin	err_t	loadView	(vcsc_t & input, view<T> & output) { rtrn loadView(*(vcu0_t*)& input, output); }
 	//
-	tplt<tpnm T, tpnm TByte>
-	err_t					viewReadLegacy	(view<T> & headerToRead, view<TByte> input)	{
-		u2_c				counterWidth	= szof(uint32_t);
+	tplTInTOut	err_t	viewReadLegacy	(view<TOut> & headerToRead, view<TIn> input)	{
+		stxp		u2_c		counterWidth	= szof(u2_t);
 		ree_if(input.size() < counterWidth, "Invalid input size: %" LLC_FMT_U2 "", input.size());
-		u2_c				elementCount	= *(u2_c*)input.begin();
-		u2_c				dataSize		= elementCount * szof(T);
+		u2_c					elementCount	= *(u2_c*)input.begin();
+		u2_c					dataSize		= elementCount * szof(T);
 		ree_if(dataSize > (input.size() - counterWidth), "Invalid input size: %" LLC_FMT_U2 ". Expected: %" LLC_FMT_U2 "", input.size(), dataSize);
-		headerToRead			= {(input.size() > counterWidth) ? (T*)&input[counterWidth] : 0, elementCount};
-		return counterWidth + dataSize;
+		headerToRead	= {(input.size() > counterWidth) ? (T*)&input[counterWidth] : 0, elementCount};
+		rtrn counterWidth + dataSize;
 	}
-	tplT	stin	err_t	viewReadLegacy	(view<const T> & headerToRead, const vcu0_t & input)	{ return viewReadLegacy<const T, const uint8_t>(headerToRead, input); }
-	tplT	stin	err_t	viewReadLegacy	(view<const T> & headerToRead, const vcs0_t & input)	{ return viewReadLegacy<const T, const int8_t >(headerToRead, input); }
-	tplT	stin	err_t	viewReadLegacy	(view<const T> & headerToRead, const vcsc_t  & input)	{ return viewReadLegacy<const T, const char   >(headerToRead, input); }
-	tplT	stin	err_t	viewReadLegacy	(view<T> & headerToRead, vu8 input)					{ return viewReadLegacy<T, uint8_t>(headerToRead, input); }
-	tplT	stin	err_t	viewReadLegacy	(view<T> & headerToRead, vi8 input)					{ return viewReadLegacy<T, int8_t >(headerToRead, input); }
-	tplT	stin	err_t	viewReadLegacy	(view<T> & headerToRead, vc  input)					{ return viewReadLegacy<T, char   >(headerToRead, input); }
+	tplTstin	err_t	viewReadLegacy	(view<cnst T> & headerToRead, vcu0_c & input)	{ rtrn viewReadLegacy<cnst T, u0_c>(headerToRead, input); }
+	tplTstin	err_t	viewReadLegacy	(view<cnst T> & headerToRead, vcs0_c & input)	{ rtrn viewReadLegacy<cnst T, s0_c>(headerToRead, input); }
+	tplTstin	err_t	viewReadLegacy	(view<cnst T> & headerToRead, vcsc_c & input)	{ rtrn viewReadLegacy<cnst T, sc_c>(headerToRead, input); }
+	tplTstin	err_t	viewReadLegacy	(view<T> & headerToRead, vu0_t input)			{ rtrn viewReadLegacy<T, u0_t>(headerToRead, input); }
+	tplTstin	err_t	viewReadLegacy	(view<T> & headerToRead, vs0_t input)			{ rtrn viewReadLegacy<T, s0_t>(headerToRead, input); }
+	tplTstin	err_t	viewReadLegacy	(view<T> & headerToRead, vsc_t input)			{ rtrn viewReadLegacy<T, sc_t>(headerToRead, input); }
 } // namespace
 
 #endif // LLC_VIEW_SERIALIZE_H_23627

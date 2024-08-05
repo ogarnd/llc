@@ -122,9 +122,9 @@ namespace llc
 		}
 	};
 #pragma pack(pop)
-	tydf packed_uint<u1_t>	pku1_t, packedu16;
-	tydf packed_uint<u2_t>	pku2_t, packedu32;
-	tydf packed_uint<u3_t>	pku3_t, packedu64;
+	tydf packed_uint<u1_t> pku1_t, packedu16; tdcs pku1_t pku1_c;
+	tydf packed_uint<u2_t> pku2_t, packedu32; tdcs pku2_t pku2_c;
+	tydf packed_uint<u3_t> pku3_t, packedu64; tdcs pku3_t pku3_c;
 
 	//nsix ::llc::packedu16	int_pack	(const u1_t value) { return {uint_tail_width(value), uint_tail_multiplier(value), uint_tail_base(value)}; } 
 	//nsix ::llc::packedu32	int_pack	(u2_c value) { return {uint_tail_width(value), uint_tail_multiplier(value), uint_tail_base(value)}; } 

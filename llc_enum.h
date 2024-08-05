@@ -244,31 +244,30 @@ namespace llc
 		::llc::camelCase(uncased, camelCased);
 		return ::llc::get_enum<TEnum>().get_value(camelCased);
 	}
-	tplt<tpnm TEnum>	ndsi	uint32_t			get_value_count		()							nxpt	{ return ::llc::get_enum<TEnum>().Values.size(); }
+	tplt<tpnm TEnum>	ndsi	uint32_t		get_value_count		()							nxpt	{ return ::llc::get_enum<TEnum>().Values.size(); }
 	tplt<tpnm TEnum>	ndsi	::llc::vcsc_c&	get_value_label		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_label(statusBit); }
 	tplt<tpnm TEnum>	ndsi	::llc::vcsc_c&	get_value_namev		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_label(statusBit); }
-	tplt<tpnm TEnum>	ndsi	const char*			get_value_namep		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_label(statusBit).begin(); }
+	tplt<tpnm TEnum>	ndsi	sc_c*			get_value_namep		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_label(statusBit).begin(); }
 	tplt<tpnm TEnum>	ndsi	::llc::vcsc_c&	get_value_descv		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_desc (statusBit); }
-	tplt<tpnm TEnum>	ndsi	const char*			get_value_descp		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_desc (statusBit).begin(); }
-	tplt<tpnm TEnum>	ndsi	::llc::vcvsc_c&		get_value_labels	()							nxpt	{ return ::llc::get_enum<TEnum>().Names; }
-	tplt<tpnm TEnum>	ndsi	::llc::vcvsc_c&		get_value_names		()							nxpt	{ return ::llc::get_enum<TEnum>().Names; }
-	tplt<tpnm TEnum>	ndsi	::llc::vcvsc_c&		get_value_descs		()							nxpt	{ return ::llc::get_enum<TEnum>().Names; }
-	tplt<tpnm TEnum>	ndsi	int32_t				get_value_index		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_index(statusBit); }
-	tplt<tpnm TEnum>	ndsi	::llc::vcsc_c&		get_enum_namev		()							nxpt	{ return ::llc::get_enum<TEnum>().Name;			}
-	tplt<tpnm TEnum>	ndsi	::llc::vcsc_c&		get_enum_namev		(const TEnum & )			nxpt	{ return ::llc::get_enum<TEnum>().Name;			}
-	tplt<tpnm TEnum>	ndsi	const char*			get_enum_namep		()							nxpt	{ return ::llc::get_enum<TEnum>().Name.begin();	}
-	tplt<tpnm TEnum>	ndsi	const char*			get_enum_namep		(const TEnum & )			nxpt	{ return ::llc::get_enum<TEnum>().Name.begin();	}
+	tplt<tpnm TEnum>	ndsi	sc_c*			get_value_descp		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_desc (statusBit).begin(); }
+	tplt<tpnm TEnum>	ndsi	::llc::vcvsc_c&	get_value_labels	()							nxpt	{ return ::llc::get_enum<TEnum>().Names; }
+	tplt<tpnm TEnum>	ndsi	::llc::vcvsc_c&	get_value_names		()							nxpt	{ return ::llc::get_enum<TEnum>().Names; }
+	tplt<tpnm TEnum>	ndsi	::llc::vcvsc_c&	get_value_descs		()							nxpt	{ return ::llc::get_enum<TEnum>().Names; }
+	tplt<tpnm TEnum>	ndsi	int32_t			get_value_index		(const TEnum & statusBit)			{ return ::llc::get_enum<TEnum>().get_value_index(statusBit); }
+	tplt<tpnm TEnum>	ndsi	::llc::vcsc_c&	get_enum_namev		()							nxpt	{ return ::llc::get_enum<TEnum>().Name;			}
+	tplt<tpnm TEnum>	ndsi	::llc::vcsc_c&	get_enum_namev		(const TEnum & )			nxpt	{ return ::llc::get_enum<TEnum>().Name;			}
+	tplt<tpnm TEnum>	ndsi	sc_c*			get_enum_namep		()							nxpt	{ return ::llc::get_enum<TEnum>().Name.begin();	}
+	tplt<tpnm TEnum>	ndsi	sc_c*			get_enum_namep		(const TEnum & )			nxpt	{ return ::llc::get_enum<TEnum>().Name.begin();	}
 
-	tplt <tpnm T>
-	struct genum_value_auto {
-		T					Value				= ::llc::enum_definition<T>::INVALID_VALUE;
+	tplTstct genum_value_auto {
+		T						Value				= ::llc::enum_definition<T>::INVALID_VALUE;
 		::llc::vcsc_t			Name				= INVALID_ENUM_VALUE_STR;
 		::llc::vcsc_t			Title				= INVALID_ENUM_VALUE_STR;
 		::llc::vcsc_t			Description			= INVALID_ENUM_VALUE_STR;
 		//
 		inxp				genum_value_auto	()									= default;
 		inxp				genum_value_auto	(const genum_value_auto & other)	= default;
-							genum_value_auto	(::llc::vcsc_c & name)															: Value((T)0), Name(name), Title(name), Description(name)			{ ::llc::get_enum<T>().add_value_auto(name, name, name);			Value = ::llc::get_value<T>(name); }
+							genum_value_auto	(::llc::vcsc_c & name)														: Value((T)0), Name(name), Title(name), Description(name)			{ ::llc::get_enum<T>().add_value_auto(name, name, name);			Value = ::llc::get_value<T>(name); }
 							genum_value_auto	(::llc::vcsc_c & name, ::llc::vcsc_c & description)							: Value((T)0), Name(name), Title(name), Description(description)	{ ::llc::get_enum<T>().add_value_auto(name, name, description);		Value = ::llc::get_value<T>(name); }
 							genum_value_auto	(::llc::vcsc_c & name, ::llc::vcsc_c & title, ::llc::vcsc_c & description)	: Value((T)0), Name(name), Title(title), Description(description)	{ ::llc::get_enum<T>().add_value_auto(name, title, description);	Value = ::llc::get_value<T>(name); }
 

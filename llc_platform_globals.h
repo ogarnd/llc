@@ -122,6 +122,7 @@
 #define tpl_t			tpl(_t)
 #define tpl_t2			tpl(_t2)
 #define tplTstct		tplT	stct
+#define tplTstin		tplT	stin
 #define tplTusng		tplT	usng
 #define tplTndsx		tplT	ndsx
 #define tplTsinx		tplT	sinx
@@ -133,6 +134,7 @@
 #define tpl_tsinx		tpl_t	sinx
 #define tpl_tstxp		tpl_t	stxp
 #define tpl_tnsix		tpl_t	nsix 
+#define tpl_tstin		tpl_t	stin
 
 #define tplTInTOut		tplt<tpnm TIn, tpnm TOut>
 #define tpl_vtArgs		tplt<tpnm... _tArgs>
@@ -143,7 +145,6 @@
 
 #define	LLC_STRINGIFY(x) #x
 #define	LLC_TOSTRING(x)  LLC_STRINGIFY(x)
-
 
 #define LLCREP0(param)			  (param)
 #define LLCREP1(param)			  LLCREP0(param), (param)
@@ -286,6 +287,5 @@
 #define LLC_FMT_LT_U32  LLC_FMT_U32_LT_U32
 #define LLC_FMT_LT_I64  LLC_FMT_I64_LT_I64
 #define LLC_FMT_LT_U64  LLC_FMT_U64_LT_U64
-
 
 #endif // LLC_PLATFORM_GLOBALS_H_23627
