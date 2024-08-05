@@ -13,6 +13,6 @@
 	return 0;
 }
 
-::llc::error_t			llc::stoull			(const ::llc::vcc & input, uint64_t & outputNumber)	{
+::llc::error_t			llc::stoull			(::llc::vcsc_c & input, uint64_t & outputNumber)	{
 	return ::llc::parseIntegerDecimal(input, outputNumber);
 }

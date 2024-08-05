@@ -282,7 +282,7 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	return 0;
 }
 
-::llc::error_t			llc::inflateToMemory  		(::llc::au0_t & tempCache, const ::llc::vcc & fileName, ::llc::au0_t & output) {
+::llc::error_t			llc::inflateToMemory  		(::llc::au0_t & tempCache, ::llc::vcsc_c & fileName, ::llc::au0_t & output) {
 	llc_necs(llc::fileToMemory(fileName, tempCache));
 	info_printf("File size: %u.", tempCache.size());
 
@@ -291,7 +291,7 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	return 0; 
 }
 
-::llc::error_t			llc::deflateFromMemory		(::llc::au0_t & tempCache, const ::llc::vcc & fileName, const ::llc::vcu0_t & input) {
+::llc::error_t			llc::deflateFromMemory		(::llc::au0_t & tempCache, ::llc::vcsc_c & fileName, const ::llc::vcu0_t & input) {
 	info_printf("Input size: %u.", input.size());
 	llc_necs(llc::arrayDeflate(input, tempCache));
 
@@ -299,7 +299,7 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	return ::llc::fileFromMemory(fileName, tempCache);
 }
 
-::llc::error_t			llc::fileFromMemorySecure	(::llc::SLoadCache & recycle, const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, const ::llc::vcu0_t & blockBytes) {
+::llc::error_t			llc::fileFromMemorySecure	(::llc::SLoadCache & recycle, ::llc::vcsc_c & fileName, const ::llc::vcu0_t & key, const bool deflate, const ::llc::vcu0_t & blockBytes) {
 	if(false == deflate && 0 == key.size())
 		recycle.Encrypted		= blockBytes;
 	else {
@@ -317,7 +317,7 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	return 0;
 }
 
-::llc::error_t			llc::fileToMemorySecure		(::llc::SLoadCache & recycle, const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::au0_t & loadedBytes)								{
+::llc::error_t			llc::fileToMemorySecure		(::llc::SLoadCache & recycle, ::llc::vcsc_c & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::au0_t & loadedBytes)								{
 	::llc::vcs					strFilename					= {fileName.begin(), fileName.size()};
 	if(false == deflate && 0 == key.size()) {
 		llc_necall(llc::fileToMemory(strFilename, loadedBytes), "Failed to read file: %s.", ::llc::toString(fileName).begin());

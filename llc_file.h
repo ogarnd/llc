@@ -20,7 +20,7 @@ namespace llc
 	stin	::llc::error_t	fileToMemory	(::llc::vcs fileName, ::llc::as0_t & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0)	{ return ::llc::fileToMemory	(fileName, *(::llc::au0_t*)&fileInMemory, maxSize, offset); }
 	stin	::llc::error_t	fileToMemory	(::llc::vcs fileName, ::llc::asc_t  & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0)	{ return ::llc::fileToMemory	(fileName, *(::llc::au0_t*)&fileInMemory, maxSize, offset); }
 	stin	::llc::error_t	fileFromMemory	(::llc::vcs fileName, const ::llc::vcs0_t & fileInMemory, bool append = false)						{ return ::llc::fileFromMemory	(fileName, *(const ::llc::vcu0_t*)&fileInMemory, append); }
-	stin	::llc::error_t	fileFromMemory	(::llc::vcs fileName, const ::llc::vcc  & fileInMemory, bool append = false)						{ return ::llc::fileFromMemory	(fileName, *(const ::llc::vcu0_t*)&fileInMemory, append); }
+	stin	::llc::error_t	fileFromMemory	(::llc::vcs fileName, ::llc::vcsc_c  & fileInMemory, bool append = false)						{ return ::llc::fileFromMemory	(fileName, *(const ::llc::vcu0_t*)&fileInMemory, append); }
 
 	GDEFINE_ENUM_TYPE(OPEN_MODE, i2u_t);
 	GDEFINE_ENUM_VALUE(OPEN_MODE, CLOSE		, 0);												

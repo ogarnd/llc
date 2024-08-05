@@ -9,7 +9,7 @@ namespace llc
 	struct label_statics;
 
 	class CLabelManager;
-	class label : public vcc {
+	class label : public vcsc_t {
 		CLabelManager		* LabelManager	= 0;
 	public:
 		inxp				label			()								noexcept	= default;
@@ -29,7 +29,7 @@ namespace llc
 		inline	bool		oper!=		(const label & other)			const	noexcept	{ return !oper==(other); }
 	};
 
-	stin ::llc::error_t	loadLabel		(::llc::vcu0_t & input, ::llc::vcc & output) { 
+	stin ::llc::error_t	loadLabel		(::llc::vcu0_t & input, ::llc::vcsc_t & output) { 
 		uint32_t					bytesRead		= 0;
 		llc_necs(bytesRead = ::llc::viewRead(output, input)); 
 		llc_necs(input.slice(input, bytesRead));

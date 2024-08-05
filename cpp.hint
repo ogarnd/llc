@@ -117,14 +117,12 @@
 #define sinx	            
 
 #define ndsc             
-#define ndst             
+#define ndsttic             
 #define ndin             
-#define ndxp             
+#define ndcnxpr             
 #define ndsi             
-#define ndsx             
-#define ndix             
-#define nsix             
+#define ndstcxp             
+#define ndincxp             
+#define ndstinx             
 
-#define cxpr_if
-
-#define LLC_USING_TYPEINT
+#define cxp_if

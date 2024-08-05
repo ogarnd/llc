@@ -6,23 +6,23 @@
 
 namespace llc
 {
-	stxp	::llc::vcc		DIGITS_HEX						= ::llc::vcc{16, "0123456789abcdef"};
-	stxp	::llc::vcc		DIGITS_DECIMAL					= ::llc::vcc{10, "0123456789"};
-	err_t			parseArbitraryBaseInteger		(u2_t base, const ::llc::vcc & symbolList, const ::llc::vcc & sourceChars, u3_t * number_);
+	stxp	vcsc_t		DIGITS_HEX						= vcsc_t{16, "0123456789abcdef"};
+	stxp	vcsc_t		DIGITS_DECIMAL					= vcsc_t{10, "0123456789"};
+	err_t			parseArbitraryBaseInteger		(u2_t base, vcsc_c & symbolList, vcsc_c & sourceChars, u3_t * number_);
 	tplt<tpnm _tInt>	
-	inline	err_t	parseIntegerDecimal				(const ::llc::vcc & sourceChars, _tInt & number_)	{ 
+	inline	err_t	parseIntegerDecimal				(vcsc_c & sourceChars, _tInt & number_)	{ 
 		u3_t					number							= 0; 
 		err_t				countDigits; 
-		llc_necs(countDigits = ::llc::parseArbitraryBaseInteger(10, ::llc::vcs{"0123456789"}, sourceChars, &number)); 
+		llc_necs(countDigits = parseArbitraryBaseInteger(10, vcs{"0123456789"}, sourceChars, &number)); 
 		number_ = (_tInt)number; 
 		return countDigits; 
 	}
 
 	tplt<tpnm _tInt>	
-	inline	err_t	parseIntegerHexadecimal			(const ::llc::vcc & sourceChars, _tInt & number_)	{ 
+	inline	err_t	parseIntegerHexadecimal			(vcsc_c & sourceChars, _tInt & number_)	{ 
 		u3_t					number							= 0; 
 		err_t countDigits;
-		llc_necs(countDigits = ::llc::parseArbitraryBaseInteger(16, ::llc::vcs{"0123456789abcdef"}, sourceChars, &number)); 
+		llc_necs(countDigits = parseArbitraryBaseInteger(16, vcs{"0123456789abcdef"}, sourceChars, &number)); 
 		number_ = (_tInt)number; 
 		return countDigits; 
 	}
@@ -36,13 +36,13 @@ namespace llc
 	struct SStripLiteralType {
 		s2_t						ParentIndex;
 		STRIP_LITERAL_TYPE			Type;
-		::llc::sliceu2_t			Span;
+		sliceu2_t			Span;
 	};
 
 	struct SStripLiteralState {
 		u2_t						IndexCurrentChar				= 0;
 		s2_t						IndexCurrentElement				= -1;
-		::llc::SStripLiteralType	* CurrentElement				= 0;
+		SStripLiteralType	* CurrentElement				= 0;
 		s2_t						NestLevel						= 0;
 		char						CharCurrent						= 0;
 		bool						Escaping						= false;
@@ -50,12 +50,12 @@ namespace llc
 		s2_t						BracketsToSkip					= 0;
 	};
 #pragma pack(pop)
-	err_t				stripLiteralParse				(::llc::SStripLiteralState	& stateReading	, ::llc::apod<::llc::SStripLiteralType> & out_types, const ::llc::vcc & in_format);
-	err_t				stripLiteralParseStep			(::llc::SStripLiteralState	& work_state	, ::llc::apod<::llc::SStripLiteralType> & out_types, const ::llc::vcc & in_format);
-	err_t				stripLiteralGetViews			(::llc::aobj<::llc::vcc>	& out_views, const ::llc::view<const ::llc::SStripLiteralType> & in_resultOfParser, const ::llc::vcc & in_format);
+	err_t				stripLiteralParse				(SStripLiteralState	& stateReading	, apod<SStripLiteralType> & out_types, vcsc_c & in_format);
+	err_t				stripLiteralParseStep			(SStripLiteralState	& work_state	, apod<SStripLiteralType> & out_types, vcsc_c & in_format);
+	err_t				stripLiteralGetViews			(aobj<vcsc_t>	& out_views, const view<const SStripLiteralType> & in_resultOfParser, vcsc_c & in_format);
 
 	bool						isSpaceCharacter				(const char characterToTest);
-	err_t				skipToNextCharacter				(u2_t & indexCurrentChar, const ::llc::vcc & expression);
+	err_t				skipToNextCharacter				(u2_t & indexCurrentChar, vcsc_c & expression);
 
 } // namespace
 

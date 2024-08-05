@@ -252,9 +252,9 @@ namespace llc
 	tydf	apod<f2_t>	af2_t;	tdcs	af2_t	af2_c;
 	tydf	apod<f3_t>	af3_t;	tdcs	af3_t	af3_c;
 
-	llc::asc_t				toString		(cnst ::llc::vcc & strToLog);
+	llc::asc_t				toString		(cnst ::llc::vcsc_t & strToLog);
 
-	::llc::err_t			camelCase		(::llc::vcc input, ::llc::asc_t & camelCased);
+	::llc::err_t			camelCase		(::llc::vcsc_t input, ::llc::asc_t & camelCased);
 
 	::llc::err_t			join			(::llc::asc_t & query, char separator, ::llc::vcvsc_t fields);
 } // namespace

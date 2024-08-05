@@ -48,7 +48,7 @@ namespace llc
 #else
 #	if defined(LLC_ATMEL) || defined(ESP8266)
 		sc_t					customDynamicString	[128]		= {};
-		u2_c 					stringLength					= (u2_t)snprintf_P(customDynamicString, szof(customDynamicString) - 1U, (cnst char*)format, args...);
+		u2_c 					stringLength					= (u2_t)snprintf_P(customDynamicString, szof(customDynamicString) - 1U, (sc_c*)format, args...);
 		customDynamicString[::llc::min(stringLength, szof(customDynamicString) - 1U)= '\n';
 	#else
 		sc_t					customDynamicString	[fmtLen + 1024 * 32]	= {};

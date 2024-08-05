@@ -10,19 +10,18 @@ namespace llc
 					_tKey									Key;
 					_tVal									Val;
 	};
-
-	tydf		::llc::SKeyVal<::llc::vcc, ::llc::vcc>
+	tydf	SKeyVal<vcsc_t, vcsc_t>
 														TKeyValConstChar, TKeyValConstString;
 
-	//tydf		::llc::SKeyVal<::llc::vcs, ::llc::vcs> TKeyValConstString;
+	//tydf		SKeyVal<vcs, vcs> TKeyValConstString;
 
-				::llc::error_t							token_split						(char token, const ::llc::vcs& input_string, TKeyValConstChar& output_views);
-	inline		::llc::error_t							keyval_split					(const ::llc::vcs& input_string, TKeyValConstString& out_keyval) { return ::llc::token_split('=', input_string, out_keyval); }
+				error_t							token_split						(char token, const vcs& input_string, TKeyValConstChar& output_views);
+	inline		error_t							keyval_split					(const vcs& input_string, TKeyValConstString& out_keyval) { return token_split('=', input_string, out_keyval); }
 
 	tplt<tpnm _tVal>
-				::llc::error_t							find			(const ::llc::vcs & keyToFind, const ::llc::view<const ::llc::SKeyVal<::llc::vcc, _tVal>> & keyvals)	{
+				error_t							find			(const vcs & keyToFind, const view<const SKeyVal<vcsc_t, _tVal>> & keyvals)	{
 		for(uint32_t iKeyVal = 0; iKeyVal < keyvals.size(); ++iKeyVal) {
-			const ::llc::vcc							& keyCurrent					= keyvals[iKeyVal].Key;
+			vcsc_c							& keyCurrent					= keyvals[iKeyVal].Key;
 			if(keyToFind == keyCurrent)
 				return iKeyVal;
 		}
@@ -30,28 +29,28 @@ namespace llc
 	}
 
 	tplt<tpnm _tVal>
-				::llc::error_t							find			(const ::llc::vcs & keyToFind, const ::llc::view<const ::llc::TKeyValConstString> & keyvals, ::llc::view<const _tVal>& out_val)		{
-		::llc::error_t					index							= ::llc::find(keyToFind, keyvals);
-		out_val								= (-1 == index) ? ::llc::view<const _tVal>{} : ::llc::view<const _tVal>{(const _tVal*)keyvals[index].Val.begin(), keyvals[index].Val.size()};
+				error_t							find			(const vcs & keyToFind, const view<const TKeyValConstString> & keyvals, view<const _tVal>& out_val)		{
+		error_t					index							= find(keyToFind, keyvals);
+		out_val								= (-1 == index) ? view<const _tVal>{} : view<const _tVal>{(const _tVal*)keyvals[index].Val.begin(), keyvals[index].Val.size()};
 		return index;
 	}
 
-				::llc::error_t							find			(const ::llc::vcs & keyToFind, const ::llc::view<const ::llc::TKeyValConstString> & keyvals, ::llc::vcc & out_val);
-				::llc::error_t							keyValVerify					(const ::llc::view<::llc::TKeyValConstString> & environViews, const ::llc::vcc & keyToVerify, const ::llc::vcc & valueToVerify);
-				::llc::error_t							keyvalNumeric					(const ::llc::vcs & key, const ::llc::view<const ::llc::TKeyValConstString> keyVals, uint64_t * outputNumber);
+				error_t							find			(const vcs & keyToFind, const view<const TKeyValConstString> & keyvals, vcsc_t & out_val);
+				error_t							keyValVerify					(const view<TKeyValConstString> & environViews, vcsc_c & keyToVerify, vcsc_c & valueToVerify);
+				error_t							keyvalNumeric					(const vcs & key, const view<const TKeyValConstString> keyVals, uint64_t * outputNumber);
 	tplt <tpnm _tNumeric>
-				::llc::error_t							keyvalNumeric					(const ::llc::vcs & key, const ::llc::view<const ::llc::TKeyValConstString> keyVals, _tNumeric & outputNumber)	{
+				error_t							keyvalNumeric					(const vcs & key, const view<const TKeyValConstString> keyVals, _tNumeric & outputNumber)	{
 		uint64_t												value							= 0;
-		::llc::error_t					indexKey						= ::llc::keyvalNumeric(key, keyVals, &value);
+		error_t					indexKey						= keyvalNumeric(key, keyVals, &value);
 		if(-1 != indexKey)
 			outputNumber										= *(_tNumeric*)&value;
 		return indexKey;
 	}
 
 	tplt <tpnm... _tArgs>
-	::llc::error_t				keyValVerify					(const ::llc::view<::llc::TKeyValConstString> & environViews, const ::llc::vcc & keyToVerify, const ::llc::view<const ::llc::vcc>& valueToVerify)	{
+	error_t				keyValVerify					(const view<TKeyValConstString> & environViews, vcsc_c & keyToVerify, const view<vcsc_c>& valueToVerify)	{
 		for(uint32_t iKey = 0; iKey < valueToVerify.size(); ++iKey) {
-			const ::llc::error_t			val								= ::llc::keyValVerify(environViews, keyToVerify, valueToVerify[iKey]);
+			const error_t			val								= keyValVerify(environViews, keyToVerify, valueToVerify[iKey]);
 			if(-1 != val)
 				return val;
 		}

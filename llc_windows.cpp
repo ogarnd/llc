@@ -35,7 +35,7 @@
 	return sizeNeededForMultiByte;
 }
 
-::llc::error_t			llc::mbstowcs					(::llc::apod<wchar_t> & output, const ::llc::vcc input)	{
+::llc::error_t			llc::mbstowcs					(::llc::apod<wchar_t> & output, ::llc::vcsc_c input)	{
 	if(0 == input.size())
 		return 0;
 

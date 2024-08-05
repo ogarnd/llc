@@ -13,7 +13,7 @@ bool					llc::isSpaceCharacter						(const char characterToTest)		{
 	}
 }
 
-::llc::error_t			llc::skipToNextCharacter					(u2_t & indexCurrentChar, const ::llc::vcc & expression)		{
+::llc::error_t			llc::skipToNextCharacter					(u2_t & indexCurrentChar, ::llc::vcsc_c & expression)		{
 	while(indexCurrentChar < expression.size()) {
 		if(::llc::isSpaceCharacter(expression[indexCurrentChar]))
 			++indexCurrentChar;
@@ -23,7 +23,7 @@ bool					llc::isSpaceCharacter						(const char characterToTest)		{
 	return 0;
 }
 
-::llc::error_t			llc::parseArbitraryBaseInteger				(u2_t base, const ::llc::vcc & symbolList, const ::llc::vcc & sourceChars, u3_t * number_)	{
+::llc::error_t			llc::parseArbitraryBaseInteger				(u2_t base, ::llc::vcsc_c & symbolList, ::llc::vcsc_c & sourceChars, u3_t * number_)	{
 	u2_t										totalCharsProcessed							= 0;
 	::llc::apod<char>								stringToParse								= {};
 	for(u2_t iChar = 0; iChar < sourceChars.size() && 0 != sourceChars[iChar];) {
@@ -63,7 +63,7 @@ bool					llc::isSpaceCharacter						(const char characterToTest)		{
 	return totalCharsProcessed;
 }
 
-::llc::error_t			stripLiteralsParseToken		(::llc::SStripLiteralState & work_state, ::llc::apod<::llc::SStripLiteralType> & out_types, const ::llc::vcc & in_format)		{
+::llc::error_t			stripLiteralsParseToken		(::llc::SStripLiteralState & work_state, ::llc::apod<::llc::SStripLiteralType> & out_types, ::llc::vcsc_c & in_format)		{
 	(void)in_format;
 	switch(work_state.CharCurrent) {
 	default		: break;
@@ -97,7 +97,7 @@ bool					llc::isSpaceCharacter						(const char characterToTest)		{
 	return 0;
 }
 
-::llc::error_t			stripLiteralsParseLiteral	(::llc::SStripLiteralState & work_state, ::llc::apod<::llc::SStripLiteralType> & out_types, const ::llc::vcc & in_format)		{
+::llc::error_t			stripLiteralsParseLiteral	(::llc::SStripLiteralState & work_state, ::llc::apod<::llc::SStripLiteralType> & out_types, ::llc::vcsc_c & in_format)		{
 	(void)in_format;
 	switch(work_state.CharCurrent) {
 	default		: break;
@@ -125,7 +125,7 @@ bool					llc::isSpaceCharacter						(const char characterToTest)		{
 	return 0;
 }
 
-::llc::error_t			llc::stripLiteralParseStep		(::llc::SStripLiteralState & work_state, ::llc::apod<::llc::SStripLiteralType> & out_types, const ::llc::vcc & in_format)		{
+::llc::error_t			llc::stripLiteralParseStep		(::llc::SStripLiteralState & work_state, ::llc::apod<::llc::SStripLiteralType> & out_types, ::llc::vcsc_c & in_format)		{
 	if(work_state.InsideToken)
 		return ::stripLiteralsParseToken(work_state, out_types, in_format);
 
@@ -136,7 +136,7 @@ bool					llc::isSpaceCharacter						(const char characterToTest)		{
 	return ::stripLiteralsParseLiteral(work_state, out_types, in_format);
 }
 
-::llc::error_t			llc::stripLiteralParse			(::llc::SStripLiteralState & stateReading, ::llc::apod<::llc::SStripLiteralType> & out_types, const ::llc::vcc & in_format)		{
+::llc::error_t			llc::stripLiteralParse			(::llc::SStripLiteralState & stateReading, ::llc::apod<::llc::SStripLiteralType> & out_types, ::llc::vcsc_c & in_format)		{
 	for(stateReading.IndexCurrentChar = 0; stateReading.IndexCurrentChar < in_format.size(); ++stateReading.IndexCurrentChar) {
 		stateReading.CharCurrent					= in_format[stateReading.IndexCurrentChar];
 		llc_necs(llc::stripLiteralParseStep(stateReading, out_types, in_format));
@@ -144,7 +144,7 @@ bool					llc::isSpaceCharacter						(const char characterToTest)		{
 	return 0;
 }
 
-::llc::error_t			llc::stripLiteralGetViews		(::llc::aobj<::llc::vcc> & out_views, const ::llc::view<const ::llc::SStripLiteralType> & in_resultOfParser, const ::llc::vcc & in_format)		{
+::llc::error_t			llc::stripLiteralGetViews		(::llc::aobj<::llc::vcsc_t> & out_views, const ::llc::view<const ::llc::SStripLiteralType> & in_resultOfParser, ::llc::vcsc_c & in_format)		{
 	for(u2_t iType = 0; iType < in_resultOfParser.size(); ++iType) {
 		const ::llc::SStripLiteralType					& type						= in_resultOfParser[iType];
 		::llc::vcs						view						= {};

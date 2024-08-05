@@ -11,7 +11,7 @@ namespace llc
 	tydf		s2_t	error_t;
 	tdcs		error_t	error_c;
 
-	tplTnsix	T		failed		(T errorCode)	nxpt	{ rtrn (errorCode < 0) ? errorCode : 0;	}
+	tplTnsix	T		failed		(T errorCode)	nxpt	{ rtrn T((errorCode < 0) ? errorCode : 0);	}
 	tplTnsix	bool	not_failed	(T errorCode)	nxpt	{ rtrn false == failed(errorCode); }
 	tplTnsix	bool	succeeded	(T errorCode)	nxpt	{ rtrn false == failed(errorCode); }
 
@@ -65,7 +65,7 @@ namespace llc
 	stxp		err_c	ESP_HW_CRYPTO_BASE             = -0xc000;
 	stxp		err_c	ESP_MEMPROT_BASE               = -0xd000;
 
-	enum OPCODE_SET : unsigned char
+	enum OPCODE_SET : u0_t
 		{ OPCODE_SET_UNKNOWN
 		, OPCODE_SET_ARM32
 		, OPCODE_SET_ARM64
@@ -80,7 +80,7 @@ namespace llc
 		, OPCODE_SET_XTENSA_LX7
 		, OPCODE_SET_CUSTOM		 = 0x40U
 		};
-	enum OPCODE_EXT : unsigned char
+	enum OPCODE_EXT : u0_t
 		{ OPCODE_EXT_NONE
 		, OPCODE_EXT_AVX
 		, OPCODE_EXT_MMX
@@ -90,7 +90,7 @@ namespace llc
 		, OPCODE_EXT_SSE4
 		, OPCODE_EXT_CUSTOM		 = 0x40U
 		};
-	enum DEVICE_TYPE : unsigned char
+	enum DEVICE_TYPE : u0_t
 		{ DEVICE_TYPE_UNKNOWN
 		, DEVICE_TYPE_ANDROID
 		, DEVICE_TYPE_IPHONE
@@ -100,7 +100,7 @@ namespace llc
 		, DEVICE_TYPE_MAC
 		, DEVICE_TYPE_CUSTOM		= 0x40U
 		};
-	enum OS_FAMILY : unsigned char
+	enum OS_FAMILY : u0_t
 		{ OS_FAMILY_UNKNOWN
 		, OS_FAMILY_ANDROID
 		, OS_FAMILY_ARDUINO
@@ -114,17 +114,14 @@ namespace llc
 		, OS_FAMILY_WINDOWS
 		, OS_FAMILY_CUSTOM		  = 0x40U
 		};
-#define GDEFINE_ENUM_NAMEP(TEnum)				nsix	::llc::sc_c*	get_enum_namep	(cnst TEnum&)	nxpt	{ rtrn #TEnum; }
+#define GDEFINE_ENUM_NAMEP(TEnum)	\
+	nsix	::llc::sc_c*	get_enum_namep	(cnst TEnum&)	nxpt	{ rtrn #TEnum; } \
+	ndsc 	::llc::sc_c*  	get_value_namep (TEnum value) 	nxpt;
 	GDEFINE_ENUM_NAMEP(DEVICE_TYPE  );
 	GDEFINE_ENUM_NAMEP(OPCODE_SET   );
 	GDEFINE_ENUM_NAMEP(OPCODE_EXT   );
 	GDEFINE_ENUM_NAMEP(OS_FAMILY	);
-
-#define llc_enum_value_log(printf_fn, enumVal)	printf_fn("'%s':(0x%X)(%" LLC_FMT_S2 ")(%c)'%s'", ::llc::get_enum_namep LLCREP3(enumVal) ? char(enumVal) : '?', ::llc::get_value_namep(enumVal))
-	ndsc ::llc::sc_c*  get_value_namep (DEVICE_TYPE value) nxpt;
-	ndsc ::llc::sc_c*  get_value_namep (OPCODE_SET  value) nxpt;
-	ndsc ::llc::sc_c*  get_value_namep (OPCODE_EXT  value) nxpt;
-	ndsc ::llc::sc_c*  get_value_namep (OS_FAMILY   value) nxpt;
+#define llc_enum_value_log(printf_fn, enumVal)	printf_fn("'%s':(0x%X)(%" LLC_FMT_S2 ")(%c)'%s'", get_enum_namep LLCREP3(enumVal) ? char(enumVal) : '?', get_value_namep(enumVal))
 } // nameespace
 
 #ifndef if_fail
@@ -133,12 +130,11 @@ namespace llc
 #ifndef if_not_fail
 #	define	if_not_fail(errVal)	if_not(::llc::failed(errVal))
 #endif
-
-#if !defined(errored)
-#	define	errored(errVal)	::llc::failed(errVal)
+#ifndef errored
+#	define	errored(errVal)		::llc::failed(errVal)
 #endif
-#if !defined(not_errored)
-#	define	not_errored(errVal)	not(::llc::failed(errVal))
+#ifndef not_errored
+#	define	not_errored(errVal)	not(false == ::llc::failed(errVal))
 #endif
 #ifndef if_failed
 #	define	if_failed			if_fail
@@ -149,11 +145,11 @@ namespace llc
 #endif
 
 #ifdef LLC_ESP32
-#	define LLC_CRASH()	do { uint64_t * _tasdas = 0; for(uint32_t i = 0; i < 0xFFFFFFFF; ++i) { for(uint32_t j = 0; j < 1000; ++j) delay(1); base_log_print("I had to do something with this.\n"); } } while(0)	// No throw? Just crash.
+#	define LLC_CRASH()	do { ::llc::u3_t * _tasdas = 0; for(::llc::u2_t i = 0; i < 0xFFFFFFFF; ++i) { for(::llc::u2_t j = 0; j < 1000; ++j) delay(1); base_log_print("I had to do something with this.\n"); } } while(0)	// No throw? Just crash.
 #elif defined(LLC_ARDUINO) 
-#	define LLC_CRASH()	do { uint64_t * _tasdas = 0; for(uint32_t i = 0; i < 0xFFFFFFFF; ++i) { for(uint32_t j = 0; j < 1000; ++j) delay(1); base_log_print_F("I had to do something with this.\n"); } } while(0)	// No throw? Just crash.
+#	define LLC_CRASH()	do { ::llc::u3_t * _tasdas = 0; for(::llc::u2_t i = 0; i < 0xFFFFFFFF; ++i) { for(::llc::u2_t j = 0; j < 1000; ++j) delay(1); base_log_print_F("I had to do something with this.\n"); } } while(0)	// No throw? Just crash.
 #else
-#	define LLC_CRASH()	do { uint64_t * _tasdas = 0; for(uint32_t i = 0; i < 0xFFFFFFFF; ++i) _tasdas[i] = 0xFFFFFFFF00000000ULL; } while(0)	// No throw? Just crash.
+#	define LLC_CRASH()	do { ::llc::u3_t * _tasdas = 0; for(::llc::u2_t i = 0; i < 0xFFFFFFFF; ++i) _tasdas[i] = 0xFFFFFFFF00000000ULL; } while(0)	// No throw? Just crash.
 #endif
 
 #endif // LLC_ERROR_H_23627

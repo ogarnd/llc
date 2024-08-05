@@ -53,7 +53,7 @@ stxp	uint32_t LLC_MAX_PATH = 256;
 	return 0;
 }
 
-::llc::error_t			llc::findLastSlash			(const ::llc::vcc & path)		{
+::llc::error_t			llc::findLastSlash			(::llc::vcsc_c & path)		{
 	int32_t						indexOfStartOfFileName0		= ::llc::rfind('\\', path);
 	int32_t						indexOfStartOfFileName1		= ::llc::rfind('/', path);
 	return
@@ -63,7 +63,7 @@ stxp	uint32_t LLC_MAX_PATH = 256;
 		;
 }
 //
-::llc::error_t			llc::pathNameCompose		(const ::llc::vcc & path, const ::llc::vcc & fileName, ::llc::asc_t & out_composed)		{
+::llc::error_t			llc::pathNameCompose		(::llc::vcsc_c & path, ::llc::vcsc_c & fileName, ::llc::asc_t & out_composed)		{
 	if(path.size()) {
 		for(uint32_t iChar = 0; iChar < path.size(); ++iChar) {
 			const char					curChar						= path[iChar];
@@ -93,7 +93,7 @@ stxp	uint32_t LLC_MAX_PATH = 256;
 
 ::llc::error_t			llc::pathList				(const ::llc::SPathContents & input, ::llc::avcc & output, const ::llc::vcs extension)					{
 	for(uint32_t iFile = 0; iFile < input.Files.size(); ++iFile) {
-		const ::llc::vcc			& fileName					= input.Files[iFile];
+		::llc::vcsc_c			& fileName					= input.Files[iFile];
 		if(0 == extension.size() || (extension.size() < fileName.size() && 0 == strncmp(fileName.end() - extension.size(), extension.begin(), ::llc::min(extension.size(), fileName.size()))))
 			llc_necs(output.push_back(fileName));
 	}
@@ -104,7 +104,7 @@ stxp	uint32_t LLC_MAX_PATH = 256;
 
 ::llc::error_t			llc::pathList				(const ::llc::SPathContents & input, ::llc::aasc_t & output, const ::llc::vcs extension)					{
 	for(uint32_t iFile = 0; iFile < input.Files.size(); ++iFile) {
-		const ::llc::vcc			& fileName					= input.Files[iFile];
+		::llc::vcsc_c			& fileName					= input.Files[iFile];
 		if(0 == extension.size() || (extension.size() < fileName.size() && 0 == strncmp(fileName.end() - extension.size(), extension.begin(), ::llc::min(extension.size(), fileName.size()))))
 			llc_necs(output.push_back(fileName));
 	}
@@ -158,7 +158,7 @@ stxp	const char		parDir	[]					= "..";
 				continue;
 			int32_t						lenPath						= snprintf(sPath, ::llc::size(sPath) - 2, "%s/%s", withoutTrailingSlash.begin(), drnt->d_name);
 			info_printf("Path: %s.", sPath);
-			llc_necall(output.push_back(::llc::vcc{sPath, (uint32_t)lenPath}), "%s", "Failed to push path to output list.");
+			llc_necall(output.push_back(::llc::vcsc_t{sPath, (uint32_t)lenPath}), "%s", "Failed to push path to output list.");
 		}
 	}
 #endif
@@ -215,7 +215,7 @@ stxp	const char		parDir	[]					= "..";
 				info_printf("Directory: %s.", sPath);
 			}
 			else {
-				llc_necall(pathContents.Files.push_back(::llc::vcc{sPath, (uint32_t)lenPath}), "%s", "Failed to push path to output list");
+				llc_necall(pathContents.Files.push_back(::llc::vcsc_t{sPath, (uint32_t)lenPath}), "%s", "Failed to push path to output list");
 				info_printf("File: %s.", sPath);
 			}
 		}

@@ -37,6 +37,7 @@ namespace llc
 	tydf float		f2_t, f2s_t;
 	tydf double		f3_t, f3s_t;
 	tydf size_t		uP_t, iPu_t;
+	tydf intptr_t	sP_t, iPs_t;
 #define	szof(type)																\
 	( (sizeof(type) > 0xFFFFU)	? ::llc::u2_t(sizeof(type) & 0xFFFFFFFFU	)	\
 	: (sizeof(type) > 0xFFU)	? ::llc::u1_t(sizeof(type) & 0xFFFFU		)	\
@@ -73,7 +74,19 @@ namespace llc
 #define tplTOutN2	tplt<tpnm TOut	, ::llc::u2_t N>
 #define tplTInN2	tplt<tpnm TIn	, ::llc::u2_t N>
 #define tpl_t_nu2	tplt<tpnm _t		, ::llc::u2_t _nu2>
-	
+#define tplN2ustct	tplN2u	stct
+#define tplN2ustin	tplN2u	stin
+#define tplN2uusng	tplN2u	usng
+#define tplN2undsx	tplN2u	ndsx
+#define tplN2usinx	tplN2u	sinx
+#define tplN2ustxp	tplN2u	stxp
+#define tplN2unsix	tplN2u	nsix
+#define tplTN2stct	tplTN2	stct
+#define tplTN2usng	tplTN2	usng
+#define tplTN2ndsx	tplTN2	ndsx
+#define tplTN2sinx	tplTN2	sinx
+#define tplTN2stxp	tplTN2	stxp
+#define tplTN2nsix	tplTN2	nsix
 #if defined(LLC_ANDROID) || defined(LLC_CLANG)
 #	pragma clang diagnostic push
 #	pragma clang diagnostic ignored "-Wtautological-constant-out-of-range-compare"
@@ -103,8 +116,8 @@ namespace llc
 #define llc_rmvltl(type)	tpnm ::llc::rm_vltl_t<type>
 #define llc_rmcsvl(type)	tpnm ::llc::rm_csvl_t<type>
 
-#define tydfTCnst(type)		tydf llc_rmcnst(type) TCnst
-#define tdfTTCnst(type)		tdfT(type); tydfTCnst(type)
+#define tydfTCnst(type)		tdcs		llc_rmcnst(type)	TCnst
+#define tdfTTCnst(type)		tdfT(type);	tydfTCnst(type)
 
 	tplTInTOut	sinx	TOut	dim2		(TIn value)				nxpt	{ rtrn {value, value}; }
 	tplTInTOut	sinx	TOut	dim3		(TIn value)				nxpt	{ rtrn {value, value, value}; }
@@ -165,41 +178,46 @@ namespace llc
 #define LLC_FMT_U0		"u"
 #define LLC_FMT_S1		"i"
 #define LLC_FMT_U1		"u"
+//
 #define LLC_FMT_GT_F2	"%" LLC_FMT_F2 " > %" LLC_FMT_F2
 #define LLC_FMT_GT_F3	"%" LLC_FMT_F3 " > %" LLC_FMT_F3
+#define LLC_FMT_GT_S0	"%" LLC_FMT_S0 " > %" LLC_FMT_S0
+#define LLC_FMT_GT_S1	"%" LLC_FMT_S1 " > %" LLC_FMT_S1
 #define LLC_FMT_GT_S2	"%" LLC_FMT_S2 " > %" LLC_FMT_S2
-#define LLC_FMT_GT_U2	"%" LLC_FMT_U2 " > %" LLC_FMT_U2
 #define LLC_FMT_GT_S3	"%" LLC_FMT_S3 " > %" LLC_FMT_S3
+#define LLC_FMT_GT_U0	"%" LLC_FMT_U0 " > %" LLC_FMT_U0
+#define LLC_FMT_GT_U1	"%" LLC_FMT_U1 " > %" LLC_FMT_U1
+#define LLC_FMT_GT_U2	"%" LLC_FMT_U2 " > %" LLC_FMT_U2
 #define LLC_FMT_GT_U3	"%" LLC_FMT_U3 " > %" LLC_FMT_U3
-
+//
 #define LLC_FMT_LT_F2	"%" LLC_FMT_F2 " < %" LLC_FMT_F2
 #define LLC_FMT_LT_F3	"%" LLC_FMT_F3 " < %" LLC_FMT_F3
 #define LLC_FMT_LT_S2	"%" LLC_FMT_S2 " < %" LLC_FMT_S2
 #define LLC_FMT_LT_U2	"%" LLC_FMT_U2 " < %" LLC_FMT_U2
 #define LLC_FMT_LT_S3	"%" LLC_FMT_S3 " < %" LLC_FMT_S3
 #define LLC_FMT_LT_U3	"%" LLC_FMT_U3 " < %" LLC_FMT_U3
-
+//
 #define LLC_FMT_EQ_F2	"%" LLC_FMT_F2 " == %" LLC_FMT_F2
 #define LLC_FMT_EQ_F3	"%" LLC_FMT_F3 " == %" LLC_FMT_F3
 #define LLC_FMT_EQ_S2	"%" LLC_FMT_S2 " == %" LLC_FMT_S2
 #define LLC_FMT_EQ_U2	"%" LLC_FMT_U2 " == %" LLC_FMT_U2
 #define LLC_FMT_EQ_S3	"%" LLC_FMT_S3 " == %" LLC_FMT_S3
 #define LLC_FMT_EQ_U3	"%" LLC_FMT_U3 " == %" LLC_FMT_U3
-
+//
 #define LLC_FMT_GE_F2	"%" LLC_FMT_F2 " >= %" LLC_FMT_F2
 #define LLC_FMT_GE_F3	"%" LLC_FMT_F3 " >= %" LLC_FMT_F3
 #define LLC_FMT_GE_S2	"%" LLC_FMT_S2 " >= %" LLC_FMT_S2
 #define LLC_FMT_GE_U2	"%" LLC_FMT_U2 " >= %" LLC_FMT_U2
 #define LLC_FMT_GE_S3	"%" LLC_FMT_S3 " >= %" LLC_FMT_S3
 #define LLC_FMT_GE_U3	"%" LLC_FMT_U3 " >= %" LLC_FMT_U3
-
+//
 #define LLC_FMT_LE_F2	"%" LLC_FMT_F2 " <= %" LLC_FMT_F2
 #define LLC_FMT_LE_F3	"%" LLC_FMT_F3 " <= %" LLC_FMT_F3
 #define LLC_FMT_LE_S2	"%" LLC_FMT_S2 " <= %" LLC_FMT_S2
 #define LLC_FMT_LE_U2	"%" LLC_FMT_U2 " <= %" LLC_FMT_U2
 #define LLC_FMT_LE_S3	"%" LLC_FMT_S3 " <= %" LLC_FMT_S3
 #define LLC_FMT_LE_U3	"%" LLC_FMT_U3 " <= %" LLC_FMT_U3
-
+//
 #define LLC_FMT_NE_F2	"%" LLC_FMT_F2 " != %" LLC_FMT_F2
 #define LLC_FMT_NE_F3	"%" LLC_FMT_F3 " != %" LLC_FMT_F3
 #define LLC_FMT_NE_S2	"%" LLC_FMT_S2 " != %" LLC_FMT_S2

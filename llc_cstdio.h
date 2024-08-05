@@ -41,7 +41,7 @@ namespace llc
 #endif
 	}
 	ndsi			err_t	fopen_s		(FILE* * out_fp, vs filename, vcs mode)						{ return fopen_s(out_fp, filename.cc(), mode); }
-	tplN1u	ndsi	err_t	fopen_s		(FILE* * out_fp, sc_c (&filename)[N], vcs mode)				{ return fopen_s(out_fp, vcc{filename}, mode); }
+	tplN1u	ndsi	err_t	fopen_s		(FILE* * out_fp, sc_c (&filename)[N], vcs mode)				{ return fopen_s(out_fp, vcsc_t{filename}, mode); }
 	ndsi			err_t	fopen_s		(FILE* * out_fp, vcs filename, vcs mode, uint64_t offset)	{ llc_necs(::llc::fopen_s(out_fp, filename, mode)); return 0 == offset ? 0 : ::llc::fseek(*out_fp, offset, FSEEK_SET); }
 } // namespace
 

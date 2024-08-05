@@ -1,7 +1,7 @@
 #include "llc_base64.h"
 #include "llc_view_bit.h"
 
-static	::llc::error_t	base64EncodeTriplet								(const ::llc::vcc & base64Symbols, ::llc::vu8 inputTriplet, ::llc::vu8 out_base64) {
+static	::llc::error_t	base64EncodeTriplet								(::llc::vcsc_c & base64Symbols, ::llc::vu8 inputTriplet, ::llc::vu8 out_base64) {
 	for (uint32_t iSingleIn = 0; iSingleIn < 3; ++iSingleIn) { // reverse bits of each input byte
 		::llc::view_bit<uint8_t>									inputBits														= {&inputTriplet[iSingleIn], 8};
 		::llc::reverse_bits(inputBits);
@@ -25,7 +25,7 @@ static	::llc::error_t	base64EncodeTriplet								(const ::llc::vcc & base64Symbo
 	}
 	return 0;
 }
-::llc::error_t			llc::base64Encode								(const ::llc::vcc & base64Symbols, char base64PadSymbol, const ::llc::vcu0_t & inputBytes, ::llc::au0_t & out_base64)	{
+::llc::error_t			llc::base64Encode								(::llc::vcsc_c & base64Symbols, char base64PadSymbol, const ::llc::vcu0_t & inputBytes, ::llc::au0_t & out_base64)	{
 	rni_if(0 == inputBytes.size(), "%s", "Empty input stream.");
 	u2_c				packsNeeded														= inputBytes.size() / 3 + one_if(inputBytes.size() % 3);
 	uint32_t					iOutput64														= out_base64.size(); //
@@ -72,7 +72,7 @@ static	::llc::error_t	base64DecodeQuad												(::llc::vu8 inputQuad, ::llc::
 	return 0;
 }
 
-::llc::error_t			llc::base64Decode								(const ::llc::vcc & base64Symbols, char base64PadSymbol, const ::llc::vcu0_t & in_base64, ::llc::au0_t & outputBytes)	{
+::llc::error_t			llc::base64Decode								(::llc::vcsc_c & base64Symbols, char base64PadSymbol, const ::llc::vcu0_t & in_base64, ::llc::au0_t & outputBytes)	{
 	rni_if(0 == in_base64.size(), "%s", "Empty base64 string.");
 	int32_t														lengthInput														= in_base64.size();
 	if(uint32_t mymod = in_base64.size() % 4) {

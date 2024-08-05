@@ -12,7 +12,7 @@
 	return 0;
 }
 
-::llc::asc_t		llc::toString			(const ::llc::vcc & strToLog)	{
+::llc::asc_t		llc::toString			(::llc::vcsc_c & strToLog)	{
 	::llc::asc_t			sprintfable				= strToLog;
 	if(sprintfable.size() && sprintfable[sprintfable.size() - 1] == 0) { // it already contains a null, so resize it to avoid counting it as part of the array.
 		sprintfable.resize(sprintfable.size() - 1);
@@ -39,7 +39,7 @@
 	return 0;
 }
 
-::llc::error_t			llc::find				(const ::llc::vcs & keyToFind, const ::llc::view<const ::llc::TKeyValConstString> & keyvals, ::llc::vcc & out_val)		{
+::llc::error_t			llc::find				(const ::llc::vcs & keyToFind, const ::llc::view<const ::llc::TKeyValConstString> & keyvals, ::llc::vcsc_t & out_val)		{
 	::llc::error_t				index					= ::llc::find(keyToFind, keyvals);
 	out_val					= (-1 == index) ? ::llc::vcs{} : keyvals[index].Val;
 	return index;
@@ -54,7 +54,7 @@
 	return indexKey;
 }
 
-::llc::error_t			llc::keyValVerify		(const ::llc::view<::llc::TKeyValConstString> & environViews, const ::llc::vcc & keyToVerify, const ::llc::vcc & valueToVerify)	{
+::llc::error_t			llc::keyValVerify		(const ::llc::view<::llc::TKeyValConstString> & environViews, ::llc::vcsc_c & keyToVerify, ::llc::vcsc_c & valueToVerify)	{
 	for(uint32_t iKey = 0; iKey < environViews.size(); ++iKey) {
 		if(environViews[iKey].Key == keyToVerify)
 			return (environViews[iKey].Val == valueToVerify) ? iKey : -1;
@@ -67,7 +67,7 @@
 	for(uint32_t iKey = 0; iKey < keyVals.size(); ++iKey) {
 		for(uint32_t iRef = 0; iRef < keysToSave.size(); ++iRef) {
 			const ::llc::TKeyValConstString	& kvToCheck						= keyVals[iKey];
-			const ::llc::vcc				& keyToSave						= keysToSave[iRef];
+			::llc::vcsc_c				& keyToSave						= keysToSave[iRef];
 			if(kvToCheck.Key == keyToSave)
 				keyValsToSave.push_back(kvToCheck);
 		}

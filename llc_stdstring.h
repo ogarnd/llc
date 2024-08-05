@@ -12,6 +12,6 @@ namespace llc
 
 	::llc::error_t			tolower		(::llc::view<char> input);
 	::llc::error_t			toupper		(::llc::view<char> input);
-	::llc::error_t			stoull		(const ::llc::vcc & input, uint64_t & output);
+	::llc::error_t			stoull		(::llc::vcsc_c & input, uint64_t & output);
 }
 #endif // LLC_STDSTRING_H_23627

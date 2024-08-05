@@ -348,7 +348,7 @@ namespace llc
 	//------------------------------------------------------------------------------------------------------------
 	::llc::error_t							keyValConstStringDeserialize	(const ::llc::vcu0_t & input, ::llc::aobj<::llc::TKeyValConstChar> & output);
 
-	::llc::error_t							filterPrefix					(::llc::view<const ::llc::vcc> input, const ::llc::vcc prefix, ::llc::aobj<::llc::vcc> & filtered, bool nullIncluded = false);
-	::llc::error_t							filterPostfix					(::llc::view<const ::llc::vcc> input, const ::llc::vcc prefix, ::llc::aobj<::llc::vcc> & filtered, bool nullIncluded = false);
+	::llc::error_t							filterPrefix					(::llc::view<::llc::vcsc_c> input, ::llc::vcsc_c prefix, ::llc::aobj<::llc::vcsc_t> & filtered, bool nullIncluded = false);
+	::llc::error_t							filterPostfix					(::llc::view<::llc::vcsc_c> input, ::llc::vcsc_c prefix, ::llc::aobj<::llc::vcsc_t> & filtered, bool nullIncluded = false);
 }
 #endif // LLC_ARRAY_OBJ_H_23627

@@ -24,8 +24,8 @@ namespace llc
 
 	// this function was ceated in order to work around the problem of the JSON system returning pointers to the original string, without having the opportunity of processing escaped path slashes.
 	//::llc::error_t						pathNameCompose			(::llc::asc_t & out_composed, ::llc::vcs fileName, ::llc::vcs path = {}, ::llc::vcs extension = {});
-	::llc::error_t						pathNameCompose			(const ::llc::vcc & path, const ::llc::vcc & fileName, ::llc::asc_t & out_composed);
-	::llc::error_t						findLastSlash			(const ::llc::vcc & path);
+	::llc::error_t						pathNameCompose			(::llc::vcsc_c & path, ::llc::vcsc_c & fileName, ::llc::asc_t & out_composed);
+	::llc::error_t						findLastSlash			(::llc::vcsc_c & path);
 
 } // namespace
 

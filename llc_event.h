@@ -12,127 +12,126 @@ namespace llc
 {
 	tpl_t struct SEventView {
 		tdfT(_t);
-		tydf	SEventView<T>		TEView;
+		tydf	SEventView<T>	TEView;
+		T		Type			= {};
+		vcu0_t	Data			= {};
 
-		T				Type		= {};
-		::llc::vcu0_t	Data		= {};
-
-		::llc::error_t	Save		(::llc::au0_t & output)	const	{
-			llc_necs(llc::savePOD (output, Type));
-			llc_necs(llc::saveView(output, Data));
-			return 0;
+		error_t	Save		(au0_t & output)	const	{
+			llc_necs(savePOD (output, Type));
+			llc_necs(saveView(output, Data));
+			rtrn 0;
 		}
 
-		::llc::error_t	Load		(::llc::vcu0_t & input)			{
-			llc_necs(llc::loadPOD (input, Type));
-			llc_necs(llc::loadView(input, Data));
-			return 0;
+		error_t	Load		(vcu0_t & input)			{
+			llc_necs(loadPOD (input, Type));
+			llc_necs(loadView(input, Data));
+			rtrn 0;
 		}
 	};
-	tplt<tpnm T> using SEView 					= ::llc::SEventView<T>;
-	tplt<tpnm T> using TEViewQueue 				= ::llc::aobj<::llc::SEView<T>>;
+	tplt<tpnm T> using SEView 					= SEventView<T>;
+	tplt<tpnm T> using TEViewQueue 				= aobj<SEView<T>>;
 
-	tplt<tpnm T> using FEViewHandler			= ::llc::function<::llc::error_t(      ::llc::SEView<T>&)>;
-	tplt<tpnm T> using FEViewHandlerConst		= ::llc::function<::llc::error_t(const ::llc::SEView<T>&)>;
-	tplt<tpnm T> using FEventViewHandler		= ::llc::function<::llc::error_t(      ::llc::SEView<T>&)>;
-	tplt<tpnm T> using FEventViewHandlerConst	= ::llc::function<::llc::error_t(const ::llc::SEView<T>&)>;
+	tplt<tpnm T> using FEViewHandler			= function<error_t(      SEView<T>&)>;
+	tplt<tpnm T> using FEViewHandlerConst		= function<error_t(const SEView<T>&)>;
+	tplt<tpnm T> using FEventViewHandler		= function<error_t(      SEView<T>&)>;
+	tplt<tpnm T> using FEventViewHandlerConst	= function<error_t(const SEView<T>&)>;
 
 	tplt<tpnm _tEventType>
 	struct SEvent {
 		tydf _tEventType			T;
-		tydf ::llc::SEView<T>	TEView;
-		tydf ::llc::SEvent<T>	TEvent;
+		tydf SEView<T>	TEView;
+		tydf SEvent<T>	TEvent;
 
 		T				Type		= {};
-		::llc::au0_t		Data		= {};
+		au0_t			Data		= {};
 
 						SEvent		(const TEvent &)							= default;
 		constexpr		SEvent		(T type = {})						: Type(type) {}
-						SEvent		(T type, const ::llc::vcu0_t data)	: Type(type), Data(data.cu8()) {}
+						SEvent		(T type, const vcu0_t data)	: Type(type), Data(data.cu8()) {}
 						SEvent		(const TEView & eventView)			: Type(eventView.Type), Data(eventView.Data) {}
 
-		TEvent&			oper= 	(const TEvent &)				= default;
-		TEvent&			oper= 	(const TEView & eventView)		{ Type = eventView.Type; Data = eventView.Data; return *this; }
+		TEvent&			oper= 		(const TEvent &)				= default;
+		TEvent&			oper= 		(const TEView & eventView)		{ Type = eventView.Type; Data = eventView.Data; rtrn *this; }
 
-		oper		TEView		()						const	{ return {Type, Data.cu8()}; }
+		oper			TEView		()						const	{ rtrn {Type, Data.cu8()}; }
 
-		::llc::error_t	Save		(::llc::au0_t & output)	const	{
-			llc_necs(llc::savePOD(output, Type));
-			llc_necs(llc::saveView(output, Data));
-			return 0;
+		error_t			Save		(au0_t & output)	const	{
+			llc_necs(savePOD(output, Type));
+			llc_necs(saveView(output, Data));
+			rtrn 0;
 		}
 
-		::llc::error_t	Load		(::llc::vcu0_t & input)			{
-			llc_necs(llc::loadPOD(input, Type));
-			llc_necs(llc::loadView(input, Data));
-			return 0;
-		}
-
-		tplt<tpnm _tETypeOther>
-		::llc::error_t	ExtractChild(::llc::SEvent<_tETypeOther> & outputEvent)		const	{
-			::llc::vcu0_t			input				= Data;
-			llc_necs(outputEvent.Load(input));
-			llc_event_printf("%s", ::llc::get_value_namep(outputEvent.Type)); 
-			return 0; 
+		error_t	Load		(vcu0_t & input)			{
+			llc_necs(loadPOD(input, Type));
+			llc_necs(loadView(input, Data));
+			rtrn 0;
 		}
 
 		tplt<tpnm _tETypeOther>
-		::llc::error_t	ExtractChild(::llc::SEView<_tETypeOther> & outputEvent)	const	{
-			::llc::vcu0_t			input				= Data;
+		error_t	ExtractChild(SEvent<_tETypeOther> & outputEvent)		const	{
+			vcu0_t			input				= Data;
 			llc_necs(outputEvent.Load(input));
-			llc_event_printf("%s", ::llc::get_value_namep(outputEvent.Type)); 
-			return 0; 
+			llc_event_printf("%s", get_value_namep(outputEvent.Type)); 
+			rtrn 0; 
+		}
+
+		tplt<tpnm _tETypeOther>
+		error_t	ExtractChild(SEView<_tETypeOther> & outputEvent)	const	{
+			vcu0_t			input				= Data;
+			llc_necs(outputEvent.Load(input));
+			llc_event_printf("%s", get_value_namep(outputEvent.Type)); 
+			rtrn 0; 
 		}
 	};
 
-	tplt<tpnm T> using FEventHandler		= ::llc::function<::llc::error_t(      ::llc::SEvent<T>&)>;
-	tplt<tpnm T> using FEventHandlerConst	= ::llc::function<::llc::error_t(const ::llc::SEvent<T>&)>;
+	tplt<tpnm T> using FEventHandler		= function<error_t(      SEvent<T>&)>;
+	tplt<tpnm T> using FEventHandlerConst	= function<error_t(const SEvent<T>&)>;
 
-	tplt<tpnm T> using PEvent 				= ::llc::pobj <::llc::SEvent<T>>;
-	tplt<tpnm T> using TEventQueue 			= ::llc::apobj<::llc::SEvent<T>>;
+	tplt<tpnm T> using PEvent 				= pobj <SEvent<T>>;
+	tplt<tpnm T> using TEventQueue 			= apobj<SEvent<T>>;
 
 	tplt <tpnm _tEvntParent, tpnm _tEvntChild>
-	static	::llc::error_t	eventWrapChild		(::llc::SEvent<_tEvntParent> & parentEvent, _tEvntChild childEventType, ::llc::vcu0_t eventData) {
-		::llc::SEView<_tEvntChild>	childEvent			= {childEventType, eventData};
-		return childEvent.Save(parentEvent.Data);
+	static	error_t	eventWrapChild		(SEvent<_tEvntParent> & parentEvent, _tEvntChild childEventType, vcu0_t eventData) {
+		SEView<_tEvntChild>	childEvent			= {childEventType, eventData};
+		rtrn childEvent.Save(parentEvent.Data);
 	}
 
 	tplt <tpnm _tEvntParent, tpnm _tEvntChild>
-	static	::llc::error_t	eventEnqueueChild	(::llc::TEventQueue<_tEvntParent> & eventQueue, _tEvntParent parentEventType, _tEvntChild childEventType, ::llc::vcu0_t eventData) {
-		::llc::PEvent<_tEvntParent>	parentEvent			= {};
+	static	error_t	eventEnqueueChild	(TEventQueue<_tEvntParent> & eventQueue, _tEvntParent parentEventType, _tEvntChild childEventType, vcu0_t eventData) {
+		PEvent<_tEvntParent>	parentEvent			= {};
 		parentEvent->Type = parentEventType;
-		llc_necs(llc::eventWrapChild(*parentEvent, childEventType, eventData));
-		return eventQueue.push_back(parentEvent);
+		llc_necs(eventWrapChild(*parentEvent, childEventType, eventData));
+		rtrn eventQueue.push_back(parentEvent);
 	}
 
 	tplt <tpnm _tEvntParent, tpnm _tEvntChild, tpnm _tPOD>
-	static	::llc::error_t	eventEnqueueChild	(::llc::TEventQueue<_tEvntParent> & eventQueue, _tEvntParent parentEventType, _tEvntChild childEventType, ::llc::view<const _tPOD> eventData) {
-		return ::llc::eventEnqueueChild(eventQueue, parentEventType, childEventType, ::llc::vcu0_t{(const uint8_t*)eventData.begin(), eventData.byte_count()});
+	static	error_t	eventEnqueueChild	(TEventQueue<_tEvntParent> & eventQueue, _tEvntParent parentEventType, _tEvntChild childEventType, view<const _tPOD> eventData) {
+		rtrn eventEnqueueChild(eventQueue, parentEventType, childEventType, vcu0_t{(const uint8_t*)eventData.begin(), eventData.byte_count()});
 	}
 
 	tplt <tpnm _tEvntParent, tpnm _tEvntChild, tpnm _tPOD>
-	static	::llc::error_t	eventEnqueueChild	(::llc::TEventQueue<_tEvntParent> & eventQueue, _tEvntParent parentEventType, _tEvntChild childEventType, const _tPOD & childEventDataType) {
-		return ::llc::eventEnqueueChild(eventQueue, parentEventType, childEventType, ::llc::vcu0_t{(const uint8_t*)&childEventDataType, szof(_tPOD)});
+	static	error_t	eventEnqueueChild	(TEventQueue<_tEvntParent> & eventQueue, _tEvntParent parentEventType, _tEvntChild childEventType, const _tPOD & childEventDataType) {
+		rtrn eventEnqueueChild(eventQueue, parentEventType, childEventType, vcu0_t{(const uint8_t*)&childEventDataType, szof(_tPOD)});
 	}
 
 	tplt<tpnm _tChildEvent, tpnm _tParentEvent>
-	static	::llc::error_t	eventExtractAndHandle	(const ::llc::SEvent<_tParentEvent> & parentEvent, const ::llc::function<::llc::error_t (const ::llc::SEventView<_tChildEvent> &)> & funcHandleChild) {
-		::llc::SEView<_tChildEvent>	childEvent; 
+	static	error_t	eventExtractAndHandle	(const SEvent<_tParentEvent> & parentEvent, const function<error_t (const SEventView<_tChildEvent> &)> & funcHandleChild) {
+		SEView<_tChildEvent>	childEvent; 
 		llc_necs(parentEvent.ExtractChild(childEvent)); 
-		return funcHandleChild(childEvent);
+		rtrn funcHandleChild(childEvent);
 	}
 
-	tydf ::llc::SEvent            <::llc::RESULT>	SEventResult;
-	tydf ::llc::SEventView        <::llc::RESULT>	SEViewResult;
-	tydf ::llc::FEventHandler     <::llc::RESULT>	FEventResult;
-	tydf ::llc::FEventHandlerConst<::llc::RESULT>	FEventResultConst;
-	tydf ::llc::SEvent            <::llc::COMMAND>	SEventCommand;
-	tydf ::llc::SEventView        <::llc::COMMAND>	SEViewCommand;
-	tydf ::llc::FEventHandler     <::llc::COMMAND>	FEventCommand;
-	tydf ::llc::FEventHandlerConst<::llc::COMMAND>	FEventCommandConst;
+	tydf SEvent            <RESULT>	SEventResult;
+	tydf SEventView        <RESULT>	SEViewResult;
+	tydf FEventHandler     <RESULT>	FEventResult;
+	tydf FEventHandlerConst<RESULT>	FEventResultConst;
+	tydf SEvent            <COMMAND>	SEventCommand;
+	tydf SEventView        <COMMAND>	SEViewCommand;
+	tydf FEventHandler     <COMMAND>	FEventCommand;
+	tydf FEventHandlerConst<COMMAND>	FEventCommandConst;
 }
 
-#define llc_warning_unhandled_event(eventUnhandled)	warning_printf("Unhandled '%s' event: '%s' (0x%llX)(%lli)(%c)"	, ::llc::get_enum_namep((eventUnhandled).Type), ::llc::get_value_namep((eventUnhandled).Type), (uint64_t)(eventUnhandled).Type, (int64_t)(eventUnhandled).Type, char((eventUnhandled).Type ? (eventUnhandled).Type : ' '))
-#define llc_warning_not_implemented(eventUnhandled) warning_printf("Implement for '%s'! '%s' (0x%llX)(%lli)(%c)"	, ::llc::get_enum_namep((eventUnhandled).Type), ::llc::get_value_namep((eventUnhandled).Type), (uint64_t)(eventUnhandled).Type, (int64_t)(eventUnhandled).Type, char((eventUnhandled).Type ? (eventUnhandled).Type : ' '))
+#define llc_warning_unhandled_event(eventUnhandled)	warning_printf("Unhandled '%s' event: '%s' (0x%llX)(%lli)(%c)"	, get_enum_namep((eventUnhandled).Type), get_value_namep((eventUnhandled).Type), (u3_t)(eventUnhandled).Type, (s3_t)(eventUnhandled).Type, char((eventUnhandled).Type ? (eventUnhandled).Type : ' '))
+#define llc_warning_not_implemented(eventUnhandled) warning_printf("Implement for '%s'! '%s' (0x%llX)(%lli)(%c)"	, get_enum_namep((eventUnhandled).Type), get_value_namep((eventUnhandled).Type), (u3_t)(eventUnhandled).Type, (s3_t)(eventUnhandled).Type, char((eventUnhandled).Type ? (eventUnhandled).Type : ' '))
 
 #endif // LLC_EVENT_H_23627

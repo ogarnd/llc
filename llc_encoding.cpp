@@ -63,7 +63,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::hexDecode					(const ::llc::vcc & in_hexed	, ::llc::au0_t & out_binary)	{
+::llc::error_t			llc::hexDecode					(::llc::vcsc_c & in_hexed	, ::llc::au0_t & out_binary)	{
 	uint32_t					offset							= out_binary.size();
 	uint32_t					binarySize						= in_hexed.size() >> 1;
 	llc_necs(out_binary.resize(offset + binarySize));
@@ -74,7 +74,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::hexDecode					(const ::llc::vcc & in_hexed	, ::llc::as0_t & out_binary)	{
+::llc::error_t			llc::hexDecode					(::llc::vcsc_c & in_hexed	, ::llc::as0_t & out_binary)	{
 	uint32_t					offset							= out_binary.size();
 	uint32_t					binarySize						= in_hexed.size() >> 1;
 	llc_necs(out_binary.resize(offset + binarySize));

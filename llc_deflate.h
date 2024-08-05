@@ -17,16 +17,16 @@ namespace llc
 #pragma pack(pop)
 
 	struct SFolderPackage {
-		::llc::SPackHeader 		PackageInfo						= {};
-		::llc::au0_t				CompressedTableFiles			;
-		::llc::au0_t				CompressedContentsPacked		;
+		SPackHeader 		PackageInfo						= {};
+		au0_t				CompressedTableFiles			;
+		au0_t				CompressedContentsPacked		;
 	};
 
 	struct SFolderInMemory {
-		::llc::au0_t				DataContents					;
-		::llc::au0_t				DataInfo						;
-		::llc::avcu8			Contents						;
-		::llc::avcc				Names							;
+		au0_t				DataContents					;
+		au0_t				DataInfo						;
+		avcu8			Contents						;
+		avcc				Names							;
 	};
 
 
@@ -38,51 +38,50 @@ namespace llc
 	stxp	uint32_t		INFLATE_DEFAULT_CHUNK_SIZE		= 1024 * 32;
 #endif	
 
-	::llc::error_t			arrayDeflate			(const ::llc::vcu0_t & inflated, ::llc::au0_t & deflated, u2_c chunkSize = ::llc::DEFLATE_DEFAULT_CHUNK_SIZE);
-	::llc::error_t			arrayInflate			(const ::llc::vcu0_t & deflated, ::llc::au0_t & inflated, u2_c chunkSize = ::llc::INFLATE_DEFAULT_CHUNK_SIZE);
+	error_t			arrayDeflate			(const vcu0_t & inflated, au0_t & deflated, u2_c chunkSize = DEFLATE_DEFAULT_CHUNK_SIZE);
+	error_t			arrayInflate			(const vcu0_t & deflated, au0_t & inflated, u2_c chunkSize = INFLATE_DEFAULT_CHUNK_SIZE);
 
-	stin	::llc::error_t	arrayDeflate			(const ::llc::vcs0_t & inflated, ::llc::au0_t & deflated, u2_c chunkSize = ::llc::DEFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayDeflate(*(::llc::vcu0_t*)&inflated, deflated, chunkSize); }
-	stin	::llc::error_t	arrayInflate			(const ::llc::vcs0_t & deflated, ::llc::au0_t & inflated, u2_c chunkSize = ::llc::INFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayInflate(*(::llc::vcu0_t*)&deflated, inflated, chunkSize); }
-	stin	::llc::error_t	arrayDeflate			(const ::llc::vcu0_t & inflated, ::llc::as0_t & deflated, u2_c chunkSize = ::llc::DEFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayDeflate(inflated, *(::llc::au0_t*)&deflated, chunkSize); }
-	stin	::llc::error_t	arrayInflate			(const ::llc::vcu0_t & deflated, ::llc::as0_t & inflated, u2_c chunkSize = ::llc::INFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayInflate(deflated, *(::llc::au0_t*)&inflated, chunkSize); }
-	stin	::llc::error_t	arrayDeflate			(const ::llc::vcs0_t & inflated, ::llc::as0_t & deflated, u2_c chunkSize = ::llc::DEFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayDeflate(*(::llc::vcu0_t*)&inflated, *(::llc::au0_t*)&deflated, chunkSize); }
-	stin	::llc::error_t	arrayInflate			(const ::llc::vcs0_t & deflated, ::llc::as0_t & inflated, u2_c chunkSize = ::llc::INFLATE_DEFAULT_CHUNK_SIZE) { return ::llc::arrayInflate(*(::llc::vcu0_t*)&deflated, *(::llc::au0_t*)&inflated, chunkSize); }
+	stin	error_t	arrayDeflate			(const vcs0_t & inflated, au0_t & deflated, u2_c chunkSize = DEFLATE_DEFAULT_CHUNK_SIZE) { return arrayDeflate(*(vcu0_t*)&inflated, deflated, chunkSize); }
+	stin	error_t	arrayInflate			(const vcs0_t & deflated, au0_t & inflated, u2_c chunkSize = INFLATE_DEFAULT_CHUNK_SIZE) { return arrayInflate(*(vcu0_t*)&deflated, inflated, chunkSize); }
+	stin	error_t	arrayDeflate			(const vcu0_t & inflated, as0_t & deflated, u2_c chunkSize = DEFLATE_DEFAULT_CHUNK_SIZE) { return arrayDeflate(inflated, *(au0_t*)&deflated, chunkSize); }
+	stin	error_t	arrayInflate			(const vcu0_t & deflated, as0_t & inflated, u2_c chunkSize = INFLATE_DEFAULT_CHUNK_SIZE) { return arrayInflate(deflated, *(au0_t*)&inflated, chunkSize); }
+	stin	error_t	arrayDeflate			(const vcs0_t & inflated, as0_t & deflated, u2_c chunkSize = DEFLATE_DEFAULT_CHUNK_SIZE) { return arrayDeflate(*(vcu0_t*)&inflated, *(au0_t*)&deflated, chunkSize); }
+	stin	error_t	arrayInflate			(const vcs0_t & deflated, as0_t & inflated, u2_c chunkSize = INFLATE_DEFAULT_CHUNK_SIZE) { return arrayInflate(*(vcu0_t*)&deflated, *(au0_t*)&inflated, chunkSize); }
 
-	::llc::error_t			folderLoad					
-		( const ::llc::vcs	nameFolderSrc 
-		, ::llc::au0_t		& tableFiles				
-		, ::llc::au0_t		& contentsPacked			
+	error_t			folderLoad					
+		( const vcs	nameFolderSrc 
+		, au0_t		& tableFiles				
+		, au0_t		& contentsPacked			
 		);
-	::llc::error_t			folderPack				(::llc::SFolderPackage	& out_packed, const ::llc::vcs nameFolderSrc);
-	::llc::error_t			folderUnpack			(::llc::SFolderInMemory	& out_loaded, const ::llc::vcu0_t & rawFileInMemory);
-	::llc::error_t			folderUnpack			(::llc::SFolderInMemory	& out_loaded, const ::llc::vcs nameFileSrc);
-	::llc::error_t			folderToDisk			(const ::llc::SFolderInMemory & virtualFolder, const ::llc::vcs destinationPath);
-	::llc::error_t			folderToDisk			(const ::llc::SFolderPackage & folderPackage, const ::llc::vcs nameFileDst);
-	::llc::error_t			folderPackToDisk		(const ::llc::vcs nameFileDst, const ::llc::vcs nameFolderSrc);
-	::llc::error_t			folderUnpackToDisk		(const ::llc::vcs namePathDst, const ::llc::vcs nameFileSrc);
+	error_t			folderPack				(SFolderPackage	& out_packed, const vcs nameFolderSrc);
+	error_t			folderUnpack			(SFolderInMemory	& out_loaded, const vcu0_t & rawFileInMemory);
+	error_t			folderUnpack			(SFolderInMemory	& out_loaded, const vcs nameFileSrc);
+	error_t			folderToDisk			(const SFolderInMemory & virtualFolder, const vcs destinationPath);
+	error_t			folderToDisk			(const SFolderPackage & folderPackage, const vcs nameFileDst);
+	error_t			folderPackToDisk		(const vcs nameFileDst, const vcs nameFolderSrc);
+	error_t			folderUnpackToDisk		(const vcs namePathDst, const vcs nameFileSrc);
 
-	::llc::error_t			crcGenerate				(const ::llc::vcu0_t & bytes, uint64_t & crc);
-	::llc::error_t			crcVerifyAndRemove		(::llc::au0_t & bytes);
-	::llc::error_t			crcGenerateAndAppend	(::llc::au0_t & bytes);
+	error_t			crcGenerate				(const vcu0_t & bytes, uint64_t & crc);
+	error_t			crcVerifyAndRemove		(au0_t & bytes);
+	error_t			crcGenerateAndAppend	(au0_t & bytes);
 
 	struct SLoadCache {
-		::llc::au0_t				Deflated;
-		::llc::au0_t				Encrypted;
+		au0_t				Deflated;
+		au0_t				Encrypted;
 	};
 
-	::llc::error_t			inflateToMemory  	(::llc::au0_t & tempCache, const ::llc::vcc & fileName, ::llc::au0_t & output);
-	::llc::error_t			deflateFromMemory	(::llc::au0_t & tempCache, const ::llc::vcc & fileName, const ::llc::vcu0_t & input);
+	error_t			inflateToMemory  	(au0_t & tempCache, vcsc_c & fileName, au0_t & output);
+	error_t			deflateFromMemory	(au0_t & tempCache, vcsc_c & fileName, const vcu0_t & input);
+	stin	error_t	inflateToMemory			(vcsc_c & fileName, au0_t & input)			{ au0_t temp; return inflateToMemory  (temp, fileName, input); }
+	stin	error_t	deflateFromMemory		(vcsc_c & fileName, const vcu0_t & input)	{ au0_t temp; return deflateFromMemory(temp, fileName, input); }
 
-	stin	::llc::error_t	inflateToMemory			(const ::llc::vcc & fileName, ::llc::au0_t & input)			{ ::llc::au0_t temp; return ::llc::inflateToMemory  (temp, fileName, input); }
-	stin	::llc::error_t	deflateFromMemory		(const ::llc::vcc & fileName, const ::llc::vcu0_t & input)	{ ::llc::au0_t temp; return ::llc::deflateFromMemory(temp, fileName, input); }
+	error_t			fileToMemorySecure		(SLoadCache & recycle, vcsc_c & fileName, const vcu0_t & key, const bool deflate, au0_t & output);
+	error_t			fileFromMemorySecure	(SLoadCache & recycle, vcsc_c & fileName, const vcu0_t & key, const bool deflate, const vcu0_t & input);
+	stin	error_t	fileToMemorySecure		(SLoadCache & recycle, vcsc_c & fileName, const vcu0_t & key, const bool deflate, asc_t & output)		{ return fileToMemorySecure  (recycle, fileName, key, deflate, *(au0_t*)&output); }
 
-	::llc::error_t			fileToMemorySecure		(::llc::SLoadCache & recycle, const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::au0_t & output);
-	::llc::error_t			fileFromMemorySecure	(::llc::SLoadCache & recycle, const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, const ::llc::vcu0_t & input);
-	stin	::llc::error_t	fileToMemorySecure		(::llc::SLoadCache & recycle, const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::asc_t & output)		{ return ::llc::fileToMemorySecure  (recycle, fileName, key, deflate, *(::llc::au0_t*)&output); }
-
-	stin	::llc::error_t	fileToMemorySecure		(const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::asc_t & output)		{ ::llc::SLoadCache temp; return ::llc::fileToMemorySecure  (temp, fileName, key, deflate, *(::llc::au0_t*)&output); }
-	stin	::llc::error_t	fileToMemorySecure		(const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::au0_t & output)			{ ::llc::SLoadCache temp; return ::llc::fileToMemorySecure  (temp, fileName, key, deflate, output); }
-	stin	::llc::error_t	fileFromMemorySecure	(const ::llc::vcc & fileName, const ::llc::vcu0_t & key, const bool deflate, const ::llc::vcu0_t & input)	{ ::llc::SLoadCache temp; return ::llc::fileFromMemorySecure(temp, fileName, key, deflate, input); }
+	stin	error_t	fileToMemorySecure		(vcsc_c & fileName, const vcu0_t & key, const bool deflate, asc_t & output)		{ SLoadCache temp; return fileToMemorySecure  (temp, fileName, key, deflate, *(au0_t*)&output); }
+	stin	error_t	fileToMemorySecure		(vcsc_c & fileName, const vcu0_t & key, const bool deflate, au0_t & output)			{ SLoadCache temp; return fileToMemorySecure  (temp, fileName, key, deflate, output); }
+	stin	error_t	fileFromMemorySecure	(vcsc_c & fileName, const vcu0_t & key, const bool deflate, const vcu0_t & input)	{ SLoadCache temp; return fileFromMemorySecure(temp, fileName, key, deflate, input); }
 } // namespace
 
 #endif // LLC_DEFLATE_H_23627
