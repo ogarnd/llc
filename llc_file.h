@@ -5,22 +5,22 @@
 
 namespace llc
 {
-	::llc::error_t			with			(vcs filepath, vcs mode, const ::llc::function<::llc::err_t(FILE*&)> & funcFile);	// 
+	err_t			with			(vcs filepath, vcs mode, const ::llc::function<::llc::err_t(FILE*&)> & funcFile);	// 
 
-	::llc::error_t			fileJoin		(::llc::vcs fileNameDst);								// Joins a file split into file.split.## parts.
-	::llc::error_t			fileSplit		(::llc::vcs fileNameSrc, u2_c partSize);		// Splits a file into file.split.## parts.
-	int64_t					fileSize		(::llc::vcs fileName);
-	::llc::error_t			fileDelete		(::llc::vcs fileName);
+	err_t			fileJoin		(::llc::vcs fileNameDst);								// Joins a file split into file.split.## parts.
+	err_t			fileSplit		(::llc::vcs fileNameSrc, u2_c partSize);		// Splits a file into file.split.## parts.
+	s3_t			fileSize		(::llc::vcs fileName);
+	err_t			fileDelete		(::llc::vcs fileName);
 
-	::llc::error_t			fileFromMemory	(::llc::vcs fileName, const ::llc::vcu0_t & fileInMemory, bool append = false);
-	::llc::error_t			fileToMemory	(::llc::vcs fileName, ::llc::au0_t & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0);
-	::llc::error_t			fileToMemory	(::llc::vcs folderPath, ::llc::vcs fileName, ::llc::au0_t & fileBytes, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0);
-	::llc::error_t			fileFromMemory	(::llc::vcs folderPath, ::llc::vcs fileName, const ::llc::vcu0_t & fileInMemory, bool append = false);
+	err_t			fileFromMemory	(::llc::vcs fileName, vcu0_c & fileInMemory, bool append = false);
+	err_t			fileToMemory	(::llc::vcs fileName, ::llc::au0_t & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0);
+	err_t			fileToMemory	(::llc::vcs folderPath, ::llc::vcs fileName, ::llc::au0_t & fileBytes, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0);
+	err_t			fileFromMemory	(::llc::vcs folderPath, ::llc::vcs fileName, vcu0_c & fileInMemory, bool append = false);
 
-	stin	::llc::error_t	fileToMemory	(::llc::vcs fileName, ::llc::as0_t & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0)	{ return ::llc::fileToMemory	(fileName, *(::llc::au0_t*)&fileInMemory, maxSize, offset); }
-	stin	::llc::error_t	fileToMemory	(::llc::vcs fileName, ::llc::asc_t  & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0)	{ return ::llc::fileToMemory	(fileName, *(::llc::au0_t*)&fileInMemory, maxSize, offset); }
-	stin	::llc::error_t	fileFromMemory	(::llc::vcs fileName, const ::llc::vcs0_t & fileInMemory, bool append = false)						{ return ::llc::fileFromMemory	(fileName, *(const ::llc::vcu0_t*)&fileInMemory, append); }
-	stin	::llc::error_t	fileFromMemory	(::llc::vcs fileName, ::llc::vcsc_c  & fileInMemory, bool append = false)						{ return ::llc::fileFromMemory	(fileName, *(const ::llc::vcu0_t*)&fileInMemory, append); }
+	stin	err_t	fileToMemory	(::llc::vcs fileName, ::llc::as0_t & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0)	{ return ::llc::fileToMemory	(fileName, *(::llc::au0_t*)&fileInMemory, maxSize, offset); }
+	stin	err_t	fileToMemory	(::llc::vcs fileName, ::llc::asc_t  & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0)	{ return ::llc::fileToMemory	(fileName, *(::llc::au0_t*)&fileInMemory, maxSize, offset); }
+	stin	err_t	fileFromMemory	(::llc::vcs fileName, vcs0_c & fileInMemory, bool append = false)						{ return ::llc::fileFromMemory	(fileName, *(vcu0_c*)&fileInMemory, append); }
+	stin	err_t	fileFromMemory	(::llc::vcs fileName, ::llc::vcsc_c  & fileInMemory, bool append = false)						{ return ::llc::fileFromMemory	(fileName, *(vcu0_c*)&fileInMemory, append); }
 
 	GDEFINE_ENUM_TYPE(OPEN_MODE, i2u_t);
 	GDEFINE_ENUM_VALUE(OPEN_MODE, CLOSE		, 0);												

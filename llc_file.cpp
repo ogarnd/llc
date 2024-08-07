@@ -198,7 +198,7 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, u2_c sizePartMa
 	return result;
 }
 
-::llc::error_t			llc::fileFromMemory			(vcs usfileName, const ::llc::vcu0_t & fileInMemory, bool append)	{
+::llc::error_t			llc::fileFromMemory			(vcs usfileName, vcu0_c & fileInMemory, bool append)	{
 	const ::llc::asc_t			fileName					= ::llc::toString(usfileName);
 #ifdef LLC_DEBUG_FILE_CONTENTS
 	llc_file_info_printf("%s '%s':\n%s\n", append ? "Appending to" : "Writing", fileName.begin(), fileInMemory.size() ? fileInMemory.begin() : (const uint8_t*)"");
@@ -246,7 +246,7 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, u2_c sizePartMa
 	llc_necall(llc::fileToMemory({filePath}, fileBytes, maxSize, offset), "folderPath: '%s', fileName: '%s'.", folderPath.begin(), fileName.begin());
 	return 0;
 }
-::llc::error_t			llc::fileFromMemory	(vcs folderPath, vcs fileName, const ::llc::vcu0_t & fileInMemory, bool append) {
+::llc::error_t			llc::fileFromMemory	(vcs folderPath, vcs fileName, vcu0_c & fileInMemory, bool append) {
 	::llc::asc_t			filePath			= {}; 
 	llc_necall(llc::pathNameCompose(folderPath, fileName, filePath), "folderPath: '%s', fileName: '%s'.", folderPath.begin(), fileName.begin());
 	llc_necall(llc::fileFromMemory({filePath}, fileInMemory, append), "folderPath: '%s', fileName: '%s', append: %s.", folderPath.begin(), fileName.begin(), ::llc::bool2char(append));

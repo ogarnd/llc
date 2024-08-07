@@ -413,7 +413,7 @@ void											llc::aesCTRXCryptBuffer				(::llc::SAESContext* ctx, uint8_t * bu
 	}
 }
 
-::llc::error_t			llc::aesEncode			(const ::llc::vcu0_t & messageToEncrypt, const ::llc::vcu0_t & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputEncrypted)	{
+::llc::error_t			llc::aesEncode			(vcu0_c & messageToEncrypt, vcu0_c & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputEncrypted)	{
 	uint8_t													iv		[::llc::AES_SIZEIV]				= {};
 	const double											fraction								= (1.0 / (65535>>1)) * 255.0;
 	for(uint32_t iVal = 0; iVal < ::llc::AES_SIZEIV; ++iVal)
@@ -425,11 +425,11 @@ void											llc::aesCTRXCryptBuffer				(::llc::SAESContext* ctx, uint8_t * bu
 	return 0;
 }
 
-::llc::error_t			llc::aesDecode			(const ::llc::vcu0_t & messageEncrypted, const ::llc::vcu0_t & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputDecrypted)	{
+::llc::error_t			llc::aesDecode			(vcu0_c & messageEncrypted, vcu0_c & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputDecrypted)	{
 	return ::llc::aesDecode({messageEncrypted.begin(), messageEncrypted.size() - ::llc::AES_SIZEIV}, {&messageEncrypted[messageEncrypted.size() - ::llc::AES_SIZEIV], ::llc::AES_SIZEIV}, encryptionKey, level, outputDecrypted);
 }
 
-::llc::error_t			llc::aesEncode		(const ::llc::vcu0_t & messageToEncrypt, const ::llc::vcu0_t & iv, const ::llc::vcu0_t & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputEncrypted) {
+::llc::error_t			llc::aesEncode		(vcu0_c & messageToEncrypt, vcu0_c & iv, vcu0_c & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputEncrypted) {
 	ree_if(0 == messageToEncrypt.size(), "Cannot encode empty message at address %p.", messageToEncrypt);
 	ree_if(encryptionKey.size() != 32, "Invalid key length! Key must be exactly 32 bytes long. Key size: %" LLC_FMT_U2 ".", encryptionKey.size());
 	int8_t													excedent								= messageToEncrypt.size() % ::llc::AES_SIZEBLOCK;
@@ -446,7 +446,7 @@ void											llc::aesCTRXCryptBuffer				(::llc::SAESContext* ctx, uint8_t * bu
 	return 0;
 }
 
-::llc::error_t			llc::aesDecode		(const ::llc::vcu0_t & messageEncrypted, const ::llc::vcu0_t & iv, const ::llc::vcu0_t & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputDecrypted) {
+::llc::error_t			llc::aesDecode		(vcu0_c & messageEncrypted, vcu0_c & iv, vcu0_c & encryptionKey, ::llc::AES_LEVEL level, ::llc::au0_t & outputDecrypted) {
 	ree_if(0 == messageEncrypted.size(), "Cannot encode empty message at address %p.", messageEncrypted.begin());
 	ree_if(messageEncrypted.size() % ::llc::AES_SIZEBLOCK, "Invalid data length: %" LLC_FMT_U2 ".", messageEncrypted.size());
 	ree_if(encryptionKey.size() != 32, "Invalid key length! Key must be exactly 32 bytes long. Key size: %" LLC_FMT_U2 ".", encryptionKey.size());

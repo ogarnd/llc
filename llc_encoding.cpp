@@ -15,7 +15,7 @@
 stxp const char HEX_DIGITS_UPPER	[]	= "0123456789ABCDEF";
 stxp const char HEX_DIGITS_LOWER	[]	= "0123456789abcdef";
 
-::llc::error_t			llc::saltDataSalt				(const ::llc::vcu0_t & binary, ::llc::au0_t & salted)				{
+::llc::error_t			llc::saltDataSalt				(vcu0_c & binary, ::llc::au0_t & salted)				{
 	llc_necs(salted.resize(binary.size() * 2));
 	uint8_t						* pSalted						= salted.begin();
 	const uint8_t				* pBinary						= binary.begin();
@@ -26,7 +26,7 @@ stxp const char HEX_DIGITS_LOWER	[]	= "0123456789abcdef";
 	return 0;
 }
 
-::llc::error_t			llc::saltDataUnsalt				(const ::llc::vcu0_t & salted, ::llc::au0_t & binary)				{
+::llc::error_t			llc::saltDataUnsalt				(vcu0_c & salted, ::llc::au0_t & binary)				{
 	llc_necs(binary.resize(salted.size() / 2));
 	const uint8_t				* pSalted						= salted.begin();
 	uint8_t						* pBinary						= binary.begin();
@@ -53,7 +53,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::hexEncode					(const ::llc::vcu0_t & in_binary, ::llc::asc_t & out_hexed	)	{
+::llc::error_t			llc::hexEncode					(vcu0_c & in_binary, ::llc::asc_t & out_hexed	)	{
 	uint32_t					offset							= out_hexed.size();
 	llc_necs(out_hexed.resize(offset + in_binary.size() * 2));
 	char						* pHexed						= out_hexed.begin();
@@ -85,7 +85,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::ardellEncode				(as2_t & cache, const ::llc::vcu0_t & input, uint64_t key, bool salt, ::llc::au0_t & output)						{
+::llc::error_t			llc::ardellEncode				(as2_t & cache, vcu0_c & input, uint64_t key, bool salt, ::llc::au0_t & output)						{
 	// Originally written by Gary Ardell as Visual Basic code. free from all copyright restrictions.
 	char						saltValue		[4]				= {};
 	if (salt)
@@ -127,7 +127,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::ardellDecode				(::llc::as2_t & cache, const ::llc::vcu0_t & input, uint64_t key, bool salt, ::llc::au0_t & output)		{
+::llc::error_t			llc::ardellDecode				(::llc::as2_t & cache, vcu0_c & input, uint64_t key, bool salt, ::llc::au0_t & output)		{
 	// Originally written by Gary Ardell as Visual Basic code. free from all copyright restrictions.
 	const int32_t				keyFinal[8]						=
 		{ (int32_t)(11 + (key % 233))
@@ -183,7 +183,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::digest				(const ::llc::vcu0_t & input, ::llc::au2_t & digest)		{
+::llc::error_t			llc::digest				(vcu0_c & input, ::llc::au2_t & digest)		{
 	uint32_t					x								= 0;
 	::llc::au2_t					filtered						= {};
 	for(uint32_t i = 0; i < input.size() - 8; ++i) {
@@ -218,7 +218,7 @@ static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	return 0;
 }
 
-::llc::error_t			llc::digest									(const ::llc::vcu0_t & input, ::llc::asc_t & digest)		{
+::llc::error_t			llc::digest									(vcu0_c & input, ::llc::asc_t & digest)		{
 	uint32_t					x								= 0;
 	::llc::au2_t					filtered						= {};
 	for(uint32_t i = 0; i < input.size() - 8; ++i) {

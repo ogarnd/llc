@@ -22,7 +22,7 @@ LLC_USING_TYPEINT();
 
 stxp	u2_c	LLC_CRC_CRC_SEED			= 18973;
 
-::llc::error_t			llc::crcGenerate			(const ::llc::vcu0_t & bytes, uint64_t & crc)	{
+::llc::error_t			llc::crcGenerate			(vcu0_c & bytes, uint64_t & crc)	{
 	crc						= 0;
 	u2_c				lastPos						= bytes.size() - 1;
 	for(uint32_t i=0; i < bytes.size(); ++i) {
@@ -50,7 +50,7 @@ stxp	u2_c	LLC_CRC_CRC_SEED			= 18973;
 	return 0;
 }
 
-::llc::error_t			llc::arrayDeflate		(const ::llc::vcu0_t & inflated, ::llc::au0_t & deflated, u2_c chunkSize)	{
+::llc::error_t			llc::arrayDeflate		(vcu0_c & inflated, ::llc::au0_t & deflated, u2_c chunkSize)	{
 #if defined(LLC_ESP32) || defined(LLC_ARDUINO)
 #	ifdef LLC_ESP32
 	deflated				= inflated;
@@ -87,7 +87,7 @@ stxp	u2_c	LLC_CRC_CRC_SEED			= 18973;
 	return 0;
 }
 
-::llc::error_t			llc::arrayInflate		(const ::llc::vcu0_t & deflated, ::llc::au0_t & inflated, u2_c chunkSize)	{
+::llc::error_t			llc::arrayInflate		(vcu0_c & deflated, ::llc::au0_t & inflated, u2_c chunkSize)	{
 #if defined(LLC_ESP32) || defined(LLC_ARDUINO)
 #	ifdef LLC_ESP32
 	inflated				= deflated;
@@ -181,7 +181,7 @@ stxp	uint32_t		DEFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 }
 
 stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
-::llc::error_t			llc::folderUnpack			(::llc::SFolderInMemory & output, const ::llc::vcu0_t & rawFileInMemory)		{
+::llc::error_t			llc::folderUnpack			(::llc::SFolderInMemory & output, vcu0_c & rawFileInMemory)		{
 	const ::llc::SPackHeader	& header					= *(::llc::SPackHeader*)&rawFileInMemory[0];
 	output.Names	.resize(header.TotalFileCount);
 	output.Contents	.resize(header.TotalFileCount);
@@ -248,7 +248,7 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	for(uint32_t iFile = 0, countFiles = virtualFolder.Names.size(); iFile < countFiles; ++iFile) {
 		llc_safe_fclose(fp);
 		const ::llc::vcs			& fileName					= virtualFolder.Names		[iFile];
-		const ::llc::vcu0_t			& fileContent				= virtualFolder.Contents	[iFile];
+		vcu0_c			& fileContent				= virtualFolder.Contents	[iFile];
 		sprintf_s(bufferFormat, "%%.%us%%.%us", destinationPath.size(), fileName.size());
 		snprintf(finalPathName.begin(), finalPathName.size(), bufferFormat, destinationPath.begin(), fileName.begin());
 		info_printf("File found (%u):'%s'. Size: %u.", iFile, finalPathName.begin(), fileContent.size());
@@ -291,7 +291,7 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	return 0; 
 }
 
-::llc::error_t			llc::deflateFromMemory		(::llc::au0_t & tempCache, ::llc::vcsc_c & fileName, const ::llc::vcu0_t & input) {
+::llc::error_t			llc::deflateFromMemory		(::llc::au0_t & tempCache, ::llc::vcsc_c & fileName, vcu0_c & input) {
 	info_printf("Input size: %u.", input.size());
 	llc_necs(llc::arrayDeflate(input, tempCache));
 
@@ -299,7 +299,7 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	return ::llc::fileFromMemory(fileName, tempCache);
 }
 
-::llc::error_t			llc::fileFromMemorySecure	(::llc::SLoadCache & recycle, ::llc::vcsc_c & fileName, const ::llc::vcu0_t & key, const bool deflate, const ::llc::vcu0_t & blockBytes) {
+::llc::error_t			llc::fileFromMemorySecure	(::llc::SLoadCache & recycle, ::llc::vcsc_c & fileName, vcu0_c & key, const bool deflate, vcu0_c & blockBytes) {
 	if(false == deflate && 0 == key.size())
 		recycle.Encrypted		= blockBytes;
 	else {
@@ -317,7 +317,7 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	return 0;
 }
 
-::llc::error_t			llc::fileToMemorySecure		(::llc::SLoadCache & recycle, ::llc::vcsc_c & fileName, const ::llc::vcu0_t & key, const bool deflate, ::llc::au0_t & loadedBytes)								{
+::llc::error_t			llc::fileToMemorySecure		(::llc::SLoadCache & recycle, ::llc::vcsc_c & fileName, vcu0_c & key, const bool deflate, ::llc::au0_t & loadedBytes)								{
 	::llc::vcs					strFilename					= {fileName.begin(), fileName.size()};
 	if(false == deflate && 0 == key.size()) {
 		llc_necall(llc::fileToMemory(strFilename, loadedBytes), "Failed to read file: %s.", ::llc::toString(fileName).begin());

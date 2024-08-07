@@ -346,7 +346,7 @@ namespace llc
 
 	tydf ::llc::SKeyVal<::llc::vcs, ::llc::aobj<::llc::vcs>>	TKeyValConstStringArray;
 	//------------------------------------------------------------------------------------------------------------
-	::llc::error_t							keyValConstStringDeserialize	(const ::llc::vcu0_t & input, ::llc::aobj<::llc::TKeyValConstChar> & output);
+	::llc::error_t							keyValConstStringDeserialize	(vcu0_c & input, ::llc::aobj<::llc::TKeyValConstChar> & output);
 
 	::llc::error_t							filterPrefix					(::llc::view<::llc::vcsc_c> input, ::llc::vcsc_c prefix, ::llc::aobj<::llc::vcsc_t> & filtered, bool nullIncluded = false);
 	::llc::error_t							filterPostfix					(::llc::view<::llc::vcsc_c> input, ::llc::vcsc_c prefix, ::llc::aobj<::llc::vcsc_t> & filtered, bool nullIncluded = false);

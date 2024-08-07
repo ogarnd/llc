@@ -81,7 +81,7 @@
 	return 0;
 }
 
-::llc::error_t			llc::keyValConstStringDeserialize	(const ::llc::vcu0_t & input, ::llc::aobj<::llc::TKeyValConstString> & output)	{
+::llc::error_t			llc::keyValConstStringDeserialize	(vcu0_c & input, ::llc::aobj<::llc::TKeyValConstString> & output)	{
 	uint32_t					offset								= 0;
 	u2_c				keysToRead							= *(u2_c*)input.begin();
 	offset					+= (uint32_t)szof(uint32_t);
