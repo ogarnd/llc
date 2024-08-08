@@ -279,15 +279,15 @@ namespace llc
 	tdcs	vstr_t				vstr_c;
 	tdcs	vcst_t				vcst_c;
 
-	stin			llc::vcs	str				(cnst llc::vcs & arg)	{ rtrn arg; } 
-	stin			llc::vcs	str				(cnst llc::vs & arg)	{ rtrn arg.cc(); } 
+	stin			llc::vcst_t	str				(cnst llc::vcst_t & arg)	{ rtrn arg; } 
+	stin			llc::vcst_t	str				(cnst llc::vs & arg)	{ rtrn arg.cc(); } 
 	// 
-	tplTnsix		::llc::vcs	get_type_namev	()							nxpt	{ rtrn LLC_CXS("unknown"); }
+	tplTnsix		::llc::vcst_t	get_type_namev	()							nxpt	{ rtrn LLC_CXS("unknown"); }
 	tplTnsix		sc_c*		get_type_namep	()							nxpt	{ rtrn get_type_namev<T>().begin(); }
 
 #define GDEFINE_TYPE_NAME_STR(typeIdentifier)																													\
-			nsix	::llc::vcs		get_type_namev					(typeIdentifier &)	nxpt	{ rtrn LLC_CXS(#typeIdentifier); }					\
-	tplt<>	ndix	::llc::vcs		get_type_namev<typeIdentifier>	()					nxpt	{ rtrn LLC_CXS(#typeIdentifier); }					\
+			nsix	::llc::vcst_t		get_type_namev					(typeIdentifier &)	nxpt	{ rtrn LLC_CXS(#typeIdentifier); }					\
+	tplt<>	ndix	::llc::vcst_t		get_type_namev<typeIdentifier>	()					nxpt	{ rtrn LLC_CXS(#typeIdentifier); }					\
 			nsix	::llc::sc_c*	get_type_namep					(typeIdentifier &)	nxpt	{ rtrn get_type_namev<typeIdentifier>().begin(); }	\
 	tplt<>	ndix	::llc::sc_c*	get_type_namep<typeIdentifier>	()					nxpt	{ rtrn get_type_namev<typeIdentifier>().begin(); }	
 	//GDEFINE_TYPE_NAME_STR(uc_t);
@@ -316,9 +316,9 @@ namespace llc
 	GDEFINE_TYPE_NAME_STR(f3_c);
 	// 
 	tydf	view<::llc::vs		>	vvs;
-	tydf	view<::llc::vcs		>	vvcs;
+	tydf	view<::llc::vcst_t		>	vvcs;
 	tydf	view<cnst ::llc::vs	>	vcvs;
-	tydf	view<cnst ::llc::vcs	>	vcvcs;
+	tydf	view<cnst ::llc::vcst_t	>	vcvcs;
 
 	stxp	::llc::vcsc_t		TRIM_CHARACTERS		= " \t\b\n\r";
 
@@ -404,8 +404,8 @@ namespace llc
 		rtrn -1;
 	}
 
-	stin	err_t			find_string				(cnst ::llc::vcs & toFind, cnst ::llc::vcsc_t & target, u2_t offset = 0) { rtrn ::llc::find_sequence_pod (toFind, target, offset); }
-	stin	err_t			rfind_string			(cnst ::llc::vcs & toFind, cnst ::llc::vcsc_t & target, u2_t offset = 0) { rtrn ::llc::rfind_sequence_pod(toFind, target, offset); }
+	stin	err_t			find_string				(cnst ::llc::vcst_t & toFind, cnst ::llc::vcsc_t & target, u2_t offset = 0) { rtrn ::llc::find_sequence_pod (toFind, target, offset); }
+	stin	err_t			rfind_string			(cnst ::llc::vcst_t & toFind, cnst ::llc::vcsc_t & target, u2_t offset = 0) { rtrn ::llc::rfind_sequence_pod(toFind, target, offset); }
 
 	tplT	err_t					split					(cnst T & valueToFind, cnst ::llc::view<T> & original, ::llc::view<T> & left, ::llc::view<T> & right) {
 		cnst err_t				iValue					= ::llc::find(valueToFind, original);

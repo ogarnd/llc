@@ -4,7 +4,7 @@
 #include "llc_json.h"
 #include "llc_windows.h"
 
-::llc::error_t			llc::tcpipAddress		(::llc::vcs strIP, uint32_t & address, uint16_t & port) {
+::llc::error_t			llc::tcpipAddress		(::llc::vcst_t strIP, uint32_t & address, uint16_t & port) {
 	uint32_t					iOffset					= ::llc::tcpipAddress(strIP, address);
 	return (iOffset < strIP.size())
 		? iOffset + ::llc::parseIntegerDecimal({&strIP[iOffset], strIP.size() - iOffset}, port)
@@ -12,7 +12,7 @@
 		;
 }
 
-::llc::error_t			jsonTcpipAddress		(llc::vcs strIP, uint32_t & ipv4) {
+::llc::error_t			jsonTcpipAddress		(llc::vcst_t strIP, uint32_t & ipv4) {
 	::llc::SJSONReader			reader					= {};
 	llc_necall(llc::jsonParse(reader, strIP), "Failed to parse ip from string: '%s'.", ::llc::toString(strIP).begin());
 	ipv4					= 0;
@@ -23,7 +23,7 @@
 	return 0;
 }
 
-::llc::error_t			llc::tcpipAddress		(llc::vcs strIP, uint32_t & ipv4)	{
+::llc::error_t			llc::tcpipAddress		(llc::vcst_t strIP, uint32_t & ipv4)	{
 	ipv4					= 0;
 	::llc::ltrim(strIP);
 	if(0 == strIP.size()) 
@@ -57,7 +57,7 @@
 	return iOffset;
 }
 
-::llc::error_t			llc::tcpipAddress		(::llc::vcs strIP, ::llc::vcs strPort, ::llc::SIPv4End & ipv4) {
+::llc::error_t			llc::tcpipAddress		(::llc::vcst_t strIP, ::llc::vcst_t strPort, ::llc::SIPv4End & ipv4) {
 	if(0 == strPort.size()) 
 		return ::llc::tcpipAddress(strIP, ipv4.IP, ipv4.Port);
 
@@ -192,7 +192,7 @@
 	return 0;
 }
 
-::llc::error_t		llc::tcpipAddress		(::llc::vcs hostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4, uint16_t* port) { 
+::llc::error_t		llc::tcpipAddress		(::llc::vcst_t hostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4, uint16_t* port) { 
 	return ::llc::tcpipAddress(::llc::toString(hostName).begin(), portRequested, adapterIndex, mode, a1, a2, a3, a4, port); 
 }
 
@@ -207,7 +207,7 @@
 	hints.ai_protocol		= (TRANSPORT_PROTOCOL_TCP == mode) ? IPPROTO_TCP	: IPPROTO_UDP	;
 
 	const ::addrinfo			* createdAddrInfo								= 0;
-	ree_if(errored(::getaddrinfo(szHostName, portString, &hints, (::addrinfo**)&createdAddrInfo)), "gettaddrinfo failed for host_name: %s, port: %s", szHostName, portString);
+	if_fail_vef(-1, ::getaddrinfo(szHostName, portString, &hints, (::addrinfo**)&createdAddrInfo), "gettaddrinfo failed for host_name: %s, port: %s", szHostName, portString);
 	//sockaddr_in6									* sockaddr_ipv6									= 0;
 
 	uint32_t					iAddress										= 0;

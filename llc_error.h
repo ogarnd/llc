@@ -130,18 +130,14 @@ namespace llc
 #ifndef if_not_fail
 #	define	if_not_fail(errVal)	if_not(::llc::failed(errVal))
 #endif
-#ifndef errored
-#	define	errored(errVal)		::llc::failed(errVal)
-#endif
-#ifndef not_errored
-#	define	not_errored(errVal)	not(false == ::llc::failed(errVal))
-#endif
 #ifndef if_failed
 #	define	if_failed			if_fail
 #endif
-
+#ifndef if_not_failed
+#	define	if_not_failed		if_not_fail
+#endif
 #ifndef if_sccs
-#	define	if_sccs(errVal)	if_not(::llc::failed(errVal))
+#	define	if_sccs(errVal)	if_not_failed(errVal)
 #endif
 
 #ifdef LLC_ESP32

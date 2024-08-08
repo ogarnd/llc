@@ -26,26 +26,26 @@
 	return sprintfable;
 }
 
-::llc::error_t			llc::token_split		(char token, const ::llc::vcs & input_string, TKeyValConstChar & output_views)	{
+::llc::error_t			llc::token_split		(char token, const ::llc::vcst_t & input_string, TKeyValConstChar & output_views)	{
 	int32_t						indexToken;
 	llc_necall(indexToken = ::llc::find(token, input_string), "'%c' not found.", token);
 	output_views.Key		= {input_string.begin(), (uint32_t)indexToken};
 	output_views.Val		= (uint32_t(indexToken + 1) < input_string.size())
-		? ::llc::vcs{&input_string[indexToken + 1U], input_string.size() - (indexToken + 1U)}
-		: ::llc::vcs{}	// empty view if there's no data after the separator.
+		? ::llc::vcst_t{&input_string[indexToken + 1U], input_string.size() - (indexToken + 1U)}
+		: ::llc::vcst_t{}	// empty view if there's no data after the separator.
 		;
 	::llc::trim(output_views.Key, output_views.Key);
 	::llc::trim(output_views.Val, output_views.Val);
 	return 0;
 }
 
-::llc::error_t			llc::find				(const ::llc::vcs & keyToFind, const ::llc::view<const ::llc::TKeyValConstString> & keyvals, ::llc::vcsc_t & out_val)		{
+::llc::error_t			llc::find				(const ::llc::vcst_t & keyToFind, const ::llc::view<const ::llc::TKeyValConstString> & keyvals, ::llc::vcsc_t & out_val)		{
 	::llc::error_t				index					= ::llc::find(keyToFind, keyvals);
-	out_val					= (-1 == index) ? ::llc::vcs{} : keyvals[index].Val;
+	out_val					= (-1 == index) ? ::llc::vcst_t{} : keyvals[index].Val;
 	return index;
 }
 
-::llc::error_t			llc::keyvalNumeric		(const ::llc::vcs & key, const ::llc::view<const ::llc::TKeyValConstString> keyVals, uint64_t * outputNumber)	{
+::llc::error_t			llc::keyvalNumeric		(const ::llc::vcst_t & key, const ::llc::view<const ::llc::TKeyValConstString> keyVals, uint64_t * outputNumber)	{
 	ree_if(0 == outputNumber, "%s", "Output number cannot point to a null address.");
 	::llc::error_t				indexKey				= ::llc::find(key, keyVals);
 	if(-1 != indexKey)

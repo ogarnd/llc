@@ -59,7 +59,7 @@ namespace llc
 	tplTN2usng	asttc		= ::llc::array_static<T, N>;
 	tplTN2usng	astatic		= ::llc::array_static<T, N>;
 
-	tplN2uusng	astvcs		= ::llc::astatic<::llc::vcs	, N>;	tplN2uusng astaticvcs	= ::llc::astvcs	<N>;
+	tplN2uusng	astvcs		= ::llc::astatic<::llc::vcst_t	, N>;	tplN2uusng astaticvcs	= ::llc::astvcs	<N>;
 	tplN2uusng	astvs		= ::llc::astatic<::llc::vs	, N>;	tplN2uusng astaticvs	= ::llc::astvs	<N>;
 
 	tplN2uusng	astuc_t		= ::llc::astatic<uc_t, N>; tplN2uusng astuc 	= ::llc::astatic<uc_t, N>; tplN2uusng astaticuc 	= ::llc::astuc 	<N>; tplN2uusng astuchar	= ::llc::astatic<uc_t, N>;

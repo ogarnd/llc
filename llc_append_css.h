@@ -6,7 +6,7 @@
 
 namespace llc
 {
-	tpl_vtArgs	err_t	appendCSSTag							(::llc::asc_t & output, llc::vcs tagName, _tArgs&&... cssAttributes)					{ return llc::append_strings(output, tagName, '{', cssAttributes..., '}', '\n'); }	
+	tpl_vtArgs	err_t	appendCSSTag							(::llc::asc_t & output, llc::vcst_t tagName, _tArgs&&... cssAttributes)					{ return llc::append_strings(output, tagName, '{', cssAttributes..., '}', '\n'); }	
 				err_t	appendCSSBorderWidth					(::llc::asc_t & output, uint8_t borderWidth, bool absoluteSize = true);
 				err_t	appendCSSControlWidth					(::llc::asc_t & output, uint16_t outerLimit, bool absoluteSize = false);
 				err_t	appendCSSControlHeight					(::llc::asc_t & output, uint16_t outerLimit, bool absoluteSize = false);

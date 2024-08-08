@@ -21,7 +21,7 @@ llc::err_t	llc::appendHtmlStyles	(::llc::asc_t & output, llc::vcvcs filenames) {
 	}
 	return result;
 }
-llc::err_t	llc::appendHtmlHead	(::llc::asc_t & output, ::llc::vcs title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS) {
+llc::err_t	llc::appendHtmlHead	(::llc::asc_t & output, ::llc::vcst_t title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS) {
 	return ::llc::appendXmlTag(output, "head", vcs{}, [&output, title, filesCSS, filesJS]() { 
 		return ::llc::appendXmlTag		(output, "title", vcs{}, title)
 			+  ::llc::appendHtmlStyles	(output, filesCSS)
@@ -36,7 +36,7 @@ llc::err_t	llc::appendHtmlPage	(::llc::asc_t & output, const ::llc::FAppend & fu
 			;
 	});
 }
-llc::err_t	llc::appendHtmlPage	(::llc::asc_t & output, ::llc::vcs title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS, const ::llc::FAppend & funcAppendBody, ::llc::vcs postScript) {
+llc::err_t	llc::appendHtmlPage	(::llc::asc_t & output, ::llc::vcst_t title, ::llc::vcvcs filesCSS, ::llc::vcvcs filesJS, const ::llc::FAppend & funcAppendBody, ::llc::vcst_t postScript) {
 	return ::llc::appendXmlTag(output, "html", vcs{}, [&output, &title, &filesCSS, &filesJS, &funcAppendBody, &postScript]() {
 		return ::llc::appendHtmlHead(output, title, filesCSS, filesJS)
 			+  ::llc::appendXmlTag(output, "body", vcs{}, [&output, funcAppendBody]() { return funcAppendBody(output); })

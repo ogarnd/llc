@@ -10,23 +10,23 @@
 
 namespace llc
 {
-	//stxp	::llc::vcs				UNDEFINED_ENUM_TYPE_STR					= LLC_CXS("Undefined enumeration type.");
-	stxp	::llc::vcs				INVALID_ENUM_VALUE_STR		= LLC_CXS("INVALID");
-	stxp	::llc::vcs				UNDEFINED_ENUM_VALUE_STR	= LLC_CXS("Undefined enumeration value.");
-	stxp	::llc::vcs				UNRESOLVED_ENUM_LABEL_STR	= LLC_CXS("Unresolved enumeration value name.");
-	stxp	::llc::vcs				UNRESOLVED_ENUM_NAME_STR	= LLC_CXS("Enum definition name not set.");
+	//stxp	vcs				UNDEFINED_ENUM_TYPE_STR					= LLC_CXS("Undefined enumeration type.");
+	stxp	vcs				INVALID_ENUM_VALUE_STR		= LLC_CXS("INVALID");
+	stxp	vcs				UNDEFINED_ENUM_VALUE_STR	= LLC_CXS("Undefined enumeration value.");
+	stxp	vcs				UNRESOLVED_ENUM_LABEL_STR	= LLC_CXS("Unresolved enumeration value name.");
+	stxp	vcs				UNRESOLVED_ENUM_NAME_STR	= LLC_CXS("Enum definition name not set.");
 
 	// This tplt is intended to store the name of an enumeration, the values of such enumeration and a string representing each value.
 	// The implementation separates names from values for improving search speed by reducing the memory usage when performing searches for names/values.
-	tpl_t struct enum_definition {
+	tpl_tstct enum_definition {
 		tdfT(_t);
 		stxp	T					INVALID_VALUE			= (T)(-1);
 
 		::llc::vcsc_t					Name					= UNRESOLVED_ENUM_NAME_STR;
-		::llc::apod<T>				Values					= {};
-		::llc::avcc					Names					= {};
-		::llc::avcc					Titles					= {};
-		::llc::avcc					Descriptions			= {};
+		::llc::apod<T>					Values					= {};
+		::llc::avcsc_t					Names					= {};
+		::llc::avcsc_t					Titles					= {};
+		::llc::avcsc_t					Descriptions			= {};
 
 		stin	enum_definition<T>&	get				()											{
 			static	enum_definition<T>		valueRegistry;
@@ -236,7 +236,7 @@ namespace llc
 	};
 
 	tplt <tpnm TEnum, size_t nameLen>
-	TEnum						get_value			(const char (&valueLabel)[nameLen])		{ return ::llc::get_enum<TEnum>().get_value(::llc::vcs{valueLabel}); }
+	TEnum						get_value			(const char (&valueLabel)[nameLen])		{ return ::llc::get_enum<TEnum>().get_value(::llc::vcst_t{valueLabel}); }
 	tplt <tpnm TEnum>	TEnum	get_value			(::llc::vcsc_c & valueLabel)			{ return ::llc::get_enum<TEnum>().get_value(valueLabel); }
 
 	tplt <tpnm TEnum>	TEnum	get_value_camelcased(::llc::vcsc_c & uncased)			{

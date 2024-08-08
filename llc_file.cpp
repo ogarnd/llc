@@ -35,9 +35,9 @@ LLC_USING_TYPEINT();
 	return result;
 }
 
-stxp ::llc::vcs	LLC_OPEN_MODE_READ		= LLC_CXS("rb");
-stxp ::llc::vcs	LLC_OPEN_MODE_WRITE		= LLC_CXS("wb");
-stxp ::llc::vcs	LLC_OPEN_MODE_APPEND	= LLC_CXS("ab+");
+stxp ::llc::vcst_t	LLC_OPEN_MODE_READ		= LLC_CXS("rb");
+stxp ::llc::vcst_t	LLC_OPEN_MODE_WRITE		= LLC_CXS("wb");
+stxp ::llc::vcst_t	LLC_OPEN_MODE_APPEND	= LLC_CXS("ab+");
 
 #if defined(LLC_ESP32) || defined(ESP8266)
 stin	fs::FS&		getSoCFileSystem		()	{ return LLC_SOC_FILESYSTEM_INSTANCE; }
@@ -62,7 +62,7 @@ s3_t								llc::fileSize				(vcs fileName)								{
 }
 
 // This function is useful for splitting files smaller than 4gb very quick.
-static	::llc::error_t				fileSplitSmall				(::llc::vcs fileNameSrc, u2_c sizePartMax) {
+static	::llc::error_t				fileSplitSmall				(::llc::vcst_t fileNameSrc, u2_c sizePartMax) {
 	ree_if(0 == sizePartMax, "Invalid part size: %" LLC_FMT_U2 ".", fileNameSrc.begin(), sizePartMax);
 	::llc::apod<int8_t>						fileInMemory;
 	llc_necall(llc::fileToMemory(fileNameSrc, fileInMemory), "Failed to load '%s'.", fileNameSrc);
@@ -86,10 +86,10 @@ static	::llc::error_t				fileSplitSmall				(::llc::vcs fileNameSrc, u2_c sizePar
 }
 
 // This function is useful for splitting files smaller than 4gb very quick.
-static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, u2_c sizePartMax) {
+static	::llc::error_t	fileSplitLarge				(::llc::vcst_t fileNameSrc, u2_c sizePartMax) {
 	ree_if(0 == sizePartMax, "Invalid part size: %" LLC_FMT_U2 ".", fileNameSrc.begin(), sizePartMax);
-	s3_t						sizeFile					= ::llc::fileSize(fileNameSrc);
-	ree_if(errored(sizeFile), "Failed to open file %s.", fileNameSrc.begin());
+	s3_t						sizeFile;
+	if_fail_vef(-1, sizeFile = ::llc::fileSize(fileNameSrc), "Failed to open file %s.", fileNameSrc.begin());
 	FILE						* fp						= 0;
 	ree_if(0 == fp, "%s", "Files larger than 3gb still not supported.");
 	ree_if(0 != ::llc::fopen_s(&fp, {fileNameSrc}, LLC_OPEN_MODE_READ), "Failed to open '%s'.", fileNameSrc.begin());
@@ -177,7 +177,7 @@ static	::llc::error_t	fileSplitLarge				(::llc::vcs fileNameSrc, u2_c sizePartMa
 	u2_c				maxRead						= (uint32_t)min((s3_t)maxSize, fileSize - (s3_t)offset);
 	fail_if_ne3u(0, ::llc::fseek(fp, offset, FSEEK_SET));
 	::llc::error_t				result						= 0;
-	if (errored(fileInMemory.resize(maxRead))) {
+	if_failed(fileInMemory.resize(maxRead)) {
 		error_printf("File too large? : %llu.", (uint64_t)fileSize);
 		result					= -1;
 	}

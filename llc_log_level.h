@@ -594,7 +594,39 @@ namespace llc
 #define if_null_vef if_null_logf_and_return_value_error
 #define if_null_vwf if_null_logf_and_return_value_warning
 #define if_null_vif if_null_logf_and_return_value_info
-#define if_null_vvf if_null_logf_and_return_value_verbose //
+#define if_null_vvf if_null_logf_and_return_value_verbose 
+//
+#define if_true_ta	if_true_log_and_throw_always
+#define if_true_te	if_true_log_and_throw_error
+#define if_true_tw	if_true_log_and_throw_warning
+#define if_true_ti	if_true_log_and_throw_info
+#define if_true_tv	if_true_log_and_throw_verbose
+#define if_fail_ta	if_fail_log_and_throw_always
+#define if_fail_te	if_fail_log_and_throw_error
+#define if_fail_tw	if_fail_log_and_throw_warning
+#define if_fail_ti	if_fail_log_and_throw_info
+#define if_fail_tv	if_fail_log_and_throw_verbose
+#define if_zero_ta	if_zero_log_and_throw_always
+#define if_zero_te	if_zero_log_and_throw_error
+#define if_zero_tw	if_zero_log_and_throw_warning
+#define if_zero_ti	if_zero_log_and_throw_info
+#define if_zero_tv	if_zero_log_and_throw_verbose
+#define if_true_taf	if_true_logf_and_throw_always
+#define if_true_tef	if_true_logf_and_throw_error
+#define if_true_twf	if_true_logf_and_throw_warning
+#define if_true_tif	if_true_logf_and_throw_info
+#define if_true_tvf	if_true_logf_and_throw_verbose
+#define if_fail_taf	if_fail_logf_and_throw_always
+#define if_fail_tef	if_fail_logf_and_throw_error
+#define if_fail_twf	if_fail_logf_and_throw_warning
+#define if_fail_tif	if_fail_logf_and_throw_info
+#define if_fail_tvf	if_fail_logf_and_throw_verbose
+#define if_zero_taf	if_zero_logf_and_throw_always
+#define if_zero_tef	if_zero_logf_and_throw_error
+#define if_zero_twf	if_zero_logf_and_throw_warning
+#define if_zero_tif	if_zero_logf_and_throw_info
+#define if_zero_tvf	if_zero_logf_and_throw_verbose
+//
 #define a_if       if_true_a 
 #define e_if       if_true_e 
 #define w_if       if_true_w 

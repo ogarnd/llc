@@ -147,7 +147,7 @@ bool					llc::isSpaceCharacter						(const char characterToTest)		{
 ::llc::error_t			llc::stripLiteralGetViews		(::llc::aobj<::llc::vcsc_t> & out_views, const ::llc::view<const ::llc::SStripLiteralType> & in_resultOfParser, ::llc::vcsc_c & in_format)		{
 	for(u2_t iType = 0; iType < in_resultOfParser.size(); ++iType) {
 		const ::llc::SStripLiteralType					& type						= in_resultOfParser[iType];
-		::llc::vcs						view						= {};
+		::llc::vcst_t						view						= {};
 		u2_t										offsetView					= 0;
 		u2_t										lenView						= 0;
 		if(type.Type == ::llc::STRIP_LITERAL_TYPE_TOKEN) {

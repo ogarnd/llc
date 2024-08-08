@@ -43,13 +43,13 @@ static	::llc::error_t	hexFromByte		(uint8_t byteValue, char * hexed)												
 
 static	::llc::error_t	hexToByte		(const char* s, uint8_t & byte)															{
 	char						temp [3]		= {s[0], s[1]};
-	llc_necs(llc::parseIntegerHexadecimal(::llc::vcs{temp}, byte));
+	llc_necs(llc::parseIntegerHexadecimal(::llc::vcst_t{temp}, byte));
 	return 0;
 }
 
 static	::llc::error_t	hexToByte		(const char* s, int8_t & byte)															{
 	char						temp [3]		= {s[0], s[1]};
-	llc_necs(llc::parseIntegerHexadecimal(::llc::vcs{temp}, byte));
+	llc_necs(llc::parseIntegerHexadecimal(::llc::vcst_t{temp}, byte));
 	return 0;
 }
 

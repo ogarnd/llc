@@ -16,7 +16,7 @@ namespace llc
 	GDEFINE_ENUM_VALUE(AES_MODE, CTR, 2);
 
 #pragma pack(push, 1)
-	struct SAESLevelProperties {
+ stct SAESLevelProperties {
 		int32_t						KeyLength ;
 		int32_t						KeyExpSize;
 	};
@@ -31,7 +31,7 @@ namespace llc
 	stxp	u2_t			AES_SIZEBLOCK					= 16; // Block length in bytes AES is 128b block only
 	stxp	u2_t			AES_SIZEIV						= 16;
 
-	struct SAESContext {
+ stct SAESContext {
 		AES_LEVEL					Level							= {};
 		au0_t					RoundKey						= {};
 		u0_t						Iv			[AES_SIZEBLOCK]		= {};

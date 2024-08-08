@@ -42,7 +42,7 @@ namespace llc
 	//GDEFINE_ENUM_VALUE(EVENT_RUNTIME, Process_event	, 3);
 
 #pragma pack(push, 1)
-	struct SDeviceResult {
+ stct SDeviceResult {
 		const ::llc::SYSTEM_EVENT	SystemEvent 	= {};
 		const uint8_t				TailWidth		: 2;
 		const uint8_t				Multiplier		: 6;
@@ -55,7 +55,7 @@ namespace llc
 			, DeviceEvent {deviceEvent}
 			{}
 	};
-	struct SDeviceCommand {
+ stct SDeviceCommand {
 		const ::llc::SYSTEM_EVENT	SystemEvent 	= {};
 		const uint8_t				TailWidth		: 2;
 		const uint8_t				Multiplier		: 6;

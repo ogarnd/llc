@@ -33,13 +33,13 @@ namespace llc
 	GDEFINE_ENUM_VALUE(STRIP_LITERAL_TYPE, COUNT	, 2);
 	GDEFINE_ENUM_VALUE(STRIP_LITERAL_TYPE, UNKNOWN	, -1);
 #pragma pack(push, 1)
-	struct SStripLiteralType {
+ stct SStripLiteralType {
 		s2_t						ParentIndex;
 		STRIP_LITERAL_TYPE			Type;
 		sliceu2_t			Span;
 	};
 
-	struct SStripLiteralState {
+ stct SStripLiteralState {
 		u2_t						IndexCurrentChar				= 0;
 		s2_t						IndexCurrentElement				= -1;
 		SStripLiteralType	* CurrentElement				= 0;

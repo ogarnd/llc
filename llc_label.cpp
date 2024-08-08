@@ -10,7 +10,7 @@ static	::llc::CLabelManager*	labelManagerSingleton		()			noexcept	{
 	e_if_failed(LabelManager->View(text, stringLen, *this), "text: %s.", text); 
 }
 
-bool	::llc::label::oper==	(const ::llc::vcs & other)		const	noexcept	{
+bool	::llc::label::oper==	(const ::llc::vcst_t & other)		const	noexcept	{
 	return (Data == other.begin()) 	? true
 		: (Count != other.size()) 	? false 
 		: 0 == memcmp(Data, other.begin(), Count)

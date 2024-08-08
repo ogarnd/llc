@@ -126,3 +126,34 @@
 #define ndstinx             
 
 #define cxp_if
+
+#define if_true_ta	
+#define if_true_te	
+#define if_true_tw	
+#define if_true_ti	
+#define if_true_tv	
+#define if_fail_ta	
+#define if_fail_te	
+#define if_fail_tw	
+#define if_fail_ti	
+#define if_fail_tv	
+#define if_zero_ta	
+#define if_zero_te	
+#define if_zero_tw	
+#define if_zero_ti	
+#define if_zero_tv	
+#define if_true_taf	
+#define if_true_tef	
+#define if_true_twf	
+#define if_true_tif	
+#define if_true_tvf	
+#define if_fail_taf	
+#define if_fail_tef	
+#define if_fail_twf	
+#define if_fail_tif	
+#define if_fail_tvf	
+#define if_zero_taf	
+#define if_zero_tef	
+#define if_zero_twf	
+#define if_zero_tif	
+#define if_zero_tvf	

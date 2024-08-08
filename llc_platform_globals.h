@@ -115,12 +115,19 @@
 #define prtc			protected
 #define prvt			private
 
-#define tpl(typeName)	tplt<tpnm typeName>
 #define tdfT(type)		tydf	type	T
+
+#define tpn(type)		tpnm	type
+#define tnv(type)		tpnm...	type
+#define tpnT			tpn(T)
+#define tnv_tArgs  	    tnv(_tArgs)
+#define tpl(type)		tplt<tpn(type)>
 #define tplT			tpl(T)
 #define tplT2			tpl(T2)
 #define tpl_t			tpl(_t)
 #define tpl_t2			tpl(_t2)
+#define tpl_vtArgs		tplt<tnv_tArgs>
+#define tplT_vtArgs		tplt<tpnT, tnv_tArgs>
 #define tplTstct		tplT	stct
 #define tplTstin		tplT	stin
 #define tplTusng		tplT	usng
@@ -137,7 +144,6 @@
 #define tpl_tstin		tpl_t	stin
 
 #define tplTInTOut		tplt<tpnm TIn, tpnm TOut>
-#define tpl_vtArgs		tplt<tpnm... _tArgs>
 
 #define cxpr_if(condition)		if cxpr(condition)
 #define cxpr_if_not(condition)	if cxpr(not(condition))
@@ -155,32 +161,32 @@
 #define LLCREP6(param)			  LLCREP5(param), (param)
 #define LLCREP7(param)			  LLCREP6(param), (param)
 
-#define cnstnxpt            cnst nxpt
-#define cnstvltl            cnst vltl
-#define unsgnd              unsigned
-#define operatr	            operator
-#define cnstxpr	            constexpr
-#define inlcxpr	            inln  cxpr
-#define stacxpr	            stTc  cxpr
-#define stainli	            stTc  inln
-#define stincxp	            stin cxpr
-#define prtctd              protected
-#define privte              private
+#define cnstnxpt			cnst nxpt
+#define cnstvltl			cnst vltl
+#define unsgnd			  unsigned
+#define operatr				operator
+#define cnstxpr				constexpr
+#define inlcxpr				inln  cxpr
+#define stacxpr				stTc  cxpr
+#define stainli				stTc  inln
+#define stincxp				stin cxpr
+#define prtctd			  protected
+#define privte			  private
 
-#define nodscrd             [[nodiscard]]
-#define ndsttic             nodscrd static
-#define ndinlne             nodscrd inline
-#define ndcnxpr             nodscrd cnstxpr
-#define ndstain             ndsttic inline
-#define ndstcxp             ndsttic cnstxpr
-#define ndincxp             ndinlne cnstxpr
-#define ndstinx             ndstain cnstxpr
+#define nodscrd			 [[nodiscard]]
+#define ndsttic			 nodscrd static
+#define ndinlne			 nodscrd inline
+#define ndcnxpr			 nodscrd cnstxpr
+#define ndstain			 ndsttic inline
+#define ndstcxp			 ndsttic cnstxpr
+#define ndincxp			 ndinlne cnstxpr
+#define ndstinx			 ndstain cnstxpr
 
-#define tplTstruct          tplT struct
-#define tplTndstcxp	        tplT ndstcxp
-#define tplTstincxp	        tplT stincxp
-#define tplTstacxpr	        tplT stacxpr
-#define tplTndstinx	        tplT ndstinx
+#define tplTstruct		  tplT struct
+#define tplTndstcxp			tplT ndstcxp
+#define tplTstincxp			tplT stincxp
+#define tplTstacxpr			tplT stacxpr
+#define tplTndstinx			tplT ndstinx
 
 #define	LLC_STRINGIFY(x) #x
 #define	LLC_TOSTRING(x)  LLC_STRINGIFY(x)

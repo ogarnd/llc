@@ -19,7 +19,7 @@
 
 stxp	uint32_t LLC_MAX_PATH = 256;
 //
-::llc::error_t			llc::pathCreate				(const ::llc::vcs & pathName, sc_c separator) {
+::llc::error_t			llc::pathCreate				(const ::llc::vcst_t & pathName, sc_c separator) {
 	rww_if(0 == pathName.begin(), "%s.", "pathName is null.");
 #ifndef LLC_ATMEL
 	char						folder[LLC_MAX_PATH]		= {};
@@ -91,7 +91,7 @@ stxp	uint32_t LLC_MAX_PATH = 256;
 	return out_composed.size();
 }
 
-::llc::error_t			llc::pathList				(const ::llc::SPathContents & input, ::llc::avcc & output, const ::llc::vcs extension)					{
+::llc::error_t			llc::pathList				(const ::llc::SPathContents & input, ::llc::avcsc_t & output, const ::llc::vcst_t extension)					{
 	for(uint32_t iFile = 0; iFile < input.Files.size(); ++iFile) {
 		::llc::vcsc_c			& fileName					= input.Files[iFile];
 		if(0 == extension.size() || (extension.size() < fileName.size() && 0 == strncmp(fileName.end() - extension.size(), extension.begin(), ::llc::min(extension.size(), fileName.size()))))
@@ -102,7 +102,7 @@ stxp	uint32_t LLC_MAX_PATH = 256;
 	return 0;
 }
 
-::llc::error_t			llc::pathList				(const ::llc::SPathContents & input, ::llc::aasc_t & output, const ::llc::vcs extension)					{
+::llc::error_t			llc::pathList				(const ::llc::SPathContents & input, ::llc::aasc_t & output, const ::llc::vcst_t extension)					{
 	for(uint32_t iFile = 0; iFile < input.Files.size(); ++iFile) {
 		::llc::vcsc_c			& fileName					= input.Files[iFile];
 		if(0 == extension.size() || (extension.size() < fileName.size() && 0 == strncmp(fileName.end() - extension.size(), extension.begin(), ::llc::min(extension.size(), fileName.size()))))
@@ -118,8 +118,8 @@ stxp	const char		curDir	[]					= ".";
 stxp	const char		parDir	[]					= "..";
 #endif
 
-::llc::error_t			llc::pathList				(const ::llc::vcs & pathToList, ::llc::aachar & output, bool listFolders, const ::llc::vcs extension)	{
-	::llc::asc_t				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcs{pathToList.begin(), pathToList.size() - 1};
+::llc::error_t			llc::pathList				(const ::llc::vcst_t & pathToList, ::llc::aachar & output, bool listFolders, const ::llc::vcst_t extension)	{
+	::llc::asc_t				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcst_t{pathToList.begin(), pathToList.size() - 1};
 	char						bufferFormat[16]			=  {};
 	snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U2 "s/*.*", withoutTrailingSlash.size());
 	char						sPath	[LLC_MAX_PATH]		= {};
@@ -138,10 +138,10 @@ stxp	const char		parDir	[]					= "..";
 		if((fdFile.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && false == listFolders)
 			continue;
 
-		const ::llc::vcs			viewPath					= sPath;
+		const ::llc::vcst_t			viewPath					= sPath;
 		if(0 == extension.size() || (extension.size() < viewPath.size() && 0 == strncmp(viewPath.end() - extension.size(), extension.begin(), ::llc::min(extension.size(), viewPath.size())))) {
 			verbose_printf("Path: %s.", sPath);
-			llc_necall(output.push_back(::llc::vcs{sPath, (uint32_t)lenPath}), "%s", "Failed to push path to output list.");
+			llc_necall(output.push_back(::llc::vcst_t{sPath, (uint32_t)lenPath}), "%s", "Failed to push path to output list.");
 		}
 		//output.push_back(0)
 	}
@@ -152,7 +152,7 @@ stxp	const char		parDir	[]					= "..";
 	dirent						* drnt						= 0;
 	dir						= opendir(withoutTrailingSlash.begin());
 	while ((drnt = readdir(dir)) != NULL) {
-		::llc::asc_t				name						= ::llc::vcs{drnt->d_name, (uint32_t)-1};
+		::llc::asc_t				name						= ::llc::vcst_t{drnt->d_name, (uint32_t)-1};
 		if (name != curDir && name != parDir) {
 			if(drnt->d_type == DT_DIR && false == listFolders)
 				continue;
@@ -166,8 +166,8 @@ stxp	const char		parDir	[]					= "..";
 }
 
 
-::llc::error_t			llc::pathList				(const ::llc::vcs & pathToList, ::llc::SPathContents & pathContents, const llc::vcs extension)						{
-	::llc::asc_t				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcs{pathToList.begin(), pathToList.size() - 1};
+::llc::error_t			llc::pathList				(const ::llc::vcst_t & pathToList, ::llc::SPathContents & pathContents, const llc::vcst_t extension)						{
+	::llc::asc_t				withoutTrailingSlash		= (pathToList.size() - 1 > (uint32_t)::llc::findLastSlash(pathToList)) ? pathToList : ::llc::vcst_t{pathToList.begin(), pathToList.size() - 1};
 	char						bufferFormat[36]			= {};
 	snprintf(bufferFormat, ::llc::size(bufferFormat) - 2, "%%.%" LLC_FMT_U2 "s/*.*", withoutTrailingSlash.size());
 	char						sPath[LLC_MAX_PATH]			= {};
@@ -205,7 +205,7 @@ stxp	const char		parDir	[]					= "..";
 	struct dirent				* drnt						= nullptr;
 	dir						= opendir(withoutTrailingSlash.begin());
 	while ((drnt = readdir(dir)) != NULL) {
-		::llc::apod<char>			name						= ::llc::vcs{drnt->d_name, (uint32_t)-1};
+		::llc::apod<char>			name						= ::llc::vcst_t{drnt->d_name, (uint32_t)-1};
 		if (name != curDir && name != parDir) {
 			int32_t						lenPath						= snprintf(sPath, ::llc::size(sPath) - 2, "%s/%s", withoutTrailingSlash.begin(), drnt->d_name);
 			if(drnt->d_type == DT_DIR) {

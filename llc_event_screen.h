@@ -24,7 +24,7 @@ namespace llc
 	tydf ::llc::FEventHandler     <EVENT_SCREEN>	FScreenEvent;
 	tydf ::llc::FEventHandlerConst<EVENT_SCREEN>	FScreenEventConst;
 
-	struct SEventArgsScreenCreate {
+ stct SEventArgsScreenCreate {
 		::llc::n2u1_t		Size;
 #ifdef LLC_WINDOWS
 		CREATESTRUCT		PlatformDetail;

@@ -15,7 +15,7 @@ namespace llc
 		u2_c					oldSizes	[]			= {args.size	()..., 0};
 		const ::llc::error_t			results		[]			= {args.resize	(newSize)..., 0};
 		for(u2_t i = 0; i < ::llc::size(results); ++i)
-			if(errored(results[i])) {
+			if_failed(results[i]) {
 				error_printf("Failed to set container %" LLC_FMT_S2 " to size: %" LLC_FMT_S2 ". Out of memory?", i, (int32_t)newSize);
 				int32_t							j						= 0;
 				const int32_t					dummy	[]				= {args.resize(oldSizes[j++])..., 0};
@@ -28,7 +28,7 @@ namespace llc
 		u2_c					oldSizes	[]			= {args.size	()..., 0};
 		const ::llc::error_t			results		[]			= {args.resize	(newSize,{})..., 0};
 		for(u2_t i = 0; i < ::llc::size(results); ++i)
-			if(errored(results[i])) {
+			if_failed(results[i]) {
 				error_printf("Failed to set container %" LLC_FMT_S2 " to size: %" LLC_FMT_S2 ". Out of memory?", i, (int32_t)newSize);
 				int32_t							j						= 0;
 				const int32_t					dummy	[]				= {args.resize(oldSizes[j++])..., 0};

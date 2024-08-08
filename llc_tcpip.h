@@ -6,13 +6,13 @@
 namespace llc
 {
 #pragma pack(push, 1)
-	::llc::error_t		tcpipAddress		(::llc::vcs strIP, uint32_t & ipv4);
-	::llc::error_t		tcpipAddress		(::llc::vcs strIP, uint32_t & ipv4, uint16_t & port);
+	::llc::error_t		tcpipAddress		(::llc::vcst_t strIP, uint32_t & ipv4);
+	::llc::error_t		tcpipAddress		(::llc::vcst_t strIP, uint32_t & ipv4, uint16_t & port);
 
-	struct SIPv4 {
+ stct SIPv4 {
 		uint32_t			IP					= {};
 		
-							SIPv4				(llc::vcs strIP)							{ ::llc::tcpipAddress(strIP, IP); }
+							SIPv4				(llc::vcst_t strIP)							{ ::llc::tcpipAddress(strIP, IP); }
 							
 		inxp				SIPv4				()								noexcept	= default;
 		inxp				SIPv4				(const SIPv4 &)					noexcept	= default;
@@ -83,7 +83,7 @@ namespace llc
 		}
 	} SIPv4Endpoint;
 
-	struct SIPv4Node {
+ stct SIPv4Node {
 		::llc::SIPv4	IPv4		= {};
 		::llc::SIPv4	Gateway		= {};
 		::llc::SIPv4	NetMask		= {};
@@ -131,13 +131,13 @@ namespace llc
 							, (uint32_t)::llc::byte_at(addr.IP, 3)	\
 							, (uint32_t)addr.Port
 
-	stin	::llc::error_t	tcpipAddress		(::llc::vcs strIP, ::llc::SIPv4 & ipv4) { return ::llc::tcpipAddress(strIP, ipv4.IP); }
+	stin	::llc::error_t	tcpipAddress		(::llc::vcst_t strIP, ::llc::SIPv4 & ipv4) { return ::llc::tcpipAddress(strIP, ipv4.IP); }
 
 
 			::llc::error_t	tcpipAddress		(const char* szHostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint32_t & address, uint16_t & port);
 			::llc::error_t	tcpipAddress		(const char* szHostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4, uint16_t* port = 0);
 
-			::llc::error_t	tcpipAddress		(::llc::vcs hostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4, uint16_t* port = 0);
+			::llc::error_t	tcpipAddress		(::llc::vcst_t hostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint8_t * a1, uint8_t * a2, uint8_t * a3, uint8_t * a4, uint16_t* port = 0);
 	stin	::llc::error_t	tcpipAddress		(const char* szHostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, uint32_t & address)				{
 		uint16_t port = 0;
 		return llc::tcpipAddress(szHostName, portRequested, adapterIndex, mode, address, port);
@@ -153,11 +153,11 @@ namespace llc
 	stin	::llc::error_t	tcpipAddress		(const char * hostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, SIPv4End & address)	{
 		return ::llc::tcpipAddress(hostName, portRequested, adapterIndex, mode, address.IP, (address.Port = portRequested));
 	}
-	stin	::llc::error_t	tcpipAddress		(const ::llc::vcs & hostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, SIPv4End & address)	{
+	stin	::llc::error_t	tcpipAddress		(const ::llc::vcst_t & hostName, uint16_t portRequested, uint32_t adapterIndex, TRANSPORT_PROTOCOL mode, SIPv4End & address)	{
 		return ::llc::tcpipAddress(hostName.begin(), portRequested, adapterIndex, mode, address.IP, (address.Port = portRequested));
 	}
 
-	::llc::error_t			tcpipAddress		(::llc::vcs strAddress, ::llc::vcs strPort, ::llc::SIPv4End & ipv4end);
+	::llc::error_t			tcpipAddress		(::llc::vcst_t strAddress, ::llc::vcst_t strPort, ::llc::SIPv4End & ipv4end);
 	
 } // namespace
 

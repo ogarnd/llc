@@ -20,11 +20,11 @@ namespace llc
 
 		tplt<size_t _stringLength>
 		inline 				label			(const char (&str)[_stringLength], uint32_t count = (uint32_t)-1)	noexcept	: label(&str[0], ::llc::min((uint32_t)_stringLength, count))	{}
-		inline 				label			(const ::llc::vcs & other)											noexcept	: label(other.begin(), other.size())							{}
+		inline 				label			(const ::llc::vcst_t & other)											noexcept	: label(other.begin(), other.size())							{}
 
-		inline	oper	::llc::vcs		()								const				{ return {Data, Count}; }
+		inline	oper	::llc::vcst_t		()								const				{ return {Data, Count}; }
 
-				bool		oper==		(const ::llc::vcs & other)		const	noexcept;
+				bool		oper==		(const ::llc::vcst_t & other)		const	noexcept;
 				bool		oper==		(const label & other)			const	noexcept;
 		inline	bool		oper!=		(const label & other)			const	noexcept	{ return !oper==(other); }
 	};

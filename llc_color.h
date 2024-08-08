@@ -82,7 +82,7 @@ namespace llc
 	cxpr	f2_c			BYTE_SCALE			= 1.0f / 255.0f;
 
 	// Stores RGBA color channels
-	struct SColorRGBA : public ::llc::rgba8 {
+ stct SColorRGBA : public ::llc::rgba8 {
 								SColorRGBA		()											nxpt	= default;
 		cxpr					SColorRGBA		(cnst SColorRGBA &)							nxpt	= default;
 		cxpr					SColorRGBA		(u0_t r_, u0_t g_, u0_t b_, u0_t a_=0xff)	nxpt	: color_rgba<u0_t>{{{{r_}, g_}, b_}, a_}						{}
@@ -106,7 +106,7 @@ namespace llc
 	};	// struct
 
 	// Stores BGRA color channels
-	struct SColorBGRA : public ::llc::bgra8 {
+ stct SColorBGRA : public ::llc::bgra8 {
 								SColorBGRA		()											nxpt	= default;
 		cxpr					SColorBGRA		(cnst SColorBGRA &)							nxpt	= default;
 		cxpr					SColorBGRA		(cnst SColorRGBA & other)					nxpt	: color_bgra<u0_t>{{{{other.b}, other.g}, other.r}, other.a} {}
@@ -141,7 +141,7 @@ namespace llc
 	};	// struct
 
 	// Stores RGB color channels
-	struct SColorRGB : public ::llc::rgb8 {
+ stct SColorRGB : public ::llc::rgb8 {
 								SColorRGB		()									nxpt	= default;
 		cxpr					SColorRGB		(cnst SColorRGB & other)			nxpt	= default;
 		cxpr					SColorRGB		(u0_t r_, u0_t g_, u0_t b_)			nxpt	: color_rgb<u0_t>{{{r_}, g_}, b_} {}
@@ -171,7 +171,7 @@ namespace llc
 	};	// struct
 
 	// Stores BGR color channels
-	struct SColorBGR : public ::llc::color_bgr<u0_t> {
+ stct SColorBGR : public ::llc::color_bgr<u0_t> {
 								SColorBGR		()								nxpt	= default;
 		cxpr					SColorBGR		(cnst SColorBGR & other)		nxpt	= default;
 		cxpr					SColorBGR		(u0_t b_, u0_t g_, u0_t r_)		nxpt	: color_bgr<u0_t>{{{b_}, g_}, r_} {}
@@ -204,7 +204,7 @@ namespace llc
 	};	// struct
 
 	// Stores RGBA f2_ting point color channels
-	struct SColorFloat : public ::llc::rgbaf32 {
+ stct SColorFloat : public ::llc::rgbaf32 {
 								SColorFloat		()										nxpt	= default;
 		cxpr					SColorFloat		(cnst SColorFloat & color)				nxpt	= default;
 		cxpr					SColorFloat		(f2_t r_, f2_t g_, f2_t b_, f2_t a_=1.0f)	nxpt	: color_rgba<f2_t>{{{{r_}, g_}, b_}, a_}						{}

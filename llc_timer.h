@@ -9,7 +9,7 @@
 
 namespace llc	//
 {
-	struct STimer {
+ stct STimer {
 		double			LastTimeSeconds			= 0;	// This variable is set by Frame() or Reset() and holds the time difference in seconds between a Frame() call and the next.
 		uint64_t		LastTimeMicroseconds	= 0;	// This variable is set by Frame() or Reset() and holds the time difference in seconds between a Frame() call and the next.
 

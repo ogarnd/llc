@@ -129,14 +129,14 @@ stxp	u2_c	LLC_CRC_CRC_SEED			= 18973;
 	return 0;
 }
 
-::llc::error_t			llc::folderUnpack			(::llc::SFolderInMemory & out_loaded, const ::llc::vcs nameFileSrc)					{
+::llc::error_t			llc::folderUnpack			(::llc::SFolderInMemory & out_loaded, const ::llc::vcst_t nameFileSrc)					{
 	::llc::au0_t					rawFileInMemory				= {};
 	llc_necall(llc::fileToMemory(nameFileSrc, rawFileInMemory), "Failed to load pak file: %s.", nameFileSrc);
 	llc_necall(llc::folderUnpack(out_loaded, rawFileInMemory), "Failed to unpack pak file: %s.", nameFileSrc);
 	return 0;
 }
 
-::llc::error_t			llc::folderToDisk			(const ::llc::SFolderPackage & folderPackage, const ::llc::vcs nameFileDst)			{
+::llc::error_t			llc::folderToDisk			(const ::llc::SFolderPackage & folderPackage, const ::llc::vcst_t nameFileDst)			{
 	const ::llc::SPackHeader 	& fileHeader				= folderPackage.PackageInfo;
 	const ::llc::au0_t			& compressedTableFiles		= folderPackage.CompressedTableFiles		;
 	const ::llc::au0_t			& compressedContentsPacked	= folderPackage.CompressedContentsPacked	;
@@ -153,7 +153,7 @@ stxp	u2_c	LLC_CRC_CRC_SEED			= 18973;
 }
 
 stxp	uint32_t		DEFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
-::llc::error_t			llc::folderPack				(::llc::SFolderPackage & output, const ::llc::vcs nameFolderSrc) {
+::llc::error_t			llc::folderPack				(::llc::SFolderPackage & output, const ::llc::vcst_t nameFolderSrc) {
 	::llc::SPackHeader 			& fileHeader			= output.PackageInfo = {};
 	// -- The following two arrays store the file table and the file contents that are going to be compressed and stored on disk
 	::llc::asc_t					finalPathName			= {};
@@ -205,7 +205,7 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 }
 
 ::llc::error_t			llc::folderLoad			
-	( const ::llc::vcs	nameFolderSrc 
+	( const ::llc::vcst_t	nameFolderSrc 
 	, ::llc::au0_t		& tableFiles				
 	, ::llc::au0_t		& contentsPacked			
 	) {
@@ -219,7 +219,7 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 		::llc::rangeu2_t			fileLocation			= {0, 0};
 		for(uint32_t iFile = 0; iFile < listFiles.size(); ++iFile) {
 			fileLocation.Offset		= contentsPacked.size();
-			const ::llc::vcs			pathToLoad				= {listFiles[iFile].begin(), listFiles[iFile].size()};
+			const ::llc::vcst_t			pathToLoad				= {listFiles[iFile].begin(), listFiles[iFile].size()};
 			if(0 == pathToLoad.size())
 				continue;
 
@@ -239,7 +239,7 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 }
 
 // Write folder to disk.
-::llc::error_t			llc::folderToDisk			(const ::llc::SFolderInMemory & virtualFolder, ::llc::vcs destinationPath)				{
+::llc::error_t			llc::folderToDisk			(const ::llc::SFolderInMemory & virtualFolder, ::llc::vcst_t destinationPath)				{
 	char						bufferFormat	[32]		= {};
 	::llc::asc_t					finalPathName				= {};
 	finalPathName.resize(8 * 1024);
@@ -247,17 +247,17 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	FILE						* fp						= 0;
 	for(uint32_t iFile = 0, countFiles = virtualFolder.Names.size(); iFile < countFiles; ++iFile) {
 		llc_safe_fclose(fp);
-		const ::llc::vcs			& fileName					= virtualFolder.Names		[iFile];
+		const ::llc::vcst_t			& fileName					= virtualFolder.Names		[iFile];
 		vcu0_c			& fileContent				= virtualFolder.Contents	[iFile];
 		sprintf_s(bufferFormat, "%%.%us%%.%us", destinationPath.size(), fileName.size());
 		snprintf(finalPathName.begin(), finalPathName.size(), bufferFormat, destinationPath.begin(), fileName.begin());
 		info_printf("File found (%u):'%s'. Size: %u.", iFile, finalPathName.begin(), fileContent.size());
 		uint32_t					lenPath						= (uint32_t)strlen(finalPathName.begin());
-		::llc::error_t				indexSlash					= ::llc::findLastSlash(::llc::vcs{finalPathName.begin(), uint32_t(-1)});
+		::llc::error_t				indexSlash					= ::llc::findLastSlash(::llc::vcst_t{finalPathName.begin(), uint32_t(-1)});
 		if(-1 != indexSlash) { // Create path if any specified.
 			finalPathName[indexSlash]	= 0;
 			lenPath						= (uint32_t)strlen(finalPathName.begin());
- 			cef_if(errored(::llc::pathCreate({finalPathName.begin(), lenPath})), "Failed to create foder: %s.", finalPathName.begin());
+ 			if_fail_cef(::llc::pathCreate({finalPathName.begin(), lenPath}), "Failed to create foder: %s.", finalPathName.begin());
 			finalPathName[indexSlash]	= '/';
 		}
 		llc_necall(::llc::fopen_s(&fp, finalPathName, "wb"), "%s", finalPathName.begin());
@@ -268,14 +268,14 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 	return 0;
 }
 
-::llc::error_t			llc::folderPackToDisk		(const ::llc::vcs nameFileDst,	const ::llc::vcs nameFolderSrc)		{
+::llc::error_t			llc::folderPackToDisk		(const ::llc::vcst_t nameFileDst,	const ::llc::vcst_t nameFolderSrc)		{
 	::llc::SFolderPackage		folderPackage;
 	llc_necall(llc::folderPack(folderPackage, nameFolderSrc), "Failed to pack folder: %s.", nameFolderSrc.begin());
 	llc_necall(llc::folderToDisk(folderPackage, nameFileDst), "Failed to pack folder: %s.", nameFolderSrc.begin());
 	return 0;
 }
 
-::llc::error_t			llc::folderUnpackToDisk		(const ::llc::vcs namePathDst, const ::llc::vcs nameFileSrc)		{
+::llc::error_t			llc::folderUnpackToDisk		(const ::llc::vcst_t namePathDst, const ::llc::vcst_t nameFileSrc)		{
 	::llc::SFolderInMemory		virtualFolder				= {};
 	llc_necall(llc::folderUnpack(virtualFolder, nameFileSrc), "Failed to unpack file: %s.", nameFileSrc);
 	llc_necall(llc::folderToDisk(virtualFolder, namePathDst), "Failed to write folder to disk. Disk full or insufficient permissions. File name: %s. Destionation Path: %s.", nameFileSrc, namePathDst);
@@ -318,7 +318,7 @@ stxp	uint32_t		INFLATE_CHUNK_SIZE			= uint32_t(1024) * 1024 * 4;
 }
 
 ::llc::error_t			llc::fileToMemorySecure		(::llc::SLoadCache & recycle, ::llc::vcsc_c & fileName, vcu0_c & key, const bool deflate, ::llc::au0_t & loadedBytes)								{
-	::llc::vcs					strFilename					= {fileName.begin(), fileName.size()};
+	::llc::vcst_t					strFilename					= {fileName.begin(), fileName.size()};
 	if(false == deflate && 0 == key.size()) {
 		llc_necall(llc::fileToMemory(strFilename, loadedBytes), "Failed to read file: %s.", ::llc::toString(fileName).begin());
 		llc_necs(llc::crcVerifyAndRemove(loadedBytes));
