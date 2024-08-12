@@ -76,6 +76,7 @@ namespace llc
 #define tpl_t_nu2	tplt<tpnm _t	, ::llc::u2_t _nu2>
 #define tplN2ustct	tplN2u	stct
 #define tplN2usttc	tplN2u	sttc
+#define tplN2uinln	tplN2u	inln
 #define tplN2ustin	tplN2u	stin
 #define tplN2uusng	tplN2u	usng
 #define tplN2undsx	tplN2u	ndsx
@@ -84,6 +85,7 @@ namespace llc
 #define tplN2unsix	tplN2u	nsix
 #define tplTN2stct	tplTN2	stct
 #define tplTN2sttc	tplTN2	sttc
+#define tplTN2inln	tplTN2	inln
 #define tplTN2usng	tplTN2	usng
 #define tplTN2ndsx	tplTN2	ndsx
 #define tplTN2sinx	tplTN2	sinx
