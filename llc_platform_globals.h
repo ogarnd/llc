@@ -129,6 +129,7 @@
 #define tpl_vtArgs		tplt<tnv_tArgs>
 #define tplT_vtArgs		tplt<tpnT, tnv_tArgs>
 #define tplTstct		tplT	stct
+#define tplTsttc		tplT	sttc
 #define tplTstin		tplT	stin
 #define tplTusng		tplT	usng
 #define tplTndsx		tplT	ndsx

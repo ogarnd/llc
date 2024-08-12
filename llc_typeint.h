@@ -73,8 +73,9 @@ namespace llc
 #define tplTN2		tplt<tpnm T		, ::llc::u2_t N>
 #define tplTOutN2	tplt<tpnm TOut	, ::llc::u2_t N>
 #define tplTInN2	tplt<tpnm TIn	, ::llc::u2_t N>
-#define tpl_t_nu2	tplt<tpnm _t		, ::llc::u2_t _nu2>
+#define tpl_t_nu2	tplt<tpnm _t	, ::llc::u2_t _nu2>
 #define tplN2ustct	tplN2u	stct
+#define tplN2usttc	tplN2u	sttc
 #define tplN2ustin	tplN2u	stin
 #define tplN2uusng	tplN2u	usng
 #define tplN2undsx	tplN2u	ndsx
@@ -82,6 +83,7 @@ namespace llc
 #define tplN2ustxp	tplN2u	stxp
 #define tplN2unsix	tplN2u	nsix
 #define tplTN2stct	tplTN2	stct
+#define tplTN2sttc	tplTN2	sttc
 #define tplTN2usng	tplTN2	usng
 #define tplTN2ndsx	tplTN2	ndsx
 #define tplTN2sinx	tplTN2	sinx
@@ -96,10 +98,10 @@ namespace llc
 #if defined(LLC_ANDROID) || defined(LLC_CLANG)
 #	pragma clang diagnostic pop
 #endif
-
-	stxp	u0_c	PLATFORM_BYTE_BIT_COUNT					= 8;
-#define	LLC_REFCOUNT_T	intptr_t
-	tdvl	LLC_REFCOUNT_T	refcount_t;
+	stxp	b8_c	flse			= false;
+	stxp	u0_c	BYTE_SIZE		= 8;
+	typedef	intptr_t	LLC_REFCOUNT_T;
+	tdvl	LLC_REFCOUNT_T	refcount_vl;
 
 	tpl_tstct	rm_cnst				{ usng T = _t; };
 	tpl_tstct	rm_cnst<cnst _t>	{ usng T = _t; };
@@ -128,7 +130,7 @@ namespace llc
 	tpl_tstct srcdst { tdfTTCnst(_t); T src, dst; }; 
 	tpl_tstct dstsrc { tdfTTCnst(_t); T dst, src; };
 #define LLC_USING_TYPEINT()				\
-	usng	::llc::b8_t, ::llc::b8_c	\
+	using	::llc::b8_t, ::llc::b8_c	\
 		,	::llc::uc_t, ::llc::uc_c	\
 		,	::llc::sc_t, ::llc::sc_c	\
 		,	::llc::u0_t, ::llc::u0_c	\
