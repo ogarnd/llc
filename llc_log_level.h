@@ -36,7 +36,7 @@ namespace llc
 
 #ifdef LLC_ESP32 // Use dynamic string buffer to save flash space.
 		if(format) {
-			u2_c bufferSize = u2_t(strlen(format) + 1024 * 2);
+			u2_c bufferSize = u2_t(strlen(format) + 1024 * 8);
 			if(char * customDynamicString = (char*)malloc(bufferSize)) {
 				u2_c 				stringLength		= (u2_t)snprintf(customDynamicString, bufferSize - 2U, format, args...);
 				customDynamicString[::llc::min(stringLength, bufferSize - 2U)] = '\n';

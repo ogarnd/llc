@@ -132,19 +132,19 @@ namespace llc
 	tpl_tstct srcdst { tdfTTCnst(_t); T src, dst; }; 
 	tpl_tstct dstsrc { tdfTTCnst(_t); T dst, src; };
 #define LLC_USING_TYPEINT()				\
-	using	::llc::b8_t, ::llc::b8_c	\
-		,	::llc::uc_t, ::llc::uc_c	\
-		,	::llc::sc_t, ::llc::sc_c	\
-		,	::llc::u0_t, ::llc::u0_c	\
-		,	::llc::u1_t, ::llc::u1_c	\
-		,	::llc::u2_t, ::llc::u2_c	\
-		,	::llc::u3_t, ::llc::u3_c	\
-		,	::llc::s0_t, ::llc::s0_c	\
-		,	::llc::s1_t, ::llc::s1_c	\
-		,	::llc::s2_t, ::llc::s2_c	\
-		,	::llc::s3_t, ::llc::s3_c	\
-		,	::llc::f2_t, ::llc::f2_c	\
-		,	::llc::f3_t, ::llc::f3_c;
+	using	::llc::b8_t, ::llc::b8_c, ::llc::b8u_t, ::llc::b8u_c	\
+		,	::llc::uc_t, ::llc::uc_c, ::llc::c0u_t, ::llc::c0u_c	\
+		,	::llc::sc_t, ::llc::sc_c, ::llc::c0s_t, ::llc::c0s_c	\
+		,	::llc::u0_t, ::llc::u0_c, ::llc::i0u_t, ::llc::i0u_c	\
+		,	::llc::u1_t, ::llc::u1_c, ::llc::i1u_t, ::llc::i1u_c	\
+		,	::llc::u2_t, ::llc::u2_c, ::llc::i2u_t, ::llc::i2u_c	\
+		,	::llc::u3_t, ::llc::u3_c, ::llc::i3u_t, ::llc::i3u_c	\
+		,	::llc::s0_t, ::llc::s0_c, ::llc::i0s_t, ::llc::i0s_c	\
+		,	::llc::s1_t, ::llc::s1_c, ::llc::i1s_t, ::llc::i1s_c	\
+		,	::llc::s2_t, ::llc::s2_c, ::llc::i2s_t, ::llc::i2s_c	\
+		,	::llc::s3_t, ::llc::s3_c, ::llc::i3s_t, ::llc::i3s_c	\
+		,	::llc::f2_t, ::llc::f2_c, ::llc::f2s_t, ::llc::f2s_c	\
+		,	::llc::f3_t, ::llc::f3_c, ::llc::f3s_t, ::llc::f3s_c;
 
 } // namespace
 
