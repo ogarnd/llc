@@ -280,17 +280,18 @@ namespace llc
 	tdcs	vcst_t				vcst_c;
 
 	stin			llc::vcst_t	str				(cnst llc::vcst_t & arg)	{ rtrn arg; } 
-	stin			llc::vcst_t	str				(cnst llc::vs & arg)	{ rtrn arg.cc(); } 
+	stin			llc::vcst_t	str				(cnst llc::vs & arg)		{ rtrn arg.cc(); } 
+	sinx			llc::vcst_t	str				(cnst bool arg)				{ rtrn arg ? VCC_TRUE : VCC_FALSE; } 
 	// 
-	tplTnsix		::llc::vcst_t	get_type_namev	()							nxpt	{ rtrn LLC_CXS("unknown"); }
-	tplTnsix		sc_c*		get_type_namep	()							nxpt	{ rtrn get_type_namev<T>().begin(); }
+	tplTnsix		::llc::vcst_t	get_type_namev	()									nxpt	{ rtrn LLC_CXS("unknown"); }
+	tplTnsix		sc_c*			get_type_namep	()									nxpt	{ rtrn get_type_namev<T>().begin(); }
 
-#define GDEFINE_TYPE_NAME_STR(typeIdentifier)																													\
-			nsix	::llc::vcst_t		get_type_namev					(typeIdentifier &)	nxpt	{ rtrn LLC_CXS(#typeIdentifier); }					\
-	tplt<>	ndix	::llc::vcst_t		get_type_namev<typeIdentifier>	()					nxpt	{ rtrn LLC_CXS(#typeIdentifier); }					\
+#define GDEFINE_TYPE_NAME_STR(typeIdentifier)																										\
+			nsix	::llc::vcst_t	get_type_namev					(typeIdentifier &)	nxpt	{ rtrn LLC_CXS(#typeIdentifier); }					\
+	tplt<>	ndix	::llc::vcst_t	get_type_namev<typeIdentifier>	()					nxpt	{ rtrn LLC_CXS(#typeIdentifier); }					\
 			nsix	::llc::sc_c*	get_type_namep					(typeIdentifier &)	nxpt	{ rtrn get_type_namev<typeIdentifier>().begin(); }	\
 	tplt<>	ndix	::llc::sc_c*	get_type_namep<typeIdentifier>	()					nxpt	{ rtrn get_type_namev<typeIdentifier>().begin(); }	
-	//GDEFINE_TYPE_NAME_STR(uc_t);
+	GDEFINE_TYPE_NAME_STR(b8_t);
 	GDEFINE_TYPE_NAME_STR(sc_t);
 	GDEFINE_TYPE_NAME_STR(u0_t);
 	GDEFINE_TYPE_NAME_STR(u1_t);
@@ -302,7 +303,7 @@ namespace llc
 	GDEFINE_TYPE_NAME_STR(s3_t);
 	GDEFINE_TYPE_NAME_STR(f2_t);
 	GDEFINE_TYPE_NAME_STR(f3_t);
-	//GDEFINE_TYPE_NAME_STR(uc_c);
+	GDEFINE_TYPE_NAME_STR(b8_c);
 	GDEFINE_TYPE_NAME_STR(sc_c);
 	GDEFINE_TYPE_NAME_STR(u0_c);
 	GDEFINE_TYPE_NAME_STR(u1_c);
