@@ -9,6 +9,7 @@
 #include "llc_json.h"
 #include "llc_rect2.h"
 #include "llc_range.h"
+#include "llc_minmax_n2.h"
 #include "llc_apod_n2.h"
 #include "llc_apod_n3.h"
 #include "llc_apod_slice.h"
