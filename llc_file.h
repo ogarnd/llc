@@ -5,22 +5,22 @@
 
 namespace llc
 {
-	err_t			with			(vcs filepath, vcs mode, const ::llc::function<::llc::err_t(FILE*&)> & funcFile);	// 
+	err_t			with			(vcs filepath, vcs mode, const function<err_t(FILE*&)> & funcFile);	// 
 
-	err_t			fileJoin		(::llc::vcst_t fileNameDst);								// Joins a file split into file.split.## parts.
-	err_t			fileSplit		(::llc::vcst_t fileNameSrc, u2_c partSize);		// Splits a file into file.split.## parts.
-	s3_t			fileSize		(::llc::vcst_t fileName);
-	err_t			fileDelete		(::llc::vcst_t fileName);
+	err_t			fileJoin		(vcst_t fileNameDst);								// Joins a file split into file.split.## parts.
+	err_t			fileSplit		(vcst_t fileNameSrc, u2_c partSize);		// Splits a file into file.split.## parts.
+	s3_t			fileSize		(vcst_t fileName);
+	err_t			fileDelete		(vcst_t fileName);
 
-	err_t			fileFromMemory	(::llc::vcst_t fileName, vcu0_c & fileInMemory, bool append = false);
-	err_t			fileToMemory	(::llc::vcst_t fileName, ::llc::au0_t & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0);
-	err_t			fileToMemory	(::llc::vcst_t folderPath, ::llc::vcst_t fileName, ::llc::au0_t & fileBytes, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0);
-	err_t			fileFromMemory	(::llc::vcst_t folderPath, ::llc::vcst_t fileName, vcu0_c & fileInMemory, bool append = false);
+	err_t			fileFromMemory	(vcst_t fileName, vcu0_c & fileInMemory, bool append = false);
+	err_t			fileToMemory	(vcst_t fileName, au0_t & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0);
+	err_t			fileToMemory	(vcst_t folderPath, vcst_t fileName, au0_t & fileBytes, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0);
+	err_t			fileFromMemory	(vcst_t folderPath, vcst_t fileName, vcu0_c & fileInMemory, bool append = false);
 
-	stin	err_t	fileToMemory	(::llc::vcst_t fileName, ::llc::as0_t & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0)	{ return ::llc::fileToMemory	(fileName, *(::llc::au0_t*)&fileInMemory, maxSize, offset); }
-	stin	err_t	fileToMemory	(::llc::vcst_t fileName, ::llc::asc_t  & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0)	{ return ::llc::fileToMemory	(fileName, *(::llc::au0_t*)&fileInMemory, maxSize, offset); }
-	stin	err_t	fileFromMemory	(::llc::vcst_t fileName, vcs0_c & fileInMemory, bool append = false)						{ return ::llc::fileFromMemory	(fileName, *(vcu0_c*)&fileInMemory, append); }
-	stin	err_t	fileFromMemory	(::llc::vcst_t fileName, ::llc::vcsc_c  & fileInMemory, bool append = false)						{ return ::llc::fileFromMemory	(fileName, *(vcu0_c*)&fileInMemory, append); }
+	stin	err_t	fileToMemory	(vcst_t fileName, as0_t & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0)	{ rtrn fileToMemory		(fileName, *(au0_t*)&fileInMemory, maxSize, offset); }
+	stin	err_t	fileToMemory	(vcst_t fileName, asc_t & fileInMemory, uint32_t maxSize = 0xFFFFFFFFU, uint64_t offset = 0)	{ rtrn fileToMemory		(fileName, *(au0_t*)&fileInMemory, maxSize, offset); }
+	stin	err_t	fileFromMemory	(vcst_t fileName, vcs0_c & fileInMemory, bool append = false)									{ rtrn fileFromMemory	(fileName, *(vcu0_c*)&fileInMemory, append); }
+	stin	err_t	fileFromMemory	(vcst_t fileName, vcsc_c & fileInMemory, bool append = false)									{ rtrn fileFromMemory	(fileName, *(vcu0_c*)&fileInMemory, append); }
 
 	GDEFINE_ENUM_TYPE(OPEN_MODE, i2u_t);
 	GDEFINE_ENUM_VALUE(OPEN_MODE, CLOSE		, 0);												
@@ -31,15 +31,15 @@ namespace llc
 	tpl_t struct SFile {	
 		tydf	_t					T;
 		T							File			{};
-		uint64_t					Offset			= {};
+		u3_t						Offset			= {};
 		vcs							Name			= {};
 
-		inline						~SFile			()						{ llc_safe_fclose(File); }
+		inln						~SFile			()					{ llc_safe_fclose(File); }
 
-		inxp		oper			T&				()						{ return File; }
+		inxp		oper			T&				()					{ return File; }
 
-		tplTOut		err_t			read			(view<TOut> output)		{ if(0 == File) llc_necall(::llc::fopen_s(&File, Name.begin(), "rb"), "%s", Name.begin()); auto nread = fread(output.begin(), szof(TOut), output.size(), File); fail_if_neu(nread, output.size()); return nread; }
-		tplTOutN2	inline	err_t	read			(TOut (&output)[N])		{ return read<TOut>(output); }
+		tplTOut		err_t			read			(view<TOut> output)	{ if(0 == File) llc_necall(fopen_s(&File, Name.begin(), "rb"), "%s", Name.begin()); auto nread = fread(output.begin(), szof(TOut), output.size(), File); fail_if_neu(nread, output.size()); return nread; }
+		tplTOutN2	inln	err_t	read			(TOut (&output)[N])	{ return read<TOut>(output); }
 	};
 
 	struct CFile : SFile<FILE*> {};

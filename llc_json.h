@@ -21,33 +21,29 @@ namespace llc
 	GDEFINE_ENUM_VALUE(JSON_TYPE, CODEPOINT	,  9);
 	GDEFINE_ENUM_VALUE(JSON_TYPE, COUNT		, 10);
 	GDEFINE_ENUM_VALUE(JSON_TYPE, UNKNOWN	, -1);
-
- stct SJSONToken {
+	stct SJSONToken {
 		s2_t					ParentIndex;
 		JSON_TYPE				Type;
-		::llc::sliceu2_t		Span;
+		sliceu2_t				Span;
 		uint64_t				Value;
 	};
-
- stct SJSONNode {
-		SJSONToken				* Token					= 0;
-		SJSONNode				* Parent				= 0;
-		::llc::apobj<SJSONNode>	Children				= {};
-		s2_t					ObjectIndex				= -1;
+	stct SJSONNode {
+		SJSONToken				* Token				= 0;
+		SJSONNode				* Parent			= 0;
+		apobj<SJSONNode>		Children			= {};
+		s2_t					ObjectIndex			= -1;
 	};
-
- stct SJSONReaderState {
-		u2_t				IndexCurrentChar		= 0;
-		s2_t					IndexCurrentElement		= -1;
-		::llc::SJSONToken		* CurrentElement		= 0;
-		s2_t					NestLevel				= 0;
-		char					CharCurrent				= 0;
-		bool					Escaping				: 1;
-		bool					InsideString			: 1;
-		bool					ExpectingSeparator		: 1;
-		bool					DoneReading				: 1;
-
-								SJSONReaderState		()
+	stct SJSONReaderState {
+		u2_t					IndexCurrentChar	= 0;
+		s2_t					IndexCurrentElement	= -1;
+		SJSONToken				* CurrentElement	= 0;
+		s1_t					NestLevel			= 0;
+		sc_t					CharCurrent			= 0;
+		b8_t					Escaping			: 1;
+		b8_t					InsideString		: 1;
+		b8_t					ExpectingSeparator	: 1;
+		b8_t					DoneReading			: 1;
+								SJSONReaderState	()
 		: Escaping			(false)
 		, InsideString		(false)
 		, ExpectingSeparator(false)
@@ -56,123 +52,125 @@ namespace llc
 	};
 #pragma pack(pop)
 
- stct SJSONReader {
-		::llc::apod<::llc::SJSONToken>	Token;
-		::llc::avcsc_t						View;
-		::llc::apobj<::llc::SJSONNode>	Tree;
-		::llc::SJSONReaderState			StateRead;
-
-		::llc::error_t					Reset					()							{
+	stct SJSONReader {
+		apod<SJSONToken>		Token;
+		avcsc_t					View;
+		apobj<SJSONNode>		Tree;
+		SJSONReaderState		StateRead;
+		
+		cnst pobj<SJSONNode>&	oper[]	(u2_t index)	cnst	{ rtrn Tree[index]; }
+		cnst pobj<SJSONNode>*	begin	()				cnst	{ rtrn Tree.begin(); }
+		cnst pobj<SJSONNode>*	end		()				cnst	{ rtrn Tree.end(); }
+		err_t					Reset	()						{
 			Token	.clear();
 			View	.clear();
-			StateRead						= {};
-			return 0;
+			StateRead				= {};
+			rtrn 0;
 		}
-
-		const ::llc::pobj<::llc::SJSONNode>&	oper[]				(u2_t index)	const	{ return Tree[index]; }
 	};
 
 	// Reader functions: Populate a SJSONReader structure from an input JSON string.
-	::llc::error_t			jsonParse				(::llc::SJSONReader & reader, ::llc::vcsc_c & jsonAsString);
-	::llc::error_t			jsonParseStep			(::llc::SJSONReader & reader, ::llc::vcsc_c & jsonAsString);
-	::llc::error_t			jsonTreeRebuild			(::llc::view<::llc::SJSONToken> & in_object, ::llc::apobj<::llc::SJSONNode> & out_nodes);
+	err_t			jsonParse			(SJSONReader & reader, vcsc_c & jsonAsString);
+	err_t			jsonParseStep		(SJSONReader & reader, vcsc_c & jsonAsString);
+	err_t			jsonTreeRebuild		(view<SJSONToken> & in_object, apobj<SJSONNode> & out_nodes);
 
-	sinx	::llc::error_t	jsonObjectKeyCount		(const ::llc::SJSONNode & node)		noexcept	{ return node.Children.size() / 2; }
-	sinx	::llc::error_t	jsonArraySize			(const ::llc::SJSONNode & node)		noexcept	{ return node.Children.size(); }	// returns the index of the JSON element corresponding to the index provided as parameter.
-	::llc::error_t			jsonArrayValueGet		(const ::llc::SJSONNode & node, u2_t index);	// returns the index of the JSON element corresponding to the index provided as parameter.
-	::llc::error_t			jsonObjectValueGet		(const ::llc::SJSONNode & node, const ::llc::view<::llc::vcsc_t> & views, const ::llc::vcst_t & key);
-	::llc::error_t			jsonObjectKeyList		(const ::llc::SJSONNode & node, ::llc::as2_t & indices);
-	::llc::error_t			jsonObjectKeyList		(const ::llc::SJSONNode & node, const ::llc::view<::llc::vcsc_t> & views, ::llc::avcsc_t & keys);
-	::llc::error_t			jsonObjectKeyList		(const ::llc::SJSONNode & node, const ::llc::view<::llc::vcsc_t> & views, ::llc::as2_t & indices, ::llc::avcsc_t & keys);
-	::llc::error_t			jsonCompareNumber		(const ::llc::SJSONNode & node, const ::llc::view<::llc::vcsc_t> & views, const ::llc::SJSONNode & other, const ::llc::view<::llc::vcsc_t> & otherViews);
-	::llc::error_t			jsonCompareArray		(const ::llc::SJSONNode & node, const ::llc::view<::llc::vcsc_t> & views, const ::llc::SJSONNode & other, const ::llc::view<::llc::vcsc_t> & otherViews);
-	::llc::error_t			jsonCompareObject		(const ::llc::SJSONNode & node, const ::llc::view<::llc::vcsc_t> & views, const ::llc::SJSONNode & other, const ::llc::view<::llc::vcsc_t> & otherViews);
+	nsix	err_t	jsonArraySize		(cnst SJSONNode & node)												nxpt	{ rtrn node.Children.size(); }	// returns the index of the JSON element corresponding to the index provided as parameter.
+	nsix	err_t	jsonObjectKeyCount	(cnst SJSONNode & node)												nxpt	{ rtrn node.Children.size() / 2; }
+	err_t			jsonArrayValueGet	(cnst SJSONNode & node, u2_t index);	// returns the index of the JSON element corresponding to the index provided as parameter.
+	err_t			jsonObjectValueGet	(cnst SJSONNode & node, cnst view<vcsc_t> & views, vcst_c & key);
+	err_t			jsonObjectKeyList	(cnst SJSONNode & node, as2_t & indices);
+	err_t			jsonObjectKeyList	(cnst SJSONNode & node, cnst view<vcsc_t> & views, avcsc_t & keys);
+	err_t			jsonObjectKeyList	(cnst SJSONNode & node, cnst view<vcsc_t> & views, as2_t & indices, avcsc_t & keys);
+	err_t			jsonCompareNumber	(cnst SJSONNode & node, cnst view<vcsc_t> & views, cnst SJSONNode & other, cnst view<vcsc_t> & otherViews);
+	err_t			jsonCompareArray	(cnst SJSONNode & node, cnst view<vcsc_t> & views, cnst SJSONNode & other, cnst view<vcsc_t> & otherViews);
+	err_t			jsonCompareObject	(cnst SJSONNode & node, cnst view<vcsc_t> & views, cnst SJSONNode & other, cnst view<vcsc_t> & otherViews);
 
 
 	// Access functions: Iterate over children looking for keys or values.
-	ndsi	::llc::error_t	jsonObjectKeyCount	(const ::llc::SJSONReader & reader, u2_t iNode)												{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2 "", iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); return jsonObjectKeyCount(*reader.Tree[iNode]); }
-	ndsi	::llc::error_t	jsonArraySize		(const ::llc::SJSONReader & reader, u2_t iNode)												{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2 "", iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); return jsonArraySize(*reader.Tree[iNode]); }
-	ndsi	::llc::error_t	jsonArrayValueGet	(const ::llc::SJSONReader & reader, u2_t iNode, u2_t indexOfValueToGet)						{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2 "", iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); return jsonArrayValueGet(*reader.Tree[iNode], indexOfValueToGet); }
-	ndsi	::llc::error_t	jsonObjectValueGet	(const ::llc::SJSONReader & reader, u2_t iNode, const ::llc::vcst_t & key)						{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2 "", iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); return jsonObjectValueGet(*reader.Tree[iNode], reader.View, {key.begin(), key.size()}); }
-	stin	::llc::error_t	jsonObjectKeyList	(const ::llc::SJSONReader & reader, u2_t iNode, ::llc::as2_t & indices)						{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2 "", iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); return jsonObjectKeyList(*reader.Tree[iNode], indices); }
-	stin	::llc::error_t	jsonObjectKeyList	(const ::llc::SJSONReader & reader, u2_t iNode, ::llc::avcsc_t & keys)							{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2 "", iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); return jsonObjectKeyList(*reader.Tree[iNode], reader.View, keys); }
-	stin	::llc::error_t	jsonObjectKeyList	(const ::llc::SJSONReader & reader, u2_t iNode, ::llc::as2_t & indices, ::llc::avcsc_t & keys)	{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2 "", iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); return jsonObjectKeyList(*reader.Tree[iNode], reader.View, indices, keys); }
+	ndsi	err_t	jsonArraySize		(cnst SJSONReader & reader, u2_t iNode)										{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2, iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); rtrn jsonArraySize(*reader.Tree[iNode]); }
+	ndsi	err_t	jsonObjectKeyCount	(cnst SJSONReader & reader, u2_t iNode)										{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2, iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); rtrn jsonObjectKeyCount(*reader.Tree[iNode]); }
+	ndsi	err_t	jsonArrayValueGet	(cnst SJSONReader & reader, u2_t iNode, u2_t indexOfValueToGet)				{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2, iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); rtrn jsonArrayValueGet(*reader.Tree[iNode], indexOfValueToGet); }
+	ndsi	err_t	jsonObjectValueGet	(cnst SJSONReader & reader, u2_t iNode, vcst_c & key)						{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2, iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); rtrn jsonObjectValueGet(*reader.Tree[iNode], reader.View, {key.begin(), key.size()}); }
+	stin	err_t	jsonObjectKeyList	(cnst SJSONReader & reader, u2_t iNode, as2_t & indices)					{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2, iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); rtrn jsonObjectKeyList(*reader.Tree[iNode], indices); }
+	stin	err_t	jsonObjectKeyList	(cnst SJSONReader & reader, u2_t iNode, avcsc_t & keys)						{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2, iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); rtrn jsonObjectKeyList(*reader.Tree[iNode], reader.View, keys); }
+	stin	err_t	jsonObjectKeyList	(cnst SJSONReader & reader, u2_t iNode, as2_t & indices, avcsc_t & keys)	{ rew_if(iNode >= reader.Tree.size(), "Invalid node index: %" LLC_FMT_S2 ". Total nodes: %" LLC_FMT_U2, iNode, reader.Tree.size()); rees_if(!reader.Tree[iNode]); rtrn jsonObjectKeyList(*reader.Tree[iNode], reader.View, indices, keys); }
 
-	ndsi	::llc::error_t	jsonCompareArray	(const ::llc::SJSONNode & node, const ::llc::SJSONNode & other, const ::llc::view<::llc::vcsc_t> & views)	{ return ::llc::jsonCompareArray	(node, views, other, views); }
-	ndsi	::llc::error_t	jsonCompareObject	(const ::llc::SJSONNode & node, const ::llc::SJSONNode & other, const ::llc::view<::llc::vcsc_t> & views)	{ return ::llc::jsonCompareObject	(node, views, other, views); }
-	ndsi	::llc::error_t	jsonCompareNumber	(const ::llc::SJSONNode & node, const ::llc::SJSONNode & other, const ::llc::view<::llc::vcsc_t> & views)	{ return ::llc::jsonCompareNumber	(node, views, other, views); }
+	ndsi	err_t	jsonCompareArray	(cnst SJSONNode & node, cnst SJSONNode & other, cnst view<vcsc_t> & views)	{ rtrn jsonCompareArray		(node, views, other, views); }
+	ndsi	err_t	jsonCompareObject	(cnst SJSONNode & node, cnst SJSONNode & other, cnst view<vcsc_t> & views)	{ rtrn jsonCompareObject	(node, views, other, views); }
+	ndsi	err_t	jsonCompareNumber	(cnst SJSONNode & node, cnst SJSONNode & other, cnst view<vcsc_t> & views)	{ rtrn jsonCompareNumber	(node, views, other, views); }
 
-	::llc::error_t	jsonObjectGetString (const ::llc::SJSONReader & reader, u2_t iNode, vcsc_t		& value);
-	::llc::error_t	jsonObjectGetBoolean(const ::llc::SJSONReader & reader, u2_t iNode, bool	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, u2_t iNode, i0u_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, u2_t iNode, i1u_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, u2_t iNode, i2u_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, u2_t iNode, i3u_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, u2_t iNode, i0s_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, u2_t iNode, i1s_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, u2_t iNode, i2s_t	& value);
-	::llc::error_t	jsonObjectGetInteger(const ::llc::SJSONReader & reader, u2_t iNode, i3s_t	& value);
-	::llc::error_t	jsonObjectGetDecimal(const ::llc::SJSONReader & reader, u2_t iNode, f2s_t	& value);
-	::llc::error_t	jsonObjectGetDecimal(const ::llc::SJSONReader & reader, u2_t iNode, f3s_t	& value);
+	err_t	jsonObjectGetCString(cnst SJSONReader & reader, u2_t iNode, vcsc_t	& value);
+	err_t	jsonObjectGetString (cnst SJSONReader & reader, u2_t iNode, vcsc_t	& value);
+	err_t	jsonObjectGetBoolean(cnst SJSONReader & reader, u2_t iNode, b8_t	& value);
+	err_t	jsonObjectGetInteger(cnst SJSONReader & reader, u2_t iNode, u0_t	& value);
+	err_t	jsonObjectGetInteger(cnst SJSONReader & reader, u2_t iNode, u1_t	& value);
+	err_t	jsonObjectGetInteger(cnst SJSONReader & reader, u2_t iNode, u2_t	& value);
+	err_t	jsonObjectGetInteger(cnst SJSONReader & reader, u2_t iNode, u3_t	& value);
+	err_t	jsonObjectGetInteger(cnst SJSONReader & reader, u2_t iNode, s0_t	& value);
+	err_t	jsonObjectGetInteger(cnst SJSONReader & reader, u2_t iNode, s1_t	& value);
+	err_t	jsonObjectGetInteger(cnst SJSONReader & reader, u2_t iNode, s2_t	& value);
+	err_t	jsonObjectGetInteger(cnst SJSONReader & reader, u2_t iNode, s3_t	& value);
+	err_t	jsonObjectGetDecimal(cnst SJSONReader & reader, u2_t iNode, f2_t	& value);
+	err_t	jsonObjectGetDecimal(cnst SJSONReader & reader, u2_t iNode, f3_t	& value);
 
 	// TODO: Finish
-	//::llc::error_t	jsonObjectGetIntegerAsString (const ::llc::SJSONReader & reader, u2_t iNode, vcsc_t	& value);
-	::llc::error_t	jsonObjectGetIntegerAsBoolean(const ::llc::SJSONReader & reader, u2_t iNode, bool	& value);
-	::llc::error_t	jsonObjectGetIntegerAsDecimal(const ::llc::SJSONReader & reader, u2_t iNode, double	& value);
-	::llc::error_t	jsonObjectGetDecimalAsInteger(const ::llc::SJSONReader & reader, u2_t iNode, i3s_t	& value);
-	//::llc::error_t	jsonObjectGetDecimalAsString (const ::llc::SJSONReader & reader, u2_t iNode, vcsc_t	& value);
-	::llc::error_t	jsonObjectGetDecimalAsBoolean(const ::llc::SJSONReader & reader, u2_t iNode, bool	& value);
-	//::llc::error_t	jsonObjectGetStringAsInteger (const ::llc::SJSONReader & reader, u2_t iNode, i64_t	& value);
-	//::llc::error_t	jsonObjectGetStringAsBoolean (const ::llc::SJSONReader & reader, u2_t iNode, bool	& value);
-	//::llc::error_t	jsonObjectGetStringAsDecimal (const ::llc::SJSONReader & reader, u2_t iNode, double	& value);
-	::llc::error_t	jsonObjectGetBooleanAsInteger(const ::llc::SJSONReader & reader, u2_t iNode, i3s_t	& value);
-	//::llc::error_t	jsonObjectGetBooleanAsString (const ::llc::SJSONReader & reader, u2_t iNode, vcsc_t	& value);
-	::llc::error_t	jsonObjectGetBooleanAsDecimal(const ::llc::SJSONReader & reader, u2_t iNode, double	& value);
+	//err_t	jsonObjectGetIntegerAsString (cnst SJSONReader & reader, u2_t iNode, vcsc_t	& value);
+	err_t	jsonObjectGetIntegerAsBoolean(cnst SJSONReader & reader, u2_t iNode, b8_t	& value);
+	err_t	jsonObjectGetIntegerAsDecimal(cnst SJSONReader & reader, u2_t iNode, f3_t	& value);
+	err_t	jsonObjectGetDecimalAsInteger(cnst SJSONReader & reader, u2_t iNode, s3_t	& value);
+	//err_t	jsonObjectGetDecimalAsString (cnst SJSONReader & reader, u2_t iNode, vcsc_t	& value);
+	err_t	jsonObjectGetDecimalAsBoolean(cnst SJSONReader & reader, u2_t iNode, b8_t	& value);
+	//err_t	jsonObjectGetStringAsInteger (cnst SJSONReader & reader, u2_t iNode, s3_t	& value);
+	//err_t	jsonObjectGetStringAsBoolean (cnst SJSONReader & reader, u2_t iNode, b8_t	& value);
+	//err_t	jsonObjectGetStringAsDecimal (cnst SJSONReader & reader, u2_t iNode, f3_t	& value);
+	err_t	jsonObjectGetBooleanAsInteger(cnst SJSONReader & reader, u2_t iNode, s3_t	& value);
+	//err_t	jsonObjectGetBooleanAsString (cnst SJSONReader & reader, u2_t iNode, vcsc_t	& value);
+	err_t	jsonObjectGetBooleanAsDecimal(cnst SJSONReader & reader, u2_t iNode, f3_t	& value);
 	// 
-	//::llc::error_t	jsonObjectGetAsString	(const ::llc::SJSONReader & reader, u2_t iNode, vcsc_t		& value);
-	//::llc::error_t	jsonObjectGetAsBoolean	(const ::llc::SJSONReader & reader, u2_t iNode, bool	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, i0u_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, i1u_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, i2u_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, i3u_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, i0s_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, i1s_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, i2s_t	& value);
-	//::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, i3s_t	& value);
-	//::llc::error_t	jsonObjectGetAsDecimal	(const ::llc::SJSONReader & reader, u2_t iNode, f2s_t	& value);
-	//::llc::error_t	jsonObjectGetAsDecimal	(const ::llc::SJSONReader & reader, u2_t iNode, f3s_t	& value);
+	//err_t	jsonObjectGetAsString	(cnst SJSONReader & reader, u2_t iNode, vcsc_t	& value);
+	//err_t	jsonObjectGetAsBoolean	(cnst SJSONReader & reader, u2_t iNode, b8_t	& value);
+	//err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, u0_t	& value);
+	//err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, u1_t	& value);
+	//err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, u2_t	& value);
+	//err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, u3_t	& value);
+	//err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, s0_t	& value);
+	//err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, s1_t	& value);
+	//err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, s2_t	& value);
+	//err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, s3_t	& value);
+	//err_t	jsonObjectGetAsDecimal	(cnst SJSONReader & reader, u2_t iNode, f2_t	& value);
+	//err_t	jsonObjectGetAsDecimal	(cnst SJSONReader & reader, u2_t iNode, f3_t	& value);
 
-	::llc::error_t	jsonObjectGetAsString	(const ::llc::SJSONReader & reader, u2_t iNode, const ::llc::vcst_t & key, vcsc_t		& value);
-	::llc::error_t	jsonObjectGetAsBoolean	(const ::llc::SJSONReader & reader, u2_t iNode, const ::llc::vcst_t & key, bool	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, const ::llc::vcst_t & key, i0u_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, const ::llc::vcst_t & key, i1u_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, const ::llc::vcst_t & key, i2u_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, const ::llc::vcst_t & key, i3u_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, const ::llc::vcst_t & key, i0s_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, const ::llc::vcst_t & key, i1s_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, const ::llc::vcst_t & key, i2s_t	& value);
-	::llc::error_t	jsonObjectGetAsInteger	(const ::llc::SJSONReader & reader, u2_t iNode, const ::llc::vcst_t & key, i3s_t	& value);
-	::llc::error_t	jsonObjectGetAsDecimal	(const ::llc::SJSONReader & reader, u2_t iNode, const ::llc::vcst_t & key, f2s_t	& value);
-	::llc::error_t	jsonObjectGetAsDecimal	(const ::llc::SJSONReader & reader, u2_t iNode, const ::llc::vcst_t & key, f3s_t	& value);
+	err_t	jsonObjectGetAsString	(cnst SJSONReader & reader, u2_t iNode, vcst_c & key, vcsc_t	& value);
+	err_t	jsonObjectGetAsBoolean	(cnst SJSONReader & reader, u2_t iNode, vcst_c & key, b8_t		& value);
+	err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, vcst_c & key, u0_t		& value);
+	err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, vcst_c & key, u1_t		& value);
+	err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, vcst_c & key, u2_t		& value);
+	err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, vcst_c & key, u3_t		& value);
+	err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, vcst_c & key, s0_t		& value);
+	err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, vcst_c & key, s1_t		& value);
+	err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, vcst_c & key, s2_t		& value);
+	err_t	jsonObjectGetAsInteger	(cnst SJSONReader & reader, u2_t iNode, vcst_c & key, s3_t		& value);
+	err_t	jsonObjectGetAsDecimal	(cnst SJSONReader & reader, u2_t iNode, vcst_c & key, f2_t		& value);
+	err_t	jsonObjectGetAsDecimal	(cnst SJSONReader & reader, u2_t iNode, vcst_c & key, f3_t		& value);
 
- stct SJSONFile {
-		::llc::asc_t			Bytes					= {};
-		::llc::SJSONReader		Reader					= {};
+	stct SJSONFile {
+		asc_t			Bytes					= {};
+		SJSONReader		Reader					= {};
 	};
 
-	tydf ::llc::SKeyVal<::llc::vcsc_t, ::llc::SJSONFile>	TKeyValJSONFile;
+	tydf SKeyVal<vcsc_t, SJSONFile>	TKeyValJSONFile;
 
-	::llc::error_t			jsonFileRead			(::llc::SJSONFile & file, ::llc::vcsc_c & filename);
-	::llc::error_t			jsonWrite				(const ::llc::SJSONNode * node, const ::llc::view<::llc::vcsc_t> & jsonViews, ::llc::apod<char> & output);
-	::llc::error_t			jsonArraySplit			(const ::llc::SJSONNode & jsonArrayToSplit, const ::llc::view<::llc::vcsc_t> & jsonViews, u2_c blockSize, ::llc::aobj<::llc::apod<char>> & outputJsons);
+	err_t			jsonFileRead			(SJSONFile & file, vcsc_c & filename);
+	err_t			jsonWrite				(cnst SJSONNode * node, cnst view<vcsc_t> & jsonViews, apod<sc_t> & output);
+	err_t			jsonArraySplit			(cnst SJSONNode & jsonArrayToSplit, cnst view<vcsc_t> & jsonViews, u2_c blockSize, aobj<asc_t> & outputJsons);
 
- stct SJSONFieldBinding {
-		::llc::vcsc_t				Field					= {};
-		::llc::JSON_TYPE		Type					= {};
+	stct SJSONFieldBinding {
+		vcsc_t			Field					= {};
+		JSON_TYPE		Type					= {};
 	};
 
-	::llc::error_t			jsonMapToFields			(::llc::as2_t & indicesOfFields, const ::llc::view<const ::llc::SJSONFieldBinding> fields, const ::llc::view<const ::llc::TKeyValConstChar> fieldMaps);
-	::llc::error_t			jsonFieldsToMap			(::llc::as2_t & indicesOfFields, const ::llc::view<const ::llc::SJSONFieldBinding> fields, const ::llc::view<const ::llc::TKeyValConstChar> fieldMaps);
+	err_t			jsonMapToFields			(as2_t & indicesOfFields, cnst view<cnst SJSONFieldBinding> fields, cnst view<cnst TKeyValConstChar> fieldMaps);
+	err_t			jsonFieldsToMap			(as2_t & indicesOfFields, cnst view<cnst SJSONFieldBinding> fields, cnst view<cnst TKeyValConstChar> fieldMaps);
 } // namespace
 
 #endif // LLC_JSON_H_23627

@@ -1,6 +1,6 @@
 #include "llc_log.h"
-#include "llc_cstring.h"
-#include "llc_size.h"
+
+#include "llc_chrono.h"
 
 #ifdef LLC_ATMEL
 #	include <stdio.h>

@@ -5,14 +5,10 @@
 #	define LLC_LOG_ARDUINO_FLASHSTRINGHELPER
 #endif
 
-#ifdef LLC_LOG_ARDUINO_FLASHSTRINGHELPER
-#	include <WString.h>
-#endif
-
 #ifdef LLC_ARDUINO
-#ifdef LLC_ESP32
-#	include <Arduino.h>
-#endif
+#	ifdef LLC_LOG_ARDUINO_FLASHSTRINGHELPER
+#		include <WString.h>
+#	endif
 #endif
 
 #ifndef LLC_LOG_CORE_H
@@ -85,11 +81,12 @@ namespace llc
 #endif // if_true_logf
 
 #ifdef if_true_log
-#	define if_true_log_and_break(llc_logFunction, condition)						if_true_block_log(llc_logFunction, condition, break)						// - Log condition and break if (condition) == true.
+#	define if_true_log_and_break(llc_logFunction, condition)						if_true_block_log(llc_logFunction, condition, break)					// - Log condition and break if (condition) == true.
 #	define if_true_log_and_continue(llc_logFunction, condition)						if_true_block_log(llc_logFunction, condition, continue)					// - Log condition and continue if (condition) == true.
-#	define if_true_log_and_throw(llc_logFunction, condition)						if_true_block_log(llc_logFunction, condition, llc_throw(#condition))			// - Log condition and return if (condition) == true.
-#	define if_true_log_and_return(llc_logFunction, condition)						if_true_block_log(llc_logFunction, condition, return)						// - Log condition and return if (condition) == true.
-#	define if_true_log_and_return_value(llc_logFunction, valueToReturn, condition)	if_true_block_log(llc_logFunction, condition, return (valueToReturn))		// - Log condition and return some value if (condition) == true.
+#	define if_true_log_and_throw(llc_logFunction, condition)						if_true_block_log(llc_logFunction, condition, llc_throw(#condition))	// - Log condition and return if (condition) == true.
+#	define if_true_log_and_return(llc_logFunction, condition)						if_true_block_log(llc_logFunction, condition, return)					// - Log condition and return if (condition) == true.
+#	define if_true_log_and_return_value(llc_logFunction, value, condition)			if_true_block_log(llc_logFunction, condition, return (value))	// - Log condition and return some value if (condition) == true.
+#	define if_true_log_and_fail(llc_logFunction, condition)							if_true_log_and_return_value(llc_logFunction, -1, condition)			// - Log condition and return some value if (condition) == true.
 #endif // if_true_log
 #ifdef if_true_logf
 #	define if_true_logf_and_break(llc_logFunction, condition, format, ...)					if_true_block_logf(llc_logFunction, condition, break, format, __VA_ARGS__)			// - Log formatted string and break if (condition) == true.
@@ -97,7 +94,8 @@ namespace llc
 #	define if_true_logf_and_throw(llc_logFunction, condition, format, ...)					if_true_block_logf(llc_logFunction, condition, llc_throw(#condition), format, __VA_ARGS__)			// - Log condition and return if (condition) == true.
 #	define if_true_logf_and_return(llc_logFunction, condition, format, ...)					if_true_block_logf(llc_logFunction, condition, return, format, __VA_ARGS__)			// - Log formatted string and return if (condition) == true.
 #	define if_true_logf_and_return_value(llc_logFunction, value, condition, format, ...)	if_true_block_logf(llc_logFunction, condition, return (value), format, __VA_ARGS__)	// - Log formatted string and return some value if (condition) == true.
-#endif // if_true_log
+#	define if_true_logf_and_fail(llc_logFunction, condition, format, ...)					if_true_logf_and_return_value(llc_logFunction, -1, condition, format, __VA_ARGS__)	// - Log formatted string and return -1 if (condition) == true.
+#endif // if_true_logf
 
 #ifdef if_true_log
 #	ifndef if_fail_log
@@ -106,42 +104,48 @@ namespace llc
 #		define if_fail_log_and_continue(llc_logFunction, condition)						if_true_log_and_continue	(llc_logFunction, ::llc::failed(condition))				// - if condition < 0 -> continue
 #		define if_fail_log_and_throw(llc_logFunction, condition)						if_true_log_and_throw		(llc_logFunction, ::llc::failed(condition))				// - if condition < 0 -> return
 #		define if_fail_log_and_return(llc_logFunction, condition)						if_true_log_and_return		(llc_logFunction, ::llc::failed(condition))				// - if condition < 0 -> return
-#		define if_fail_log_and_return_value(llc_logFunction, value, condition)			if_true_log_and_return_value(llc_logFunction, (value), ::llc::failed(condition))		// - if condition < 0 -> return value
-#		define if_zero_log(llc_logFunction, condition)									if_true_log					(llc_logFunction, 0 == (condition))							// - if condition == 0 -> log
-#		define if_zero_log_and_break(llc_logFunction, condition)						if_true_log_and_break		(llc_logFunction, 0 == (condition))							// - if condition == 0 -> break
-#		define if_zero_log_and_continue(llc_logFunction, condition)						if_true_log_and_continue	(llc_logFunction, 0 == (condition))							// - if condition == 0 -> continue
-#		define if_zero_log_and_throw(llc_logFunction, condition)						if_true_logf_and_throw		(llc_logFunction, 0 == (condition))							// - if condition == 0 -> return
-#		define if_zero_log_and_return(llc_logFunction, condition)						if_true_log_and_return		(llc_logFunction, 0 == (condition))							// - if condition == 0 -> return
-#		define if_zero_log_and_return_value(llc_logFunction, value, condition)			if_true_log_and_return_value(llc_logFunction, (value), 0 == (condition))				// - if condition == 0 -> return value
-#		define if_null_log																if_zero_log																				// - if condition == 0 -> log
-#		define if_null_log_and_break													if_zero_log_and_break																	// - if condition == 0 -> break
-#		define if_null_log_and_continue													if_zero_log_and_continue																// - if condition == 0 -> continue
-#		define if_null_log_and_throw													if_zero_log_and_throw																	// - if condition == 0 -> return
-#		define if_null_log_and_return													if_zero_log_and_return																	// - if condition == 0 -> return
-#		define if_null_log_and_return_value												if_zero_log_and_return_value															// - if condition == 0 -> return value
+#		define if_fail_log_and_return_value(llc_logFunction, value, condition)			if_true_log_and_return_value(llc_logFunction, (value), ::llc::failed(condition))	// - if condition < 0 -> return value
+#		define if_fail_log_and_fail(llc_logFunction, condition)							if_true_log_and_fail		(llc_logFunction, ::llc::failed(condition))				// - if condition < 0 -> return -1
+#		define if_zero_log(llc_logFunction, condition)									if_true_log					(llc_logFunction, 0 == (condition))						// - if condition == 0 -> log
+#		define if_zero_log_and_break(llc_logFunction, condition)						if_true_log_and_break		(llc_logFunction, 0 == (condition))						// - if condition == 0 -> break
+#		define if_zero_log_and_continue(llc_logFunction, condition)						if_true_log_and_continue	(llc_logFunction, 0 == (condition))						// - if condition == 0 -> continue
+#		define if_zero_log_and_throw(llc_logFunction, condition)						if_true_logf_and_throw		(llc_logFunction, 0 == (condition))						// - if condition == 0 -> return
+#		define if_zero_log_and_return(llc_logFunction, condition)						if_true_log_and_return		(llc_logFunction, 0 == (condition))						// - if condition == 0 -> return
+#		define if_zero_log_and_return_value(llc_logFunction, value, condition)			if_true_log_and_return_value(llc_logFunction, (value), 0 == (condition))			// - if condition == 0 -> return value
+#		define if_zero_log_and_fail(llc_logFunction, condition)							if_true_log_and_fail		(llc_logFunction, 0 == (condition))						// - if condition == 0 -> return -1
+#		define if_null_log																if_zero_log																			// - if condition == 0 -> log
+#		define if_null_log_and_break													if_zero_log_and_break																// - if condition == 0 -> break
+#		define if_null_log_and_continue													if_zero_log_and_continue															// - if condition == 0 -> continue
+#		define if_null_log_and_throw													if_zero_log_and_throw																// - if condition == 0 -> return
+#		define if_null_log_and_return													if_zero_log_and_return																// - if condition == 0 -> return
+#		define if_null_log_and_return_value												if_zero_log_and_return_value														// - if condition == 0 -> return value
+#		define if_null_log_and_fail														if_zero_log_and_fail																// - if condition == 0 -> return -1
 #	endif // if_fail_log
 #endif // if_true_log
 
 #ifdef if_true_logf
 #	ifndef if_fail_logf
-#		define if_fail_logf(llc_logFunction, condition, format, ...)							if_true_logf					(llc_logFunction, ::llc::failed(condition), format, __VA_ARGS__)				// - if condition < 0 -> log
-#		define if_fail_logf_and_break(llc_logFunction, condition, format, ...)					if_true_logf_and_break			(llc_logFunction, ::llc::failed(condition), format, __VA_ARGS__)				// - if condition < 0 -> break
-#		define if_fail_logf_and_continue(llc_logFunction, condition, format, ...)				if_true_logf_and_continue		(llc_logFunction, ::llc::failed(condition), format, __VA_ARGS__)				// - if condition < 0 -> continue
-#		define if_fail_logf_and_throw(llc_logFunction, condition, format, ...)					if_true_logf_and_throw			(llc_logFunction, ::llc::failed(condition), format, __VA_ARGS__)				// - if condition < 0 -> return
-#		define if_fail_logf_and_return(llc_logFunction, condition, format, ...)					if_true_logf_and_return			(llc_logFunction, ::llc::failed(condition), format, __VA_ARGS__)				// - if condition < 0 -> return
+#		define if_fail_logf(llc_logFunction, condition, format, ...)							if_true_logf					(llc_logFunction, ::llc::failed(condition), format, __VA_ARGS__)			// - if condition < 0 -> log
+#		define if_fail_logf_and_break(llc_logFunction, condition, format, ...)					if_true_logf_and_break			(llc_logFunction, ::llc::failed(condition), format, __VA_ARGS__)			// - if condition < 0 -> break
+#		define if_fail_logf_and_continue(llc_logFunction, condition, format, ...)				if_true_logf_and_continue		(llc_logFunction, ::llc::failed(condition), format, __VA_ARGS__)			// - if condition < 0 -> continue
+#		define if_fail_logf_and_throw(llc_logFunction, condition, format, ...)					if_true_logf_and_throw			(llc_logFunction, ::llc::failed(condition), format, __VA_ARGS__)			// - if condition < 0 -> return
+#		define if_fail_logf_and_return(llc_logFunction, condition, format, ...)					if_true_logf_and_return			(llc_logFunction, ::llc::failed(condition), format, __VA_ARGS__)			// - if condition < 0 -> return
 #		define if_fail_logf_and_return_value(llc_logFunction, value, condition, format, ...)	if_true_logf_and_return_value	(llc_logFunction, (value), ::llc::failed(condition), format, __VA_ARGS__)	// - if condition < 0 -> return value
-#		define if_zero_logf(llc_logFunction, condition, format, ...)							if_true_logf					(llc_logFunction, 0 == (condition), format, __VA_ARGS__)						// - if condition == 0 -> log
-#		define if_zero_logf_and_break(llc_logFunction, condition, format, ...)					if_true_logf_and_break			(llc_logFunction, 0 == (condition), format, __VA_ARGS__)						// - if condition == 0 -> break
-#		define if_zero_logf_and_continue(llc_logFunction, condition, format, ...)				if_true_logf_and_continue		(llc_logFunction, 0 == (condition), format, __VA_ARGS__)						// - if condition == 0 -> continue
-#		define if_zero_logf_and_throw(llc_logFunction, condition, format, ...)					if_true_logf_and_throw			(llc_logFunction, 0 == (condition), format, __VA_ARGS__)						// - if condition == 0 -> return
-#		define if_zero_logf_and_return(llc_logFunction, condition, format, ...)					if_true_logf_and_return			(llc_logFunction, 0 == (condition), format, __VA_ARGS__)						// - if condition == 0 -> return
-#		define if_zero_logf_and_return_value(llc_logFunction, value, condition, format, ...)	if_true_logf_and_return_value	(llc_logFunction, (value), 0 == (condition), format, __VA_ARGS__)				// - if condition == 0 -> return value
-#		define if_null_logf						if_zero_logf																																					// - if condition == 0 -> log
-#		define if_null_logf_and_break			if_zero_logf_and_break																																			// - if condition == 0 -> break
-#		define if_null_logf_and_continue		if_zero_logf_and_continue																																		// - if condition == 0 -> continue
-#		define if_null_log_and_throw			if_zero_log_and_throw																																			// - if condition == 0 -> return
-#		define if_null_logf_and_return			if_zero_logf_and_return																																			// - if condition == 0 -> return
-#		define if_null_logf_and_return_value	if_zero_logf_and_return_value																																	// - if condition == 0 -> return value
+#		define if_fail_logf_and_fail(llc_logFunction, condition, format, ...)					if_true_logf_and_fail			(llc_logFunction, ::llc::failed(condition), format, __VA_ARGS__)			// - if condition < 0 -> return -1
+#		define if_zero_logf(llc_logFunction, condition, format, ...)							if_true_logf					(llc_logFunction, 0 == (condition), format, __VA_ARGS__)					// - if condition == 0 -> log
+#		define if_zero_logf_and_break(llc_logFunction, condition, format, ...)					if_true_logf_and_break			(llc_logFunction, 0 == (condition), format, __VA_ARGS__)					// - if condition == 0 -> break
+#		define if_zero_logf_and_continue(llc_logFunction, condition, format, ...)				if_true_logf_and_continue		(llc_logFunction, 0 == (condition), format, __VA_ARGS__)					// - if condition == 0 -> continue
+#		define if_zero_logf_and_throw(llc_logFunction, condition, format, ...)					if_true_logf_and_throw			(llc_logFunction, 0 == (condition), format, __VA_ARGS__)					// - if condition == 0 -> return
+#		define if_zero_logf_and_return(llc_logFunction, condition, format, ...)					if_true_logf_and_return			(llc_logFunction, 0 == (condition), format, __VA_ARGS__)					// - if condition == 0 -> return
+#		define if_zero_logf_and_return_value(llc_logFunction, value, condition, format, ...)	if_true_logf_and_return_value	(llc_logFunction, (value), 0 == (condition), format, __VA_ARGS__)			// - if condition == 0 -> return value
+#		define if_zero_logf_and_fail(llc_logFunction, condition, format, ...)					if_true_logf_and_fail			(llc_logFunction, 0 == (condition), format, __VA_ARGS__)					// - if condition == 0 -> return -1
+#		define if_null_logf						if_zero_logf					// - if condition == 0 -> log
+#		define if_null_logf_and_break			if_zero_logf_and_break			// - if condition == 0 -> break
+#		define if_null_logf_and_continue		if_zero_logf_and_continue		// - if condition == 0 -> continue
+#		define if_null_log_and_throw			if_zero_log_and_throw			// - if condition == 0 -> return
+#		define if_null_logf_and_return			if_zero_logf_and_return			// - if condition == 0 -> return
+#		define if_null_logf_and_return_value	if_zero_logf_and_return_value	// - if condition == 0 -> return value
+#		define if_null_logf_and_fail			if_zero_logf_and_fail			// - if condition == 0 -> return -1
 #	endif // if_fail_logf
 #endif // if_true_logf
 

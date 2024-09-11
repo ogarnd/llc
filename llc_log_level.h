@@ -1,8 +1,6 @@
 #include "llc_log_core.h"
 
-#include "llc_chrono.h" 
 #include "llc_size.h"
-
 #include "llc_cstring.h"
 
 #ifdef LLC_ATMEL
@@ -17,18 +15,17 @@
 
 namespace llc
 {
+	err_t			debug_print_prefix				(s0_t severity, sc_c * path, u2_t line, sc_c * function);
 #ifndef LLC_ARDUINO
-	void				_llc_print_system_errors		(sc_c * prefix, u2_t prefixLen);
+	void			_llc_print_system_errors		(sc_c * prefix, u2_t prefixLen);
 #endif
-	err_t		debug_print_prefix				(s0_t severity, sc_c * path, u2_t line, sc_c * function);
-
 #ifndef LLC_ATMEL
 	tplt<u2_t fmtLen, tpnm... TArgs>
-	sttc	void		_llc_debug_printf				(s0_t severity, sc_c * path, u2_t line, sc_c * function, sc_c (&format)[fmtLen], cnst TArgs... args)			{
+	sttc	void	_llc_debug_printf				(s0_t severity, sc_c * path, u2_t line, sc_c * function, sc_c (&format)[fmtLen], cnst TArgs... args)	{
 		debug_print_prefix((int8_t)severity, path, line, function);
 #else
 	tplt<tpnm... TArgs>
-	sttc	void		_llc_debug_printf				(sc_c * function, cnst __FlashStringHelper * format, cnst TArgs... args)			{
+	sttc	void	_llc_debug_printf				(sc_c * function, cnst __FlashStringHelper * format, cnst TArgs... args)			{
 		base_log_print_F("{");
 		base_log_print(function);
 		base_log_print_F("}:");
@@ -39,9 +36,9 @@ namespace llc
 			u2_c bufferSize = u2_t(strlen(format) + 1024 * 8);
 			if(char * customDynamicString = (char*)malloc(bufferSize)) {
 				u2_c 				stringLength		= (u2_t)snprintf(customDynamicString, bufferSize - 2U, format, args...);
-				customDynamicString[::llc::min(stringLength, bufferSize - 2U)] = '\n';
-				customDynamicString[::llc::min(stringLength + 1, bufferSize - 1U)] = 0;
-				base_log_write(customDynamicString, (int)::llc::min(stringLength + 1U, bufferSize - 1U));
+				customDynamicString[min(stringLength, bufferSize - 2U)] = '\n';
+				customDynamicString[min(stringLength + 1, bufferSize - 1U)] = 0;
+				base_log_write(customDynamicString, (int)min(stringLength + 1U, bufferSize - 1U));
 				free(customDynamicString);
 			}
 		}
@@ -49,11 +46,11 @@ namespace llc
 #	if defined(LLC_ATMEL) || defined(ESP8266)
 		sc_t					customDynamicString	[128]		= {};
 		u2_c 					stringLength					= (u2_t)snprintf_P(customDynamicString, szof(customDynamicString) - 1U, (sc_c*)format, args...);
-		customDynamicString[::llc::min(stringLength, szof(customDynamicString) - 1U)] = '\n';
+		customDynamicString[min(stringLength, szof(customDynamicString) - 1U)] = '\n';
 	#else
 		sc_t					customDynamicString	[fmtLen + 1024 * 32]	= {};
 		u2_c 					stringLength					= (u2_t)::llc::sprintf_s(customDynamicString, format, args...);
-		customDynamicString[::llc::min(stringLength, szof(customDynamicString) - 2U)] = '\n';
+		customDynamicString[min(stringLength, szof(customDynamicString) - 2U)] = '\n';
 		if(2 >= severity)
 			::llc::_llc_print_system_errors("", 0);
 #	endif
@@ -276,6 +273,21 @@ namespace llc
 #define if_zero_log_and_return_value_warning(value, condition)		if_zero_log_and_return_value	(warning_printf, (value), (condition))
 #define if_zero_log_and_return_value_info(value, condition)			if_zero_log_and_return_value	(info_printf   , (value), (condition))
 #define if_zero_log_and_return_value_verbose(value, condition)		if_zero_log_and_return_value	(verbose_printf, (value), (condition))
+#define if_true_log_and_fail_always(condition)						if_true_log_and_fail(always_printf , (condition))
+#define if_true_log_and_fail_error(condition)						if_true_log_and_fail(error_printf  , (condition))
+#define if_true_log_and_fail_warning(condition)						if_true_log_and_fail(warning_printf, (condition))
+#define if_true_log_and_fail_info(condition)						if_true_log_and_fail(info_printf   , (condition))
+#define if_true_log_and_fail_verbose(condition)						if_true_log_and_fail(verbose_printf, (condition))
+#define if_fail_log_and_fail_always(condition)						if_fail_log_and_fail(always_printf , (condition))
+#define if_fail_log_and_fail_error(condition)						if_fail_log_and_fail(error_printf  , (condition))
+#define if_fail_log_and_fail_warning(condition)						if_fail_log_and_fail(warning_printf, (condition))
+#define if_fail_log_and_fail_info(condition)						if_fail_log_and_fail(info_printf   , (condition))
+#define if_fail_log_and_fail_verbose(condition)						if_fail_log_and_fail(verbose_printf, (condition))
+#define if_zero_log_and_fail_always(condition)						if_zero_log_and_fail(always_printf , (condition))
+#define if_zero_log_and_fail_error(condition)						if_zero_log_and_fail(error_printf  , (condition))
+#define if_zero_log_and_fail_warning(condition)						if_zero_log_and_fail(warning_printf, (condition))
+#define if_zero_log_and_fail_info(condition)						if_zero_log_and_fail(info_printf   , (condition))
+#define if_zero_log_and_fail_verbose(condition)						if_zero_log_and_fail(verbose_printf, (condition))
 
 
 #define if_true_logf_always(condition, format, ...)								if_true_logf					(always_printf  , (condition), format, __VA_ARGS__)
@@ -369,6 +381,22 @@ namespace llc
 #define if_zero_logf_and_return_value_info(value, condition, format, ...)		if_zero_logf_and_return_value	(info_printf    , (value), (condition), format, __VA_ARGS__)
 #define if_zero_logf_and_return_value_verbose(value, condition, format, ...)	if_zero_logf_and_return_value	(verbose_printf , (value), (condition), format, __VA_ARGS__)
 
+#define if_true_logf_and_fail_always(condition, format, ...)	if_true_logf_and_return_value	(always_printf  , (condition), format, __VA_ARGS__)
+#define if_true_logf_and_fail_error(condition, format, ...)		if_true_logf_and_return_value	(error_printf   , (condition), format, __VA_ARGS__)
+#define if_true_logf_and_fail_warning(condition, format, ...)	if_true_logf_and_return_value	(warning_printf , (condition), format, __VA_ARGS__)
+#define if_true_logf_and_fail_info(condition, format, ...)		if_true_logf_and_return_value	(info_printf    , (condition), format, __VA_ARGS__)
+#define if_true_logf_and_fail_verbose(condition, format, ...)	if_true_logf_and_return_value	(verbose_printf , (condition), format, __VA_ARGS__)
+#define if_fail_logf_and_fail_always(condition, format, ...)	if_fail_logf_and_return_value	(always_printf  , (condition), format, __VA_ARGS__)
+#define if_fail_logf_and_fail_error(condition, format, ...)		if_fail_logf_and_return_value	(error_printf   , (condition), format, __VA_ARGS__)
+#define if_fail_logf_and_fail_warning(condition, format, ...)	if_fail_logf_and_return_value	(warning_printf , (condition), format, __VA_ARGS__)
+#define if_fail_logf_and_fail_info(condition, format, ...)		if_fail_logf_and_return_value	(info_printf    , (condition), format, __VA_ARGS__)
+#define if_fail_logf_and_fail_verbose(condition, format, ...)	if_fail_logf_and_return_value	(verbose_printf , (condition), format, __VA_ARGS__)
+#define if_zero_logf_and_fail_always(condition, format, ...)	if_zero_logf_and_return_value	(always_printf  , (condition), format, __VA_ARGS__)
+#define if_zero_logf_and_fail_error(condition, format, ...)		if_zero_logf_and_return_value	(error_printf   , (condition), format, __VA_ARGS__)
+#define if_zero_logf_and_fail_warning(condition, format, ...)	if_zero_logf_and_return_value	(warning_printf , (condition), format, __VA_ARGS__)
+#define if_zero_logf_and_fail_info(condition, format, ...)		if_zero_logf_and_return_value	(info_printf    , (condition), format, __VA_ARGS__)
+#define if_zero_logf_and_fail_verbose(condition, format, ...)	if_zero_logf_and_return_value	(verbose_printf , (condition), format, __VA_ARGS__)
+
 #define if_null_log_always							if_zero_log_always
 #define if_null_log_error							if_zero_log_error
 #define if_null_log_warning							if_zero_log_warning
@@ -399,6 +427,11 @@ namespace llc
 #define if_null_log_and_return_value_warning		if_zero_log_and_return_value_warning
 #define if_null_log_and_return_value_info			if_zero_log_and_return_value_info
 #define if_null_log_and_return_value_verbose		if_zero_log_and_return_value_verbose
+#define if_null_log_and_fail_always					if_zero_log_and_fail_always
+#define if_null_log_and_fail_error					if_zero_log_and_fail_error
+#define if_null_log_and_fail_warning				if_zero_log_and_fail_warning
+#define if_null_log_and_fail_info					if_zero_log_and_fail_info
+#define if_null_log_and_fail_verbose				if_zero_log_and_fail_verbose
 
 #define if_null_logf_always						if_zero_logf_always
 #define if_null_logf_error						if_zero_logf_error
@@ -429,7 +462,11 @@ namespace llc
 #define if_null_logf_and_return_value_warning	if_zero_logf_and_return_value_warning
 #define if_null_logf_and_return_value_info		if_zero_logf_and_return_value_info
 #define if_null_logf_and_return_value_verbose	if_zero_logf_and_return_value_verbose
-
+#define if_null_logf_and_fail_always			if_zero_logf_and_fail_always
+#define if_null_logf_and_fail_error				if_zero_logf_and_fail_error
+#define if_null_logf_and_fail_warning			if_zero_logf_and_fail_warning
+#define if_null_logf_and_fail_info				if_zero_logf_and_fail_info
+#define if_null_logf_and_fail_verbose			if_zero_logf_and_fail_verbose
 //
 #define if_true_a  if_true_log_always
 #define if_true_e  if_true_log_error
@@ -594,7 +631,48 @@ namespace llc
 #define if_null_vef if_null_logf_and_return_value_error
 #define if_null_vwf if_null_logf_and_return_value_warning
 #define if_null_vif if_null_logf_and_return_value_info
-#define if_null_vvf if_null_logf_and_return_value_verbose 
+#define if_null_vvf if_null_logf_and_return_value_verbose
+//
+#define if_true_fa  if_true_log_and_fail_always
+#define if_true_fe  if_true_log_and_fail_error
+#define if_true_fw  if_true_log_and_fail_warning
+#define if_true_fi  if_true_log_and_fail_info
+#define if_true_fv  if_true_log_and_fail_verbose
+#define if_fail_fa  if_fail_log_and_fail_always
+#define if_fail_fe  if_fail_log_and_fail_error
+#define if_fail_fw  if_fail_log_and_fail_warning
+#define if_fail_fi  if_fail_log_and_fail_info
+#define if_fail_fv  if_fail_log_and_fail_verbose
+#define if_zero_fa  if_zero_log_and_fail_always
+#define if_zero_fe  if_zero_log_and_fail_error
+#define if_zero_fw  if_zero_log_and_fail_warning
+#define if_zero_fi  if_zero_log_and_fail_info
+#define if_zero_fv  if_zero_log_and_fail_verbose
+#define if_null_fa  if_null_log_and_fail_always
+#define if_null_fe  if_null_log_and_fail_error
+#define if_null_fw  if_null_log_and_fail_warning
+#define if_null_fi  if_null_log_and_fail_info
+#define if_null_fv  if_null_log_and_fail_verbose
+#define if_true_faf if_true_logf_and_fail_always
+#define if_true_fef if_true_logf_and_fail_error
+#define if_true_fwf if_true_logf_and_fail_warning
+#define if_true_fif if_true_logf_and_fail_info
+#define if_true_fvf if_true_logf_and_fail_verbose
+#define if_fail_faf if_fail_logf_and_fail_always
+#define if_fail_fef if_fail_logf_and_fail_error
+#define if_fail_fwf if_fail_logf_and_fail_warning
+#define if_fail_fif if_fail_logf_and_fail_info
+#define if_fail_fvf if_fail_logf_and_fail_verbose
+#define if_zero_faf if_zero_logf_and_fail_always
+#define if_zero_fef if_zero_logf_and_fail_error
+#define if_zero_fwf if_zero_logf_and_fail_warning
+#define if_zero_fif if_zero_logf_and_fail_info
+#define if_zero_fvf if_zero_logf_and_fail_verbose
+#define if_null_faf if_null_logf_and_fail_always
+#define if_null_fef if_null_logf_and_fail_error
+#define if_null_fwf if_null_logf_and_fail_warning
+#define if_null_fif if_null_logf_and_fail_info
+#define if_null_fvf if_null_logf_and_fail_verbose
 //
 #define if_true_ta	if_true_log_and_throw_always
 #define if_true_te	if_true_log_and_throw_error
@@ -627,169 +705,210 @@ namespace llc
 #define if_zero_tif	if_zero_logf_and_throw_info
 #define if_zero_tvf	if_zero_logf_and_throw_verbose
 //
-#define a_if       if_true_a 
-#define e_if       if_true_e 
-#define w_if       if_true_w 
-#define i_if       if_true_i 
-#define v_if       if_true_v 
-#define a_if_fail  if_fail_a 
-#define e_if_fail  if_fail_e 
-#define w_if_fail  if_fail_w 
-#define i_if_fail  if_fail_i 
-#define v_if_fail  if_fail_v 
-#define a_if_zero  if_zero_a 
-#define e_if_zero  if_zero_e 
-#define w_if_zero  if_zero_w 
-#define i_if_zero  if_zero_i 
-#define v_if_zero  if_zero_v 
-#define a_if_null  if_null_a 
-#define e_if_null  if_null_e 
-#define w_if_null  if_null_w 
-#define i_if_null  if_null_i 
-#define v_if_null  if_null_v 
-#define af_if      if_true_af 
-#define ef_if      if_true_ef 
-#define wf_if      if_true_wf 
-#define if_if      if_true_if 
-#define vf_if      if_true_vf 
-#define af_if_fail if_fail_af 
-#define ef_if_fail if_fail_ef 
-#define wf_if_fail if_fail_wf 
-#define if_if_fail if_fail_if 
-#define vf_if_fail if_fail_vf 
-#define af_if_zero if_zero_af 
-#define ef_if_zero if_zero_ef 
-#define wf_if_zero if_zero_wf 
-#define if_if_zero if_zero_if 
-#define vf_if_zero if_zero_vf 
-#define af_if_null if_null_af 
-#define ef_if_null if_null_ef 
-#define wf_if_null if_null_wf 
-#define if_if_null if_null_if 
-#define vf_if_null if_null_vf 
+#define a_if       if_true_a
+#define e_if       if_true_e
+#define w_if       if_true_w
+#define i_if       if_true_i
+#define v_if       if_true_v
+#define a_if_fail  if_fail_a
+#define e_if_fail  if_fail_e
+#define w_if_fail  if_fail_w
+#define i_if_fail  if_fail_i
+#define v_if_fail  if_fail_v
+#define a_if_zero  if_zero_a
+#define e_if_zero  if_zero_e
+#define w_if_zero  if_zero_w
+#define i_if_zero  if_zero_i
+#define v_if_zero  if_zero_v
+#define a_if_null  if_null_a
+#define e_if_null  if_null_e
+#define w_if_null  if_null_w
+#define i_if_null  if_null_i
+#define v_if_null  if_null_v
+#define af_if      if_true_af
+#define ef_if      if_true_ef
+#define wf_if      if_true_wf
+#define if_if      if_true_if
+#define vf_if      if_true_vf
+#define af_if_fail if_fail_af
+#define ef_if_fail if_fail_ef
+#define wf_if_fail if_fail_wf
+#define if_if_fail if_fail_if
+#define vf_if_fail if_fail_vf
+#define af_if_zero if_zero_af
+#define ef_if_zero if_zero_ef
+#define wf_if_zero if_zero_wf
+#define if_if_zero if_zero_if
+#define vf_if_zero if_zero_vf
+#define af_if_null if_null_af
+#define ef_if_null if_null_ef
+#define wf_if_null if_null_wf
+#define if_if_null if_null_if
+#define vf_if_null if_null_vf
 //
-#define va_if       if_true_va 
-#define ve_if       if_true_ve 
-#define vw_if       if_true_vw 
-#define vi_if       if_true_vi 
-#define vv_if       if_true_vv 
-#define va_if_fail  if_fail_va 
-#define ve_if_fail  if_fail_ve 
-#define vw_if_fail  if_fail_vw 
-#define vi_if_fail  if_fail_vi 
-#define vv_if_fail  if_fail_vv 
-#define va_if_zero  if_zero_va 
-#define ve_if_zero  if_zero_ve 
-#define vw_if_zero  if_zero_vw 
-#define vi_if_zero  if_zero_vi 
-#define vv_if_zero  if_zero_vv 
-#define va_if_null  if_null_va 
-#define ve_if_null  if_null_ve 
-#define vw_if_null  if_null_vw 
-#define vi_if_null  if_null_vi 
-#define vv_if_null  if_null_vv 
-#define vaf_if      if_true_vaf 
-#define vef_if      if_true_vef 
-#define vwf_if      if_true_vwf 
-#define vif_if      if_true_vif 
-#define vvf_if      if_true_vvf 
-#define vaf_if_fail if_fail_vaf 
-#define vef_if_fail if_fail_vef 
-#define vwf_if_fail if_fail_vwf 
-#define vif_if_fail if_fail_vif 
-#define vvf_if_fail if_fail_vvf 
-#define vaf_if_zero if_zero_vaf 
-#define vef_if_zero if_zero_vef 
-#define vwf_if_zero if_zero_vwf 
-#define vif_if_zero if_zero_vif 
-#define vvf_if_zero if_zero_vvf 
-#define vaf_if_null if_null_vaf 
-#define vef_if_null if_null_vef 
-#define vwf_if_null if_null_vwf 
-#define vif_if_null if_null_vif 
-#define vvf_if_null if_null_vvf 
+#define va_if       if_true_va
+#define ve_if       if_true_ve
+#define vw_if       if_true_vw
+#define vi_if       if_true_vi
+#define vv_if       if_true_vv
+#define va_if_fail  if_fail_va
+#define ve_if_fail  if_fail_ve
+#define vw_if_fail  if_fail_vw
+#define vi_if_fail  if_fail_vi
+#define vv_if_fail  if_fail_vv
+#define va_if_zero  if_zero_va
+#define ve_if_zero  if_zero_ve
+#define vw_if_zero  if_zero_vw
+#define vi_if_zero  if_zero_vi
+#define vv_if_zero  if_zero_vv
+#define va_if_null  if_null_va
+#define ve_if_null  if_null_ve
+#define vw_if_null  if_null_vw
+#define vi_if_null  if_null_vi
+#define vv_if_null  if_null_vv
+#define vaf_if      if_true_vaf
+#define vef_if      if_true_vef
+#define vwf_if      if_true_vwf
+#define vif_if      if_true_vif
+#define vvf_if      if_true_vvf
+#define vaf_if_fail if_fail_vaf
+#define vef_if_fail if_fail_vef
+#define vwf_if_fail if_fail_vwf
+#define vif_if_fail if_fail_vif
+#define vvf_if_fail if_fail_vvf
+#define vaf_if_zero if_zero_vaf
+#define vef_if_zero if_zero_vef
+#define vwf_if_zero if_zero_vwf
+#define vif_if_zero if_zero_vif
+#define vvf_if_zero if_zero_vvf
+#define vaf_if_null if_null_vaf
+#define vef_if_null if_null_vef
+#define vwf_if_null if_null_vwf
+#define vif_if_null if_null_vif
+#define vvf_if_null if_null_vvf
 //
-#define ba_if       if_true_ba 
-#define be_if       if_true_be 
-#define bw_if       if_true_bw 
-#define bi_if       if_true_bi 
-#define bv_if       if_true_bv 
-#define ba_if_fail  if_fail_ba 
-#define be_if_fail  if_fail_be 
-#define bw_if_fail  if_fail_bw 
-#define bi_if_fail  if_fail_bi 
-#define bv_if_fail  if_fail_bv 
-#define ba_if_zero  if_zero_ba 
-#define be_if_zero  if_zero_be 
-#define bw_if_zero  if_zero_bw 
-#define bi_if_zero  if_zero_bi 
-#define bv_if_zero  if_zero_bv 
-#define ba_if_null  if_null_ba 
-#define be_if_null  if_null_be 
-#define bw_if_null  if_null_bw 
-#define bi_if_null  if_null_bi 
-#define bv_if_null  if_null_bv 
-#define baf_if      if_true_baf 
-#define bef_if      if_true_bef 
-#define bwf_if      if_true_bwf 
-#define bif_if      if_true_bif 
-#define bvf_if      if_true_bvf 
-#define baf_if_fail if_fail_baf 
-#define bef_if_fail if_fail_bef 
-#define bwf_if_fail if_fail_bwf 
-#define bif_if_fail if_fail_bif 
-#define bvf_if_fail if_fail_bvf 
-#define baf_if_zero if_zero_baf 
-#define bef_if_zero if_zero_bef 
-#define bwf_if_zero if_zero_bwf 
-#define bif_if_zero if_zero_bif 
-#define bvf_if_zero if_zero_bvf 
-#define baf_if_null if_null_baf 
-#define bef_if_null if_null_bef 
-#define bwf_if_null if_null_bwf 
-#define bif_if_null if_null_bif 
-#define bvf_if_null if_null_bvf 
+#define fa_if       if_true_fa
+#define fe_if       if_true_fe
+#define fw_if       if_true_fw
+#define fi_if       if_true_fi
+#define fv_if       if_true_fv
+#define fa_if_fail  if_fail_fa
+#define fe_if_fail  if_fail_fe
+#define fw_if_fail  if_fail_fw
+#define fi_if_fail  if_fail_fi
+#define fv_if_fail  if_fail_fv
+#define fa_if_zero  if_zero_fa
+#define fe_if_zero  if_zero_fe
+#define fw_if_zero  if_zero_fw
+#define fi_if_zero  if_zero_fi
+#define fv_if_zero  if_zero_fv
+#define fa_if_null  if_null_fa
+#define fe_if_null  if_null_fe
+#define fw_if_null  if_null_fw
+#define fi_if_null  if_null_fi
+#define fv_if_null  if_null_fv
+#define faf_if      if_true_faf
+#define fef_if      if_true_fef
+#define fwf_if      if_true_fwf
+#define fif_if      if_true_fif
+#define fvf_if      if_true_fvf
+#define faf_if_fail if_fail_faf
+#define fef_if_fail if_fail_fef
+#define fwf_if_fail if_fail_fwf
+#define fif_if_fail if_fail_fif
+#define fvf_if_fail if_fail_fvf
+#define faf_if_zero if_zero_faf
+#define fef_if_zero if_zero_fef
+#define fwf_if_zero if_zero_fwf
+#define fif_if_zero if_zero_fif
+#define fvf_if_zero if_zero_fvf
+#define faf_if_null if_null_faf
+#define fef_if_null if_null_fef
+#define fwf_if_null if_null_fwf
+#define fif_if_null if_null_fif
+#define fvf_if_null if_null_fvf
 //
-#define ca_if       if_true_ca 
-#define ce_if       if_true_ce 
-#define cw_if       if_true_cw 
-#define ci_if       if_true_ci 
-#define cv_if       if_true_cv 
-#define ca_if_fail  if_fail_ca 
-#define ce_if_fail  if_fail_ce 
-#define cw_if_fail  if_fail_cw 
-#define ci_if_fail  if_fail_ci 
-#define cv_if_fail  if_fail_cv 
-#define ca_if_zero  if_zero_ca 
-#define ce_if_zero  if_zero_ce 
-#define cw_if_zero  if_zero_cw 
-#define ci_if_zero  if_zero_ci 
-#define cv_if_zero  if_zero_cv 
-#define ca_if_null  if_null_ca 
-#define ce_if_null  if_null_ce 
-#define cw_if_null  if_null_cw 
-#define ci_if_null  if_null_ci 
-#define cv_if_null  if_null_cv 
-#define caf_if      if_true_caf 
-#define cef_if      if_true_cef 
-#define cwf_if      if_true_cwf 
-#define cif_if      if_true_cif 
-#define cvf_if      if_true_cvf 
-#define caf_if_fail if_fail_caf 
-#define cef_if_fail if_fail_cef 
-#define cwf_if_fail if_fail_cwf 
-#define cif_if_fail if_fail_cif 
-#define cvf_if_fail if_fail_cvf 
-#define caf_if_zero if_zero_caf 
-#define cef_if_zero if_zero_cef 
-#define cwf_if_zero if_zero_cwf 
-#define cif_if_zero if_zero_cif 
-#define cvf_if_zero if_zero_cvf 
-#define caf_if_null if_null_caf 
-#define cef_if_null if_null_cef 
-#define cwf_if_null if_null_cwf 
-#define cif_if_null if_null_cif 
-#define cvf_if_null if_null_cvf 
+#define ba_if       if_true_ba
+#define be_if       if_true_be
+#define bw_if       if_true_bw
+#define bi_if       if_true_bi
+#define bv_if       if_true_bv
+#define ba_if_fail  if_fail_ba
+#define be_if_fail  if_fail_be
+#define bw_if_fail  if_fail_bw
+#define bi_if_fail  if_fail_bi
+#define bv_if_fail  if_fail_bv
+#define ba_if_zero  if_zero_ba
+#define be_if_zero  if_zero_be
+#define bw_if_zero  if_zero_bw
+#define bi_if_zero  if_zero_bi
+#define bv_if_zero  if_zero_bv
+#define ba_if_null  if_null_ba
+#define be_if_null  if_null_be
+#define bw_if_null  if_null_bw
+#define bi_if_null  if_null_bi
+#define bv_if_null  if_null_bv
+#define baf_if      if_true_baf
+#define bef_if      if_true_bef
+#define bwf_if      if_true_bwf
+#define bif_if      if_true_bif
+#define bvf_if      if_true_bvf
+#define baf_if_fail if_fail_baf
+#define bef_if_fail if_fail_bef
+#define bwf_if_fail if_fail_bwf
+#define bif_if_fail if_fail_bif
+#define bvf_if_fail if_fail_bvf
+#define baf_if_zero if_zero_baf
+#define bef_if_zero if_zero_bef
+#define bwf_if_zero if_zero_bwf
+#define bif_if_zero if_zero_bif
+#define bvf_if_zero if_zero_bvf
+#define baf_if_null if_null_baf
+#define bef_if_null if_null_bef
+#define bwf_if_null if_null_bwf
+#define bif_if_null if_null_bif
+#define bvf_if_null if_null_bvf
+//
+#define ca_if       if_true_ca
+#define ce_if       if_true_ce
+#define cw_if       if_true_cw
+#define ci_if       if_true_ci
+#define cv_if       if_true_cv
+#define ca_if_fail  if_fail_ca
+#define ce_if_fail  if_fail_ce
+#define cw_if_fail  if_fail_cw
+#define ci_if_fail  if_fail_ci
+#define cv_if_fail  if_fail_cv
+#define ca_if_zero  if_zero_ca
+#define ce_if_zero  if_zero_ce
+#define cw_if_zero  if_zero_cw
+#define ci_if_zero  if_zero_ci
+#define cv_if_zero  if_zero_cv
+#define ca_if_null  if_null_ca
+#define ce_if_null  if_null_ce
+#define cw_if_null  if_null_cw
+#define ci_if_null  if_null_ci
+#define cv_if_null  if_null_cv
+#define caf_if      if_true_caf
+#define cef_if      if_true_cef
+#define cwf_if      if_true_cwf
+#define cif_if      if_true_cif
+#define cvf_if      if_true_cvf
+#define caf_if_fail if_fail_caf
+#define cef_if_fail if_fail_cef
+#define cwf_if_fail if_fail_cwf
+#define cif_if_fail if_fail_cif
+#define cvf_if_fail if_fail_cvf
+#define caf_if_zero if_zero_caf
+#define cef_if_zero if_zero_cef
+#define cwf_if_zero if_zero_cwf
+#define cif_if_zero if_zero_cif
+#define cvf_if_zero if_zero_cvf
+#define caf_if_null if_null_caf
+#define cef_if_null if_null_cef
+#define cwf_if_null if_null_cwf
+#define cif_if_null if_null_cif
+#define cvf_if_null if_null_cvf
 //
 #define a_ecall  if_fail_a
 #define e_ecall  if_fail_e
@@ -833,40 +952,37 @@ namespace llc
 #define ci_ecallf if_fail_cif
 #define cv_ecallf if_fail_cvf
 
-#define llc_fail_if_eq(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left == (n2u_right), str_format, n2u_left, n2u_right)
-#define llc_fail_if_ne(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left != (n2u_right), str_format, n2u_left, n2u_right)
-#define llc_fail_if_lt(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left  < (n2u_right), str_format, n2u_left, n2u_right)
-#define llc_fail_if_le(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left <= (n2u_right), str_format, n2u_left, n2u_right)
-#define llc_fail_if_ge(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left >= (n2u_right), str_format, n2u_left, n2u_right)
-#define llc_fail_if_gt(str_format, n2u_left, n2u_right) if_true_vef(-1, n2u_left  > (n2u_right), str_format, n2u_left, n2u_right)
+#define llc_fail_if_eq(str_format, i2x_left, i2x_right) if_true_fef(-1, (i2x_left) == (i2x_right), str_format, (i2x_left), (i2x_right))
+#define llc_fail_if_ne(str_format, i2x_left, i2x_right) if_true_fef(-1, (i2x_left) != (i2x_right), str_format, (i2x_left), (i2x_right))
+#define llc_fail_if_lt(str_format, i2x_left, i2x_right) if_true_fef(-1, (i2x_left)  < (i2x_right), str_format, (i2x_left), (i2x_right))
+#define llc_fail_if_le(str_format, i2x_left, i2x_right) if_true_fef(-1, (i2x_left) <= (i2x_right), str_format, (i2x_left), (i2x_right))
+#define llc_fail_if_ge(str_format, i2x_left, i2x_right) if_true_fef(-1, (i2x_left) >= (i2x_right), str_format, (i2x_left), (i2x_right))
+#define llc_fail_if_gt(str_format, i2x_left, i2x_right) if_true_fef(-1, (i2x_left)  > (i2x_right), str_format, (i2x_left), (i2x_right))
 
-#define fail_if_eq2u(n2u_left, n2u_right) llc_fail_if_eq(LLC_FMT_EQ_U2, u2_t(n2u_left), u2_t(n2u_right))
-#define fail_if_ne2u(n2u_left, n2u_right) llc_fail_if_ne(LLC_FMT_NE_U2, u2_t(n2u_left), u2_t(n2u_right))
-#define fail_if_lt2u(n2u_left, n2u_right) llc_fail_if_lt(LLC_FMT_LT_U2, u2_t(n2u_left), u2_t(n2u_right))
-#define fail_if_le2u(n2u_left, n2u_right) llc_fail_if_le(LLC_FMT_LE_U2, u2_t(n2u_left), u2_t(n2u_right))
-#define fail_if_ge2u(n2u_left, n2u_right) llc_fail_if_ge(LLC_FMT_GE_U2, u2_t(n2u_left), u2_t(n2u_right))
-#define fail_if_gt2u(n2u_left, n2u_right) llc_fail_if_gt(LLC_FMT_GT_U2, u2_t(n2u_left), u2_t(n2u_right))
-
-#define fail_if_eq2s(n2s_left, n2s_right) llc_fail_if_eq(LLC_FMT_EQ_S2, int32_t(n2s_left), int32_t(n2s_right))
-#define fail_if_ne2s(n2s_left, n2s_right) llc_fail_if_ne(LLC_FMT_NE_S2, int32_t(n2s_left), int32_t(n2s_right))
-#define fail_if_lt2s(n2s_left, n2s_right) llc_fail_if_lt(LLC_FMT_LT_S2, int32_t(n2s_left), int32_t(n2s_right))
-#define fail_if_le2s(n2s_left, n2s_right) llc_fail_if_le(LLC_FMT_LE_S2, int32_t(n2s_left), int32_t(n2s_right))
-#define fail_if_ge2s(n2s_left, n2s_right) llc_fail_if_ge(LLC_FMT_GE_S2, int32_t(n2s_left), int32_t(n2s_right))
-#define fail_if_gt2s(n2s_left, n2s_right) llc_fail_if_gt(LLC_FMT_GT_S22, int32_t(n2s_left), int32_t(n2s_right))
-
-#define fail_if_eq3u(n3u_left, n3u_right) llc_fail_if_eq(LLC_FMT_EQ_U3, uint64_t(n3u_left), uint64_t(n3u_right))
-#define fail_if_ne3u(n3u_left, n3u_right) llc_fail_if_ne(LLC_FMT_NE_U3, uint64_t(n3u_left), uint64_t(n3u_right))
-#define fail_if_lt3u(n3u_left, n3u_right) llc_fail_if_lt(LLC_FMT_LT_U3, uint64_t(n3u_left), uint64_t(n3u_right))
-#define fail_if_le3u(n3u_left, n3u_right) llc_fail_if_le(LLC_FMT_LE_U3, uint64_t(n3u_left), uint64_t(n3u_right))
-#define fail_if_ge3u(n3u_left, n3u_right) llc_fail_if_ge(LLC_FMT_GE_U3, uint64_t(n3u_left), uint64_t(n3u_right))
-#define fail_if_gt3u(n3u_left, n3u_right) llc_fail_if_gt(LLC_FMT_GT_U3, uint64_t(n3u_left), uint64_t(n3u_right))
-
-#define fail_if_eq3s(n3s_left, n3s_right) llc_fail_if_eq(LLC_FMT_EQ_S3, int64_t(n3s_left), int64_t(n3s_right))
-#define fail_if_ne3s(n3s_left, n3s_right) llc_fail_if_ne(LLC_FMT_NE_S3, int64_t(n3s_left), int64_t(n3s_right))
-#define fail_if_lt3s(n3s_left, n3s_right) llc_fail_if_lt(LLC_FMT_LT_S3, int64_t(n3s_left), int64_t(n3s_right))
-#define fail_if_le3s(n3s_left, n3s_right) llc_fail_if_le(LLC_FMT_LE_S3, int64_t(n3s_left), int64_t(n3s_right))
-#define fail_if_ge3s(n3s_left, n3s_right) llc_fail_if_ge(LLC_FMT_GE_S3, int64_t(n3s_left), int64_t(n3s_right))
-#define fail_if_gt3s(n3s_left, n3s_right) llc_fail_if_gt(LLC_FMT_GT_S3, int64_t(n3s_left), int64_t(n3s_right))
+#define fail_if_eq2u(i2u_left, i2u_right) llc_fail_if_eq(LLC_FMT_EQ_U2, i2u_t(i2u_left), i2u_t(i2u_right))
+#define fail_if_ne2u(i2u_left, i2u_right) llc_fail_if_ne(LLC_FMT_NE_U2, i2u_t(i2u_left), i2u_t(i2u_right))
+#define fail_if_lt2u(i2u_left, i2u_right) llc_fail_if_lt(LLC_FMT_LT_U2, i2u_t(i2u_left), i2u_t(i2u_right))
+#define fail_if_le2u(i2u_left, i2u_right) llc_fail_if_le(LLC_FMT_LE_U2, i2u_t(i2u_left), i2u_t(i2u_right))
+#define fail_if_ge2u(i2u_left, i2u_right) llc_fail_if_ge(LLC_FMT_GE_U2, i2u_t(i2u_left), i2u_t(i2u_right))
+#define fail_if_gt2u(i2u_left, i2u_right) llc_fail_if_gt(LLC_FMT_GT_U2, i2u_t(i2u_left), i2u_t(i2u_right))
+#define fail_if_eq2s(i2s_left, i2s_right) llc_fail_if_eq(LLC_FMT_EQ_S2, i2s_t(i2s_left), i2s_t(i2s_right))
+#define fail_if_ne2s(i2s_left, i2s_right) llc_fail_if_ne(LLC_FMT_NE_S2, i2s_t(i2s_left), i2s_t(i2s_right))
+#define fail_if_lt2s(i2s_left, i2s_right) llc_fail_if_lt(LLC_FMT_LT_S2, i2s_t(i2s_left), i2s_t(i2s_right))
+#define fail_if_le2s(i2s_left, i2s_right) llc_fail_if_le(LLC_FMT_LE_S2, i2s_t(i2s_left), i2s_t(i2s_right))
+#define fail_if_ge2s(i2s_left, i2s_right) llc_fail_if_ge(LLC_FMT_GE_S2, i2s_t(i2s_left), i2s_t(i2s_right))
+#define fail_if_gt2s(i2s_left, i2s_right) llc_fail_if_gt(LLC_FMT_GT_S2, i2s_t(i2s_left), i2s_t(i2s_right))
+#define fail_if_eq3u(i3u_left, i3u_right) llc_fail_if_eq(LLC_FMT_EQ_U3, i3u_t(i3u_left), i3u_t(i3u_right))
+#define fail_if_ne3u(i3u_left, i3u_right) llc_fail_if_ne(LLC_FMT_NE_U3, i3u_t(i3u_left), i3u_t(i3u_right))
+#define fail_if_lt3u(i3u_left, i3u_right) llc_fail_if_lt(LLC_FMT_LT_U3, i3u_t(i3u_left), i3u_t(i3u_right))
+#define fail_if_le3u(i3u_left, i3u_right) llc_fail_if_le(LLC_FMT_LE_U3, i3u_t(i3u_left), i3u_t(i3u_right))
+#define fail_if_ge3u(i3u_left, i3u_right) llc_fail_if_ge(LLC_FMT_GE_U3, i3u_t(i3u_left), i3u_t(i3u_right))
+#define fail_if_gt3u(i3u_left, i3u_right) llc_fail_if_gt(LLC_FMT_GT_U3, i3u_t(i3u_left), i3u_t(i3u_right))
+#define fail_if_eq3s(i3s_left, i3s_right) llc_fail_if_eq(LLC_FMT_EQ_S3, i3s_t(i3s_left), i3s_t(i3s_right))
+#define fail_if_ne3s(i3s_left, i3s_right) llc_fail_if_ne(LLC_FMT_NE_S3, i3s_t(i3s_left), i3s_t(i3s_right))
+#define fail_if_lt3s(i3s_left, i3s_right) llc_fail_if_lt(LLC_FMT_LT_S3, i3s_t(i3s_left), i3s_t(i3s_right))
+#define fail_if_le3s(i3s_left, i3s_right) llc_fail_if_le(LLC_FMT_LE_S3, i3s_t(i3s_left), i3s_t(i3s_right))
+#define fail_if_ge3s(i3s_left, i3s_right) llc_fail_if_ge(LLC_FMT_GE_S3, i3s_t(i3s_left), i3s_t(i3s_right))
+#define fail_if_gt3s(i3s_left, i3s_right) llc_fail_if_gt(LLC_FMT_GT_S3, i3s_t(i3s_left), i3s_t(i3s_right))
 
 #define fail_if_equ fail_if_eq2u
 #define fail_if_neu fail_if_ne2u

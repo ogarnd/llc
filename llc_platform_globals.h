@@ -114,6 +114,8 @@
 #define pblc			public
 #define prtc			protected
 #define prvt			private
+#define lt4(lt4type)    llc::lt4type
+#define usl4(type)      usng lt4(type)
 
 #define tdfT(type)		tydf	type	T
 
@@ -153,40 +155,40 @@
 #define cxpr_if_not(condition)	if cxpr(not(condition))
 #define if_not(condition)		if(not(condition))
 
-#define	LLC_STRINGIFY(x) #x
-#define	LLC_TOSTRING(x)  LLC_STRINGIFY(x)
+#define	LLC_STRINGIFY(x)	#x
+#define	LLC_TOSTRING(x)		LLC_STRINGIFY(x)
 
-#define LLCREP0(param)			  (param)
-#define LLCREP1(param)			  LLCREP0(param), (param)
-#define LLCREP2(param)			  LLCREP1(param), (param)
-#define LLCREP3(param)			  LLCREP2(param), (param)
-#define LLCREP4(param)			  LLCREP3(param), (param)
-#define LLCREP5(param)			  LLCREP4(param), (param)
-#define LLCREP6(param)			  LLCREP5(param), (param)
-#define LLCREP7(param)			  LLCREP6(param), (param)
+#define LLCREP0(param)		(param)
+#define LLCREP1(param)		LLCREP0(param), (param)
+#define LLCREP2(param)		LLCREP1(param), (param)
+#define LLCREP3(param)		LLCREP2(param), (param)
+#define LLCREP4(param)		LLCREP3(param), (param)
+#define LLCREP5(param)		LLCREP4(param), (param)
+#define LLCREP6(param)		LLCREP5(param), (param)
+#define LLCREP7(param)		LLCREP6(param), (param)
 
 #define cnstnxpt			cnst nxpt
 #define cnstvltl			cnst vltl
-#define unsgnd			  unsigned
-#define operatr				operator
-#define cnstxpr				constexpr
+#define unsgnd				unsigned
+#define operatr				oper
+#define cnstxpr				cxpr
 #define inlcxpr				inln  cxpr
 #define stacxpr				stTc  cxpr
 #define stainli				stTc  inln
 #define stincxp				stin cxpr
-#define prtctd			  protected
-#define privte			  private
+#define prtctd				protected
+#define privte				private
 
-#define nodscrd			 [[nodiscard]]
-#define ndsttic			 nodscrd static
-#define ndinlne			 nodscrd inline
-#define ndcnxpr			 nodscrd cnstxpr
-#define ndstain			 ndsttic inline
-#define ndstcxp			 ndsttic cnstxpr
-#define ndincxp			 ndinlne cnstxpr
-#define ndstinx			 ndstain cnstxpr
+#define nodscrd				[[nodiscard]]
+#define ndsttic				nodscrd static
+#define ndinlne				nodscrd inline
+#define ndcnxpr				nodscrd cnstxpr
+#define ndstain				ndsttic inline
+#define ndstcxp				ndsttic cnstxpr
+#define ndincxp				ndinlne cnstxpr
+#define ndstinx				ndstain cnstxpr
 
-#define tplTstruct		  tplT struct
+#define tplTstruct			tplT struct
 #define tplTndstcxp			tplT ndstcxp
 #define tplTstincxp			tplT stincxp
 #define tplTstacxpr			tplT stacxpr

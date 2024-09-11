@@ -1,6 +1,6 @@
 #include "llc_apod_serialize.h"
-#include "llc_array_ptr.h"
 #include "llc_astatic_serialize.h"
+#include "llc_array_ptr.h"
 #include "llc_arduino_string.h"
 #include "llc_std_string.h"
 #include "llc_std_cstring.h"
@@ -14,6 +14,7 @@
 #include "llc_apod_n3.h"
 #include "llc_apod_slice.h"
 #include "llc_apod_range.h"
+#include "llc_apod_tcpip.h"
 #include "llc_append_frontend.h"
 
 #ifndef LLC_ARDUINO_H
