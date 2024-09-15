@@ -67,6 +67,3 @@ namespace llc
 } // namespace
 
 #endif // LLC_EVAL_H_23627
-
-
-

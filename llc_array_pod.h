@@ -236,25 +236,41 @@ namespace llc
 		}
 	}; // array_pod
 
-	tplTusng	apod	= ::llc::array_pod<T>;
-	tplTusng	ap		= ::llc::apod	<T>;
+	tplTusng	apod		= ::llc::array_pod<T>;
+	tplTusng	ap			= ::llc::apod	<T>;
 
-	tydf	apod<uc_t>	auc_t;	tdcs	auc_t	auc_c;
-	tydf	apod<sc_t>	asc_t;	tdcs	asc_t	asc_c;
-	tydf	apod<u0_t>	au0_t;	tdcs	au0_t	au0_c;
-	tydf	apod<u1_t>	au1_t;	tdcs	au1_t	au1_c;
-	tydf	apod<u2_t>	au2_t;	tdcs	au2_t	au2_c;
-	tydf	apod<u3_t>	au3_t;	tdcs	au3_t	au3_c;
-	tydf	apod<s0_t>	as0_t;	tdcs	as0_t	as0_c;
-	tydf	apod<s1_t>	as1_t;	tdcs	as1_t	as1_c;
-	tydf	apod<s2_t>	as2_t;	tdcs	as2_t	as2_c;
-	tydf	apod<s3_t>	as3_t;	tdcs	as3_t	as3_c;
-	tydf	apod<f2_t>	af2_t;	tdcs	af2_t	af2_c;
-	tydf	apod<f3_t>	af3_t;	tdcs	af3_t	af3_c;
+	tydf		apod<b8_t>	ab8_t;	tdcs	ab8_t	ab8_c;
+	tydf		apod<uc_t>	auc_t;	tdcs	auc_t	auc_c;
+	tydf		apod<sc_t>	asc_t;	tdcs	asc_t	asc_c;
+	tydf		apod<u0_t>	au0_t;	tdcs	au0_t	au0_c;
+	tydf		apod<u1_t>	au1_t;	tdcs	au1_t	au1_c;
+	tydf		apod<u2_t>	au2_t;	tdcs	au2_t	au2_c;
+	tydf		apod<u3_t>	au3_t;	tdcs	au3_t	au3_c;
+	tydf		apod<s0_t>	as0_t;	tdcs	as0_t	as0_c;
+	tydf		apod<s1_t>	as1_t;	tdcs	as1_t	as1_c;
+	tydf		apod<s2_t>	as2_t;	tdcs	as2_t	as2_c;
+	tydf		apod<s3_t>	as3_t;	tdcs	as3_t	as3_c;
+	tydf		apod<f2_t>	af2_t;	tdcs	af2_t	af2_c;
+	tydf		apod<f3_t>	af3_t;	tdcs	af3_t	af3_c;
 
-	asc_t			toString		(::llc::vcsc_c & strToLog);
-	err_t			camelCase		(::llc::vcsc_t input, ::llc::asc_t & camelCased);
-	err_t			join			(::llc::asc_t & query, char separator, ::llc::vcvsc_t fields);
+	asc_t		toString	(::llc::vcsc_c & strToLog);
+	err_t		camelCase	(::llc::vcsc_t input, ::llc::asc_t & camelCased);
+	err_t		join		(::llc::asc_t & query, char separator, ::llc::vcvsc_t fields);
 } // namespace
+
+#define LLC_USING_APOD()				\
+	usng	::llc::ab8_t, ::llc::ab8_c	\
+		,	::llc::auc_t, ::llc::auc_c	\
+		,	::llc::asc_t, ::llc::asc_c	\
+		,	::llc::au0_t, ::llc::au0_c	\
+		,	::llc::au1_t, ::llc::au1_c	\
+		,	::llc::au2_t, ::llc::au2_c	\
+		,	::llc::au3_t, ::llc::au3_c	\
+		,	::llc::as0_t, ::llc::as0_c	\
+		,	::llc::as1_t, ::llc::as1_c	\
+		,	::llc::as2_t, ::llc::as2_c	\
+		,	::llc::as3_t, ::llc::as3_c	\
+		,	::llc::af2_t, ::llc::af2_c	\
+		,	::llc::af3_t, ::llc::af3_c
 
 #endif // LLC_ARRAY_POD_H_23627

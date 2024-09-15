@@ -13,10 +13,10 @@ namespace llc
 		tydf		gref<T>	TRef;
 		using		TNCOPtr	::Reference;
 	
-					inline	cnst T*	oper->	()							csnx	{ return Reference->Instance;														}
-					inline	T*		oper->	()								nxpt	{ return (0 == Reference) ? ::llc::ref_create(&Reference) : Reference->Instance;	}
-		tpl_vtArgs	inline	T*		create		(_tArgs &&... constructorArgs)	nxpt	{ return ::llc::ref_create(&Reference, constructorArgs...);							}
-					inline	T*		allocate	()								nxpt	{ return ::llc::ref_allocate(&Reference);											}
+					inxp	cnst T*	oper->		()								csnx	{ return Reference->Instance;														}
+					inln	T*		oper->		()								nxpt	{ return (0 == Reference) ? ::llc::ref_create(&Reference) : Reference->Instance;	}
+		tpl_vtArgs	inln	T*		create		(_tArgs &&... constructorArgs)	nxpt	{ return ::llc::ref_create(&Reference, constructorArgs...);							}
+					inln	T*		allocate	()								nxpt	{ return ::llc::ref_allocate(&Reference);											}
 	};
 	tplT	using	po	= ::llc::pobj<T>; 
 #pragma pack(pop)
