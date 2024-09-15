@@ -47,7 +47,7 @@ stin	fs::FS&		getSoCFileSystem	()	{ return LLC_SOC_FILESYSTEM_INSTANCE; }
 
 #define llc_file_info_printf info_printf
 
-s3_t	llc::err_t	fileSize			(llc::vcst_t fileName)			{
+s3_t	llc::	fileSize			(llc::vcst_t fileName)			{
 #if defined(LLC_ESP32) || defined(ESP8266)
 	File				fp						= getSoCFileSystem().open(fileName.begin(), LLC_OPEN_MODE_READ);
 	ree_if(!fp, "Cannot open file: %s.", fileName.begin());
