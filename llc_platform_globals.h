@@ -169,12 +169,12 @@
 
 #define cnstnxpt			cnst nxpt
 #define cnstvltl			cnst vltl
-#define unsgnd				unsigned
+#define unsgnd				unsd
 #define operatr				oper
 #define cnstxpr				cxpr
-#define inlcxpr				inln  cxpr
-#define stacxpr				stTc  cxpr
-#define stainli				stTc  inln
+#define inlcxpr				inln cxpr
+#define stacxpr				sttc cxpr
+#define stainli				sttc inln
 #define stincxp				stin cxpr
 #define prtctd				protected
 #define privte				private
