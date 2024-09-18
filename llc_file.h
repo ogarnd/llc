@@ -37,8 +37,13 @@ namespace llc
 		inln						~SFile			()					{ llc_safe_fclose(File); }
 
 		inxp		oper			T&				()					{ return File; }
-
-		tplTOut		err_t			read			(view<TOut> output)	{ if(0 == File) llc_necall(fopen_s(&File, Name.begin(), "rb"), "%s", Name.begin()); auto nread = fread(output.begin(), szof(TOut), output.size(), File); fail_if_neu(nread, output.size()); return nread; }
+		tplTOut		err_t			read			(view<TOut> output)	{ 
+			if(0 == File) 
+			llc_necall(fopen_s(&File, Name.begin(), "rb"), "%s", Name.begin()); 
+			auto nread = fread(output.begin(), szof(TOut), output.size(), File); 
+			fail_if_neu(nread, output.size()); 
+			return nread; 
+		}
 		tplTOutN2	inln	err_t	read			(TOut (&output)[N])	{ return read<TOut>(output); }
 	};
 

@@ -950,12 +950,12 @@ namespace llc
 #define ci_ecallf if_fail_cif
 #define cv_ecallf if_fail_cvf
 
-#define llc_fail_if_eq(str_format, i2x_left, i2x_right) if_true_fef(-1, (i2x_left) == (i2x_right), str_format, (i2x_left), (i2x_right))
-#define llc_fail_if_ne(str_format, i2x_left, i2x_right) if_true_fef(-1, (i2x_left) != (i2x_right), str_format, (i2x_left), (i2x_right))
-#define llc_fail_if_lt(str_format, i2x_left, i2x_right) if_true_fef(-1, (i2x_left)  < (i2x_right), str_format, (i2x_left), (i2x_right))
-#define llc_fail_if_le(str_format, i2x_left, i2x_right) if_true_fef(-1, (i2x_left) <= (i2x_right), str_format, (i2x_left), (i2x_right))
-#define llc_fail_if_ge(str_format, i2x_left, i2x_right) if_true_fef(-1, (i2x_left) >= (i2x_right), str_format, (i2x_left), (i2x_right))
-#define llc_fail_if_gt(str_format, i2x_left, i2x_right) if_true_fef(-1, (i2x_left)  > (i2x_right), str_format, (i2x_left), (i2x_right))
+#define llc_fail_if_eq(str_format, i2x_left, i2x_right) if_true_fef((i2x_left) == (i2x_right), str_format, (i2x_left), (i2x_right))
+#define llc_fail_if_ne(str_format, i2x_left, i2x_right) if_true_fef((i2x_left) != (i2x_right), str_format, (i2x_left), (i2x_right))
+#define llc_fail_if_lt(str_format, i2x_left, i2x_right) if_true_fef((i2x_left)  < (i2x_right), str_format, (i2x_left), (i2x_right))
+#define llc_fail_if_le(str_format, i2x_left, i2x_right) if_true_fef((i2x_left) <= (i2x_right), str_format, (i2x_left), (i2x_right))
+#define llc_fail_if_ge(str_format, i2x_left, i2x_right) if_true_fef((i2x_left) >= (i2x_right), str_format, (i2x_left), (i2x_right))
+#define llc_fail_if_gt(str_format, i2x_left, i2x_right) if_true_fef((i2x_left)  > (i2x_right), str_format, (i2x_left), (i2x_right))
 
 #define fail_if_eq2u(i2u_left, i2u_right) llc_fail_if_eq(LLC_FMT_EQ_U2, i2u_t(i2u_left), i2u_t(i2u_right))
 #define fail_if_ne2u(i2u_left, i2u_right) llc_fail_if_ne(LLC_FMT_NE_U2, i2u_t(i2u_left), i2u_t(i2u_right))
