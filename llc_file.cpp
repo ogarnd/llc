@@ -2,6 +2,7 @@
 #include "llc_cstdio.h"
 #include "llc_cstring.h"
 #include "llc_path.h"
+#include "llc_string_compose.h"
 
 #include <new>
 
@@ -42,13 +43,28 @@ stxp llc::vcst_t	LLC_OPEN_MODE_WRITE		= LLC_CXS("wb");
 stxp llc::vcst_t	LLC_OPEN_MODE_APPEND	= LLC_CXS("ab+");
 
 #if defined(LLC_ESP32) || defined(ESP8266)
-stin	fs::FS&		getSoCFileSystem	()	{ return LLC_SOC_FILESYSTEM_INSTANCE; }
+stin	fs::FS&		getSoCFileSystem	()	{ rtrn LLC_SOC_FILESYSTEM_INSTANCE; }
+sttc  	llc::err_t	socPath  			(llc::asc_t & fixed, llc::vcsc_t path) {
+	llc::vcsc_t			trimmd;
+	if_fail_fe(llc::ltrim(trimmd, path, "/ \t\n"));
+	rtrn llc::append_strings(fixed, '/', trimmed);
+}
+#	define FIX_SOC_PATH(_pathView)                      {   \
+	if_zero_fe(_pathView.size());                           \
+	asc_t      _fixedPath;                            \
+	if('/' != _pathView[0]) {                               \
+		if_fail_fe(::socPath(_fixedPath, _pathView)); \
+		_pathView = _fixedPath;                       \
+	}														\
+}
 #endif
 
 #define llc_file_info_printf info_printf
 
-s3_t	llc::	fileSize			(llc::vcst_t fileName)			{
+s3_t	llc::	fileSize			(llc::vcst_t usfileName)			{
+	llc::asc_t			fileName					= llc::toString(usfileName);
 #if defined(LLC_ESP32) || defined(ESP8266)
+	FIX_SOC_PATH(fileName);
 	File				fp						= getSoCFileSystem().open(fileName.begin(), LLC_OPEN_MODE_READ);
 	ree_if(!fp, "Cannot open file: %s.", fileName.begin());
 	u2_c				fileSize				= (uint32_t)fp.size();
@@ -158,10 +174,11 @@ llc::err_t	llc::	fileJoin				(vcst_t fileNameDst)	{
 #define LLC_DEBUG_FILE_CONTENTS
 
 llc::err_t	llc::	fileToMemory			(vcst_t usfileName, llc::au0_t & fileInMemory, uint32_t maxSize, uint64_t offset)		{
-	llc::asc_c			fileName					= llc::toString(usfileName);
+	llc::asc_t			fileName					= llc::toString(usfileName);
 	llc_file_info_printf("Loading '%s'.", fileName.begin());
 
 #if defined(LLC_ESP32) || defined(ESP8266)
+	FIX_SOC_PATH(fileName);
 	File				fp					= getSoCFileSystem().open(fileName.begin(), LLC_OPEN_MODE_READ);
 	ree_if(!fp, "Cannot open file: %s.", fileName.begin());
 	u2_c				fileSize					= (uint32_t)fp.size();
@@ -207,7 +224,7 @@ llc::err_t	llc::	fileToMemory			(vcst_t usfileName, llc::au0_t & fileInMemory, u
 }
 
 llc::err_t	llc::	fileFromMemory			(vcst_t usfileName, vcu0_c & fileInMemory, bool append)	{
-	llc::asc_c			fileName					= llc::toString(usfileName);
+	llc::asc_t			fileName					= llc::toString(usfileName);
 #ifdef LLC_DEBUG_FILE_CONTENTS
 	llc_file_info_printf("%s '%s':\n%s\n", append ? "Appending to" : "Writing", fileName.begin(), fileInMemory.size() ? fileInMemory.begin() : (const uint8_t*)"");
 #else
@@ -216,6 +233,7 @@ llc::err_t	llc::	fileFromMemory			(vcst_t usfileName, vcu0_c & fileInMemory, boo
 
 	llc::err_t	result				= 0;
 #if defined(LLC_ESP32) || defined(ESP8266)
+	FIX_SOC_PATH(fileName);
 	File 				fp	 				= ::getSoCFileSystem().open(fileName.begin(), append ? LLC_OPEN_MODE_APPEND : LLC_OPEN_MODE_WRITE);
 	ree_if(!fp, "Failed to open '%s'.", fileName.begin());
 	ree_if(!fp.write(fileInMemory.begin(), fileInMemory.size()), "Failed to write to '%s'.", fileName.begin());
@@ -234,9 +252,10 @@ llc::err_t	llc::	fileFromMemory			(vcst_t usfileName, vcu0_c & fileInMemory, boo
 }
 
 llc::err_t	llc::	fileDelete				(vcst_t usfileName)	{
-	llc::asc_c	fileName					= llc::toString(usfileName);
+	llc::asc_t	fileName					= llc::toString(usfileName);
 	llc_file_info_printf("Deleting '%s'.", fileName.begin());
 #if defined(LLC_ESP32) || defined(ESP8266)
+	FIX_SOC_PATH(fileName);
 	ree_if(0 == ::getSoCFileSystem().remove(fileName.begin()), "Failed to delete '%s'.", fileName.begin());
 #elif defined(LLC_WINDOWS)
 	ree_if(FALSE == DeleteFileA(fileName.begin()), "Failed to delete '%s'.", fileName.begin());
