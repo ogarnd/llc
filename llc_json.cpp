@@ -603,7 +603,7 @@ llc::err_t			llc::jsonObjectKeyList		(cnst llc::SJSONNode & node_object, cnst ll
 }
 
 llc::err_t			llc::jsonObjectValueGet		(cnst llc::SJSONNode & node_object, cnst llc::view<vcsc_t> & views, cnst llc::vcst_t & key)	{
-	ree_if(llc::JSON_TYPE_OBJECT != node_object.Token->Type, "Invalid node type: %" LLC_FMT_S2 " (%s). Only objects are allowed to be accessed by key.", node_object.Token->Type, llc::get_value_label(node_object.Token->Type).begin());
+	ree_if(llc::JSON_TYPE_OBJECT != node_object.Token->Type, "Invalid node type: %" LLC_FMT_S2 " (%s). Only objects are allowed to be accessed by key (\"%s\").", node_object.Token->Type, llc::get_value_label(node_object.Token->Type).begin(), key.begin());
 	for(u2_t iNode = 0, countNodes = node_object.Children.size(); iNode < countNodes; iNode += 2) {
 		cnst llc::SJSONNode		* node						= node_object.Children[iNode];
 		ree_if(llc::JSON_TYPE_STRING != node->Token->Type, "Invalid node type: %" LLC_FMT_U2 " (%s). Only string types (%" LLC_FMT_U2 ") can be keys of JSON objects.", node->Token->Type, llc::get_value_label(node->Token->Type).begin(), llc::JSON_TYPE_STRING);
