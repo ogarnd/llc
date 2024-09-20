@@ -47,7 +47,7 @@ stin	fs::FS&		getSoCFileSystem	()	{ rtrn LLC_SOC_FILESYSTEM_INSTANCE; }
 sttc  	llc::err_t	socPath  			(llc::asc_t & fixed, llc::vcsc_t path) {
 	llc::vcsc_t			trimmd;
 	if_fail_fe(llc::ltrim(trimmd, path, "/ \t\n"));
-	rtrn llc::append_strings(fixed, '/', trimmed);
+	rtrn llc::append_strings(fixed, '/', trimmd);
 }
 #	define FIX_SOC_PATH(_pathView)                      {   \
 	if_zero_fe(_pathView.size());                           \
