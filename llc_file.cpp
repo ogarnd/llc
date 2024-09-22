@@ -59,7 +59,7 @@ sttc  	llc::err_t	socPath  			(llc::asc_t & fixed, llc::vcsc_t path) {
 }
 #endif
 
-#define llc_file_info_printf info_printf
+#define llc_file_info_printf(...) do {} while(0) // info_printf
 
 s3_t	llc::	fileSize			(llc::vcst_t usfileName)			{
 	llc::asc_t			fileName					= llc::toString(usfileName);
