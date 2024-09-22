@@ -8,7 +8,13 @@
 namespace llc
 {
 #pragma pack(push, 1)
+#ifdef LLC_ARDUINO
+	tydf  s1_t json_id_t;
+	GDEFINE_ENUM_TYPE(JSON_TYPE, s0_t);
+#else
+	tydf  s2_t json_id_t;
 	GDEFINE_ENUM_TYPE(JSON_TYPE, s2_t);
+#endif
 	GDEFINE_ENUM_VALUE(JSON_TYPE, NULL		,  0);
 	GDEFINE_ENUM_VALUE(JSON_TYPE, INTEGER	,  1);
 	GDEFINE_ENUM_VALUE(JSON_TYPE, DECIMAL	,  2);
@@ -22,7 +28,7 @@ namespace llc
 	GDEFINE_ENUM_VALUE(JSON_TYPE, COUNT		, 10);
 	GDEFINE_ENUM_VALUE(JSON_TYPE, UNKNOWN	, -1);
 	stct SJSONToken {
-		s2_t					ParentIndex;
+		json_id_t				ParentIndex;
 		JSON_TYPE				Type;
 		sliceu2_t				Span;
 		uint64_t				Value;
@@ -31,11 +37,11 @@ namespace llc
 		SJSONToken				* Token				= 0;
 		SJSONNode				* Parent			= 0;
 		apobj<SJSONNode>		Children			= {};
-		s2_t					ObjectIndex			= -1;
+		json_id_t				ObjectIndex			= -1;
 	};
 	stct SJSONReaderState {
 		u2_t					IndexCurrentChar	= 0;
-		s2_t					IndexCurrentElement	= -1;
+		json_id_t				IndexCurrentElement	= -1;
 		SJSONToken				* CurrentElement	= 0;
 		s1_t					NestLevel			= 0;
 		sc_t					CharCurrent			= 0;
@@ -70,7 +76,7 @@ namespace llc
 	};
 
 	// Reader functions: Populate a SJSONReader structure from an input JSON string.
-	err_t			jsonParse			(SJSONReader & reader, vcsc_c & jsonAsString);
+	err_t			jsonParse			(SJSONReader & reader, vcsc_c & jsonAsString, bool buildTree = true, bool buildViews = true);
 	err_t			jsonParseStep		(SJSONReader & reader, vcsc_c & jsonAsString);
 	err_t			jsonTreeRebuild		(view<SJSONToken> & in_object, apobj<SJSONNode> & out_nodes);
 

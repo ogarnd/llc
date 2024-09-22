@@ -44,8 +44,11 @@ namespace llc
 			stxp	u2_t			MAX_COUNT				= 0x3FFFFFFFU;
 			if(MAX_COUNT < newCountRequested)
 				return (u2_t)-1;
-
+#if defined (LLC_ARDUINO) || defined(LLC_ESP32) || defined(LLC_ESP8266) || defined(ESP32)
+			u2_c				desiredCount			= newCountRequested + 1;//: + (newCountRequested >> 8);
+#else
 			u2_c				desiredCount			= newCountRequested + (newCountRequested >> 2);
+#endif
 			return outCount = (desiredCount > MAX_COUNT || desiredCount < newCountRequested) ? MAX_COUNT : desiredCount; 
 		}
 

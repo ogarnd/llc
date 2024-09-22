@@ -554,19 +554,25 @@ llc::err_t			llc::jsonTreeRebuild		(llc::view<llc::SJSONToken>& in_object, llc::
 
 #define json_bi_if(condition, format, ...) if(condition) break; //
 
-llc::err_t			llc::jsonParse				(llc::SJSONReader & reader, llc::vcsc_c & jsonAsString)	{
-	llc::SJSONReaderState		& stateReader				= reader.StateRead;
+llc::err_t			llc::jsonParse				(llc::SJSONReader & reader, llc::vcsc_c & jsonAsString, bool buildTree, bool buildViews)	{
+	llc::SJSONReaderState		& stateReader			= reader.StateRead;
 	for(stateReader.IndexCurrentChar = 0; stateReader.IndexCurrentChar < jsonAsString.size(); ++stateReader.IndexCurrentChar) {
 		llc_necs(llc::jsonParseStep(reader, jsonAsString));
 		json_bi_if(reader.StateRead.DoneReading, "%" LLC_FMT_S2 " json characters read.", stateReader.IndexCurrentChar + 1);
 	}
 	ree_if(stateReader.NestLevel, "Nest level: %" LLC_FMT_S2 " (Needs to be zero).", stateReader.NestLevel);
-	llc_necs(reader.View.resize(reader.Token.size()));
-	for(u2_t iView = 0; iView < reader.View.size(); ++iView) {
-		cnst llc::SJSONToken		& currentElement									= reader.Token[iView];
-		llc_necs(jsonAsString.slice(reader.View[iView], currentElement.Span.Begin, currentElement.Span.End - currentElement.Span.Begin));
+	if(false == buildViews) {
+		llc_necs(reader.View.resize(1));
+		reader.View[0] = jsonAsString;
 	}
-	rtrn llc::jsonTreeRebuild(reader.Token, reader.Tree);
+	else {
+		llc_necs(reader.View.resize(reader.Token.size()));
+		for(u2_t iView = 0; iView < reader.View.size(); ++iView) {
+			cnst llc::SJSONToken		& currentElement									= reader.Token[iView];
+			llc_necs(jsonAsString.slice(reader.View[iView], currentElement.Span.Begin, currentElement.Span.End - currentElement.Span.Begin));
+		}
+	}	
+	rtrn buildTree ? llc::jsonTreeRebuild(reader.Token, reader.Tree) : 0;
 }
 
 llc::err_t			llc::jsonObjectKeyList		(cnst llc::SJSONNode & node_object, cnst llc::view<vcsc_t> & views, llc::as2_t & indices, llc::avcsc_t & keys)	{
