@@ -6,21 +6,21 @@
 #	define LLC_ESPIDF
 #endif
 
-#if (!defined(LLC_ARDUINO)) && (defined(__ARDUINO__) || defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266))
+#if (!defined(LLC_ARDUINO))	&&	(defined(__ARDUINO__)	||	defined(ARDUINO_ARCH_ESP32)	||	defined(ARDUINO_ARCH_ESP8266))
 #	define LLC_ARDUINO
 #endif
 
-#if (!defined(LLC_ATMEL)) && defined(__ATMEGA__)
+#if (!defined(LLC_ATMEL))	&&	defined(__ATMEGA__)
 #	define LLC_ATMEL
-#elif (!defined(LLC_ESP32)) && (defined(ESP32) || defined(ARDUINO_ARCH_ESP32))
+#elif (!defined(LLC_ESP32))		&&	(defined(ESP32)		||	defined(ARDUINO_ARCH_ESP32))
 #	define LLC_ESP32
-#elif(!defined(LLC_ESP8266)) && (defined(ESP8266) || defined(ARDUINO_ARCH_ESP8266))
+#elif (!defined(LLC_ESP8266))	&&	(defined(ESP8266)	||	defined(ARDUINO_ARCH_ESP8266))
 #	define LLC_ESP8266
-#elif (!defined(LLC_ANDROID)) && (defined(ANDROID) || defined(__ANDROID__))
+#elif (!defined(LLC_ANDROID))	&&	(defined(ANDROID)	||	defined(__ANDROID__))
 #	define LLC_ANDROID
-#elif (!defined(LLC_LINUX)) && defined(__linux__)
+#elif (!defined(LLC_LINUX))		&&	defined(__linux__)
 #	define LLC_LINUX
-#elif (!defined(LLC_WINDOWS)) && (defined(WIN32) || defined(_WIN32) || defined(WIN64) || defined(_WIN64))
+#elif (!defined(LLC_WINDOWS))	&&	(defined(WIN32) || defined(_WIN32) || defined(WIN64) || defined(_WIN64))
 #	define LLC_WINDOWS
 #endif
 
