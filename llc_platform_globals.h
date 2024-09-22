@@ -155,149 +155,147 @@
 #define cxpr_if_not(condition)	if cxpr(not(condition))
 #define if_not(condition)		if(not(condition))
 
-#define	LLC_STRINGIFY(x)	#x
-#define	LLC_TOSTRING(x)		LLC_STRINGIFY(x)
+#define LLC_STRINGIFY(x)		#x
+#define LLC_TOSTRING(x)			LLC_STRINGIFY(x)
 
-#define LLCREP0(param)		(param)
-#define LLCREP1(param)		LLCREP0(param), (param)
-#define LLCREP2(param)		LLCREP1(param), (param)
-#define LLCREP3(param)		LLCREP2(param), (param)
-#define LLCREP4(param)		LLCREP3(param), (param)
-#define LLCREP5(param)		LLCREP4(param), (param)
-#define LLCREP6(param)		LLCREP5(param), (param)
-#define LLCREP7(param)		LLCREP6(param), (param)
+#define LLCREP0(param)			(param)
+#define LLCREP1(param)			LLCREP0(param), (param)
+#define LLCREP2(param)			LLCREP1(param), (param)
+#define LLCREP3(param)			LLCREP2(param), (param)
+#define LLCREP4(param)			LLCREP3(param), (param)
+#define LLCREP5(param)			LLCREP4(param), (param)
+#define LLCREP6(param)			LLCREP5(param), (param)
+#define LLCREP7(param)			LLCREP6(param), (param)
 
-#define cnstnxpt			cnst nxpt
-#define cnstvltl			cnst vltl
-#define unsgnd				unsd
-#define operatr				oper
-#define cnstxpr				cxpr
-#define inlcxpr				inln cxpr
-#define stacxpr				sttc cxpr
-#define stainli				sttc inln
-#define stincxp				stin cxpr
-#define prtctd				protected
-#define privte				private
-
-#define nodscrd				[[nodiscard]]
-#define ndsttic				nodscrd static
-#define ndinlne				nodscrd inline
-#define ndcnxpr				nodscrd cnstxpr
-#define ndstain				ndsttic inline
-#define ndstcxp				ndsttic cnstxpr
-#define ndincxp				ndinlne cnstxpr
-#define ndstinx				ndstain cnstxpr
-
-#define tplTstruct			tplT struct
-#define tplTndstcxp			tplT ndstcxp
-#define tplTstincxp			tplT stincxp
-#define tplTstacxpr			tplT stacxpr
-#define tplTndstinx			tplT ndstinx
-
-#define	LLC_STRINGIFY(x) #x
-#define	LLC_TOSTRING(x)  LLC_STRINGIFY(x)
-
-#ifndef LLC_ATMEL
-#	define LLC_FMT_F32 "f"
-#	define LLC_FMT_F64 "f"
-#	define LLC_FMT_I32 "i"
-#	define LLC_FMT_U32 "u"
-#	define LLC_FMT_I64 "lli"
-#	define LLC_FMT_U64 "llu"
+#ifndef	LLC_ATMEL
+#	define LLC_FMT_F32	"f"
+#	define LLC_FMT_F64	"f"
+#	define LLC_FMT_I32	"i"
+#	define LLC_FMT_U32	"u"
+#	define LLC_FMT_I64	"lli"
+#	define LLC_FMT_U64	"llu"
 #else
-#	define LLC_FMT_F32 "f"
-#	define LLC_FMT_F64 "f"
-#	define LLC_FMT_I32 "li"
-#	define LLC_FMT_U32 "lu"
-#	define LLC_FMT_I64 "lli"
-#	define LLC_FMT_U64 "llu"
+#	define LLC_FMT_F32	"f"
+#	define LLC_FMT_F64	"f"
+#	define LLC_FMT_I32	"li"
+#	define LLC_FMT_U32	"lu"
+#	define LLC_FMT_I64	"lli"
+#	define LLC_FMT_U64	"llu"
 #endif
-#define LLC_FMT_I8  "i"
-#define LLC_FMT_U8  "u"
-#define LLC_FMT_I16 "i"
-#define LLC_FMT_U16 "u"
-#define LLC_FMT_F32_GT_F32 "%" LLC_FMT_F32 " > %" LLC_FMT_F32
-#define LLC_FMT_F64_GT_F64 "%" LLC_FMT_F64 " > %" LLC_FMT_F64
-#define LLC_FMT_I32_GT_I32 "%" LLC_FMT_I32 " > %" LLC_FMT_I32
-#define LLC_FMT_U32_GT_U32 "%" LLC_FMT_U32 " > %" LLC_FMT_U32
-#define LLC_FMT_I64_GT_I64 "%" LLC_FMT_I64 " > %" LLC_FMT_I64
-#define LLC_FMT_U64_GT_U64 "%" LLC_FMT_U64 " > %" LLC_FMT_U64
+#define LLC_FMT_I8			"i"
+#define LLC_FMT_U8			"u"
+#define LLC_FMT_I16			"i"
+#define LLC_FMT_U16			"u"
+#define LLC_FMT_F32_GT_F32	"%"	LLC_FMT_F32	" > %"	LLC_FMT_F32
+#define LLC_FMT_F64_GT_F64	"%"	LLC_FMT_F64	" > %"	LLC_FMT_F64
+#define LLC_FMT_I32_GT_I32	"%"	LLC_FMT_I32	" > %"	LLC_FMT_I32
+#define LLC_FMT_U32_GT_U32	"%"	LLC_FMT_U32	" > %"	LLC_FMT_U32
+#define LLC_FMT_I64_GT_I64	"%"	LLC_FMT_I64	" > %"	LLC_FMT_I64
+#define LLC_FMT_U64_GT_U64	"%"	LLC_FMT_U64	" > %"	LLC_FMT_U64
 
-#define LLC_FMT_F32_LT_F32 "%" LLC_FMT_F32 " < %" LLC_FMT_F32
-#define LLC_FMT_F64_LT_F64 "%" LLC_FMT_F64 " < %" LLC_FMT_F64
-#define LLC_FMT_I32_LT_I32 "%" LLC_FMT_I32 " < %" LLC_FMT_I32
-#define LLC_FMT_U32_LT_U32 "%" LLC_FMT_U32 " < %" LLC_FMT_U32
-#define LLC_FMT_I64_LT_I64 "%" LLC_FMT_I64 " < %" LLC_FMT_I64
-#define LLC_FMT_U64_LT_U64 "%" LLC_FMT_U64 " < %" LLC_FMT_U64
+#define LLC_FMT_F32_LT_F32	"%"	LLC_FMT_F32	" < %"	LLC_FMT_F32
+#define LLC_FMT_F64_LT_F64	"%"	LLC_FMT_F64	" < %"	LLC_FMT_F64
+#define LLC_FMT_I32_LT_I32	"%"	LLC_FMT_I32	" < %"	LLC_FMT_I32
+#define LLC_FMT_U32_LT_U32	"%"	LLC_FMT_U32	" < %"	LLC_FMT_U32
+#define LLC_FMT_I64_LT_I64	"%"	LLC_FMT_I64	" < %"	LLC_FMT_I64
+#define LLC_FMT_U64_LT_U64	"%"	LLC_FMT_U64	" < %"	LLC_FMT_U64
 
-#define LLC_FMT_F32_EQ_F32 "%" LLC_FMT_F32 " == %" LLC_FMT_F32
-#define LLC_FMT_F64_EQ_F64 "%" LLC_FMT_F64 " == %" LLC_FMT_F64
-#define LLC_FMT_I32_EQ_I32 "%" LLC_FMT_I32 " == %" LLC_FMT_I32
-#define LLC_FMT_U32_EQ_U32 "%" LLC_FMT_U32 " == %" LLC_FMT_U32
-#define LLC_FMT_I64_EQ_I64 "%" LLC_FMT_I64 " == %" LLC_FMT_I64
-#define LLC_FMT_U64_EQ_U64 "%" LLC_FMT_U64 " == %" LLC_FMT_U64
+#define LLC_FMT_F32_EQ_F32	"%"	LLC_FMT_F32	" == %"	LLC_FMT_F32
+#define LLC_FMT_F64_EQ_F64	"%"	LLC_FMT_F64	" == %"	LLC_FMT_F64
+#define LLC_FMT_I32_EQ_I32	"%"	LLC_FMT_I32	" == %"	LLC_FMT_I32
+#define LLC_FMT_U32_EQ_U32	"%"	LLC_FMT_U32	" == %"	LLC_FMT_U32
+#define LLC_FMT_I64_EQ_I64	"%"	LLC_FMT_I64	" == %"	LLC_FMT_I64
+#define LLC_FMT_U64_EQ_U64	"%"	LLC_FMT_U64	" == %"	LLC_FMT_U64
 
-#define LLC_FMT_F32_GE_F32 "%" LLC_FMT_F32 " >= %" LLC_FMT_F32
-#define LLC_FMT_F64_GE_F64 "%" LLC_FMT_F64 " >= %" LLC_FMT_F64
-#define LLC_FMT_I32_GE_I32 "%" LLC_FMT_I32 " >= %" LLC_FMT_I32
-#define LLC_FMT_U32_GE_U32 "%" LLC_FMT_U32 " >= %" LLC_FMT_U32
-#define LLC_FMT_I64_GE_I64 "%" LLC_FMT_I64 " >= %" LLC_FMT_I64
-#define LLC_FMT_U64_GE_U64 "%" LLC_FMT_U64 " >= %" LLC_FMT_U64
+#define LLC_FMT_F32_GE_F32	"%"	LLC_FMT_F32	" >= %"	LLC_FMT_F32
+#define LLC_FMT_F64_GE_F64	"%"	LLC_FMT_F64	" >= %"	LLC_FMT_F64
+#define LLC_FMT_I32_GE_I32	"%"	LLC_FMT_I32	" >= %"	LLC_FMT_I32
+#define LLC_FMT_U32_GE_U32	"%"	LLC_FMT_U32	" >= %"	LLC_FMT_U32
+#define LLC_FMT_I64_GE_I64	"%"	LLC_FMT_I64	" >= %"	LLC_FMT_I64
+#define LLC_FMT_U64_GE_U64	"%"	LLC_FMT_U64	" >= %"	LLC_FMT_U64
 
-#define LLC_FMT_F32_LE_F32 "%" LLC_FMT_F32 " <= %" LLC_FMT_F32
-#define LLC_FMT_F64_LE_F64 "%" LLC_FMT_F64 " <= %" LLC_FMT_F64
-#define LLC_FMT_I32_LE_I32 "%" LLC_FMT_I32 " <= %" LLC_FMT_I32
-#define LLC_FMT_U32_LE_U32 "%" LLC_FMT_U32 " <= %" LLC_FMT_U32
-#define LLC_FMT_I64_LE_I64 "%" LLC_FMT_I64 " <= %" LLC_FMT_I64
-#define LLC_FMT_U64_LE_U64 "%" LLC_FMT_U64 " <= %" LLC_FMT_U64
+#define LLC_FMT_F32_LE_F32	"%"	LLC_FMT_F32	" <= %"	LLC_FMT_F32
+#define LLC_FMT_F64_LE_F64	"%"	LLC_FMT_F64	" <= %"	LLC_FMT_F64
+#define LLC_FMT_I32_LE_I32	"%"	LLC_FMT_I32	" <= %"	LLC_FMT_I32
+#define LLC_FMT_U32_LE_U32	"%"	LLC_FMT_U32	" <= %"	LLC_FMT_U32
+#define LLC_FMT_I64_LE_I64	"%"	LLC_FMT_I64	" <= %"	LLC_FMT_I64
+#define LLC_FMT_U64_LE_U64	"%"	LLC_FMT_U64	" <= %"	LLC_FMT_U64
 
-#define LLC_FMT_F32_NE_F32 "%" LLC_FMT_F32 " != %" LLC_FMT_F32
-#define LLC_FMT_F64_NE_F64 "%" LLC_FMT_F64 " != %" LLC_FMT_F64
-#define LLC_FMT_I32_NE_I32 "%" LLC_FMT_I32 " != %" LLC_FMT_I32
-#define LLC_FMT_U32_NE_U32 "%" LLC_FMT_U32 " != %" LLC_FMT_U32
-#define LLC_FMT_I64_NE_I64 "%" LLC_FMT_I64 " != %" LLC_FMT_I64
-#define LLC_FMT_U64_NE_U64 "%" LLC_FMT_U64 " != %" LLC_FMT_U64
+#define LLC_FMT_F32_NE_F32	"%"	LLC_FMT_F32	" != %"	LLC_FMT_F32
+#define LLC_FMT_F64_NE_F64	"%"	LLC_FMT_F64	" != %"	LLC_FMT_F64
+#define LLC_FMT_I32_NE_I32	"%"	LLC_FMT_I32	" != %"	LLC_FMT_I32
+#define LLC_FMT_U32_NE_U32	"%"	LLC_FMT_U32	" != %"	LLC_FMT_U32
+#define LLC_FMT_I64_NE_I64	"%"	LLC_FMT_I64	" != %"	LLC_FMT_I64
+#define LLC_FMT_U64_NE_U64	"%"	LLC_FMT_U64	" != %"	LLC_FMT_U64
 
-#define LLC_FMT_EQ_F32  LLC_FMT_F32_EQ_F32
-#define LLC_FMT_EQ_F64  LLC_FMT_F64_EQ_F64
-#define LLC_FMT_EQ_I32  LLC_FMT_I32_EQ_I32
-#define LLC_FMT_EQ_U32  LLC_FMT_U32_EQ_U32
-#define LLC_FMT_EQ_I64  LLC_FMT_I64_EQ_I64
-#define LLC_FMT_EQ_U64  LLC_FMT_U64_EQ_U64
+#define LLC_FMT_EQ_F32		LLC_FMT_F32_EQ_F32
+#define LLC_FMT_EQ_F64		LLC_FMT_F64_EQ_F64
+#define LLC_FMT_EQ_I32		LLC_FMT_I32_EQ_I32
+#define LLC_FMT_EQ_U32		LLC_FMT_U32_EQ_U32
+#define LLC_FMT_EQ_I64		LLC_FMT_I64_EQ_I64
+#define LLC_FMT_EQ_U64		LLC_FMT_U64_EQ_U64
 
-#define LLC_FMT_NE_F32  LLC_FMT_F32_NE_F32
-#define LLC_FMT_NE_F64  LLC_FMT_F64_NE_F64
-#define LLC_FMT_NE_I32  LLC_FMT_I32_NE_I32
-#define LLC_FMT_NE_U32  LLC_FMT_U32_NE_U32
-#define LLC_FMT_NE_I64  LLC_FMT_I64_NE_I64
-#define LLC_FMT_NE_U64  LLC_FMT_U64_NE_U64
+#define LLC_FMT_NE_F32		LLC_FMT_F32_NE_F32
+#define LLC_FMT_NE_F64		LLC_FMT_F64_NE_F64
+#define LLC_FMT_NE_I32		LLC_FMT_I32_NE_I32
+#define LLC_FMT_NE_U32		LLC_FMT_U32_NE_U32
+#define LLC_FMT_NE_I64		LLC_FMT_I64_NE_I64
+#define LLC_FMT_NE_U64		LLC_FMT_U64_NE_U64
 
-#define LLC_FMT_GT_F32  LLC_FMT_F32_GT_F32
-#define LLC_FMT_GT_F64  LLC_FMT_F64_GT_F64
-#define LLC_FMT_GT_I32  LLC_FMT_I32_GT_I32
-#define LLC_FMT_GT_U32  LLC_FMT_U32_GT_U32
-#define LLC_FMT_GT_I64  LLC_FMT_I64_GT_I64
-#define LLC_FMT_GT_U64  LLC_FMT_U64_GT_U64
+#define LLC_FMT_GT_F32		LLC_FMT_F32_GT_F32
+#define LLC_FMT_GT_F64		LLC_FMT_F64_GT_F64
+#define LLC_FMT_GT_I32		LLC_FMT_I32_GT_I32
+#define LLC_FMT_GT_U32		LLC_FMT_U32_GT_U32
+#define LLC_FMT_GT_I64		LLC_FMT_I64_GT_I64
+#define LLC_FMT_GT_U64		LLC_FMT_U64_GT_U64
 
-#define LLC_FMT_GE_F32  LLC_FMT_F32_GE_F32
-#define LLC_FMT_GE_F64  LLC_FMT_F64_GE_F64
-#define LLC_FMT_GE_I32  LLC_FMT_I32_GE_I32
-#define LLC_FMT_GE_U32  LLC_FMT_U32_GE_U32
-#define LLC_FMT_GE_I64  LLC_FMT_I64_GE_I64
-#define LLC_FMT_GE_U64  LLC_FMT_U64_GE_U64
+#define LLC_FMT_GE_F32		LLC_FMT_F32_GE_F32
+#define LLC_FMT_GE_F64		LLC_FMT_F64_GE_F64
+#define LLC_FMT_GE_I32		LLC_FMT_I32_GE_I32
+#define LLC_FMT_GE_U32		LLC_FMT_U32_GE_U32
+#define LLC_FMT_GE_I64		LLC_FMT_I64_GE_I64
+#define LLC_FMT_GE_U64		LLC_FMT_U64_GE_U64
 
-#define LLC_FMT_LE_F32  LLC_FMT_F32_LE_F32
-#define LLC_FMT_LE_F64  LLC_FMT_F64_LE_F64
-#define LLC_FMT_LE_I32  LLC_FMT_I32_LE_I32
-#define LLC_FMT_LE_U32  LLC_FMT_U32_LE_U32
-#define LLC_FMT_LE_I64  LLC_FMT_I64_LE_I64
-#define LLC_FMT_LE_U64  LLC_FMT_U64_LE_U64
+#define LLC_FMT_LE_F32		LLC_FMT_F32_LE_F32
+#define LLC_FMT_LE_F64		LLC_FMT_F64_LE_F64
+#define LLC_FMT_LE_I32		LLC_FMT_I32_LE_I32
+#define LLC_FMT_LE_U32		LLC_FMT_U32_LE_U32
+#define LLC_FMT_LE_I64		LLC_FMT_I64_LE_I64
+#define LLC_FMT_LE_U64		LLC_FMT_U64_LE_U64
 
-#define LLC_FMT_LT_F32  LLC_FMT_F32_LT_F32
-#define LLC_FMT_LT_F64  LLC_FMT_F64_LT_F64
-#define LLC_FMT_LT_I32  LLC_FMT_I32_LT_I32
-#define LLC_FMT_LT_U32  LLC_FMT_U32_LT_U32
-#define LLC_FMT_LT_I64  LLC_FMT_I64_LT_I64
-#define LLC_FMT_LT_U64  LLC_FMT_U64_LT_U64
+#define LLC_FMT_LT_F32		LLC_FMT_F32_LT_F32
+#define LLC_FMT_LT_F64		LLC_FMT_F64_LT_F64
+#define LLC_FMT_LT_I32		LLC_FMT_I32_LT_I32
+#define LLC_FMT_LT_U32		LLC_FMT_U32_LT_U32
+#define LLC_FMT_LT_I64		LLC_FMT_I64_LT_I64
+#define LLC_FMT_LT_U64		LLC_FMT_U64_LT_U64
 
-#endif // LLC_PLATFORM_GLOBALS_H_23627
+// Legacy -- Compat
+#define cnstnxpt				csnx
+#define cnstvltl				csvl
+#define unsgnd					unsd
+#define operatr					oper
+#define cnstxpr					cxpr
+#define inlcxpr					inxp
+#define stacxpr					stxp
+#define stainli					stin
+#define stincxp					sinx
+#define prtctd					prtc
+#define privte					prvt
+
+#define nodscrd					ndsc
+#define ndsttic					ndst
+#define ndinlne					ndin
+#define ndcnxpr					ndxp
+#define ndstain					ndsi
+#define ndstcxp					ndsx
+#define ndincxp					ndix
+#define ndstinx					nsix
+
+#define tplTstruct				tplTstct
+#define tplTndstcxp				tplTndsx
+#define tplTstincxp				tplTsinx
+#define tplTstacxpr				tplTstxp
+#define tplTndstinx				tplTnsix
+
+#endif	//	LLC_PLATFORM_GLOBALS_H_23627
