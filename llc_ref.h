@@ -18,8 +18,8 @@ namespace llc
 		TRef					* oldRef				= *llc_reference;
 		*llc_reference		= 0;
 		if(oldRef)
-			switch(llc_sync_decrement(oldRef->References)) {
-			case -1: error_printf("%s", "Reference count error!"); return -1;
+			switch(refcount_c referenceCount = llc_sync_decrement(oldRef->References)) {
+			default: if_fail_fef(referenceCount, "Reference count error! (%i).", referenceCount); 
 			case  0:
 				if_null_e(oldRef->Instance)
 				else {

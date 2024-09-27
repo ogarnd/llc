@@ -102,8 +102,9 @@ namespace llc
 #endif
 	stxp	b8_c	flse			= false;
 	stxp	u0_c	BYTE_SIZE		= 8;
-	typedef	intptr_t	LLC_REFCOUNT_T;
-	tdvl	LLC_REFCOUNT_T	refcount_vl;
+	tydf	intptr_t	refcount_t;
+	tdcs	refcount_t	refcount_c;
+	tdvl	refcount_t	refcount_vl;
 
 	tpl_tstct	rm_cnst				{ usng T = _t; };
 	tpl_tstct	rm_cnst<cnst _t>	{ usng T = _t; };
