@@ -19,7 +19,7 @@ namespace llc
 		*llc_reference		= 0;
 		if(oldRef)
 			switch(refcount_c referenceCount = llc_sync_decrement(oldRef->References)) {
-			default: if_fail_fef(referenceCount, "Reference count error! (%i).", referenceCount); 
+			default: if_fail_fef(referenceCount, "Reference count error! (%i).", referenceCount); break;
 			case  0:
 				if_null_e(oldRef->Instance)
 				else {
