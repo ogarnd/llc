@@ -157,11 +157,10 @@ sttc	llc::err_t	jsonCloseElement			(llc::SJSONReaderState & stateReader, llc::ap
 }
 
 sttc	llc::err_t	jsonTestAndCloseValue		(llc::SJSONReaderState & stateReader, llc::apod<llc::SJSONToken> & object) {
-	if(stateReader.CurrentElement && llc::JSON_TYPE_VALUE == stateReader.CurrentElement->Type) {
-		stateReader.ExpectingSeparator	= true;	// actually we expect the separator AFTER calling jsonCloseElement(). However, such function doesn't care about this value, so we can simplify the code by reversing the operations.
-		rtrn ::jsonCloseElement(stateReader, object, stateReader.IndexCurrentChar);
-	}
-	rtrn 1;
+	if_null_fe(stateReader.CurrentElement);
+	if_true_vv(1, llc::JSON_TYPE_VALUE != stateReader.CurrentElement->Type); 
+	stateReader.ExpectingSeparator	= true;	// actually we expect the separator AFTER calling jsonCloseElement(). However, such function doesn't care about this value, so we can simplify the code by reversing the operations.
+	rtrn ::jsonCloseElement(stateReader, object, stateReader.IndexCurrentChar);
 }
 
 #define seterr_break_if(condition, format, ...)	\
@@ -369,11 +368,10 @@ sttc	llc::err_t	parseJsonNumber				(llc::SJSONReaderState & stateReader, llc::ap
 }
 
 sttc	llc::err_t	jsonTestAndCloseKey			(llc::SJSONReaderState & stateReader, llc::apod<llc::SJSONToken> & tokens) {
-	if(stateReader.CurrentElement && llc::JSON_TYPE_KEY == stateReader.CurrentElement->Type) {
-		stateReader.ExpectingSeparator	= true;	// actually we expect the separator AFTER calling jsonCloseElement(). However, such function doesn't care about this value, so we can simplify the code by reversing the operations.
-		rtrn ::jsonCloseElement(stateReader, tokens, stateReader.IndexCurrentChar);
-	}
-	rtrn 1;
+	if_null_fe(stateReader.CurrentElement);
+	if_true_vv(1, llc::JSON_TYPE_KEY != stateReader.CurrentElement->Type);
+	stateReader.ExpectingSeparator	= true;	// actually we expect the separator AFTER calling jsonCloseElement(). However, such function doesn't care about this value, so we can simplify the code by reversing the operations.
+	rtrn ::jsonCloseElement(stateReader, tokens, stateReader.IndexCurrentChar);
 }
 
 sttc	llc::err_t	jsonCloseOrDiscardEmptyKOrV	(llc::SJSONReaderState & stateReader, llc::apod<llc::SJSONToken> & tokens, llc::JSON_TYPE containerType) {
