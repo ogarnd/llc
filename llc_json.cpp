@@ -156,11 +156,43 @@ sttc	llc::err_t	jsonCloseElement			(llc::SJSONReaderState & stateReader, llc::ap
 	rtrn ::jsonCloseElement(stateReader, object, indexChar);
 }
 
-sttc	llc::err_t	jsonTestAndCloseValue		(llc::SJSONReaderState & stateReader, llc::apod<llc::SJSONToken> & object) {
+sttc	llc::err_t	jsonTestAndCloseValue		(llc::SJSONReaderState & stateReader, llc::apod<llc::SJSONToken> & tokens) {
 	if_null_fe(stateReader.CurrentElement);
-	if_true_vv(1, llc::JSON_TYPE_VALUE != stateReader.CurrentElement->Type); 
+	if_true_vv(1, llc::JSON_TYPE_VALUE != stateReader.CurrentElement->Type);
+	llc::err_c			result			= ::jsonCloseElement(stateReader, tokens, stateReader.IndexCurrentChar);
+	stateReader.ExpectingSeparator	= true;
+	if(stateReader.CurrentElement) {
+		llc::SJSONToken		& element		= *stateReader.CurrentElement;
+		if(llc::JSON_TYPE_ARRAY  == element.Type
+		|| llc::JSON_TYPE_OBJECT == element.Type
+		) ++element.Value;
+	}
+	rtrn result;
+}
+
+sttc	llc::err_t	jsonTestAndCloseKey			(llc::SJSONReaderState & stateReader, llc::apod<llc::SJSONToken> & tokens) {
+	if_null_fe(stateReader.CurrentElement);
+	if_true_vv(1, llc::JSON_TYPE_KEY != stateReader.CurrentElement->Type);
 	stateReader.ExpectingSeparator	= true;	// actually we expect the separator AFTER calling jsonCloseElement(). However, such function doesn't care about this value, so we can simplify the code by reversing the operations.
-	rtrn ::jsonCloseElement(stateReader, object, stateReader.IndexCurrentChar);
+	rtrn ::jsonCloseElement(stateReader, tokens, stateReader.IndexCurrentChar);
+}
+
+sttc	llc::err_t	jsonCloseOrDiscardEmptyKOrV	(llc::SJSONReaderState & stateReader, llc::apod<llc::SJSONToken> & tokens, llc::JSON_TYPE containerType) {
+	llc::err_t				errVal						= 0;
+	if(tokens[tokens.size() - 1].Type == containerType) {
+		json_info_printf("Discarding empty container element at index %" LLC_FMT_S2 " (%s). Level: %" LLC_FMT_S2 "", tokens.size() - 1, llc::get_value_label(containerType).begin(), stateReader.NestLevel);
+		stateReader.IndexCurrentElement	= tokens[tokens.size() - 1].ParentIndex;
+		llc_necs(tokens.pop_back());
+		--stateReader.NestLevel;
+		if((u2_t)stateReader.IndexCurrentElement < tokens.size())
+			stateReader.CurrentElement	= &tokens[stateReader.IndexCurrentElement];
+	}
+	else {
+		json_info_printf("Closing container at index %" LLC_FMT_S2 " (%s).", tokens.size() - 1, llc::get_value_label(containerType).begin());
+			 if(llc::JSON_TYPE_VALUE	== containerType) errVal = ::jsonTestAndCloseValue	(stateReader, tokens);
+		else if(llc::JSON_TYPE_KEY		== containerType) errVal = ::jsonTestAndCloseKey	(stateReader, tokens);
+	}
+	rtrn errVal;
 }
 
 #define seterr_break_if(condition, format, ...)	\
@@ -367,30 +399,6 @@ sttc	llc::err_t	parseJsonNumber				(llc::SJSONReaderState & stateReader, llc::ap
 	rtrn 0;
 }
 
-sttc	llc::err_t	jsonTestAndCloseKey			(llc::SJSONReaderState & stateReader, llc::apod<llc::SJSONToken> & tokens) {
-	if_null_fe(stateReader.CurrentElement);
-	if_true_vv(1, llc::JSON_TYPE_KEY != stateReader.CurrentElement->Type);
-	stateReader.ExpectingSeparator	= true;	// actually we expect the separator AFTER calling jsonCloseElement(). However, such function doesn't care about this value, so we can simplify the code by reversing the operations.
-	rtrn ::jsonCloseElement(stateReader, tokens, stateReader.IndexCurrentChar);
-}
-
-sttc	llc::err_t	jsonCloseOrDiscardEmptyKOrV	(llc::SJSONReaderState & stateReader, llc::apod<llc::SJSONToken> & tokens, llc::JSON_TYPE containerType) {
-	llc::err_t				errVal						= 0;
-	if(tokens[tokens.size() - 1].Type == containerType) {
-		json_info_printf("Discarding empty container element at index %" LLC_FMT_S2 " (%s). Level: %" LLC_FMT_S2 "", tokens.size() - 1, llc::get_value_label(containerType).begin(), stateReader.NestLevel);
-		stateReader.IndexCurrentElement	= tokens[tokens.size() - 1].ParentIndex;
-		llc_necs(tokens.pop_back());
-		--stateReader.NestLevel;
-		if((u2_t)stateReader.IndexCurrentElement < tokens.size())
-			stateReader.CurrentElement									= &tokens[stateReader.IndexCurrentElement];
-	}
-	else {
-		json_info_printf("Closing container at index %" LLC_FMT_S2 " (%s).", tokens.size() - 1, llc::get_value_label(containerType).begin());
-			 if(llc::JSON_TYPE_VALUE	== containerType) errVal = ::jsonTestAndCloseValue	(stateReader, tokens);
-		else if(llc::JSON_TYPE_KEY	== containerType) errVal = ::jsonTestAndCloseKey	(stateReader, tokens);
-	}
-	rtrn errVal;
-}
 sttc	llc::err_t	jsonCloseContainer			(llc::SJSONReaderState & stateReader, llc::apod<llc::SJSONToken> & tokens, llc::JSON_TYPE containerType) {
 	llc::err_t				errVal						= 0;
 	llc_necall(::jsonCloseOrDiscardEmptyKOrV(stateReader, tokens, (llc::JSON_TYPE_ARRAY == containerType) ? llc::JSON_TYPE_VALUE : llc::JSON_TYPE_KEY), "Failed to close container at index %" LLC_FMT_S2 " (%s).", stateReader.IndexCurrentElement, llc::get_value_label(containerType).begin());
