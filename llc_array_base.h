@@ -45,9 +45,9 @@ namespace llc
 			if(MAX_COUNT < newCountRequested)
 				return (u2_t)-1;
 #if defined (LLC_ARDUINO) || defined(LLC_ESP32) || defined(LLC_ESP8266) || defined(ESP32)
-			u2_c				desiredCount			= newCountRequested + 1;//: + (newCountRequested >> 8);
+			u2_c				desiredCount			= 2 + newCountRequested;//: + (newCountRequested >> 8);
 #else
-			u2_c				desiredCount			= newCountRequested + (newCountRequested >> 2);
+			u2_c				desiredCount			= 2 + newCountRequested + (newCountRequested >> 2);
 #endif
 			return outCount = (desiredCount > MAX_COUNT || desiredCount < newCountRequested) ? MAX_COUNT : desiredCount; 
 		}
