@@ -22,9 +22,9 @@ namespace llc
 #ifdef LLC_DEBUG_ENABLED
 	tplT 		T		bit_make		(u0_t bitIndex)	nxpt	{
 		rve_if((T)-1LL, bitIndex >= (szof(T) * BYTE_SIZE), "Invalid bit index: %i", bitIndex);
-#else
+#else // !LLC_DEBUG_ENABLED
 	tplT ndxp	T		bit_make		(u0_t bitIndex)	nxpt	{
-#endif
+#endif // LLC_DEBUG_ENABLED
 		rtrn (T)(((T)1) << bitIndex);
 	}
 

@@ -31,9 +31,9 @@
 
 #if (defined(DEBUG) || defined(_DEBUG)) && (!defined(LLC_DISABLE_DEBUG)) && !defined(LLC_DEBUG_ENABLED)
 #	define LLC_DEBUG_ENABLED
-#	if !defined(USE_DEBUG_BREAK_ON_ERROR_LOG)
+#	ifndef USE_DEBUG_BREAK_ON_ERROR_LOG
 #		define USE_DEBUG_BREAK_ON_ERROR_LOG
-#	endif
+#	endif // USE_DEBUG_BREAK_ON_ERROR_LOG
 #endif	// _DEBUG
 
 #if (!defined(LLC_MTSUPPORT)) && !defined(LLC_DISABLE_MTSUPPORT)
