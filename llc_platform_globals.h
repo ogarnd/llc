@@ -6,7 +6,7 @@
 #	define LLC_ESPIDF
 #endif
 
-#if (!defined(LLC_ARDUINO))	&&	(defined(__ARDUINO__)	||	defined(ARDUINO_ARCH_ESP32)	||	defined(ARDUINO_ARCH_ESP8266))
+#if (!defined(LLC_ARDUINO))	&&	(defined(ARDUINO) || defined(__ARDUINO__) || defined(ARDUINO) || defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266))
 #	define LLC_ARDUINO
 #endif
 
