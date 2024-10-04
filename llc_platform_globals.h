@@ -59,16 +59,16 @@
 #	pragma warning(disable : 4706)		// Enable assignment within conditional expression. We do this constantly inside our macros in a completely valid way.
 #endif
 
-#if defined(LLC_WINDOWS)
+#ifndef LLC_WINDOWS
+#	define LLC_DYNAMIC_LIBRARY_EXTENSION "os"
+#else
+#	define LLC_DYNAMIC_LIBRARY_EXTENSION "dll"
 #	if !defined(NOMINMAX)
 #		define NOMINMAX
 #	endif
 #	if !defined(WIN32_LEAN_AND_MEAN)
 #		define WIN32_LEAN_AND_MEAN
 #	endif
-#	define LLC_DYNAMIC_LIBRARY_EXTENSION "dll"
-#else
-#	define LLC_DYNAMIC_LIBRARY_EXTENSION "os"
 #endif
 
 #if defined LLC_ANDROID
@@ -87,6 +87,7 @@
 #define nxpt			noexcept
 #define csnx			cnst nxpt
 #define sttc			static
+#define stcs			sttc cnst
 #define inln			inline
 #define stin			sttc inln
 #define cxpr			constexpr

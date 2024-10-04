@@ -1,5 +1,4 @@
 #include "llc_log.h"
-
 #include "llc_chrono.h"
 
 #ifdef LLC_ATMEL
@@ -80,12 +79,63 @@ static	::llc::error_t	default_base_log_print	(const char * text) {	return (::llc
 	return 0;
 }
 
-::llc::error_t			llc::setupLogCallbacks			
-	( llc::log_print_t	funcLogPrint	
+::llc::error_t			llc::setupLogCallbacks
+	( llc::log_print_t	funcLogPrint
 	, llc::log_write_t	funcLogWrite
 	) {
 	::llc_log_print	= funcLogPrint;
 	::llc_log_write	= funcLogWrite;
+
+	struct llc_debug_checker_struct {
+		llc_debug_checker_struct() {
+			info_printf("LLC_DYNAMIC_LIBRARY_EXTENSION:\"" LLC_DYNAMIC_LIBRARY_EXTENSION "\".");
+#	ifdef LLC_ARDUINO
+			info_printf("LLC_ARDUINO"       );
+#	endif // LLC_ARDUINO
+#	ifdef LLC_DEBUG_ENABLED
+			info_printf("LLC_DEBUG_ENABLED" );
+#	endif // LLC_DEBUG_ENABLED
+#	ifdef LLC_ESP32
+			info_printf("LLC_ESP32"         );
+#	endif // LLC_ESP32
+#	ifdef LLC_ESP8266
+			info_printf("LLC_ESP8266"       );
+#	endif // LLC_ESP8266
+#	ifdef LLC_ATMEL
+			info_printf("LLC_ATMEL"         );
+#	endif // LLC_ATMEL
+#	ifdef LLC_ESPIDF
+			info_printf("LLC_ESPIDF"        );
+#	endif // LLC_ESPIDF
+#	ifdef LLC_WINDOWS
+			info_printf("LLC_WINDOWS"       );
+#	endif // LLC_WINDOWS
+#	ifdef LLC_LINUX
+			info_printf("LLC_LINUX"         );
+#	endif // LLC_LINUX
+#	ifdef LLC_ANDROID
+			info_printf("LLC_ANDROID"       );
+#	endif // LLC_ANDROID
+#	ifdef USE_DEBUG_BREAK_ON_ERROR_LOG
+			info_printf("USE_DEBUG_BREAK_ON_ERROR_LOG");
+#	endif // USE_DEBUG_BREAK_ON_ERROR_LOG
+#	ifdef LLC_MTSUPPORT
+			info_printf("LLC_MTSUPPORT"     );
+#	endif // LLC_MTSUPPORT
+#	ifdef LLC_DISABLE_CPP_EXCEPTIONS
+			info_printf("LLC_DISABLE_CPP_EXCEPTIONS");
+#	endif // LLC_DISABLE_CPP_EXCEPTIONS
+#	ifdef NOMINMAX
+			info_printf("NOMINMAX");
+#	endif // NOMINMAX
+#	ifdef WIN32_LEAN_AND_MEAN
+			info_printf("WIN32_LEAN_AND_MEAN");
+#	endif // WIN32_LEAN_AND_MEAN
+#	ifdef __GNUC__
+			info_printf("__GNUC__");
+#	endif // __GNUC__
+		}
+	} llc_debug_checker_instance = {};
 	return 0;
 }
 
@@ -94,7 +144,7 @@ static	::llc::error_t	default_base_log_print	(const char * text) {	return (::llc
 static	::llc::error_t	getSystemErrorAsString			(const uint64_t lastError, char* buffer, uint32_t bufferSize)			{	// Get the error message, if any.
 #ifdef LLC_WINDOWS
 	rees_if(0 == buffer);
-	return lastError 
+	return lastError
 		? ::FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, (DWORD)(lastError & 0xFFFFFFFF), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buffer, bufferSize, NULL)
 		: 0
 		;
