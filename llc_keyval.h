@@ -6,7 +6,7 @@
 namespace llc
 {
 	tplt<tpnm _tKey, tpnm _tVal>
- stct SKeyVal {
+	stct SKeyVal {
 					_tKey									Key;
 					_tVal									Val;
 	};

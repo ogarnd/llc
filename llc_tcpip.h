@@ -9,7 +9,7 @@ namespace llc
 	::llc::error_t		tcpipAddress		(::llc::vcst_t strIP, uint32_t & ipv4);
 	::llc::error_t		tcpipAddress		(::llc::vcst_t strIP, uint32_t & ipv4, uint16_t & port);
 
- stct SIPv4 {
+	stct SIPv4 {
 		uint32_t			IP					= {};
 		
 							SIPv4				(llc::vcst_t strIP)							{ ::llc::tcpipAddress(strIP, IP); }
@@ -83,7 +83,7 @@ namespace llc
 		}
 	} SIPv4Endpoint;
 
- stct SIPv4Node {
+	stct SIPv4Node {
 		::llc::SIPv4	IPv4		= {};
 		::llc::SIPv4	Gateway		= {};
 		::llc::SIPv4	NetMask		= {};

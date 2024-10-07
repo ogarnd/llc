@@ -26,7 +26,7 @@ namespace llc
 	tplt<tpnm _tNumber>
 	cxpr	_tNumber	interpolate_linear	(const _tNumber a, const _tNumber b, const double factor)	noexcept	{ return (_tNumber)(a * (1.0 - factor) + b * factor);	}
 
- stct SSinCos { double Sin, Cos; };
+	stct SSinCos { double Sin, Cos; };
 
 	stin	SSinCos		getSinCos			(double theta)												noexcept	{ return {sin(theta), cos(theta)};						}
 

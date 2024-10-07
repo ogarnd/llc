@@ -24,7 +24,7 @@ namespace llc
 	GDEFINE_ENUM_VALUE(BUS_TYPE, IP		,  7);
 
 #pragma pack(push, 1)
- stct SWireCommand {
+	stct SWireCommand {
 		WIRE_EVENT	Event		: 1;
 		WIRE_MODE	Mode		: 2;
 		BUS_TYPE	Type		: 5;

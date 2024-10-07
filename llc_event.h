@@ -37,7 +37,7 @@ namespace llc
 	tplt<tpnm T> using FEventViewHandlerConst	= function<error_t(const SEView<T>&)>;
 
 	tplt<tpnm _tEventType>
- stct SEvent {
+	stct SEvent {
 		tydf _tEventType			T;
 		tydf SEView<T>	TEView;
 		tydf SEvent<T>	TEvent;

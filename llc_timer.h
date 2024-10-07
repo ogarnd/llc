@@ -9,7 +9,7 @@
 
 namespace llc	//
 {
- stct STimer {
+	stct STimer {
 		double			LastTimeSeconds			= 0;	// This variable is set by Frame() or Reset() and holds the time difference in seconds between a Frame() call and the next.
 		uint64_t		LastTimeMicroseconds	= 0;	// This variable is set by Frame() or Reset() and holds the time difference in seconds between a Frame() call and the next.
 
@@ -19,16 +19,16 @@ namespace llc	//
 		double			Frame					()		noexcept;	// Calculate time elapsed since the last Frame() or Reset() call.
 
 	private:
-#if defined(LLC_WINDOWS) || defined(LLC_ARDUINO) || defined(LLC_CMSIS)
+#if !(defined(LLC_WINDOWS) || defined(LLC_ARDUINO) || defined(LLC_CMSIS))
+		::std::chrono::high_resolution_clock::time_point	PrevTimeStamp		= {};
+#else // defined(LLC_WINDOWS) || defined(LLC_ARDUINO) || defined(LLC_CMSIS)
 		int64_t			PrevTimeStamp			= 0;
 #	ifndef LLC_ATMEL
 		int64_t			CountsPerSecond			= 0;
 		double			SecondsPerCount			= 0;
 		double			MicrosecondsPerCount	= 0;
-#	endif
-#else
-		::std::chrono::high_resolution_clock::time_point	PrevTimeStamp		= {};
-#endif
+#	endif // LLC_ATMEL
+#endif // !(defined(LLC_WINDOWS) || defined(LLC_ARDUINO) || defined(LLC_CMSIS))
 	};
 }
 

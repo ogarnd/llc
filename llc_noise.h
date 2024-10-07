@@ -21,7 +21,7 @@ namespace llc
 	nsix	f3_t		noiseNormal3D		(u2_t x, u2_t y, u2_t z	, u2_t nWidth, u2_t nHeight	, u3_t noiseSeed = ::llc::NOISE_SEED)	nxpt	{ return ::llc::noiseNormal1D	(x + y * nWidth + z * nHeight * nWidth, noiseSeed);	}
 
 #pragma pack(push, 1)
- stct SPRNG {
+	stct SPRNG {
 		u3_t				Seed				= NOISE_SEED;
 		u3_t				Position			= 0;
 		u3_t				Value				= 0;

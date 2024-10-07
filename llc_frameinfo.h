@@ -7,7 +7,7 @@
 namespace llc
 {
 #pragma pack(push, 1)
- stct SFrameSeconds {
+	stct SFrameSeconds {
 		double					Total				;
 		double					LastFrame			;
 		double					LastFrameHalfSquared;
@@ -22,14 +22,14 @@ namespace llc
 		}
 	};
 
- stct SFrameMicroseconds {
+	stct SFrameMicroseconds {
 		uint64_t				Total				;
 		uint64_t				LastFrame			;
 		// Helper
 		inline	void			UpdateFromTime		(uint64_t microsecondsToAdd)	noexcept	{ Total += LastFrame = microsecondsToAdd; }
 	};
 
- stct SFrameMeter {
+	stct SFrameMeter {
 		double					AverageFrameTime	= 0;
 		uint64_t				FrameNumber			= 0;
 		uint32_t				FramesPerSecond		= 0;
@@ -50,7 +50,7 @@ namespace llc
 		}
 	};
 
- stct SFrameInfo {
+	stct SFrameInfo {
 		SFrameMicroseconds		Microseconds		= {};
 		SFrameSeconds			Seconds				= {};
 		SFrameMeter				FrameMeter			= {};
@@ -63,7 +63,7 @@ namespace llc
 		}
 	};
 
- stct SFrameTimer {
+	stct SFrameTimer {
 		::llc::STimer			Timer				= {};
 		::llc::SFrameInfo		FrameInfo			= {};
 

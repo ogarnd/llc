@@ -5,7 +5,7 @@
 
 namespace llc
 {
- stct SPathContents {
+	stct SPathContents {
 		::llc::aachar				Files					= {};
 		::llc::aobj<SPathContents>	Folders					= {};
 	};
