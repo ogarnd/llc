@@ -1,8 +1,8 @@
 #include "llc_typeint.h"	// for int64_t
-#if !defined(LLC_WINDOWS) && !defined(LLC_ATMEL) && !defined(LLC_CMSIS) && !defined(LLC_ARDUINO)
+
+#if !(defined(LLC_WINDOWS) || defined(LLC_CMSIS) || defined(LLC_ARDUINO))
 #	include <chrono>
 #endif
-
 
 #ifndef LLC_TIMER_H_23627
 #define LLC_TIMER_H_23627
@@ -18,18 +18,17 @@ namespace llc	//
 		void			Reset					()		noexcept;	// Reset timer
 		double			Frame					()		noexcept;	// Calculate time elapsed since the last Frame() or Reset() call.
 
-	private:
 #if !(defined(LLC_WINDOWS) || defined(LLC_ARDUINO) || defined(LLC_CMSIS))
 		::std::chrono::high_resolution_clock::time_point	PrevTimeStamp		= {};
-#else // defined(LLC_WINDOWS) || defined(LLC_ARDUINO) || defined(LLC_CMSIS)
+#else // (LLC_WINDOWS || LLC_ARDUINO || LLC_CMSIS)
 		int64_t			PrevTimeStamp			= 0;
 #	ifndef LLC_ATMEL
 		int64_t			CountsPerSecond			= 0;
 		double			SecondsPerCount			= 0;
 		double			MicrosecondsPerCount	= 0;
 #	endif // LLC_ATMEL
-#endif // !(defined(LLC_WINDOWS) || defined(LLC_ARDUINO) || defined(LLC_CMSIS))
-	};
-}
+#endif // !(LLC_WINDOWS || LLC_ARDUINO || LLC_CMSIS)
+	}; // STimer
+} // namespace
 
 #endif // LLC_TIMER_H_23627
