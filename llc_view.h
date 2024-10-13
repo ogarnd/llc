@@ -45,7 +45,7 @@ namespace llc
 		// Operators
 		inxp	oper			view<TCnst>		()									csnx	{ rtrn {Data, Count}; }
 		T&						oper[]			(u2_t index)								{
-			static T dymmy = {}; 
+			static T dymmy = {};
 			rves_if(dymmy, 0 == Data);
 			gthrow_if(index >= Count, LLC_FMT_GE_U2, index, Count);
 			rtrn Data[index];
@@ -279,10 +279,10 @@ namespace llc
 	tdcs	vstr_t				vstr_c;
 	tdcs	vcst_t				vcst_c;
 
-	stin			llc::vcst_t	str				(cnst llc::vcst_t & arg)	{ rtrn arg; } 
-	stin			llc::vcst_t	str				(cnst llc::vs & arg)		{ rtrn arg.cc(); } 
-	sinx			llc::vcst_t	str				(cnst bool arg)				{ rtrn arg ? VCC_TRUE : VCC_FALSE; } 
-	// 
+	stin			llc::vcst_t	str				(cnst llc::vcst_t & arg)	{ rtrn arg; }
+	stin			llc::vcst_t	str				(cnst llc::vs & arg)		{ rtrn arg.cc(); }
+	sinx			llc::vcst_t	str				(cnst bool arg)				{ rtrn arg ? VCC_TRUE : VCC_FALSE; }
+	//
 	tplTnsix		::llc::vcst_t	get_type_namev	()									nxpt	{ rtrn LLC_CXS("unknown"); }
 	tplTnsix		sc_c*			get_type_namep	()									nxpt	{ rtrn get_type_namev<T>().begin(); }
 
@@ -290,7 +290,7 @@ namespace llc
 			nsix	::llc::vcst_t	get_type_namev					(typeIdentifier &)	nxpt	{ rtrn LLC_CXS(#typeIdentifier); }					\
 	tplt<>	ndix	::llc::vcst_t	get_type_namev<typeIdentifier>	()					nxpt	{ rtrn LLC_CXS(#typeIdentifier); }					\
 			nsix	::llc::sc_c*	get_type_namep					(typeIdentifier &)	nxpt	{ rtrn get_type_namev<typeIdentifier>().begin(); }	\
-	tplt<>	ndix	::llc::sc_c*	get_type_namep<typeIdentifier>	()					nxpt	{ rtrn get_type_namev<typeIdentifier>().begin(); }	
+	tplt<>	ndix	::llc::sc_c*	get_type_namep<typeIdentifier>	()					nxpt	{ rtrn get_type_namev<typeIdentifier>().begin(); }
 	GDEFINE_TYPE_NAME_STR(b8_t);
 	GDEFINE_TYPE_NAME_STR(sc_t);
 	GDEFINE_TYPE_NAME_STR(u0_t);
@@ -315,7 +315,7 @@ namespace llc
 	GDEFINE_TYPE_NAME_STR(s3_c);
 	GDEFINE_TYPE_NAME_STR(f2_c);
 	GDEFINE_TYPE_NAME_STR(f3_c);
-	// 
+	//
 	tydf	view<::llc::vs		>	vvs;
 	tydf	view<::llc::vcst_t		>	vvcs;
 	tydf	view<cnst ::llc::vs	>	vcvs;
@@ -329,7 +329,7 @@ namespace llc
 	stin	err_t	rtrim				(::llc::vcsc_t & trimmed) 	{ rtrn rtrim(trimmed, trimmed); }
 	stin	err_t	ltrim				(::llc::vcsc_t & trimmed) 	{ rtrn ltrim(trimmed, trimmed); }
 	stin	err_t	trim				(::llc::vcsc_t & trimmed) 	{ rtrn trim(trimmed, trimmed); }
-	
+
 	stin	err_t	rtrim				(::llc::vc & trimmed, cnst ::llc::vc & original, cnst ::llc::vcsc_t & characters = ::llc::TRIM_CHARACTERS)	{ rtrn rtrim	(*(::llc::vcsc_t*)&trimmed, *(cnst ::llc::vcsc_t*)&original, characters); }
 	stin	err_t	ltrim				(::llc::vc & trimmed, cnst ::llc::vc & original, cnst ::llc::vcsc_t & characters = ::llc::TRIM_CHARACTERS)	{ rtrn ltrim	(*(::llc::vcsc_t*)&trimmed, *(cnst ::llc::vcsc_t*)&original, characters); }
 	stin	err_t	trim				(::llc::vc & trimmed, cnst ::llc::vc & original, cnst ::llc::vcsc_t & characters = ::llc::TRIM_CHARACTERS)	{ rtrn trim	(*(::llc::vcsc_t*)&trimmed, *(cnst ::llc::vcsc_t*)&original, characters); }
