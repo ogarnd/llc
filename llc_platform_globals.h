@@ -88,6 +88,7 @@
 #define csnx			cnst nxpt
 #define sttc			static
 #define stcs			sttc cnst
+#define stvl			sttc vltl
 #define inln			inline
 #define stin			sttc inln
 #define cxpr			constexpr

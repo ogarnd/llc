@@ -37,10 +37,10 @@ namespace llc
 	nsix	uintptr_t					calc_align_address_64		(uintptr_t address)							noexcept	{ return calc_align_address(64, address); }
 
 #if defined(LLC_WINDOWS)
-	stin	void						llc_free					(void* ptr)									noexcept	{ _aligned_free(ptr);									}
+	stin	void*						llc_free					(void* ptr)									noexcept	{ _aligned_free(ptr); rtrn 0; }
 	stin	void*						llc_malloc					(size_t size)								noexcept	{ int8_t* p = (int8_t*)_aligned_malloc(size + 1, LLC_MALLOC_ALIGN); return p; }
 #elif defined(LLC_NEWLIB)
-	stin	void						llc_free					(void* ptr)									noexcept	{
+	stin	void*						llc_free					(void* ptr)									noexcept	{
 		::free(ptr);
 	}
 	stin	void*						llc_malloc					(size_t size)								noexcept	{
@@ -48,10 +48,10 @@ namespace llc
 		return p;
 	}
 #elif defined(LLC_ATMEL) || defined(ESP8266)
-	stin	void						llc_free					(void* ptr)									noexcept	{ ::free(ptr);											}
+	stin	void*						llc_free					(void* ptr)									noexcept	{ ::free(ptr); rtrn 0; }
 	stin	void*						llc_malloc					(size_t size)								noexcept	{ int8_t* p = (int8_t*)::malloc(size + 1); return p; }
 #else
-	stin	void						llc_free					(void* ptr)									noexcept	{ ::free(ptr);		        									}
+	stin	void*						llc_free					(void* ptr)									noexcept	{ ::free(ptr); rtrn 0; }
 	stin	void*						llc_malloc					(size_t size)								noexcept	{ int8_t* p = (int8_t*)::memalign(LLC_MALLOC_ALIGN, size + 1); return p; }
 #endif
 

@@ -145,7 +145,8 @@ namespace llc
 		,	::llc::s2_t, ::llc::s2_c, ::llc::i2s_t, ::llc::i2s_c	\
 		,	::llc::s3_t, ::llc::s3_c, ::llc::i3s_t, ::llc::i3s_c	\
 		,	::llc::f2_t, ::llc::f2_c, ::llc::f2s_t, ::llc::f2s_c	\
-		,	::llc::f3_t, ::llc::f3_c, ::llc::f3s_t, ::llc::f3s_c;
+		,	::llc::f3_t, ::llc::f3_c, ::llc::f3s_t, ::llc::f3s_c	\
+		,	::llc::uP_t, ::llc::uP_c
 
 } // namespace
 
