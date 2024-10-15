@@ -88,42 +88,42 @@ static	::llc::error_t	default_base_log_print	(const char * text) {	return (::llc
 
 	struct llc_debug_checker_struct {
 		llc_debug_checker_struct() {
-			info_printf("LLC_DYNAMIC_LIBRARY_EXTENSION:\"" LLC_DYNAMIC_LIBRARY_EXTENSION "\".");
+			info_printf("DYNAMIC_LIBRARY_EXTENSION:\"" LLC_DYNAMIC_LIBRARY_EXTENSION "\".");
 #	ifdef LLC_ARDUINO
-			info_printf("LLC_ARDUINO"       );
+			info_printf("ARDUINO"       );
 #	endif // LLC_ARDUINO
 #	ifdef LLC_DEBUG_ENABLED
-			info_printf("LLC_DEBUG_ENABLED" );
+			info_printf("DEBUG_ENABLED" );
 #	endif // LLC_DEBUG_ENABLED
 #	ifdef LLC_ESP32
-			info_printf("LLC_ESP32"         );
+			info_printf("ESP32"         );
 #	endif // LLC_ESP32
 #	ifdef LLC_ESP8266
-			info_printf("LLC_ESP8266"       );
+			info_printf("ESP8266"       );
 #	endif // LLC_ESP8266
 #	ifdef LLC_ATMEL
-			info_printf("LLC_ATMEL"         );
+			info_printf("ATMEL"         );
 #	endif // LLC_ATMEL
 #	ifdef LLC_ESPIDF
-			info_printf("LLC_ESPIDF"        );
+			info_printf("ESPIDF"        );
 #	endif // LLC_ESPIDF
 #	ifdef LLC_WINDOWS
-			info_printf("LLC_WINDOWS"       );
+			info_printf("WINDOWS"       );
 #	endif // LLC_WINDOWS
 #	ifdef LLC_LINUX
-			info_printf("LLC_LINUX"         );
+			info_printf("LINUX"         );
 #	endif // LLC_LINUX
 #	ifdef LLC_ANDROID
-			info_printf("LLC_ANDROID"       );
+			info_printf("ANDROID"       );
 #	endif // LLC_ANDROID
 #	ifdef USE_DEBUG_BREAK_ON_ERROR_LOG
 			info_printf("USE_DEBUG_BREAK_ON_ERROR_LOG");
 #	endif // USE_DEBUG_BREAK_ON_ERROR_LOG
 #	ifdef LLC_MTSUPPORT
-			info_printf("LLC_MTSUPPORT"     );
+			info_printf("MTSUPPORT"     );
 #	endif // LLC_MTSUPPORT
 #	ifdef LLC_DISABLE_CPP_EXCEPTIONS
-			info_printf("LLC_DISABLE_CPP_EXCEPTIONS");
+			info_printf("DISABLE_CPP_EXCEPTIONS");
 #	endif // LLC_DISABLE_CPP_EXCEPTIONS
 #	ifdef NOMINMAX
 			info_printf("NOMINMAX");
